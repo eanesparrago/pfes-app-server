@@ -4,14 +4,21 @@ import "./App.css";
 
 import Navbar from "./components/layout/Navbar";
 import Login from "./components/auth/Login";
+import Register from "./components/admin/Register";
 
 class App extends Component {
   render() {
     return (
       <Router>
         <div className="App">
-          <Navbar />
-          <Login />
+          <Route exact path="/" component={Navbar} />
+          <Route path="/admin" component={Navbar} />
+
+          {/* <Navbar /> */}
+          <div className="container">
+            <Route exact path="/" component={Login} />
+            <Route exact path="/admin/register" component={Register} />
+          </div>
         </div>
       </Router>
     );
