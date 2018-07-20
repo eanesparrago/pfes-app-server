@@ -4,3 +4,7 @@
   flex-flow: column nowrap;
   justify-content: space-between;
 }
+
+a {
+  cursor: pointer;
+}
