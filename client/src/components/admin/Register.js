@@ -21,6 +21,7 @@ class Register extends Component {
     };
 
     this.onChange = this.onChange.bind(this);
+    // this.onClick = this.onClick.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
@@ -33,6 +34,13 @@ class Register extends Component {
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
+
+  // onClick(e) {
+  //   this.setState({
+  //     [e.target.firstElementChild.name]: e.target.firstElementChild.value
+  //   });
+  //   console.log(this.state);
+  // }
 
   onSubmit(e) {
     e.preventDefault();
@@ -48,7 +56,6 @@ class Register extends Component {
       password2: this.state.password2
     };
 
-    // console.log(newUser);
     this.props.registerUser(newUser, this.props.history);
   }
 
@@ -56,15 +63,15 @@ class Register extends Component {
     const { errors } = this.state;
 
     return (
-      // <div className="register">
-      //   <div className="container">
-      //     <div className="row">
       <div className="col-md-6 m-auto">
         <h1 className="display-4 text-center">Register</h1>
         <p className="lead text-center">Register a new user</p>
+
         <form noValidate onSubmit={this.onSubmit}>
           <div className="form-group">
-            <label htmlFor="userName">Username</label>
+            <label className="mb-1" htmlFor="userName">
+              Username
+            </label>
             <input
               type="text"
               className={classnames("form-control form-control-lg", {
@@ -81,7 +88,10 @@ class Register extends Component {
           </div>
 
           <div className="form-group mt-3">
-            <label htmlFor="userType">User type</label>
+            <label className="mb-1" htmlFor="userType">
+              User type
+            </label>
+
             <select
               className={classnames("form-control form-control-lg", {
                 "is-invalid": errors.userType
@@ -96,13 +106,41 @@ class Register extends Component {
               <option value="operations">Operations</option>
               <option value="viewer">Viewer</option>
             </select>
+
+            {/* <div className="btn-group btn-group-toggle" data-toggle="buttons">
+              <label className="btn btn-secondary" onClick={this.onClick}>
+                <input type="radio" name="userType" id="sales" value="sales" />
+                Sales
+              </label>
+              <label className="btn btn-secondary" onClick={this.onClick}>
+                <input
+                  type="radio"
+                  name="userType"
+                  id="operations"
+                  value="operations"
+                />
+                Operations
+              </label>
+              <label className="btn btn-secondary" onClick={this.onClick}>
+                <input
+                  type="radio"
+                  name="userType"
+                  id="viewer"
+                  value="viewer"
+                />
+                Viewer
+              </label>
+            </div> */}
+
             {errors.userType && (
               <div className="invalid-feedback">{errors.userType}</div>
             )}
           </div>
 
           <div className="form-group">
-            <label htmlFor="firstName">Firstname</label>
+            <label className="mb-1" htmlFor="firstName">
+              Firstname
+            </label>
 
             <input
               type="text"
@@ -120,7 +158,9 @@ class Register extends Component {
           </div>
 
           <div className="form-group">
-            <label htmlFor="lastName">Lastname</label>
+            <label className="mb-1" htmlFor="lastName">
+              Lastname
+            </label>
             <input
               type="text"
               className={classnames("form-control form-control-lg", {
@@ -137,7 +177,9 @@ class Register extends Component {
           </div>
 
           <div className="form-group">
-            <label htmlFor="email">Email</label>
+            <label className="mb-1" htmlFor="email">
+              Email
+            </label>
             <input
               type="text"
               className={classnames("form-control form-control-lg", {
@@ -154,7 +196,9 @@ class Register extends Component {
           </div>
 
           <div className="form-group">
-            <label htmlFor="contact">Contact</label>
+            <label className="mb-1" htmlFor="contact">
+              Contact
+            </label>
 
             <input
               type="text"
@@ -174,7 +218,9 @@ class Register extends Component {
           <div className="dropdown-divider mb-3" />
 
           <div className="form-group">
-            <label htmlFor="password">Password</label>
+            <label className="mb-1" htmlFor="password">
+              Password
+            </label>
             <input
               type="password"
               className={classnames("form-control form-control-lg", {
@@ -191,7 +237,9 @@ class Register extends Component {
           </div>
 
           <div className="form-group">
-            <label htmlFor="password2">Confirm password</label>
+            <label className="mb-1" htmlFor="password2">
+              Confirm password
+            </label>
 
             <input
               type="password"
@@ -211,9 +259,6 @@ class Register extends Component {
           <input type="submit" className="btn btn-primary btn-block mt-4" />
         </form>
       </div>
-      //     </div>
-      //   </div>
-      // </div>
     );
   }
 }

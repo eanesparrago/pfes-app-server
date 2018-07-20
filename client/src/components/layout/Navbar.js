@@ -11,13 +11,13 @@ class Navbar extends Component {
               PFES App
             </Link>
 
-            <ul className="navbar-nav ml-auto">
+            {/* <ul className="navbar-nav ml-auto">
               <li className="nav-item">
                 <Link className="nav-link" to="/">
                   Login
                 </Link>
               </li>
-            </ul>
+            </ul> */}
           </div>
         </nav>
       </div>
