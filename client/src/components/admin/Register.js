@@ -219,7 +219,9 @@ class Register extends Component {
 
           <div className="form-group">
             <label className="mb-1" htmlFor="password">
-              Password
+              Password <small className="text-muted">
+                (Must be at least 6 characters)
+              </small>
             </label>
             <input
               type="password"
@@ -231,6 +233,7 @@ class Register extends Component {
               value={this.state.password}
               onChange={this.onChange}
             />
+
             {errors.password && (
               <div className="invalid-feedback">{errors.password}</div>
             )}
@@ -256,7 +259,11 @@ class Register extends Component {
             )}
           </div>
 
-          <input type="submit" className="btn btn-primary btn-block mt-4" />
+          <input
+            type="submit"
+            value="Register User"
+            className="btn btn-primary btn-block mt-4"
+          />
         </form>
       </div>
     );

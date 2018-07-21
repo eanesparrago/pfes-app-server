@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import classnames from "classnames";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
+import TextFieldGroup from "../common/TextFieldGroup";
 
 class Login extends Component {
   constructor() {
@@ -51,6 +51,14 @@ class Login extends Component {
   render() {
     const { errors } = this.state;
 
+    // Show error for both if either username or password is invalid
+    // This is to reduce information given to potential hackers
+    let validation = null;
+
+    if (errors.userName || errors.password) {
+      validation = "Invalid login information";
+    }
+
     return (
       <div className="login">
         <div className="container">
@@ -60,39 +68,25 @@ class Login extends Component {
               <p className="lead text-center">Log in to your PFES account</p>
 
               <form onSubmit={this.onSubmit}>
-                <div className="form-group">
-                  <input
-                    type="text"
-                    placeholder="Username"
-                    className={classnames("form-control form-control-lg", {
-                      "is-invalid": errors.userName
-                    })}
-                    name="userName"
-                    value={this.state.userName}
-                    onChange={this.onChange}
-                  />
-                  {errors.userName && (
-                    <div className="invalid-feedback">{errors.userName}</div>
-                  )}
-                </div>
+                <TextFieldGroup
+                  placeholder="Username"
+                  name="userName"
+                  value={this.state.userName}
+                  onChange={this.onChange}
+                  error={validation}
+                />
 
-                <div className="form-group">
-                  <input
-                    type="password"
-                    placeholder="Password"
-                    className={classnames("form-control form-control-lg", {
-                      "is-invalid": errors.password
-                    })}
-                    name="password"
-                    value={this.state.password}
-                    onChange={this.onChange}
-                  />
-                  {errors.userName && (
-                    <div className="invalid-feedback">{errors.password}</div>
-                  )}
-                </div>
+                <TextFieldGroup
+                  placeholder="Password"
+                  type="password"
+                  name="password"
+                  value={this.state.password}
+                  onChange={this.onChange}
+                  error={validation}
+                />
                 <input
                   type="submit"
+                  value="Login"
                   className="btn btn-primary btn-block mt-4"
                 />
               </form>
