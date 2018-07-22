@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const LogSchema = new Schema({
+const InternationalLogSchema = new Schema({
   domJo: {
     type: String,
     required: true
@@ -41,39 +41,51 @@ const LogSchema = new Schema({
   eta: {
     type: Date
   },
-  status: {
-    type: String,
-    default: "Pending"
-  },
   operations: {
     preloading: {
-      type: String,
-      default: "n/a"
+      status: {
+        type: Boolean,
+        default: false,
+        required: true
+      },
+      remarks: {
+        type: String,
+        default: "n/a"
+      }
     },
     loading: {
-      type: String,
-      default: "n/a"
+      status: {
+        type: Boolean,
+        default: false,
+        required: true
+      },
+      remarks: {
+        type: String,
+        default: "n/a"
+      }
     },
     unloading: {
-      type: String,
-      default: "n/a"
-    },
-    customerSatisfactionI: {
-      type: String,
-      default: "n/a"
-    },
-    customerSatisfactionE: {
-      type: String,
-      default: "n/a"
-    },
-    remarks: {
-      type: String,
-      default: "n/a"
+      status: {
+        type: Boolean,
+        default: false,
+        required: true
+      },
+      remarks: {
+        type: String,
+        default: "n/a"
+      }
     }
+  },
+  rating: {
+    type: String,
+    defaut: "n/a"
   },
   user: {
     type: Schema.Types.ObjectId,
     ref: "users"
   }
 });
-module.exports = Log = mongoose.model("logs", LogSchema);
+module.exports = InternationalLog = mongoose.model(
+  "internationalLogs",
+  InternationalLogSchema
+);

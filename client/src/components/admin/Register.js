@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 import classnames from "classnames";
 import { connect } from "react-redux";
 import { registerUser } from "../../actions/authActions";
+import { getAllUsers } from "../../actions/usersActions";
 
 class Register extends Component {
   constructor() {
@@ -21,7 +22,6 @@ class Register extends Component {
     };
 
     this.onChange = this.onChange.bind(this);
-    // this.onClick = this.onClick.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
@@ -29,18 +29,47 @@ class Register extends Component {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
+
+    // if (nextProps.users) {
+    //   if (nextProps.users.length > this.state.users.length) {
+    //     console.log(nextProps.users.length, this.state.users.length);
+    //     this.setState({
+    //       userName: "",
+    //       userType: "",
+    //       firstName: "",
+    //       lastName: "",
+    //       email: "",
+    //       contact: "",
+    //       password: "",
+    //       password2: "",
+    //       errors: {}
+    //     });
+    //   }
+
+    //   this.setState({ users: nextProps.users });
+    // }
+
+    if (nextProps.register) {
+      if (nextProps.register.success) {
+        console.log("Success");
+        this.setState({
+          userName: "",
+          userType: "",
+          firstName: "",
+          lastName: "",
+          email: "",
+          contact: "",
+          password: "",
+          password2: "",
+          errors: {}
+        });
+      }
+    }
   }
 
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
-
-  // onClick(e) {
-  //   this.setState({
-  //     [e.target.firstElementChild.name]: e.target.firstElementChild.value
-  //   });
-  //   console.log(this.state);
-  // }
 
   onSubmit(e) {
     e.preventDefault();
@@ -56,7 +85,11 @@ class Register extends Component {
       password2: this.state.password2
     };
 
-    this.props.registerUser(newUser, this.props.history);
+    this.props.registerUser(newUser);
+
+    this.props.getAllUsers();
+
+    console.log("Submit clicked");
   }
 
   render() {
@@ -106,31 +139,6 @@ class Register extends Component {
               <option value="operations">Operations</option>
               <option value="viewer">Viewer</option>
             </select>
-
-            {/* <div className="btn-group btn-group-toggle" data-toggle="buttons">
-              <label className="btn btn-secondary" onClick={this.onClick}>
-                <input type="radio" name="userType" id="sales" value="sales" />
-                Sales
-              </label>
-              <label className="btn btn-secondary" onClick={this.onClick}>
-                <input
-                  type="radio"
-                  name="userType"
-                  id="operations"
-                  value="operations"
-                />
-                Operations
-              </label>
-              <label className="btn btn-secondary" onClick={this.onClick}>
-                <input
-                  type="radio"
-                  name="userType"
-                  id="viewer"
-                  value="viewer"
-                />
-                Viewer
-              </label>
-            </div> */}
 
             {errors.userType && (
               <div className="invalid-feedback">{errors.userType}</div>
@@ -219,7 +227,8 @@ class Register extends Component {
 
           <div className="form-group">
             <label className="mb-1" htmlFor="password">
-              Password <small className="text-muted">
+              Password{" "}
+              <small className="text-muted">
                 (Must be at least 6 characters)
               </small>
             </label>
@@ -276,10 +285,14 @@ Register.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  errors: state.errors
+  errors: state.errors,
+  register: state.register
 });
 
 export default connect(
   mapStateToProps,
-  { registerUser }
+  {
+    registerUser,
+    getAllUsers
+  }
 )(withRouter(Register));

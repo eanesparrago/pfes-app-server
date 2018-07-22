@@ -46,12 +46,11 @@ class App extends Component {
             <div className="container">
               <Route exact path="/" component={Login} />
 
-              <div className="container">
-                <div className="row">
-                  <Route exact path="/admin/register" component={Register} />
-                  <Route exact path="/admin/register" component={UsersTable} />
-                </div>
+              <div className="row">
+                <Route exact path="/admin/users" component={Register} />
+                <Route exact path="/admin/users" component={UsersTable} />
               </div>
+
             </div>
             <Footer />
           </div>

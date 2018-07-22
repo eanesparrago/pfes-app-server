@@ -141,4 +141,27 @@ router.get(
   }
 );
 
+// ////////////////////////////////////
+// @route   GET api/users/all
+// @desc    Get all users
+// @access  Private
+router.get(
+  "/all",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const errors = {};
+
+    User.find()
+      .sort({ userName: 1 })
+      .then(users => {
+        if (!users) {
+          errors.noUsers = "There are no users";
+
+          return res.status(404).json(errors);
+        }
+        res.json(users);
+      })
+      .catch(err => res.status(404).json({ profile: "There are no users" }));
+  }
+);
 module.exports = router;

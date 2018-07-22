@@ -23,6 +23,12 @@ class Login extends Component {
     }
   }
 
+  componentWillUnmount() {
+    if (!this.props.auth.isAuthenticated) {
+      this.props.history.push("/");
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
       this.props.history.push("/app");
