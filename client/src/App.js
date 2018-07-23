@@ -1,5 +1,10 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect
+} from "react-router-dom";
 import "./App.css";
 import { Provider } from "react-redux";
 import store from "./store";
@@ -13,6 +18,7 @@ import Footer from "./components/layout/Footer";
 import Login from "./components/auth/Login";
 import ApplicationNav from "./components/application/ApplicationNav";
 import Users from "./components/admin/users/Users";
+import Logs from "./components/application/Logs";
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -39,6 +45,9 @@ if (localStorage.jwtToken) {
 
 class App extends Component {
   render() {
+    const state = store.getState();
+    const isAuthenticated = state.auth.isAuthenticated;
+
     return (
       <Provider store={store}>
         <Router>
@@ -46,18 +55,35 @@ class App extends Component {
             <Navbar />
 
             <div className="container">
-              <Route exact path="/" component={Login} />
-
               <Switch>
+                {/* Login */}
+                <Route exact path="/" component={Login} />
                 {/* App navigation tabs */}
                 <Route path="/app" component={ApplicationNav} />
-
+                {/* 404 */}
                 <Route render={() => <h1>Not found</h1>} />
               </Switch>
 
+              <Route
+                exact
+                path="/app"
+                render={() =>
+                  isAuthenticated ? (
+                    <Redirect to="/app/logs" />
+                  ) : (
+                    <Redirect to="/" />
+                  )
+                }
+              />
+            </div>
+
+            <div className="container-fluid ">
+              {/* Log management */}
+              <Route exact path="/app/logs" component={Logs} />
               {/* Admin - user management */}
               <Route exact path="/app/users" component={Users} />
             </div>
+
             <Footer />
           </div>
         </Router>

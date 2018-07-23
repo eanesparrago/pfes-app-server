@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getAllUsers } from "../../../actions/usersActions";
 import spinner from "../../../img/spinner.gif";
-import "./Spinner.css";
 
 class UsersTable extends Component {
   constructor() {
@@ -25,7 +24,7 @@ class UsersTable extends Component {
   }
 
   render() {
-    const { users } = this.state;
+    const { users, loading } = this.state;
 
     const tableBody = users.map(user => {
       return (
@@ -41,22 +40,22 @@ class UsersTable extends Component {
     });
 
     return (
-      <div className="container">
-        {this.state.loading ? (
+      <div className="">
+        {loading ? (
           <div className="text-center">
             <img src={spinner} alt="Loading spinner" />
           </div>
         ) : (
-          <div className="table-responsive mx-3 mt-2">
+          <div className="table-responsive  mt-2">
             <table className="table">
               <thead>
                 <tr>
-                  <th scople="col">Username</th>
-                  <th scople="col">Type</th>
-                  <th scople="col">Firstname</th>
-                  <th scople="col">Lastname</th>
-                  <th scople="col">Email</th>
-                  <th scople="col">Contact</th>
+                  <th scope="col">Username</th>
+                  <th scope="col">Type</th>
+                  <th scope="col">Firstname</th>
+                  <th scope="col">Lastname</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Contact</th>
                 </tr>
               </thead>
               <tbody>{tableBody}</tbody>

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { GET_ALL_USERS } from "./types";
+import { GET_ALL_USERS, CLEAR_USERS } from "./types";
 
 // Get all users
 export const getAllUsers = () => dispatch => {
@@ -10,4 +10,8 @@ export const getAllUsers = () => dispatch => {
       payload: res.data
     })
   );
+};
+
+export const clearUsers = () => {
+  return { type: CLEAR_USERS, payload: [] };
 };

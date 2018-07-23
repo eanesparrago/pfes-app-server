@@ -24,6 +24,25 @@ router.get("/test", (req, res) => res.json({ msg: "Logs works" }));
 // @desc    Get domestic logs
 // @access  Private
 // router.get("/domestic")
+router.get(
+  "/domestic",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const errors = {};
+
+    DomesticLog.find()
+      .then(logs => {
+        if (!logs) {
+          errors.noLogs = "There are no job orders";
+          return res.status(404).json(errors);
+        }
+        res.json(logs);
+      })
+      .catch(err =>
+        res.status(404).json({ profile: "There are no job orders" })
+      );
+  }
+);
 
 // ////////////////////////////////////
 // @route   POST api/logs/domestic

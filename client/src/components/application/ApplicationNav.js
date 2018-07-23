@@ -39,10 +39,10 @@ class ApplicationNav extends Component {
         <li className="nav-item">
           <Link
             className={classnames("nav-link", {
-              active: this.state.active === "/app"
+              active: this.state.active === "/app/logs"
             })}
-            to="/app"
-            onClick={() => this.handleClick("/app")}
+            to="/app/logs"
+            onClick={() => this.handleClick("/app/logs")}
           >
             Logs
           </Link>

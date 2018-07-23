@@ -4,4 +4,7 @@ export const GET_ALL_USERS = "GET_ALL_USERS";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const CLEAR_REGISTER = "CLEAR_REGISTER";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
+export const CLEAR_USERS = "CLEAR_USERS";
+export const GET_DOMESTIC_LOGS = "GET_DOMESTIC_LOGS";
+export const USER_LOGOUT = "USER_LOGOUT";
 

@@ -13,7 +13,7 @@ class Users extends Component {
 
   render() {
     return (
-      <div className="row mx-2 mt-3">
+      <div className="mx-3 mt-3">
         <RegisterContainer />
         <UsersTable />
       </div>

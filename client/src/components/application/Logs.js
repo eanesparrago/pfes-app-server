@@ -1,17 +1,16 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+
+import DomesticLogs from "./DomesticLogs";
+import InternationalLogs from "./InternationalLogs";
 
 class Logs extends Component {
-  static propTypes = {
-    prop: PropTypes
-  }
-
   render() {
     return (
-      <div>
-        
+      <div className="mx-3 mt-2">
+        <DomesticLogs />
       </div>
-    )
+    );
   }
 }
 
