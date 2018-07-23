@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import DomesticLogCreate from "./DomesticLogCreate";
 
 import { getDomesticLogs } from "../../actions/logsActions";
 
@@ -67,9 +68,11 @@ class DomesticLogs extends Component {
           </button>
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <button className="btn btn-primary mr-3" type="button">
+            {/* <button className="btn btn-primary mr-3" type="button">
               New Job Order
-            </button>
+            </button> */}
+
+            <DomesticLogCreate />
             <form className="form-inline my-2 my-lg-0">
               <input
                 className="form-control mr-sm-2"

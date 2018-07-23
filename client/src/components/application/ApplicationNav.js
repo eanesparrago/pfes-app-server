@@ -7,7 +7,7 @@ class ApplicationNav extends Component {
   constructor() {
     super();
     this.state = {
-      active: ""
+      active: "/app/logs"
     };
 
     this.handleClick = this.handleClick.bind(this);
@@ -20,6 +20,8 @@ class ApplicationNav extends Component {
       this.setState({ active: this.props.location.pathname });
     }
   }
+
+  componentDidMount() {}
 
   componentWillUnmount() {
     if (this.props.auth.isAuthenticated) {

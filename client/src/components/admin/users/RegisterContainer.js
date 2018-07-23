@@ -91,7 +91,7 @@ class RegisterContainer extends Component {
           data-toggle="modal"
           data-target="#exampleModal"
         >
-          Register New User
+          New User
         </button>
 
         <div
