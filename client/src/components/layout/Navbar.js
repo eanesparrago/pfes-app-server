@@ -24,10 +24,24 @@ class Navbar extends Component {
 
     const authLinks = (
       <ul className="navbar-nav ml-auto">
-        <li className="nav-item">
-          <a onClick={this.onLogoutClick.bind(this)} className="nav-link">
-            Logout
+        <li className="nav-item dropdown">
+          <a
+            className="nav-link dropdown-toggle"
+            data-toggle="dropdown"
+            role="button"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            {user.userName} ({user.userType})
           </a>
+          <div className="dropdown-menu">
+            <a
+              onClick={this.onLogoutClick.bind(this)}
+              className="dropdown-item"
+            >
+              Logout
+            </a>
+          </div>
         </li>
       </ul>
     );

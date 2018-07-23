@@ -1,8 +1,6 @@
 import axios from "axios";
-import setAuthToken from "../utils/setAuthToken";
-import jwt_decode from "jwt-decode";
 
-import { GET_ERRORS, GET_ALL_USERS } from "./types";
+import { GET_ALL_USERS } from "./types";
 
 // Get all users
 export const getAllUsers = () => dispatch => {

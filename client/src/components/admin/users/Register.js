@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import classnames from "classnames";
 import { connect } from "react-redux";
-import { registerUser } from "../../actions/authActions";
-import { getAllUsers } from "../../actions/usersActions";
+import { registerUser } from "../../../actions/authActions";
+import { getAllUsers } from "../../../actions/usersActions";
 
 class Register extends Component {
   constructor() {
@@ -29,25 +29,6 @@ class Register extends Component {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
-
-    // if (nextProps.users) {
-    //   if (nextProps.users.length > this.state.users.length) {
-    //     console.log(nextProps.users.length, this.state.users.length);
-    //     this.setState({
-    //       userName: "",
-    //       userType: "",
-    //       firstName: "",
-    //       lastName: "",
-    //       email: "",
-    //       contact: "",
-    //       password: "",
-    //       password2: "",
-    //       errors: {}
-    //     });
-    //   }
-
-    //   this.setState({ users: nextProps.users });
-    // }
 
     if (nextProps.register) {
       if (nextProps.register.success) {
@@ -96,9 +77,9 @@ class Register extends Component {
     const { errors } = this.state;
 
     return (
-      <div className="col-md-6 m-auto">
-        <h1 className="display-4 text-center">Register</h1>
-        <p className="lead text-center">Register a new user</p>
+      <div className="">
+        {/* <h1 className="display-4 text-center">Register</h1>
+        <p className="lead text-center">Register a new user</p> */}
 
         <form noValidate onSubmit={this.onSubmit}>
           <div className="form-group">
@@ -138,6 +119,7 @@ class Register extends Component {
               <option value="sales">Sales</option>
               <option value="operations">Operations</option>
               <option value="viewer">Viewer</option>
+              <option value="admin">Administrator</option>
             </select>
 
             {errors.userType && (

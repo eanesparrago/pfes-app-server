@@ -21,46 +21,55 @@ router.get("/test", (req, res) => res.json({ msg: "Users works" }));
 // ////////////////////////////////////
 // @route   POST api/users/register
 // @desc    Register user
-// @access  Public (Should become private for admin)
-router.post("/register", (req, res) => {
-  // Validate registration
-  const { errors, isValid } = validateRegisterInput(req.body);
-
-  // Check validation
-  if (!isValid) {
-    return res.status(400).json(errors);
-  }
-
-  User.findOne({ userName: req.body.userName }).then(user => {
-    // Check to see if the username already exists in the database
-    if (user) {
-      return res.status(400).json({ userName: "Username already exists" });
-    } else {
-      // Create new user of model User
-      const newUser = new User({
-        userName: req.body.userName,
-        userType: req.body.userType,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        contact: req.body.contact,
-        password: req.body.password // This will be a hash
-      });
-
-      // Generate hash for password
-      bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(newUser.password, salt, (err, hash) => {
-          if (err) throw err;
-          newUser.password = hash;
-          newUser
-            .save()
-            .then(user => res.json(user))
-            .catch(err => console.log(err));
-        });
-      });
+// @access  Private
+router.post(
+  "/register",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    // Only admin register a new user account
+    if (req.user.userType !== "admin") {
+      return res.status(401).json({ error: "Unauthorized" });
     }
-  });
-});
+
+    // Validate registration
+    const { errors, isValid } = validateRegisterInput(req.body);
+
+    // Check validation
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
+    User.findOne({ userName: req.body.userName }).then(user => {
+      // Check to see if the username already exists in the database
+      if (user) {
+        return res.status(400).json({ userName: "Username already exists" });
+      } else {
+        // Create new user of model User
+        const newUser = new User({
+          userName: req.body.userName,
+          userType: req.body.userType,
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          email: req.body.email,
+          contact: req.body.contact,
+          password: req.body.password // This will be a hash
+        });
+
+        // Generate hash for password
+        bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(newUser.password, salt, (err, hash) => {
+            if (err) throw err;
+            newUser.password = hash;
+            newUser
+              .save()
+              .then(user => res.json(user))
+              .catch(err => console.log(err));
+          });
+        });
+      }
+    });
+  }
+);
 
 // ////////////////////////////////////
 // @route   POST api/users/login
@@ -100,7 +109,7 @@ router.post("/login", (req, res) => {
           contact: user.contact
         };
 
-        // Sign token
+        // Sign token (expires in 12 hours or 43200 seconds)
         jwt.sign(
           payload,
           keys.secretOrKey,
@@ -144,11 +153,16 @@ router.get(
 // ////////////////////////////////////
 // @route   GET api/users/all
 // @desc    Get all users
-// @access  Private
+// @access  Private (admin)
 router.get(
   "/all",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
+    // Only admin register a new user account
+    if (req.user.userType !== "admin") {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
     const errors = {};
 
     User.find()

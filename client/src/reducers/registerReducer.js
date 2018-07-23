@@ -1,6 +1,6 @@
 // register
 
-import { REGISTER_SUCCESS } from "../actions/types";
+import { REGISTER_SUCCESS, CLEAR_REGISTER } from "../actions/types";
 
 const initialState = {};
 
@@ -11,6 +11,8 @@ export default function(state = initialState, action) {
         ...state,
         success: action.payload
       };
+    case CLEAR_REGISTER:
+      return {};
 
     default:
       return state;
