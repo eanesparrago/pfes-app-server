@@ -35,6 +35,7 @@ class UsersTable extends Component {
           <td>{user.lastName}</td>
           <td>{user.email}</td>
           <td>{user.contact}</td>
+          <td>{user.date.slice(0,10)}</td>
         </tr>
       );
     });
@@ -56,6 +57,7 @@ class UsersTable extends Component {
                   <th scope="col">Lastname</th>
                   <th scope="col">Email</th>
                   <th scope="col">Contact</th>
+                  <th scope="col">Date Added</th>
                 </tr>
               </thead>
               <tbody>{tableBody}</tbody>

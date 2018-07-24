@@ -4,10 +4,9 @@ import { withRouter } from "react-router-dom";
 
 import classnames from "classnames";
 import { connect } from "react-redux";
-import { registerUser } from "../../actions/authActions";
-import { getAllUsers } from "../../actions/usersActions";
-import { clearRegister } from "../../actions/registerActions";
+import { createDomesticLog, getDomesticLogs } from "../../actions/logsActions";
 import { clearErrors } from "../../actions/errorActions";
+import { clearSuccess } from "../../actions/successActions";
 
 import isEmpty from "../../validation/is-empty";
 
@@ -15,14 +14,17 @@ class DomesticLogCreate extends Component {
   constructor() {
     super();
     this.state = {
-      userName: "",
-      userType: "",
-      firstName: "",
-      lastName: "",
-      email: "",
-      contact: "",
-      password: "",
-      password2: "",
+      domJo: "",
+      shipperConsignee: "",
+      associate: "",
+      modeOfTransport: "",
+      commodity: "",
+      blAwb: "",
+      origin: "",
+      destination: "",
+      etd: "",
+      eta: "",
+      status: "Waiting",
       errors: {}
     };
 
@@ -35,26 +37,28 @@ class DomesticLogCreate extends Component {
       this.setState({ errors: nextProps.errors });
     }
 
-    if (nextProps.register) {
-      if (!isEmpty(nextProps.register)) {
-        this.setState({
-          userName: "",
-          userType: "",
-          firstName: "",
-          lastName: "",
-          email: "",
-          contact: "",
-          password: "",
-          password2: "",
-          errors: {}
-        });
-        console.log("Success");
+    if (!isEmpty(nextProps.success)) {
+      this.setState({
+        domJo: "",
+        shipperConsignee: "",
+        associate: "",
+        modeOfTransport: "",
+        commodity: "",
+        blAwb: "",
+        origin: "",
+        destination: "",
+        etd: "",
+        eta: "",
+        status: "",
+        errors: {}
+      });
+      console.log("Success");
 
-        this.props.clearRegister();
-        this.props.clearErrors();
-        this.props.getAllUsers();
-      }
+      this.props.clearSuccess();
+      this.props.clearErrors();
+      this.props.getDomesticLogs();
     }
+    // }
   }
 
   onChange(e) {
@@ -65,19 +69,24 @@ class DomesticLogCreate extends Component {
     e.preventDefault();
 
     const newUser = {
-      userName: this.state.userName,
-      userType: this.state.userType,
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
-      email: this.state.email,
-      contact: this.state.contact,
-      password: this.state.password,
-      password2: this.state.password2
+      domJo: this.state.domJo,
+      shipperConsignee: this.state.shipperConsignee,
+      associate: this.state.associate,
+      modeOfTransport: this.state.modeOfTransport,
+      commodity: this.state.commodity,
+      blAwb: this.state.blAwb,
+      origin: this.state.origin,
+      destination: this.state.destination,
+      etd: this.state.etd,
+      eta: this.state.eta,
+      status: this.state.status
     };
 
-    this.props.registerUser(newUser);
+    this.props.createDomesticLog(newUser);
 
-    console.log("Submit clicked");
+    console.log(typeof this.state.etd, this.state.etd);
+
+    console.log(this.state);
   }
 
   render() {
@@ -160,27 +169,28 @@ class DomesticLogCreate extends Component {
                       )}
                     </div>
                   </div>
-
-                  <div className="form-group">
-                    <label className="mb-1" htmlFor="associate">
-                      Associate
-                    </label>
-                    <input
-                      type="text"
-                      className={classnames("form-control form-control-lg", {
-                        "is-invalid": errors.associate
-                      })}
-                      placeholder="Associate"
-                      name="associate"
-                      value={this.state.associate}
-                      onChange={this.onChange}
-                    />
-                    {errors.associate && (
-                      <div className="invalid-feedback">{errors.associate}</div>
-                    )}
-                  </div>
-
                   <div className="row">
+                    <div className="form-group col-md-6">
+                      <label className="mb-1" htmlFor="associate">
+                        Associate
+                      </label>
+                      <input
+                        type="text"
+                        className={classnames("form-control form-control-lg", {
+                          "is-invalid": errors.associate
+                        })}
+                        placeholder="Associate"
+                        name="associate"
+                        value={this.state.associate}
+                        onChange={this.onChange}
+                      />
+                      {errors.associate && (
+                        <div className="invalid-feedback">
+                          {errors.associate}
+                        </div>
+                      )}
+                    </div>
+
                     <div className="form-group col-md-6">
                       <label className="mb-1" htmlFor="modeOfTransport">
                         Mode of Transport
@@ -201,6 +211,30 @@ class DomesticLogCreate extends Component {
                         </div>
                       )}
                     </div>
+                  </div>
+
+                  <div className="row">
+                    <div className="form-group col-md-6">
+                      <label className="mb-1" htmlFor="commodity">
+                        Commodity
+                      </label>
+                      <input
+                        type="text"
+                        className={classnames("form-control form-control-lg", {
+                          "is-invalid": errors.commodity
+                        })}
+                        placeholder="Mode of Transport"
+                        name="commodity"
+                        value={this.state.commodity}
+                        onChange={this.onChange}
+                      />
+                      {errors.commodity && (
+                        <div className="invalid-feedback">
+                          {errors.commodity}
+                        </div>
+                      )}
+                    </div>
+
                     <div className="form-group col-md-6">
                       <label className="mb-1" htmlFor="blAwb">
                         BL/AWB
@@ -313,11 +347,10 @@ class DomesticLogCreate extends Component {
                       value={this.state.status}
                       onChange={this.onChange}
                     >
-                      <option label=" " />
-                      <option value="waiting">Waiting</option>
-                      <option value="ongoing">Ongoing</option>
-                      <option value="complete">Complete</option>
-                      <option value="void">Void</option>
+                      <option value="Waiting">Waiting</option>
+                      <option value="Ongoing">Ongoing</option>
+                      <option value="Complete">Complete</option>
+                      <option value="Void">Void</option>
                     </select>
 
                     {errors.status && (
@@ -350,19 +383,24 @@ class DomesticLogCreate extends Component {
   }
 }
 
-DomesticLogCreate.propTypes = {};
+DomesticLogCreate.propTypes = {
+  createDomesticLog: PropTypes.func.isRequired,
+  getDomesticLogs: PropTypes.func.isRequired,
+  clearSuccess: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => ({
-  // errors: state.errors,
-  // register: state.register
+  errors: state.errors,
+  success: state.success
 });
 
 export default connect(
   mapStateToProps,
   {
-    // registerUser,
-    // getAllUsers,
-    // clearRegister,
-    // clearErrors
+    createDomesticLog,
+    getDomesticLogs,
+    clearSuccess,
+    clearErrors
   }
 )(withRouter(DomesticLogCreate));

@@ -1,16 +1,15 @@
-import {
-  GET_DOMESTIC_LOGS,
-  USER_LOGOUT
-} from "../actions/types";
+import { SUCCESS_CREATE, CLEAR_SUCCESS } from "../actions/types";
 
-const initialState = [];
+const initialState = {};
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case GET_DOMESTIC_LOGS:
+    case SUCCESS_CREATE:
       return action.payload;
-    case USER_LOGOUT:
+      
+    case CLEAR_SUCCESS:
       return initialState;
+
     default:
       return state;
   }

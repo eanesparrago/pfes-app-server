@@ -41,8 +41,8 @@ class DomesticLogs extends Component {
           <td>{log.blAwb}</td>
           <td>{log.origin}</td>
           <td>{log.destination}</td>
-          <td>{log.etd.substring(0, 10)}</td>
-          <td>{log.eta.substring(0, 10)}</td>
+          <td>{log.etd}</td>
+          <td>{log.eta}</td>
           <td>{log.status}</td>
         </tr>
       );

@@ -7,4 +7,5 @@ export const CLEAR_ERRORS = "CLEAR_ERRORS";
 export const CLEAR_USERS = "CLEAR_USERS";
 export const GET_DOMESTIC_LOGS = "GET_DOMESTIC_LOGS";
 export const USER_LOGOUT = "USER_LOGOUT";
-
+export const SUCCESS_CREATE = "SUCCESS_CREATE";
+export const CLEAR_SUCCESS = "CLEAR_SUCCESS";
