@@ -53,6 +53,9 @@ const DomesticLogSchema = new Schema({
       remarks: {
         type: String,
         default: "n/a"
+      },
+      dateFinished: {
+        type: String
       }
     },
     loading: {
@@ -64,6 +67,9 @@ const DomesticLogSchema = new Schema({
       remarks: {
         type: String,
         default: "n/a"
+      },
+      dateFinished: {
+        type: String
       }
     },
     unloading: {
@@ -75,6 +81,9 @@ const DomesticLogSchema = new Schema({
       remarks: {
         type: String,
         default: "n/a"
+      },
+      dateFinished: {
+        type: String
       }
     }
   },

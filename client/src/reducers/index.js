@@ -7,6 +7,7 @@ import registerReducer from "./registerReducer";
 import domesticReducer from "./domesticReducer";
 import successReducer from "./successReducer";
 import internationalReducer from "./internationalReducer";
+import logReducer from "./logReducer";
 
 export default combineReducers({
   auth: authReducer,
@@ -15,5 +16,6 @@ export default combineReducers({
   register: registerReducer,
   domesticLogs: domesticReducer,
   internationalLogs: internationalReducer,
-  success: successReducer
+  success: successReducer,
+  log: logReducer
 });

@@ -1,8 +1,8 @@
 .App {
-  /* min-height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-flow: column nowrap;
-  justify-content: space-between; */
+  justify-content: flex-start;
 }
 
 a {

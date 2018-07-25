@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import DomesticLogCreate from "./DomesticLogCreate";
 
-import { getDomesticLogs } from "../../actions/logsActions";
+import { getDomesticLogs, openLogView } from "../../actions/logsActions";
 
 import spinner from "../../img/spinner.gif";
 
@@ -32,7 +32,12 @@ class DomesticLogs extends Component {
 
     const tableBody = domesticLogs.map(log => {
       return (
-        <tr key={log._id}>
+        <tr
+          key={log._id}
+          data-toggle="modal"
+          data-target="#LogView"
+          onClick={() => this.props.openLogView(log)}
+        >
           <td>{log.domJo}</td>
           <td>{log.associate}</td>
           <td>{log.shipperConsignee}</td>
@@ -127,5 +132,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getDomesticLogs }
+  { getDomesticLogs, openLogView }
 )(DomesticLogs);

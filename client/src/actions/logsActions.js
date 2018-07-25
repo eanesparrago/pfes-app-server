@@ -1,6 +1,12 @@
 import axios from "axios";
 
-import { GET_DOMESTIC_LOGS, GET_INTERNATIONAL_LOGS, SUCCESS_CREATE, GET_ERRORS } from "./types";
+import {
+  GET_DOMESTIC_LOGS,
+  GET_INTERNATIONAL_LOGS,
+  SUCCESS_CREATE,
+  GET_ERRORS,
+  LOG_CLICKED
+} from "./types";
 
 // Get domestic logs
 export const getDomesticLogs = () => dispatch => {
@@ -56,4 +62,13 @@ export const createInternationalLog = logData => dispatch => {
         payload: err.response.data
       })
     );
+};
+
+// Open log view
+export const openLogView = log => dispatch => {
+  console.log(log);
+  dispatch({
+    type: LOG_CLICKED,
+    payload: log
+  });
 };

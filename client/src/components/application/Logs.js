@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 import DomesticLogs from "./DomesticLogs";
 import InternationalLogs from "./InternationalLogs";
+import LogView from "./LogView";
 
 class Logs extends Component {
   render() {
@@ -10,6 +11,7 @@ class Logs extends Component {
       <div className="mx-3 mt-2">
         <DomesticLogs />
         <InternationalLogs />
+        <LogView />
       </div>
     );
   }

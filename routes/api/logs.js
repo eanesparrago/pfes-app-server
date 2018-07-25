@@ -98,7 +98,7 @@ router.post(
     if (req.body.associate) newLog.associate = req.body.associate;
     if (req.body.modeOfTransport)
       newLog.modeOfTransport = req.body.modeOfTransport;
-    if (req.body.commodity) newLog.commodity = req.body.domJo;
+    if (req.body.commodity) newLog.commodity = req.body.commodity;
     if (req.body.blAwb) newLog.blAwb = req.body.blAwb;
     if (req.body.origin) newLog.origin = req.body.origin;
     if (req.body.destination) newLog.destination = req.body.destination;
@@ -166,7 +166,7 @@ router.post(
     if (req.body.associate) newLog.associate = req.body.associate;
     if (req.body.modeOfTransport)
       newLog.modeOfTransport = req.body.modeOfTransport;
-    if (req.body.commodity) newLog.commodity = req.body.domJo;
+    if (req.body.commodity) newLog.commodity = req.body.commodity;
     if (req.body.blAwb) newLog.blAwb = req.body.blAwb;
     if (req.body.origin) newLog.origin = req.body.origin;
     if (req.body.destination) newLog.destination = req.body.destination;

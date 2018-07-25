@@ -223,7 +223,7 @@ class DomesticLogCreate extends Component {
                         className={classnames("form-control form-control-lg", {
                           "is-invalid": errors.commodity
                         })}
-                        placeholder="Mode of Transport"
+                        placeholder="Commodity"
                         name="commodity"
                         value={this.state.commodity}
                         onChange={this.onChange}
