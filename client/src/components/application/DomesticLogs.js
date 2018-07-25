@@ -97,7 +97,7 @@ class DomesticLogs extends Component {
           </div>
         ) : (
           <div className="mt-3 table-responsive">
-            <table className="table">
+            <table className="table table-hover">
               <thead>
                 <tr>
                   <th scope="col">D-JO</th>

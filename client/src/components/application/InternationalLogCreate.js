@@ -4,13 +4,13 @@ import { withRouter } from "react-router-dom";
 
 import classnames from "classnames";
 import { connect } from "react-redux";
-import { createDomesticLog, getDomesticLogs } from "../../actions/logsActions";
+import { createInternationalLog, getInternationalLogs } from "../../actions/logsActions";
 import { clearErrors } from "../../actions/errorActions";
 import { clearSuccess } from "../../actions/successActions";
 
 import isEmpty from "../../validation/is-empty";
 
-class DomesticLogCreate extends Component {
+class InternationalLogCreate extends Component {
   constructor() {
     super();
     this.state = {
@@ -56,7 +56,7 @@ class DomesticLogCreate extends Component {
 
       // this.props.clearSuccess();
       this.props.clearErrors();
-      this.props.getDomesticLogs();
+      this.props.getInternationalLogs();
     }
     // }
   }
@@ -82,10 +82,7 @@ class DomesticLogCreate extends Component {
       status: this.state.status
     };
 
-    this.props.createDomesticLog(newUser);
-
-    console.log(typeof this.state.etd, this.state.etd);
-
+    this.props.createInternationalLog(newUser);
     console.log(this.state);
   }
 
@@ -98,13 +95,13 @@ class DomesticLogCreate extends Component {
           type="button"
           className="btn btn-primary mr-3"
           data-toggle="modal"
-          data-target="#domesticLogCreate"
+          data-target="#internationalLogCreate"
         >
           New Job Order
         </button>
         <div
           className="modal fade"
-          id="domesticLogCreate"
+          id="internationalLogCreate"
           tabIndex="-1"
           role="dialog"
           aria-labelledby="exampleModalLabel"
@@ -114,7 +111,7 @@ class DomesticLogCreate extends Component {
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title" id="exampleModalLabel">
-                  New Domestic Job Order
+                  New International Job Order
                 </h5>
                 <button
                   type="button"
@@ -383,9 +380,9 @@ class DomesticLogCreate extends Component {
   }
 }
 
-DomesticLogCreate.propTypes = {
-  createDomesticLog: PropTypes.func.isRequired,
-  getDomesticLogs: PropTypes.func.isRequired,
+InternationalLogCreate.propTypes = {
+  createInternationalLog: PropTypes.func.isRequired,
+  getInternationalLogs: PropTypes.func.isRequired,
   clearSuccess: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired
 };
@@ -398,9 +395,9 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   {
-    createDomesticLog,
-    getDomesticLogs,
+    createInternationalLog,
+    getInternationalLogs,
     clearSuccess,
     clearErrors
   }
-)(withRouter(DomesticLogCreate));
+)(withRouter(InternationalLogCreate));

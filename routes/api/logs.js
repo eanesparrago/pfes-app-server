@@ -45,6 +45,30 @@ router.get(
 );
 
 // ////////////////////////////////////
+// @route   GET api/logs/international
+// @desc    Get international logs
+// @access  Private
+router.get(
+  "/international",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const errors = {};
+
+    InternationalLog.find()
+      .then(logs => {
+        if (!logs) {
+          errors.noLogs = "There are no job orders";
+          return res.status(404).json(errors);
+        }
+        res.json(logs);
+      })
+      .catch(err =>
+        res.status(404).json({ profile: "There are no job orders" })
+      );
+  }
+);
+
+// ////////////////////////////////////
 // @route   POST api/logs/domestic
 // @desc    Create domestic log
 // @access  Private
@@ -55,7 +79,7 @@ router.post(
     console.log(req.user);
     // Only admin and sales can create logs
     if (req.user.userType !== "admin" && req.user.userType !== "sales") {
-      return res.json({ unauthorized: "Unauthorized" });
+      return res.status(400).json({ unauthorized: "Unauthorized" });
     }
 
     const { errors, isValid } = validateLogInput(req.body);
@@ -132,22 +156,43 @@ router.post(
       return res.status(400).json(errors);
     }
 
-    const newInternationalLog = new InternationalLog({
-      domJo: req.body.domJo,
-      shipperConsignee: req.body.shipperConsignee,
-      associate: req.body.associate,
-      modeOfTransport: req.body.modeOfTransport,
-      commodity: req.body.commodity,
-      blAwb: req.body.associate,
-      origin: req.body.origin,
-      destination: req.body.destination,
-      etd: new Date(Date.now()).toISOString(),
-      eta: new Date(Date.now()).toISOString(),
-      status: req.body.status,
-      operations: {},
-      rating: req.body.rating,
-      user: req.user.id
-    });
+    // If the field was empty it will check so that it will default to n/a instead of an empty object
+    const newLog = {};
+
+    newLog.domJo = req.body.domJo;
+    newLog.user = req.body.user;
+    if (req.body.shipperConsignee)
+      newLog.shipperConsignee = req.body.shipperConsignee;
+    if (req.body.associate) newLog.associate = req.body.associate;
+    if (req.body.modeOfTransport)
+      newLog.modeOfTransport = req.body.modeOfTransport;
+    if (req.body.commodity) newLog.commodity = req.body.domJo;
+    if (req.body.blAwb) newLog.blAwb = req.body.blAwb;
+    if (req.body.origin) newLog.origin = req.body.origin;
+    if (req.body.destination) newLog.destination = req.body.destination;
+    if (req.body.etd) newLog.etd = req.body.etd;
+    if (req.body.eta) newLog.eta = req.body.eta;
+    // if (req.body.status) newLog.status = req.body.status;
+    newLog.status = req.body.status;
+
+    const newInternationalLog = new InternationalLog(
+      newLog
+      // domJo: req.body.domJo,
+      // status: req.body.status,
+      // user: req.user.id,
+      // shipperConsignee: req.body.shipperConsignee,
+      // associate: req.body.associate,
+      // modeOfTransport: req.body.modeOfTransport,
+      // commodity: req.body.commodity,
+      // blAwb: req.body.associate,
+      // origin: req.body.origin,
+      // destination: req.body.destination,
+      // etd: req.body.etd,
+      // eta: req.body.eta,
+      // status: req.body.status,
+      // operations: {},
+      // rating: req.body.rating,
+    );
 
     InternationalLog.findOne({ domJo: req.body.domJo }).then(log => {
       if (log) {

@@ -36,10 +36,12 @@ const InternationalLogSchema = new Schema({
     default: "n/a"
   },
   etd: {
-    type: Date
+    type: String,
+    default: "n/a"
   },
   eta: {
-    type: Date
+    type: String,
+    default: "n/a"
   },
   operations: {
     preloading: {
@@ -80,9 +82,18 @@ const InternationalLogSchema = new Schema({
     type: String,
     defaut: "n/a"
   },
+  status: {
+    type: String,
+    defaut: "Waiting",
+    required: true
+  },
   user: {
     type: Schema.Types.ObjectId,
     ref: "users"
+  },
+  date: {
+    type: Date,
+    default: Date.now
   }
 });
 module.exports = InternationalLog = mongoose.model(
