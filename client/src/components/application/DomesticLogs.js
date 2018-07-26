@@ -17,7 +17,7 @@ class DomesticLogs extends Component {
       loading: true
     };
   }
-  
+
   componentDidMount() {
     this.props.getDomesticLogs();
   }
@@ -30,6 +30,7 @@ class DomesticLogs extends Component {
 
   render() {
     const { domesticLogs, loading } = this.state;
+    const { auth } = this.props;
 
     const tableBody = domesticLogs.map(log => {
       return (
@@ -56,7 +57,6 @@ class DomesticLogs extends Component {
       );
     });
 
-    console.log(this.state);
     return (
       <div className="">
         {/* //////////////////////// NAVBAR //////////////////////// */}
@@ -80,7 +80,10 @@ class DomesticLogs extends Component {
               New Job Order
             </button> */}
 
-            <DomesticLogCreate />
+            {auth.user.userType === "admin" ||
+            auth.user.userType === "sales" ? (
+              <DomesticLogCreate />
+            ) : null}
 
             <form className="form-inline my-2 my-lg-0">
               <input
@@ -131,7 +134,8 @@ class DomesticLogs extends Component {
   }
 }
 const mapStateToProps = state => ({
-  domesticLogs: state.domesticLogs
+  domesticLogs: state.domesticLogs,
+  auth: state.auth
 });
 
 export default connect(

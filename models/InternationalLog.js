@@ -53,6 +53,10 @@ const InternationalLogSchema = new Schema({
       remarks: {
         type: String,
         default: "n/a"
+      },
+      dateFinished: {
+        type: String,
+        default: "n/a"
       }
     },
     loading: {
@@ -64,6 +68,10 @@ const InternationalLogSchema = new Schema({
       remarks: {
         type: String,
         default: "n/a"
+      },
+      dateFinished: {
+        type: String,
+        default: "n/a"
       }
     },
     unloading: {
@@ -73,6 +81,10 @@ const InternationalLogSchema = new Schema({
         required: true
       },
       remarks: {
+        type: String,
+        default: "n/a"
+      },
+      dateFinished: {
         type: String,
         default: "n/a"
       }
@@ -94,6 +106,9 @@ const InternationalLogSchema = new Schema({
   date: {
     type: Date,
     default: Date.now
+  },
+  dateModified: {
+    type: Date
   },
   type: {
     type: String,

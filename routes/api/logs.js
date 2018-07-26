@@ -209,24 +209,9 @@ router.post(
     if (req.body.eta) newLog.eta = req.body.eta;
     newLog.status = req.body.status;
 
-    const newDomesticLog = newLog;
+    newLog.dateModified = Date.now();
 
-    // const newDomesticLog = {
-    //   domJo: req.body.domJo,
-    //   shipperConsignee: req.body.shipperConsignee,
-    //   associate: req.body.associate,
-    //   modeOfTransport: req.body.modeOfTransport,
-    //   commodity: req.body.commodity,
-    //   blAwb: req.body.associate,
-    //   origin: req.body.origin,
-    //   destination: req.body.destination,
-    //   etd: new Date(Date.now()).toISOString(),
-    //   eta: new Date(Date.now()).toISOString(),
-    //   status: req.body.status,
-    //   operations: {},
-    //   rating: req.body.rating,
-    //   user: req.user.id
-    // };
+    const newDomesticLog = newLog;
 
     DomesticLog.findOne({ domJo: req.body.domJo }).then(log => {
       if (log) {
@@ -278,6 +263,8 @@ router.post(
     if (req.body.etd) newLog.etd = req.body.etd;
     if (req.body.eta) newLog.eta = req.body.eta;
     newLog.status = req.body.status;
+
+    newLog.dateModified = Date.now();
 
     const newInternationalLog = newLog;
 

@@ -55,7 +55,6 @@ class InternationalLogCreate extends Component {
         status: "Waiting",
         errors: {}
       });
-      console.log("Success");
 
       // this.props.clearSuccess();
       this.props.clearErrors();
@@ -86,7 +85,6 @@ class InternationalLogCreate extends Component {
     };
 
     this.props.createInternationalLog(newUser);
-    console.log(this.state);
   }
 
   render() {
@@ -314,6 +312,7 @@ class InternationalLogCreate extends Component {
                         <div className="invalid-feedback">{errors.etd}</div>
                       )}
                     </div>
+                    
                     <div className="form-group col-md-6">
                       <label className="mb-1" htmlFor="eta">
                         ETA

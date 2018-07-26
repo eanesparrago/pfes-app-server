@@ -74,7 +74,7 @@ export const openLogView = log => dispatch => {
 
 // Edit log
 export const editLog = log => dispatch => {
-  console.log("editLog", log);
+  // console.log("editLog", log);
 
   if (log.type === "Domestic") {
     axios

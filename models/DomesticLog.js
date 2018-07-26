@@ -55,7 +55,8 @@ const DomesticLogSchema = new Schema({
         default: "n/a"
       },
       dateFinished: {
-        type: String
+        type: String,
+        default: "n/a"
       }
     },
     loading: {
@@ -69,7 +70,8 @@ const DomesticLogSchema = new Schema({
         default: "n/a"
       },
       dateFinished: {
-        type: String
+        type: String,
+        default: "n/a"
       }
     },
     unloading: {
@@ -83,7 +85,8 @@ const DomesticLogSchema = new Schema({
         default: "n/a"
       },
       dateFinished: {
-        type: String
+        type: String,
+        default: "n/a"
       }
     }
   },
@@ -103,6 +106,9 @@ const DomesticLogSchema = new Schema({
   date: {
     type: Date,
     default: Date.now
+  },
+  dateModified: {
+    type: Date
   },
   type: {
     type: String,

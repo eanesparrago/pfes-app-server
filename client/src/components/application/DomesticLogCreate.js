@@ -83,10 +83,6 @@ class DomesticLogCreate extends Component {
     };
 
     this.props.createDomesticLog(newUser);
-
-    console.log(typeof this.state.etd, this.state.etd);
-
-    console.log(this.state);
   }
 
   render() {

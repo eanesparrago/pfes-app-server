@@ -32,6 +32,7 @@ class InternationalLogs extends Component {
 
   render() {
     const { internationalLogs, loading } = this.state;
+    const { auth } = this.props;
 
     const tableBody = internationalLogs.map(log => {
       return (
@@ -41,7 +42,9 @@ class InternationalLogs extends Component {
           data-target="#LogView"
           onClick={() => this.props.openLogView(log)}
         >
-          <td>{log.type.slice(0, 1)}-{log.domJo}</td>
+          <td>
+            {log.type.slice(0, 1)}-{log.domJo}
+          </td>
           <td>{log.associate}</td>
           <td>{log.shipperConsignee}</td>
           <td>{log.modeOfTransport}</td>
@@ -56,7 +59,6 @@ class InternationalLogs extends Component {
       );
     });
 
-    console.log(this.state);
     return (
       <div className="">
         {/* //////////////////////// NAVBAR //////////////////////// */}
@@ -80,7 +82,10 @@ class InternationalLogs extends Component {
               New Job Order
             </button> */}
 
-            <InternationalLogCreate />
+            {auth.user.userType === "admin" ||
+            auth.user.userType === "sales" ? (
+              <InternationalLogCreate />
+            ) : null}
 
             <form className="form-inline my-2 my-lg-0">
               <input
@@ -131,7 +136,8 @@ class InternationalLogs extends Component {
   }
 }
 const mapStateToProps = state => ({
-  internationalLogs: state.internationalLogs
+  internationalLogs: state.internationalLogs,
+  auth: state.auth
 });
 
 export default connect(
