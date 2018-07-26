@@ -17,7 +17,7 @@ class ApplicationNav extends Component {
     if (!this.props.auth.isAuthenticated) {
       this.props.history.push("/");
     } else {
-      if (this.props.location.pathname === "/app") {
+      if (this.props.location.pathname === "/app" || this.props.location.pathname === "/app/") {
         this.setState({ active: "/app/logs" });
       } else {
         this.setState({ active: this.props.location.pathname });
