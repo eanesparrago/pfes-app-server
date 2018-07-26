@@ -94,6 +94,11 @@ const InternationalLogSchema = new Schema({
   date: {
     type: Date,
     default: Date.now
+  },
+  type: {
+    type: String,
+    default: "International",
+    required: true
   }
 });
 module.exports = InternationalLog = mongoose.model(

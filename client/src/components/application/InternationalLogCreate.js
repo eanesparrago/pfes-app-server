@@ -4,7 +4,10 @@ import { withRouter } from "react-router-dom";
 
 import classnames from "classnames";
 import { connect } from "react-redux";
-import { createInternationalLog, getInternationalLogs } from "../../actions/logsActions";
+import {
+  createInternationalLog,
+  getInternationalLogs
+} from "../../actions/logsActions";
 import { clearErrors } from "../../actions/errorActions";
 import { clearSuccess } from "../../actions/successActions";
 
@@ -146,28 +149,6 @@ class InternationalLogCreate extends Component {
                     </div>
 
                     <div className="form-group col-md-6">
-                      <label className="mb-1" htmlFor="shipperConsignee">
-                        Shipper/Consignee
-                      </label>
-                      <input
-                        type="text"
-                        className={classnames("form-control form-control-lg", {
-                          "is-invalid": errors.shipperConsignee
-                        })}
-                        placeholder="Shipper/Consignee"
-                        name="shipperConsignee"
-                        value={this.state.shipperConsignee}
-                        onChange={this.onChange}
-                      />
-                      {errors.shipperConsignee && (
-                        <div className="invalid-feedback">
-                          {errors.shipperConsignee}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="form-group col-md-6">
                       <label className="mb-1" htmlFor="associate">
                         Associate
                       </label>
@@ -184,6 +165,28 @@ class InternationalLogCreate extends Component {
                       {errors.associate && (
                         <div className="invalid-feedback">
                           {errors.associate}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="form-group col-md-6">
+                      <label className="mb-1" htmlFor="shipperConsignee">
+                        Shipper/Consignee
+                      </label>
+                      <input
+                        type="text"
+                        className={classnames("form-control form-control-lg", {
+                          "is-invalid": errors.shipperConsignee
+                        })}
+                        placeholder="Shipper/Consignee"
+                        name="shipperConsignee"
+                        value={this.state.shipperConsignee}
+                        onChange={this.onChange}
+                      />
+                      {errors.shipperConsignee && (
+                        <div className="invalid-feedback">
+                          {errors.shipperConsignee}
                         </div>
                       )}
                     </div>

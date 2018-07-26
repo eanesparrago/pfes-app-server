@@ -66,9 +66,47 @@ export const createInternationalLog = logData => dispatch => {
 
 // Open log view
 export const openLogView = log => dispatch => {
-  console.log(log);
   dispatch({
     type: LOG_CLICKED,
     payload: log
   });
+};
+
+// Edit log
+export const editLog = log => dispatch => {
+  console.log("editLog", log);
+
+  if (log.type === "Domestic") {
+    axios
+      .post("/api/logs/domestic/edit", log)
+      .then(res => {
+        dispatch({
+          type: LOG_CLICKED,
+          payload: res.data
+        });
+      })
+      .catch(err =>
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+      );
+  }
+
+  if (log.type === "International") {
+    axios
+      .post("/api/logs/international/edit", log)
+      .then(res => {
+        dispatch({
+          type: LOG_CLICKED,
+          payload: res.data
+        });
+      })
+      .catch(err =>
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+      );
+  }
 };

@@ -106,24 +106,7 @@ router.post(
     if (req.body.eta) newLog.eta = req.body.eta;
     if (req.body.status) newLog.status = req.body.status;
 
-    const newDomesticLog = new DomesticLog(
-      newLog
-      // domJo: req.body.domJo,
-      // status: req.body.status,
-      // user: req.user.id,
-      // shipperConsignee: req.body.shipperConsignee,
-      // associate: req.body.associate,
-      // modeOfTransport: req.body.modeOfTransport,
-      // commodity: req.body.commodity,
-      // blAwb: req.body.associate,
-      // origin: req.body.origin,
-      // destination: req.body.destination,
-      // etd: req.body.etd,
-      // eta: req.body.eta,
-      // status: req.body.status,
-      // operations: {},
-      // rating: req.body.rating,
-    );
+    const newDomesticLog = new DomesticLog(newLog);
 
     DomesticLog.findOne({ domJo: req.body.domJo }).then(log => {
       if (log) {
@@ -175,24 +158,7 @@ router.post(
     // if (req.body.status) newLog.status = req.body.status;
     newLog.status = req.body.status;
 
-    const newInternationalLog = new InternationalLog(
-      newLog
-      // domJo: req.body.domJo,
-      // status: req.body.status,
-      // user: req.user.id,
-      // shipperConsignee: req.body.shipperConsignee,
-      // associate: req.body.associate,
-      // modeOfTransport: req.body.modeOfTransport,
-      // commodity: req.body.commodity,
-      // blAwb: req.body.associate,
-      // origin: req.body.origin,
-      // destination: req.body.destination,
-      // etd: req.body.etd,
-      // eta: req.body.eta,
-      // status: req.body.status,
-      // operations: {},
-      // rating: req.body.rating,
-    );
+    const newInternationalLog = new InternationalLog(newLog);
 
     InternationalLog.findOne({ domJo: req.body.domJo }).then(log => {
       if (log) {
@@ -225,22 +191,42 @@ router.post(
       return res.status(400).json(errors);
     }
 
-    const newDomesticLog = {
-      domJo: req.body.domJo,
-      shipperConsignee: req.body.shipperConsignee,
-      associate: req.body.associate,
-      modeOfTransport: req.body.modeOfTransport,
-      commodity: req.body.commodity,
-      blAwb: req.body.associate,
-      origin: req.body.origin,
-      destination: req.body.destination,
-      etd: new Date(Date.now()).toISOString(),
-      eta: new Date(Date.now()).toISOString(),
-      status: req.body.status,
-      operations: {},
-      rating: req.body.rating,
-      user: req.user.id
-    };
+    // If the field was empty it will check so that it will default to n/a instead of an empty object
+    const newLog = {};
+
+    newLog.domJo = req.body.domJo;
+    newLog.user = req.body.user;
+    if (req.body.shipperConsignee)
+      newLog.shipperConsignee = req.body.shipperConsignee;
+    if (req.body.associate) newLog.associate = req.body.associate;
+    if (req.body.modeOfTransport)
+      newLog.modeOfTransport = req.body.modeOfTransport;
+    if (req.body.commodity) newLog.commodity = req.body.commodity;
+    if (req.body.blAwb) newLog.blAwb = req.body.blAwb;
+    if (req.body.origin) newLog.origin = req.body.origin;
+    if (req.body.destination) newLog.destination = req.body.destination;
+    if (req.body.etd) newLog.etd = req.body.etd;
+    if (req.body.eta) newLog.eta = req.body.eta;
+    newLog.status = req.body.status;
+
+    const newDomesticLog = newLog;
+
+    // const newDomesticLog = {
+    //   domJo: req.body.domJo,
+    //   shipperConsignee: req.body.shipperConsignee,
+    //   associate: req.body.associate,
+    //   modeOfTransport: req.body.modeOfTransport,
+    //   commodity: req.body.commodity,
+    //   blAwb: req.body.associate,
+    //   origin: req.body.origin,
+    //   destination: req.body.destination,
+    //   etd: new Date(Date.now()).toISOString(),
+    //   eta: new Date(Date.now()).toISOString(),
+    //   status: req.body.status,
+    //   operations: {},
+    //   rating: req.body.rating,
+    //   user: req.user.id
+    // };
 
     DomesticLog.findOne({ domJo: req.body.domJo }).then(log => {
       if (log) {
@@ -275,22 +261,25 @@ router.post(
       return res.status(400).json(errors);
     }
 
-    const newInternationalLog = {
-      domJo: req.body.domJo,
-      shipperConsignee: req.body.shipperConsignee,
-      associate: req.body.associate,
-      modeOfTransport: req.body.modeOfTransport,
-      commodity: req.body.commodity,
-      blAwb: req.body.associate,
-      origin: req.body.origin,
-      destination: req.body.destination,
-      etd: new Date(Date.now()).toISOString(),
-      eta: new Date(Date.now()).toISOString(),
-      status: req.body.status,
-      operations: {},
-      rating: req.body.rating,
-      user: req.user.id
-    };
+    // If the field was empty it will check so that it will default to n/a instead of an empty object
+    const newLog = {};
+
+    newLog.domJo = req.body.domJo;
+    newLog.user = req.body.user;
+    if (req.body.shipperConsignee)
+      newLog.shipperConsignee = req.body.shipperConsignee;
+    if (req.body.associate) newLog.associate = req.body.associate;
+    if (req.body.modeOfTransport)
+      newLog.modeOfTransport = req.body.modeOfTransport;
+    if (req.body.commodity) newLog.commodity = req.body.commodity;
+    if (req.body.blAwb) newLog.blAwb = req.body.blAwb;
+    if (req.body.origin) newLog.origin = req.body.origin;
+    if (req.body.destination) newLog.destination = req.body.destination;
+    if (req.body.etd) newLog.etd = req.body.etd;
+    if (req.body.eta) newLog.eta = req.body.eta;
+    newLog.status = req.body.status;
+
+    const newInternationalLog = newLog;
 
     InternationalLog.findOne({ domJo: req.body.domJo }).then(log => {
       if (log) {
@@ -313,11 +302,11 @@ router.post(
   "/domestic/operations/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    // console.log(req.user);
+    console.log(req.user);
     // Only admin and operations can edit operations status
-    // if (req.user.userType !== "admin" && req.user.userType !== "operations") {
-    //   return res.json({ unauthorized: "Unauthorized" });
-    // }
+    if (req.user.userType !== "admin" && req.user.userType !== "operations") {
+      return res.json({ unauthorized: "Unauthorized" });
+    }
 
     const update = {};
 

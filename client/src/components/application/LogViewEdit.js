@@ -1,0 +1,400 @@
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import classnames from "classnames";
+import { connect } from "react-redux";
+
+import {
+  editLog,
+  getDomesticLogs,
+  getInternationalLogs
+} from "../../actions/logsActions";
+
+export class LogViewEdit extends Component {
+  constructor() {
+    super();
+    this.state = {
+      domJo: "",
+      shipperConsignee: "",
+      associate: "",
+      modeOfTransport: "",
+      commodity: "",
+      blAwb: "",
+      origin: "",
+      destination: "",
+      etd: "",
+      eta: "",
+      status: "Waiting",
+      type: "",
+
+      errors: {},
+      isEditable: false
+    };
+
+    this.onChange = this.onChange.bind(this);
+    this.toggleEdit = this.toggleEdit.bind(this);
+    this.submitEdit = this.submitEdit.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+
+    if (nextProps.log) {
+      this.setState({
+        domJo: nextProps.log.domJo,
+        shipperConsignee: nextProps.log.shipperConsignee,
+        associate: nextProps.log.associate,
+        modeOfTransport: nextProps.log.modeOfTransport,
+        commodity: nextProps.log.commodity,
+        blAwb: nextProps.log.blAwb,
+        origin: nextProps.log.origin,
+        destination: nextProps.log.destination,
+        etd: nextProps.log.etd,
+        eta: nextProps.log.eta,
+        status: nextProps.log.status,
+        type: nextProps.log.type,
+
+        isEditable: false
+      });
+
+      this.props.getDomesticLogs();
+      this.props.getInternationalLogs();
+    }
+  }
+
+  onChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
+  toggleEdit() {
+    this.setState({
+      domJo: this.props.log.domJo,
+      shipperConsignee: this.props.log.shipperConsignee,
+      associate: this.props.log.associate,
+      modeOfTransport: this.props.log.modeOfTransport,
+      commodity: this.props.log.commodity,
+      blAwb: this.props.log.blAwb,
+      origin: this.props.log.origin,
+      destination: this.props.log.destination,
+      etd: this.props.log.etd,
+      eta: this.props.log.eta,
+      status: this.props.log.status,
+
+      isEditable: !this.state.isEditable
+    });
+    console.log(this.state);
+  }
+
+  submitEdit() {
+    // console.log("STATE", this.state);
+
+    const log = {
+      domJo: this.state.domJo,
+      shipperConsignee: this.state.shipperConsignee,
+      associate: this.state.associate,
+      modeOfTransport: this.state.modeOfTransport,
+      commodity: this.state.commodity,
+      blAwb: this.state.blAwb,
+      origin: this.state.origin,
+      destination: this.state.destination,
+      etd: this.state.etd,
+      eta: this.state.eta,
+      status: this.state.status,
+      type: this.state.type
+    };
+
+    this.props.editLog(log);
+  }
+
+  render() {
+    const { errors, isEditable } = this.state;
+    const { log, auth } = this.props;
+
+    return (
+      <div>
+        {/* Only admin or sales usertype may see these options */}
+        {auth.user.userType === "admin" || auth.user.userType === "sales" ? (
+          isEditable ? (
+            <button
+              type="button"
+              className="btn btn-primary mr-2 mb-3"
+              onClick={this.submitEdit}
+            >
+              Confirm
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="btn btn-outline-primary mr-2 mb-3"
+              onClick={this.toggleEdit}
+            >
+              Edit Job Order
+            </button>
+          )
+        ) : null}
+
+        {auth.user.userType === "admin" || auth.user.userType === "sales" ? (
+          isEditable ? (
+            <button
+              type="button"
+              className="btn btn-outline-secondary mb-3"
+              onClick={this.toggleEdit}
+            >
+              Cancel
+            </button>
+          ) : null
+        ) : null}
+
+        <form noValidate>
+          <div className="row">
+            {/* <div className="form-group col-md-6">
+              <label className="mb-1" htmlFor="domJo">
+                Job order number
+              </label>
+              <input
+                readOnly
+                type="text"
+                className={classnames("form-control-plaintext", {
+                  "is-invalid": errors.domJo
+                })}
+                placeholder="Job order number"
+                name="domJo"
+                value={this.state.domJo}
+                // onChange={this.onChange}
+              />
+              {errors.domJo && (
+                <div className="invalid-feedback">{errors.domJo}</div>
+              )}
+            </div> */}
+
+            <div className="form-group col-md-6">
+              <label className="mb-1" htmlFor="associate">
+                Associate
+              </label>
+              <input
+                readOnly={!isEditable}
+                type="text"
+                className={classnames("form-control", {
+                  "is-invalid": errors.associate
+                })}
+                placeholder="Associate"
+                name="associate"
+                value={this.state.associate}
+                onChange={this.onChange}
+              />
+              {errors.associate && (
+                <div className="invalid-feedback">{errors.associate}</div>
+              )}
+            </div>
+
+            <div className="form-group col-md-6">
+              <label className="mb-1" htmlFor="shipperConsignee">
+                Shipper/Consignee
+              </label>
+              <input
+                readOnly={!isEditable}
+                type="text"
+                className={classnames("form-control", {
+                  "is-invalid": errors.shipperConsignee
+                })}
+                placeholder="Shipper/Consignee"
+                name="shipperConsignee"
+                value={this.state.shipperConsignee}
+                onChange={this.onChange}
+              />
+              {errors.shipperConsignee && (
+                <div className="invalid-feedback">
+                  {errors.shipperConsignee}
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="form-group col-md-6">
+              <label className="mb-1" htmlFor="modeOfTransport">
+                Mode of Transport
+              </label>
+              <input
+                readOnly={!isEditable}
+                type="text"
+                className={classnames("form-control", {
+                  "is-invalid": errors.modeOfTransport
+                })}
+                placeholder="Mode of Transport"
+                name="modeOfTransport"
+                value={this.state.modeOfTransport}
+                onChange={this.onChange}
+              />
+              {errors.modeOfTransport && (
+                <div className="invalid-feedback">{errors.modeOfTransport}</div>
+              )}
+            </div>
+
+            <div className="form-group col-md-6">
+              <label className="mb-1" htmlFor="commodity">
+                Commodity
+              </label>
+              <input
+                readOnly={!isEditable}
+                type="text"
+                className={classnames("form-control", {
+                  "is-invalid": errors.commodity
+                })}
+                placeholder="Commodity"
+                name="commodity"
+                value={this.state.commodity}
+                onChange={this.onChange}
+              />
+              {errors.commodity && (
+                <div className="invalid-feedback">{errors.commodity}</div>
+              )}
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="form-group col-md-6">
+              <label className="mb-1" htmlFor="blAwb">
+                BL/AWB
+              </label>
+              <input
+                readOnly={!isEditable}
+                type="text"
+                className={classnames("form-control", {
+                  "is-invalid": errors.blAwb
+                })}
+                placeholder="BL/AWB"
+                name="blAwb"
+                value={this.state.blAwb}
+                onChange={this.onChange}
+              />
+              {errors.blAwb && (
+                <div className="invalid-feedback">{errors.blAwb}</div>
+              )}
+            </div>
+
+            <div className="form-group col-md-6">
+              <label className="mb-1" htmlFor="origin">
+                Origin
+              </label>
+              <input
+                readOnly={!isEditable}
+                type="text"
+                className={classnames("form-control", {
+                  "is-invalid": errors.origin
+                })}
+                placeholder="Origin"
+                name="origin"
+                value={this.state.origin}
+                onChange={this.onChange}
+              />
+              {errors.origin && (
+                <div className="invalid-feedback">{errors.origin}</div>
+              )}
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="form-group col-md-6">
+              <label className="mb-1" htmlFor="destination">
+                Destination
+              </label>
+              <input
+                readOnly={!isEditable}
+                type="text"
+                className={classnames("form-control", {
+                  "is-invalid": errors.destination
+                })}
+                placeholder="Destination"
+                name="destination"
+                value={this.state.destination}
+                onChange={this.onChange}
+              />
+              {errors.destination && (
+                <div className="invalid-feedback">{errors.destination}</div>
+              )}
+            </div>
+
+            <div className="form-group col-md-6">
+              <label className="mb-1" htmlFor="etd">
+                ETD
+              </label>
+              <input
+                readOnly={!isEditable}
+                type="date"
+                className={classnames("form-control", {
+                  "is-invalid": errors.etd
+                })}
+                name="etd"
+                value={this.state.etd}
+                onChange={this.onChange}
+              />
+              {errors.etd && (
+                <div className="invalid-feedback">{errors.etd}</div>
+              )}
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="form-group col-md-6">
+              <label className="mb-1" htmlFor="eta">
+                ETA
+              </label>
+              <input
+                readOnly={!isEditable}
+                type="date"
+                className={classnames("form-control", {
+                  "is-invalid": errors.eta
+                })}
+                name="eta"
+                value={this.state.eta}
+                onChange={this.onChange}
+              />
+              {errors.eta && (
+                <div className="invalid-feedback">{errors.eta}</div>
+              )}
+            </div>
+
+            <div className="form-group col-md-6">
+              <label className="mb-1" htmlFor="status">
+                Status
+              </label>
+
+              <select
+                className={classnames("form-control", {
+                  "is-invalid": errors.status
+                })}
+                disabled={!isEditable}
+                readOnly={!isEditable}
+                id="status"
+                name="status"
+                value={this.state.status}
+                onChange={this.onChange}
+              >
+                <option value="Waiting">Waiting</option>
+                <option value="Ongoing">Ongoing</option>
+                <option value="Complete">Complete</option>
+                <option value="Void">Void</option>
+              </select>
+              {errors.status && (
+                <div className="invalid-feedback">{errors.status}</div>
+              )}
+            </div>
+          </div>
+        </form>
+      </div>
+    );
+  }
+}
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  log: state.log,
+  errors: state.errors
+});
+
+export default connect(
+  mapStateToProps,
+  { editLog, getDomesticLogs, getInternationalLogs }
+)(LogViewEdit);

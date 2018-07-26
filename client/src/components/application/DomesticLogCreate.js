@@ -149,28 +149,6 @@ class DomesticLogCreate extends Component {
                     </div>
 
                     <div className="form-group col-md-6">
-                      <label className="mb-1" htmlFor="shipperConsignee">
-                        Shipper/Consignee
-                      </label>
-                      <input
-                        type="text"
-                        className={classnames("form-control form-control-lg", {
-                          "is-invalid": errors.shipperConsignee
-                        })}
-                        placeholder="Shipper/Consignee"
-                        name="shipperConsignee"
-                        value={this.state.shipperConsignee}
-                        onChange={this.onChange}
-                      />
-                      {errors.shipperConsignee && (
-                        <div className="invalid-feedback">
-                          {errors.shipperConsignee}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="form-group col-md-6">
                       <label className="mb-1" htmlFor="associate">
                         Associate
                       </label>
@@ -187,6 +165,29 @@ class DomesticLogCreate extends Component {
                       {errors.associate && (
                         <div className="invalid-feedback">
                           {errors.associate}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="row">
+                    <div className="form-group col-md-6">
+                      <label className="mb-1" htmlFor="shipperConsignee">
+                        Shipper/Consignee
+                      </label>
+                      <input
+                        type="text"
+                        className={classnames("form-control form-control-lg", {
+                          "is-invalid": errors.shipperConsignee
+                        })}
+                        placeholder="Shipper/Consignee"
+                        name="shipperConsignee"
+                        value={this.state.shipperConsignee}
+                        onChange={this.onChange}
+                      />
+                      {errors.shipperConsignee && (
+                        <div className="invalid-feedback">
+                          {errors.shipperConsignee}
                         </div>
                       )}
                     </div>

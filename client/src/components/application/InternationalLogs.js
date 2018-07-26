@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import InternationalLogCreate from "./InternationalLogCreate";
 
-import { getInternationalLogs } from "../../actions/logsActions";
+import { getInternationalLogs, openLogView } from "../../actions/logsActions";
 
 import spinner from "../../img/spinner.gif";
 
@@ -35,8 +35,13 @@ class InternationalLogs extends Component {
 
     const tableBody = internationalLogs.map(log => {
       return (
-        <tr key={log._id}>
-          <td>{log.domJo}</td>
+        <tr
+          key={log._id}
+          data-toggle="modal"
+          data-target="#LogView"
+          onClick={() => this.props.openLogView(log)}
+        >
+          <td>{log.type.slice(0, 1)}-{log.domJo}</td>
           <td>{log.associate}</td>
           <td>{log.shipperConsignee}</td>
           <td>{log.modeOfTransport}</td>
@@ -76,7 +81,7 @@ class InternationalLogs extends Component {
             </button> */}
 
             <InternationalLogCreate />
-            
+
             <form className="form-inline my-2 my-lg-0">
               <input
                 className="form-control mr-sm-2"
@@ -131,5 +136,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getInternationalLogs }
+  { getInternationalLogs, openLogView }
 )(InternationalLogs);

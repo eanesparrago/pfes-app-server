@@ -103,6 +103,11 @@ const DomesticLogSchema = new Schema({
   date: {
     type: Date,
     default: Date.now
+  },
+  type: {
+    type: String,
+    default: "Domestic",
+    required: true
   }
 });
 module.exports = DomesticLog = mongoose.model(

@@ -17,6 +17,7 @@ class DomesticLogs extends Component {
       loading: true
     };
   }
+  
   componentDidMount() {
     this.props.getDomesticLogs();
   }
@@ -38,7 +39,9 @@ class DomesticLogs extends Component {
           data-target="#LogView"
           onClick={() => this.props.openLogView(log)}
         >
-          <td>{log.domJo}</td>
+          <td>
+            {log.type.slice(0, 1)}-{log.domJo}
+          </td>
           <td>{log.associate}</td>
           <td>{log.shipperConsignee}</td>
           <td>{log.modeOfTransport}</td>
@@ -78,6 +81,7 @@ class DomesticLogs extends Component {
             </button> */}
 
             <DomesticLogCreate />
+
             <form className="form-inline my-2 my-lg-0">
               <input
                 className="form-control mr-sm-2"

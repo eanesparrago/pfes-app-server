@@ -3,10 +3,20 @@ import PropTypes from "prop-types";
 import classnames from "classnames";
 import { connect } from "react-redux";
 
+import LogViewEdit from "./LogViewEdit";
+import Operations from "./Operations";
+
 class LogView extends Component {
+  constructor() {
+    super();
+  }
+
   render() {
-    // const { errors } = this.state;
     const { log } = this.props;
+
+    //  This is required because you can't slice undefined
+    log.type ? (log.type = log.type) : (log.type = "default");
+    log.date ? (log.date = log.date) : (log.date = "default");
 
     return (
       <div
@@ -21,14 +31,11 @@ class LogView extends Component {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title mr-3 mt-1" id="exampleModalLabel">
-                {log.domJo}
+                {log.type.slice(0, 1)}-{log.domJo}{"  "}
+                <small>
+                  <em> Date added: {log.date.slice(0, 10)}</em>
+                </small>
               </h5>
-              <button
-                type="button"
-                className="btn btn-primary"
-              >
-                Edit Job Order
-              </button>
 
               <button
                 type="button"
@@ -40,30 +47,11 @@ class LogView extends Component {
               </button>
             </div>
             <div className="modal-body">
-              {/* FORM */}
-              <form noValidate>
-                <div className="row">
-                  <div className="form-group col-md-6">
-                    <label className="mb-1" htmlFor="domJo">
-                      Job order number
-                    </label>
-                    <input
-                      type="text"
-                      className={classnames("form-control form-control-lg", {
-                        // "is-invalid": errors.domJo
-                      })}
-                      placeholder="Job order number"
-                      name="domJo"
-                      // value={this.state.domJo}
-                      // onChange={this.onChange}
-                    />
-                    {/* {errors.domJo && (
-                      <div className="invalid-feedback">{errors.domJo}</div>
-                    )} */}
-                  </div>
-                </div>
-              </form>
+              {/* //////////// FORM //////////// */}
+              <LogViewEdit />
             </div>
+
+            <Operations />
             <div className="modal-footer">
               <button
                 type="button"
@@ -71,13 +59,6 @@ class LogView extends Component {
                 data-dismiss="modal"
               >
                 Close
-              </button>
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={this.onSubmit}
-              >
-                Register User
               </button>
             </div>
           </div>
@@ -88,7 +69,8 @@ class LogView extends Component {
 }
 
 const mapStateToProps = state => ({
-  log: state.log
+  log: state.log,
+  auth: state.auth
 });
 
 export default connect(
