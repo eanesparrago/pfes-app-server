@@ -113,7 +113,7 @@ export class LogViewEdit extends Component {
     return (
       <div>
         <div className="container row">
-          <h2 className="mr-3">Job Order</h2>
+          <h2 className="mr-3">Details</h2>
 
           {/* Only admin or sales usertype may see these options */}
           {auth.user.userType === "admin" || auth.user.userType === "sales" ? (
@@ -140,10 +140,10 @@ export class LogViewEdit extends Component {
             isEditable ? (
               <button
                 type="button"
-                className="btn btn-outline-secondary mb-3"
+                className="btn btn-secondary mb-3"
                 onClick={this.toggleEdit}
               >
-                Cancel
+                &times;
               </button>
             ) : null
           ) : null}
