@@ -31,10 +31,10 @@ class DomesticLogs extends Component {
           <td>{log.origin}</td>
           <td>{log.destination}</td>
           <td>
-            <Moment format="YYYY/MM/DD">{log.etd}</Moment>
+            <Moment format="YYYY-MM-DD">{log.etd}</Moment>
           </td>
           <td>
-            <Moment format="YYYY/MM/DD">{log.eta}</Moment>
+            <Moment format="YYYY-MM-DD">{log.eta}</Moment>
           </td>
           <td>{log.status}</td>
         </tr>
