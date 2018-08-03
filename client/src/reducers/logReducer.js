@@ -3,8 +3,6 @@
 import {
   GET_DOMESTIC_LOGS,
   GET_INTERNATIONAL_LOGS,
-  SUCCESS_CREATE,
-  GET_ERRORS,
   LOG_CLICKED,
   LOG_LOADING,
   ADD_DOMESTIC_LOG,
@@ -16,8 +14,7 @@ const initialState = {
   international: null,
   log: {},
 
-  loading: false,
-  success: false
+  loading: false
 };
 
 export default function(state = initialState, action) {

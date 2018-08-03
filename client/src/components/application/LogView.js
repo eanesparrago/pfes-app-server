@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import classnames from "classnames";
 import { connect } from "react-redux";
 
 import LogViewEdit from "./LogViewEdit";
@@ -16,8 +15,6 @@ class LogView extends Component {
     log.dateModified
       ? (log.dateModified = log.dateModified)
       : (log.dateModified = "-");
-
-    console.log(log);
 
     return (
       <div
@@ -77,6 +74,11 @@ class LogView extends Component {
     );
   }
 }
+
+LogView.propTypes = {
+  log: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired
+};
 
 const mapStateToProps = state => ({
   log: state.log.log,

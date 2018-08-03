@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Register from "./Register";
 import UsersTable from "./UsersTable";
 import RegisterContainer from "./RegisterContainer";
 import { connect } from "react-redux";

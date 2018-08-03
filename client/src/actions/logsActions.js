@@ -3,7 +3,6 @@ import axios from "axios";
 import {
   GET_DOMESTIC_LOGS,
   GET_INTERNATIONAL_LOGS,
-  SUCCESS_CREATE,
   GET_ERRORS,
   LOG_CLICKED,
   CLEAR_ERRORS,
