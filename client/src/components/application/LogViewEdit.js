@@ -91,7 +91,7 @@ export class LogViewEdit extends Component {
     const log = {
       domJo: this.state.domJo,
       shipperConsignee: this.state.shipperConsignee,
-      associate: this.state.associate,
+      // associate: this.state.associate,
       modeOfTransport: this.state.modeOfTransport,
       commodity: this.state.commodity,
       blAwb: this.state.blAwb,
@@ -157,7 +157,7 @@ export class LogViewEdit extends Component {
                   Associate
                 </label>
                 <input
-                  readOnly={!isEditable}
+                  readOnly
                   type="text"
                   className={classnames("form-control", {
                     "is-invalid": errors.associate
@@ -165,7 +165,7 @@ export class LogViewEdit extends Component {
                   placeholder="Associate"
                   name="associate"
                   value={this.state.associate}
-                  onChange={this.onChange}
+                  // onChange={this.onChange}
                 />
                 {errors.associate && (
                   <div className="invalid-feedback">{errors.associate}</div>

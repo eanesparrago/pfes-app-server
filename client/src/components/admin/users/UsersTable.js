@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getAllUsers } from "../../../actions/usersActions";
-import spinner from "../../../img/spinner.gif";
+
+import Spinner from "../../common/Spinner";
 
 class UsersTable extends Component {
   constructor() {
@@ -35,7 +36,7 @@ class UsersTable extends Component {
           <td>{user.lastName}</td>
           <td>{user.email}</td>
           <td>{user.contact}</td>
-          <td>{user.date.slice(0,10)}</td>
+          <td>{user.date.slice(0, 10)}</td>
         </tr>
       );
     });
@@ -44,7 +45,7 @@ class UsersTable extends Component {
       <div className="">
         {loading ? (
           <div className="text-center">
-            <img src={spinner} alt="Loading spinner" />
+            <Spinner />
           </div>
         ) : (
           <div className="table-responsive  mt-2">

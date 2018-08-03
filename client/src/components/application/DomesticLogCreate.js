@@ -41,7 +41,7 @@ class DomesticLogCreate extends Component {
       this.setState({
         domJo: "",
         shipperConsignee: "",
-        associate: "",
+        // associate: "",
         modeOfTransport: "",
         commodity: "",
         blAwb: "",
@@ -71,7 +71,7 @@ class DomesticLogCreate extends Component {
     const newUser = {
       domJo: this.state.domJo,
       shipperConsignee: this.state.shipperConsignee,
-      associate: this.state.associate,
+      // associate: this.state.associate,
       modeOfTransport: this.state.modeOfTransport,
       commodity: this.state.commodity,
       blAwb: this.state.blAwb,
@@ -87,6 +87,7 @@ class DomesticLogCreate extends Component {
 
   render() {
     const { errors } = this.state;
+    const { auth } = this.props;
 
     return (
       <div className="">
@@ -149,14 +150,15 @@ class DomesticLogCreate extends Component {
                         Associate
                       </label>
                       <input
+                        readOnly
                         type="text"
                         className={classnames("form-control form-control-lg", {
                           "is-invalid": errors.associate
                         })}
                         placeholder="Associate"
                         name="associate"
-                        value={this.state.associate}
-                        onChange={this.onChange}
+                        value={`${auth.user.firstName} ${auth.user.lastName}`}
+                        // onChange={this.onChange}
                       />
                       {errors.associate && (
                         <div className="invalid-feedback">
@@ -369,7 +371,7 @@ class DomesticLogCreate extends Component {
                   className="btn btn-primary"
                   onClick={this.onSubmit}
                 >
-                  Register User
+                  Create Job Order
                 </button>
               </div>
             </div>
@@ -389,7 +391,8 @@ DomesticLogCreate.propTypes = {
 
 const mapStateToProps = state => ({
   errors: state.errors,
-  success: state.success
+  success: state.success,
+  auth: state.auth
 });
 
 export default connect(

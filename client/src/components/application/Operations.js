@@ -101,8 +101,8 @@ class Operations extends Component {
             </div>
 
             <div className="container">
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item d-flex justify-content-between align-items-center row">
+              <ul className="list-group list-group-flush">
+                <li className="list-group-item d-flex justify-content-between align-items-center row">
                   <div className="col-6">Permit</div>
                   <div className="col-4">2018-07-24</div>
                   <div className="col-2">
@@ -116,7 +116,7 @@ class Operations extends Component {
                   </div>
                 </li>
                
-                <li class="list-group-item d-flex justify-content-between align-items-center row">
+                <li className="list-group-item d-flex justify-content-between align-items-center row">
                   <div className="col-6">There was a delay</div>
                   <div className="col-4">2018-07-24</div>
                   <div className="col-2">
@@ -130,7 +130,7 @@ class Operations extends Component {
                   </div>
                 </li>
                
-                <li class="list-group-item d-flex justify-content-between align-items-center row">
+                <li className="list-group-item d-flex justify-content-between align-items-center row">
                   <div className="col-6">AWB</div>
                   <div className="col-4">2018-07-31</div>
                   <div className="col-2">

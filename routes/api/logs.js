@@ -23,7 +23,6 @@ router.get("/test", (req, res) => res.json({ msg: "Logs works" }));
 // @route   GET api/logs/domestic
 // @desc    Get domestic logs
 // @access  Private
-// router.get("/domestic")
 router.get(
   "/domestic",
   passport.authenticate("jwt", { session: false }),
@@ -31,6 +30,7 @@ router.get(
     const errors = {};
 
     DomesticLog.find()
+      .sort({ _id: -1 })
       .then(logs => {
         if (!logs) {
           errors.noLogs = "There are no job orders";
@@ -45,6 +45,11 @@ router.get(
 );
 
 // ////////////////////////////////////
+// @route   GET api/logs/domestic/:id
+// @desc    Get domestic log by id
+// @access  Private
+
+// ////////////////////////////////////
 // @route   GET api/logs/international
 // @desc    Get international logs
 // @access  Private
@@ -55,6 +60,7 @@ router.get(
     const errors = {};
 
     InternationalLog.find()
+      .sort({ _id: -1 })
       .then(logs => {
         if (!logs) {
           errors.noLogs = "There are no job orders";
@@ -95,7 +101,7 @@ router.post(
     newLog.user = req.body.user;
     if (req.body.shipperConsignee)
       newLog.shipperConsignee = req.body.shipperConsignee;
-    if (req.body.associate) newLog.associate = req.body.associate;
+    // if (req.body.associate) newLog.associate = req.body.associate;
     if (req.body.modeOfTransport)
       newLog.modeOfTransport = req.body.modeOfTransport;
     if (req.body.commodity) newLog.commodity = req.body.commodity;
@@ -105,6 +111,10 @@ router.post(
     if (req.body.etd) newLog.etd = req.body.etd;
     if (req.body.eta) newLog.eta = req.body.eta;
     if (req.body.status) newLog.status = req.body.status;
+
+    newLog.associate = `${req.user.firstName} ${req.user.lastName}`;
+
+    newLog.user = req.user.id;
 
     const newDomesticLog = new DomesticLog(newLog);
 
@@ -146,7 +156,7 @@ router.post(
     newLog.user = req.body.user;
     if (req.body.shipperConsignee)
       newLog.shipperConsignee = req.body.shipperConsignee;
-    if (req.body.associate) newLog.associate = req.body.associate;
+    // if (req.body.associate) newLog.associate = req.body.associate;
     if (req.body.modeOfTransport)
       newLog.modeOfTransport = req.body.modeOfTransport;
     if (req.body.commodity) newLog.commodity = req.body.commodity;
@@ -157,6 +167,10 @@ router.post(
     if (req.body.eta) newLog.eta = req.body.eta;
     // if (req.body.status) newLog.status = req.body.status;
     newLog.status = req.body.status;
+
+    newLog.associate = `${req.user.firstName} ${req.user.lastName}`;
+
+    newLog.user = req.user.id;
 
     const newInternationalLog = new InternationalLog(newLog);
 
@@ -182,7 +196,7 @@ router.post(
     console.log(req.user);
     // Only admin and sales can edit logs
     if (req.user.userType !== "admin" && req.user.userType !== "sales") {
-      return res.json({ unauthorized: "Unauthorized" });
+      return res.status(401).json({ unauthorized: "Unauthorized" });
     }
 
     const { errors, isValid } = validateLogInput(req.body);
@@ -198,7 +212,7 @@ router.post(
     newLog.user = req.body.user;
     if (req.body.shipperConsignee)
       newLog.shipperConsignee = req.body.shipperConsignee;
-    if (req.body.associate) newLog.associate = req.body.associate;
+    // if (req.body.associate) newLog.associate = req.body.associate;
     if (req.body.modeOfTransport)
       newLog.modeOfTransport = req.body.modeOfTransport;
     if (req.body.commodity) newLog.commodity = req.body.commodity;
@@ -209,12 +223,21 @@ router.post(
     if (req.body.eta) newLog.eta = req.body.eta;
     newLog.status = req.body.status;
 
+    newLog.user = req.user.id;
+
     newLog.dateModified = Date.now();
 
     const newDomesticLog = newLog;
 
     DomesticLog.findOne({ domJo: req.body.domJo }).then(log => {
       if (log) {
+        // Check to see if the sales account does not match the user ID
+        if (req.user.userType === "sales") {
+          if (req.user.id !== String(log.user)) {
+            return res.status(401).json({ unauthorized: "Unauthorized" });
+          }
+        }
+
         // Update
         DomesticLog.findOneAndUpdate(
           { domJo: req.body.domJo },
@@ -264,12 +287,21 @@ router.post(
     if (req.body.eta) newLog.eta = req.body.eta;
     newLog.status = req.body.status;
 
+    newLog.user = req.user.id;
+
     newLog.dateModified = Date.now();
 
     const newInternationalLog = newLog;
 
     InternationalLog.findOne({ domJo: req.body.domJo }).then(log => {
       if (log) {
+        // Check to see if the sales account does not match the user ID
+        if (req.user.userType === "sales") {
+          if (req.user.id !== String(log.user)) {
+            return res.status(401).json({ unauthorized: "Unauthorized" });
+          }
+        }
+
         // Update
         InternationalLog.findOneAndUpdate(
           { domJo: req.body.domJo },

@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
 import TextFieldGroup from "../common/TextFieldGroup";
 
+import "./Login.css";
+
 class Login extends Component {
   constructor() {
     super();
@@ -66,7 +68,7 @@ class Login extends Component {
     }
 
     return (
-      <div className="login">
+      <div className="Login">
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">

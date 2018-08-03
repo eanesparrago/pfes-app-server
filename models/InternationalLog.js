@@ -36,16 +36,14 @@ const InternationalLogSchema = new Schema({
     default: "n/a"
   },
   etd: {
-    type: String,
-    default: "n/a"
+    type: Date
   },
   eta: {
-    type: String,
-    default: "n/a"
+    type: Date
   },
   operations: {
     preloading: {
-      status: {
+      isFinished: {
         type: Boolean,
         default: false,
         required: true
@@ -55,12 +53,30 @@ const InternationalLogSchema = new Schema({
         default: "n/a"
       },
       dateFinished: {
-        type: String,
-        default: "n/a"
-      }
+        type: Date
+      },
+      satuses: [
+        {
+          userName: {
+            type: Schema.Types.ObjectId,
+            ref: "users"
+          },
+          comment: {
+            type: String,
+            required: true
+          },
+          dateInput: {
+            type: Date
+          },
+          date: {
+            type: Date,
+            default: Date.now
+          }
+        }
+      ]
     },
     loading: {
-      status: {
+      isFinished: {
         type: Boolean,
         default: false,
         required: true
@@ -70,12 +86,30 @@ const InternationalLogSchema = new Schema({
         default: "n/a"
       },
       dateFinished: {
-        type: String,
-        default: "n/a"
-      }
+        type: Date
+      },
+      satuses: [
+        {
+          userName: {
+            type: Schema.Types.ObjectId,
+            ref: "users"
+          },
+          comment: {
+            type: String,
+            required: true
+          },
+          dateInput: {
+            type: Date
+          },
+          date: {
+            type: Date,
+            default: Date.now
+          }
+        }
+      ]
     },
     unloading: {
-      status: {
+      isFinished: {
         type: Boolean,
         default: false,
         required: true
@@ -85,9 +119,27 @@ const InternationalLogSchema = new Schema({
         default: "n/a"
       },
       dateFinished: {
-        type: String,
-        default: "n/a"
-      }
+        type: Date
+      },
+      satuses: [
+        {
+          userName: {
+            type: Schema.Types.ObjectId,
+            ref: "users"
+          },
+          comment: {
+            type: String,
+            required: true
+          },
+          dateInput: {
+            type: Date
+          },
+          date: {
+            type: Date,
+            default: Date.now
+          }
+        }
+      ]
     }
   },
   rating: {

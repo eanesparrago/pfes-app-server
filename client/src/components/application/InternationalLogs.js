@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import Moment from "react-moment";
 import InternationalLogCreate from "./InternationalLogCreate";
 
 import { getInternationalLogs, openLogView } from "../../actions/logsActions";
 
-import spinner from "../../img/spinner.gif";
+import Spinner from "../common/Spinner";
 
 import "./Logs.css";
 
@@ -52,8 +53,12 @@ class InternationalLogs extends Component {
           <td>{log.blAwb}</td>
           <td>{log.origin}</td>
           <td>{log.destination}</td>
-          <td>{log.etd}</td>
-          <td>{log.eta}</td>
+          <td>
+            <Moment format="YYYY/MM/DD">{log.etd}</Moment>
+          </td>
+          <td>
+            <Moment format="YYYY/MM/DD">{log.eta}</Moment>
+          </td>
           <td>{log.status}</td>
         </tr>
       );
@@ -107,7 +112,7 @@ class InternationalLogs extends Component {
         {/* //////////////////////// TABLE //////////////////////// */}
         {loading ? (
           <div className="text-center">
-            <img src={spinner} alt="Loading spinner" />
+            <Spinner />
           </div>
         ) : (
           <div className="mt-3 table-responsive">
