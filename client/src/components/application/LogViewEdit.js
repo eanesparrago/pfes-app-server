@@ -455,6 +455,15 @@ export class LogViewEdit extends Component {
   }
 }
 
+LogViewEdit.propTypes = {
+  getDomesticLogs: PropTypes.func.isRequired,
+  editLog: PropTypes.func.isRequired,
+  getInternationalLogs: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  log: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
 const mapStateToProps = state => ({
   auth: state.auth,
   log: state.log,
