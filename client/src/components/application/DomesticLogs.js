@@ -4,36 +4,15 @@ import { connect } from "react-redux";
 import Moment from "react-moment";
 import DomesticLogCreate from "./DomesticLogCreate";
 
-import { getDomesticLogs, openLogView } from "../../actions/logsActions";
-
-import Spinner from "../common/Spinner";
+import { openLogView } from "../../actions/logsActions";
 
 import "./Logs.css";
 
 class DomesticLogs extends Component {
-  constructor() {
-    super();
-    this.state = {
-      domesticLogs: [],
-      loading: true
-    };
-  }
-
-  componentDidMount() {
-    this.props.getDomesticLogs();
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.domesticLogs) {
-      this.setState({ domesticLogs: nextProps.domesticLogs, loading: false });
-    }
-  }
-
   render() {
-    const { domesticLogs, loading } = this.state;
-    const { auth } = this.props;
+    const { auth, logs } = this.props;
 
-    const tableBody = domesticLogs.map(log => {
+    const tableBody = logs.map(log => {
       return (
         <tr
           key={log._id}
@@ -81,10 +60,6 @@ class DomesticLogs extends Component {
           </button>
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            {/* <button className="btn btn-primary mr-3" type="button">
-              New Job Order
-            </button> */}
-
             {auth.user.userType === "admin" ||
             auth.user.userType === "sales" ? (
               <DomesticLogCreate />
@@ -108,42 +83,41 @@ class DomesticLogs extends Component {
         </nav>
 
         {/* //////////////////////// TABLE //////////////////////// */}
-        {loading ? (
-          <div className="text-center">
-            <Spinner />
-          </div>
-        ) : (
-          <div className="mt-3 table-responsive">
-            <table className="table table-hover">
-              <thead>
-                <tr>
-                  <th scope="col">D-JO</th>
-                  <th scope="col">Associate</th>
-                  <th scope="col">Shipper/Consignee</th>
-                  <th scope="col">Mode of Transport</th>
-                  <th scope="col">Commodity</th>
-                  <th scope="col">BL/AWB</th>
-                  <th scope="col">Origin</th>
-                  <th scope="col">Destination</th>
-                  <th scope="col">ETD</th>
-                  <th scope="col">ETA</th>
-                  <th scope="col">Status</th>
-                </tr>
-              </thead>
-              <tbody>{tableBody}</tbody>
-            </table>
-          </div>
-        )}
+
+        <div className="mt-3 table-responsive">
+          <table className="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">D-JO</th>
+                <th scope="col">Associate</th>
+                <th scope="col">Shipper/Consignee</th>
+                <th scope="col">Mode of Transport</th>
+                <th scope="col">Commodity</th>
+                <th scope="col">BL/AWB</th>
+                <th scope="col">Origin</th>
+                <th scope="col">Destination</th>
+                <th scope="col">ETD</th>
+                <th scope="col">ETA</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>{tableBody}</tbody>
+          </table>
+        </div>
       </div>
     );
   }
 }
+
+DomesticLogs.propTypes = {
+  auth: PropTypes.object.isRequired
+};
+
 const mapStateToProps = state => ({
-  domesticLogs: state.domesticLogs,
   auth: state.auth
 });
 
 export default connect(
   mapStateToProps,
-  { getDomesticLogs, openLogView }
+  { openLogView }
 )(DomesticLogs);

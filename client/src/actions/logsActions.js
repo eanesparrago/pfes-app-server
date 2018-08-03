@@ -5,7 +5,10 @@ import {
   GET_INTERNATIONAL_LOGS,
   SUCCESS_CREATE,
   GET_ERRORS,
-  LOG_CLICKED
+  LOG_CLICKED,
+  CLEAR_ERRORS,
+  ADD_DOMESTIC_LOG,
+  ADD_INTERNATIONAL_LOG
 } from "./types";
 
 // Get domestic logs
@@ -18,13 +21,25 @@ export const getDomesticLogs = () => dispatch => {
   );
 };
 
+// Get international logs
+export const getInternationalLogs = () => dispatch => {
+  axios.get("/api/logs/international").then(res =>
+    dispatch({
+      type: GET_INTERNATIONAL_LOGS,
+      payload: res.data
+    })
+  );
+};
+
 // Create domestic log
 export const createDomesticLog = logData => dispatch => {
+  dispatch(clearErrors());
+
   axios
     .post("/api/logs/domestic", logData)
     .then(res =>
       dispatch({
-        type: SUCCESS_CREATE,
+        type: ADD_DOMESTIC_LOG,
         payload: res.data
       })
     )
@@ -36,23 +51,15 @@ export const createDomesticLog = logData => dispatch => {
     );
 };
 
-// Get international logs
-export const getInternationalLogs = () => dispatch => {
-  axios.get("/api/logs/international").then(res =>
-    dispatch({
-      type: GET_INTERNATIONAL_LOGS,
-      payload: res.data
-    })
-  );
-};
-
 // Create international log
 export const createInternationalLog = logData => dispatch => {
+  dispatch(clearErrors());
+
   axios
     .post("/api/logs/international", logData)
     .then(res =>
       dispatch({
-        type: SUCCESS_CREATE,
+        type: ADD_INTERNATIONAL_LOG,
         payload: res.data
       })
     )
@@ -109,4 +116,11 @@ export const editLog = log => dispatch => {
         })
       );
   }
+};
+
+// Clear errors
+export const clearErrors = () => {
+  return {
+    type: CLEAR_ERRORS
+  };
 };

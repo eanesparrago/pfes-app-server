@@ -4,9 +4,7 @@ import errorReducer from "./errorReducer";
 import authReducer from "./authReducer";
 import usersReducer from "./usersReducer";
 import registerReducer from "./registerReducer";
-import domesticReducer from "./domesticReducer";
 import successReducer from "./successReducer";
-import internationalReducer from "./internationalReducer";
 import logReducer from "./logReducer";
 
 export default combineReducers({
@@ -14,8 +12,7 @@ export default combineReducers({
   errors: errorReducer,
   users: usersReducer,
   register: registerReducer,
-  domesticLogs: domesticReducer,
-  internationalLogs: internationalReducer,
+
   success: successReducer,
   log: logReducer
 });

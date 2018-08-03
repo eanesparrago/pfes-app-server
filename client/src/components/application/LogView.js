@@ -7,10 +7,6 @@ import LogViewEdit from "./LogViewEdit";
 import Operations from "./Operations";
 
 class LogView extends Component {
-  constructor() {
-    super();
-  }
-
   render() {
     const { log } = this.props;
 
@@ -20,6 +16,8 @@ class LogView extends Component {
     log.dateModified
       ? (log.dateModified = log.dateModified)
       : (log.dateModified = "-");
+
+    console.log(log);
 
     return (
       <div
@@ -48,7 +46,7 @@ class LogView extends Component {
             </div>
             <div className="modal-body">
               {/* //////////// FORM //////////// */}
-              <LogViewEdit />
+              <LogViewEdit log={log} />
 
               <div className="dropdown-divider" />
 
@@ -81,7 +79,7 @@ class LogView extends Component {
 }
 
 const mapStateToProps = state => ({
-  log: state.log,
+  log: state.log.log,
   auth: state.auth
 });
 
