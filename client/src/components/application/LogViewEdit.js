@@ -110,33 +110,41 @@ export class LogViewEdit extends Component {
     const { errors, isEditable } = this.state;
     const { log, auth } = this.props;
 
+    console.log(auth.user.id, log.user);
+
+    let editControls = null;
+
+    if (
+      auth.user.userType === "admin" ||
+      (auth.user.userType === "sales" && auth.user.id === log.user)
+    ) {
+      editControls = isEditable ? (
+        <button
+          type="button"
+          className="btn btn-primary mr-2 mb-3"
+          onClick={this.submitEdit}
+        >
+          Confirm
+        </button>
+      ) : (
+        <button
+          type="button"
+          className="btn btn-outline-primary mr-2 mb-3"
+          onClick={this.toggleEdit}
+        >
+          Edit Job Order
+        </button>
+      );
+    }
+
     return (
       <div>
         <div className="container row">
           <h2 className="mr-3">Details</h2>
 
-          {/* Only admin or sales usertype may see these options */}
-          {auth.user.userType === "admin" || auth.user.userType === "sales" ? (
-            isEditable ? (
-              <button
-                type="button"
-                className="btn btn-primary mr-2 mb-3"
-                onClick={this.submitEdit}
-              >
-                Confirm
-              </button>
-            ) : (
-              <button
-                type="button"
-                className="btn btn-outline-primary mr-2 mb-3"
-                onClick={this.toggleEdit}
-              >
-                Edit Job Order
-              </button>
-            )
-          ) : null}
+          {editControls}
 
-          {auth.user.userType === "admin" || auth.user.userType === "sales" ? (
+          {editControls !== null ? (
             isEditable ? (
               <button
                 type="button"
@@ -466,7 +474,7 @@ LogViewEdit.propTypes = {
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  log: state.log,
+  log: state.log.log,
   errors: state.errors
 });
 

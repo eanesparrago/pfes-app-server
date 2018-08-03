@@ -4,11 +4,7 @@ import { withRouter } from "react-router-dom";
 
 import classnames from "classnames";
 import { connect } from "react-redux";
-import {
-  createInternationalLog,
-  getInternationalLogs
-} from "../../actions/logsActions";
-import { clearErrors } from "../../actions/errorActions";
+import { createInternationalLog } from "../../actions/logsActions";
 import { clearSuccess } from "../../actions/successActions";
 
 import isEmpty from "../../validation/is-empty";
@@ -56,11 +52,8 @@ class InternationalLogCreate extends Component {
         errors: {}
       });
 
-      // this.props.clearSuccess();
-      this.props.clearErrors();
-      this.props.getInternationalLogs();
+      this.props.clearSuccess();
     }
-    // }
   }
 
   onChange(e) {
@@ -386,9 +379,7 @@ class InternationalLogCreate extends Component {
 
 InternationalLogCreate.propTypes = {
   createInternationalLog: PropTypes.func.isRequired,
-  getInternationalLogs: PropTypes.func.isRequired,
-  clearSuccess: PropTypes.func.isRequired,
-  clearErrors: PropTypes.func.isRequired
+  clearSuccess: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -401,8 +392,6 @@ export default connect(
   mapStateToProps,
   {
     createInternationalLog,
-    getInternationalLogs,
-    clearSuccess,
-    clearErrors
+    clearSuccess
   }
 )(withRouter(InternationalLogCreate));

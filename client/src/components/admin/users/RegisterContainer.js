@@ -7,7 +7,6 @@ import { connect } from "react-redux";
 import { registerUser } from "../../../actions/authActions";
 import { getAllUsers } from "../../../actions/usersActions";
 import { clearRegister } from "../../../actions/registerActions";
-import { clearErrors } from "../../../actions/errorActions";
 
 import isEmpty from "../../../validation/is-empty";
 
@@ -329,7 +328,6 @@ export default connect(
   {
     registerUser,
     getAllUsers,
-    clearRegister,
-    clearErrors
+    clearRegister
   }
 )(withRouter(RegisterContainer));

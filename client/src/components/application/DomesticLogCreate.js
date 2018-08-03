@@ -4,8 +4,7 @@ import { withRouter } from "react-router-dom";
 
 import classnames from "classnames";
 import { connect } from "react-redux";
-import { createDomesticLog, getDomesticLogs } from "../../actions/logsActions";
-import { clearErrors } from "../../actions/errorActions";
+import { createDomesticLog } from "../../actions/logsActions";
 import { clearSuccess } from "../../actions/successActions";
 
 import isEmpty from "../../validation/is-empty";
@@ -41,7 +40,7 @@ class DomesticLogCreate extends Component {
       this.setState({
         domJo: "",
         shipperConsignee: "",
-        // associate: "",
+        associate: "",
         modeOfTransport: "",
         commodity: "",
         blAwb: "",
@@ -52,13 +51,9 @@ class DomesticLogCreate extends Component {
         status: "Waiting",
         errors: {}
       });
-      console.log("Success");
 
-      // this.props.clearSuccess();
-      this.props.clearErrors();
-      this.props.getDomesticLogs();
+      this.props.clearSuccess();
     }
-    // }
   }
 
   onChange(e) {
@@ -384,9 +379,7 @@ class DomesticLogCreate extends Component {
 
 DomesticLogCreate.propTypes = {
   createDomesticLog: PropTypes.func.isRequired,
-  getDomesticLogs: PropTypes.func.isRequired,
-  clearSuccess: PropTypes.func.isRequired,
-  clearErrors: PropTypes.func.isRequired
+  clearSuccess: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -399,8 +392,6 @@ export default connect(
   mapStateToProps,
   {
     createDomesticLog,
-    getDomesticLogs,
-    clearSuccess,
-    clearErrors
+    clearSuccess
   }
 )(withRouter(DomesticLogCreate));

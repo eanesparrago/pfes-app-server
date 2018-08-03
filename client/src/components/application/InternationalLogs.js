@@ -4,38 +4,15 @@ import { connect } from "react-redux";
 import Moment from "react-moment";
 import InternationalLogCreate from "./InternationalLogCreate";
 
-import { getInternationalLogs, openLogView } from "../../actions/logsActions";
-
-import Spinner from "../common/Spinner";
+import { openLogView } from "../../actions/logsActions";
 
 import "./Logs.css";
 
 class InternationalLogs extends Component {
-  constructor() {
-    super();
-    this.state = {
-      internationalLogs: [],
-      loading: true
-    };
-  }
-  componentDidMount() {
-    this.props.getInternationalLogs();
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.internationalLogs) {
-      this.setState({
-        internationalLogs: nextProps.internationalLogs,
-        loading: false
-      });
-    }
-  }
-
   render() {
-    const { internationalLogs, loading } = this.state;
-    const { auth } = this.props;
+    const { auth, logs } = this.props;
 
-    const tableBody = internationalLogs.map(log => {
+    const tableBody = logs.map(log => {
       return (
         <tr
           key={log._id}
@@ -83,10 +60,6 @@ class InternationalLogs extends Component {
           </button>
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            {/* <button className="btn btn-primary mr-3" type="button">
-              New Job Order
-            </button> */}
-
             {auth.user.userType === "admin" ||
             auth.user.userType === "sales" ? (
               <InternationalLogCreate />
@@ -108,44 +81,41 @@ class InternationalLogs extends Component {
             </form>
           </div>
         </nav>
-
         {/* //////////////////////// TABLE //////////////////////// */}
-        {loading ? (
-          <div className="text-center">
-            <Spinner />
-          </div>
-        ) : (
-          <div className="mt-3 table-responsive">
-            <table className="table table-hover">
-              <thead>
-                <tr>
-                  <th scope="col">I-JO</th>
-                  <th scope="col">Associate</th>
-                  <th scope="col">Shipper/Consignee</th>
-                  <th scope="col">Mode of Transport</th>
-                  <th scope="col">Commodity</th>
-                  <th scope="col">BL/AWB</th>
-                  <th scope="col">Origin</th>
-                  <th scope="col">Destination</th>
-                  <th scope="col">ETD</th>
-                  <th scope="col">ETA</th>
-                  <th scope="col">Status</th>
-                </tr>
-              </thead>
-              <tbody>{tableBody}</tbody>
-            </table>
-          </div>
-        )}
+        <div className="mt-3 table-responsive">
+          <table className="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">I-JO</th>
+                <th scope="col">Associate</th>
+                <th scope="col">Shipper/Consignee</th>
+                <th scope="col">Mode of Transport</th>
+                <th scope="col">Commodity</th>
+                <th scope="col">BL/AWB</th>
+                <th scope="col">Origin</th>
+                <th scope="col">Destination</th>
+                <th scope="col">ETD</th>
+                <th scope="col">ETA</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>{tableBody}</tbody>
+          </table>
+        </div>
       </div>
     );
   }
 }
+
+InternationalLogs.propTypes = {
+  auth: PropTypes.object.isRequired
+}
+
 const mapStateToProps = state => ({
-  internationalLogs: state.internationalLogs,
   auth: state.auth
 });
 
 export default connect(
   mapStateToProps,
-  { getInternationalLogs, openLogView }
+  { openLogView }
 )(InternationalLogs);

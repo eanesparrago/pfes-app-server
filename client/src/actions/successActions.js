@@ -1,4 +1,4 @@
-import { CLEAR_SUCCESS } from "./types";
+import {  CLEAR_SUCCESS } from "./types";
 
 export const clearSuccess = () => {
   return {
