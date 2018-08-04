@@ -16,6 +16,7 @@ const passport = require("passport");
 // ROUTES IMPORTS
 const users = require("./routes/api/users");
 const logs = require("./routes/api/logs");
+const operations = require("./routes/api/operations");
 
 // ////////////////////////////////////
 
@@ -43,6 +44,7 @@ require("./config/passport")(passport);
 //  Use routes
 app.use("/api/users", users);
 app.use("/api/logs", logs);
+app.use("/api/operations", operations);
 
 const port = process.env.PORT || 5000;
 

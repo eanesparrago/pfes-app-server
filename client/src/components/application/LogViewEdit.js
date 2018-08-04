@@ -59,8 +59,8 @@ export class LogViewEdit extends Component {
         isEditable: false
       });
 
-      this.props.getDomesticLogs();
-      this.props.getInternationalLogs();
+      // this.props.getDomesticLogs();
+      // this.props.getInternationalLogs();
     }
   }
 
@@ -70,25 +70,11 @@ export class LogViewEdit extends Component {
 
   toggleEdit() {
     this.setState({
-      // domJo: this.props.log.domJo,
-      // shipperConsignee: this.props.log.shipperConsignee,
-      // associate: this.props.log.associate,
-      // modeOfTransport: this.props.log.modeOfTransport,
-      // commodity: this.props.log.commodity,
-      // blAwb: this.props.log.blAwb,
-      // origin: this.props.log.origin,
-      // destination: this.props.log.destination,
-      // etd: this.props.log.etd,
-      // eta: this.props.log.eta,
-      // status: this.props.log.status,
-
       isEditable: !this.state.isEditable
     });
   }
 
   submitEdit() {
-    // console.log("STATE", this.state);
-
     const log = {
       domJo: this.state.domJo,
       shipperConsignee: this.state.shipperConsignee,

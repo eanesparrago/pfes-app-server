@@ -55,9 +55,12 @@ const InternationalLogSchema = new Schema({
       dateFinished: {
         type: Date
       },
-      satuses: [
+      statuses: [
         {
-          userName: {
+          name: {
+            type: String
+          },
+          user: {
             type: Schema.Types.ObjectId,
             ref: "users"
           },
@@ -88,9 +91,12 @@ const InternationalLogSchema = new Schema({
       dateFinished: {
         type: Date
       },
-      satuses: [
+      statuses: [
         {
-          userName: {
+          name: {
+            type: String
+          },
+          user: {
             type: Schema.Types.ObjectId,
             ref: "users"
           },
@@ -121,9 +127,12 @@ const InternationalLogSchema = new Schema({
       dateFinished: {
         type: Date
       },
-      satuses: [
+      statuses: [
         {
-          userName: {
+          name: {
+            type: String
+          },
+          user: {
             type: Schema.Types.ObjectId,
             ref: "users"
           },

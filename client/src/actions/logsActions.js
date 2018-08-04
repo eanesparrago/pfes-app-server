@@ -7,7 +7,8 @@ import {
   LOG_CLICKED,
   CLEAR_ERRORS,
   ADD_DOMESTIC_LOG,
-  ADD_INTERNATIONAL_LOG
+  ADD_INTERNATIONAL_LOG,
+  ADD_STATUS
 } from "./types";
 
 // Get domestic logs
@@ -107,6 +108,65 @@ export const editLog = log => dispatch => {
           type: LOG_CLICKED,
           payload: res.data
         });
+      })
+      .catch(err =>
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+      );
+  }
+};
+
+// Add domestic log status
+export const addStatus = (logID, statusData) => dispatch => {
+  dispatch(clearErrors());
+
+  if (statusData.stage === "preloading") {
+    axios
+      .post(`/api/operations/domestic/${logID}/status`, statusData)
+      .then(res => {
+        dispatch({
+          type: ADD_STATUS,
+          payload: res.data
+        });
+        console.log(res.data);
+      })
+      .catch(err =>
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+      );
+  }
+
+  if (statusData.stage === "loading") {
+    axios
+      .post(`/api/operations/domestic/${logID}/status`, statusData)
+      .then(res => {
+        dispatch({
+          type: ADD_STATUS,
+          payload: res.data
+        });
+        console.log(res.data);
+      })
+      .catch(err =>
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+      );
+  }
+
+  if (statusData.stage === "unloading") {
+    axios
+      .post(`/api/operations/domestic/${logID}/status`, statusData)
+      .then(res => {
+        dispatch({
+          type: ADD_STATUS,
+          payload: res.data
+        });
+        console.log(res.data);
       })
       .catch(err =>
         dispatch({

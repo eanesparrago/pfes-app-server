@@ -43,7 +43,7 @@ class LogView extends Component {
             </div>
             <div className="modal-body">
               {/* //////////// FORM //////////// */}
-              <LogViewEdit log={log} />
+              <LogViewEdit />
 
               <div className="dropdown-divider" />
 

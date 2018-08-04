@@ -6,13 +6,20 @@ import {
   LOG_CLICKED,
   LOG_LOADING,
   ADD_DOMESTIC_LOG,
-  ADD_INTERNATIONAL_LOG
+  ADD_INTERNATIONAL_LOG,
+  ADD_STATUS
 } from "../actions/types";
 
 const initialState = {
   domestic: null,
   international: null,
-  log: {},
+  log: {
+    operations: {
+      preloading: { statuses: [] },
+      loading: { statuses: [] },
+      unloading: { statuses: [] }
+    }
+  },
 
   loading: false
 };
@@ -49,6 +56,12 @@ export default function(state = initialState, action) {
       return {
         ...state,
         international: [action.payload, ...state.international]
+      };
+
+    case ADD_STATUS:
+      return {
+        ...state,
+        log: action.payload
       };
 
     case LOG_CLICKED:

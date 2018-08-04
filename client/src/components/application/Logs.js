@@ -34,8 +34,8 @@ class Logs extends Component {
 
     return (
       <div className="mx-3 mt-2">
-        {domesticContent};
-        {internationalContent};
+        {domesticContent}
+        {internationalContent}
         <LogView />
       </div>
     );
