@@ -132,32 +132,34 @@ export const editLog = log => dispatch => {
 // ////////////////////////
 // Delete log (admin)
 export const deleteLog = log => dispatch => {
-  if (log.type === "Domestic") {
-    axios
-      .delete(`/api/logs/domestic/${log._id}`)
-      .then(res => {
-        dispatch(getDomesticLogs());
-      })
-      .catch(err =>
-        dispatch({
-          type: GET_ERRORS,
-          payload: err.response.data
+  if (window.confirm("Are you sure?")) {
+    if (log.type === "Domestic") {
+      axios
+        .delete(`/api/logs/domestic/${log._id}`)
+        .then(res => {
+          dispatch(getDomesticLogs());
         })
-      );
-  }
+        .catch(err =>
+          dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
+          })
+        );
+    }
 
-  if (log.type === "International") {
-    axios
-      .delete(`/api/logs/international/${log._id}`)
-      .then(res => {
-        dispatch(getInternationalLogs());
-      })
-      .catch(err =>
-        dispatch({
-          type: GET_ERRORS,
-          payload: err.response.data
+    if (log.type === "International") {
+      axios
+        .delete(`/api/logs/international/${log._id}`)
+        .then(res => {
+          dispatch(getInternationalLogs());
         })
-      );
+        .catch(err =>
+          dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
+          })
+        );
+    }
   }
 };
 
@@ -254,87 +256,91 @@ export const addStatus = (log, statusData) => dispatch => {
 // /////////////////////////
 // Delete domestic/international status
 export const deleteStatus = (log, statusData, stage) => dispatch => {
-  if (log.type === "Domestic") {
-    axios
-      .post(`/api/operations/domestic/${log._id}/status/${statusData}`, stage)
-      .then(res => {
-        dispatch({
-          type: DELETE_STATUS,
-          payload: res.data
-        });
-        dispatch(getDomesticLogs());
-      })
-      .catch(err =>
-        dispatch({
-          type: GET_ERRORS,
-          payload: err.response.data
+  if (window.confirm("Are you sure?")) {
+    if (log.type === "Domestic") {
+      axios
+        .post(`/api/operations/domestic/${log._id}/status/${statusData}`, stage)
+        .then(res => {
+          dispatch({
+            type: DELETE_STATUS,
+            payload: res.data
+          });
+          dispatch(getDomesticLogs());
         })
-      );
-  }
+        .catch(err =>
+          dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
+          })
+        );
+    }
 
-  if (log.type === "International") {
-    axios
-      .post(
-        `/api/operations/international/${log._id}/status/${statusData}`,
-        stage
-      )
-      .then(res => {
-        dispatch({
-          type: DELETE_STATUS,
-          payload: res.data
-        });
-        dispatch(getInternationalLogs());
-      })
-      .catch(err =>
-        dispatch({
-          type: GET_ERRORS,
-          payload: err.response.data
+    if (log.type === "International") {
+      axios
+        .post(
+          `/api/operations/international/${log._id}/status/${statusData}`,
+          stage
+        )
+        .then(res => {
+          dispatch({
+            type: DELETE_STATUS,
+            payload: res.data
+          });
+          dispatch(getInternationalLogs());
         })
-      );
+        .catch(err =>
+          dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
+          })
+        );
+    }
   }
 };
 
 // ////////////////////////
 // Delete complete
 export const deleteComplete = (log, statusData) => dispatch => {
-  dispatch(clearErrors());
+  if (window.confirm("Are you sure?")) {
+    dispatch(clearErrors());
 
-  if (log.type === "Domestic") {
-    axios
-      .post(`/api/operations/domestic/${log._id}`, statusData)
-      .then(res => {
-        dispatch({
-          type: LOG_CLICKED,
-          payload: res.data
-        });
+    if (log.type === "Domestic") {
+      axios
+        .post(`/api/operations/domestic/${log._id}`, statusData)
+        .then(res => {
+          dispatch({
+            type: LOG_CLICKED,
+            payload: res.data
+          });
 
-        dispatch(getDomesticLogs());
-      })
-      .catch(err =>
-        dispatch({
-          type: GET_ERRORS,
-          payload: err.response.data
+          dispatch(getDomesticLogs());
         })
-      );
-  }
+        .catch(err =>
+          dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
+          })
+        );
+    }
 
-  if (log.type === "International") {
-    axios
-      .post(`/api/operations/international/${log._id}`, statusData)
-      .then(res => {
-        dispatch({
-          type: LOG_CLICKED,
-          payload: res.data
-        });
+    if (log.type === "International") {
+      axios
+        .post(`/api/operations/international/${log._id}`, statusData)
+        .then(res => {
+          dispatch({
+            type: LOG_CLICKED,
+            payload: res.data
+          });
 
-        dispatch(getInternationalLogs());
-      })
-      .catch(err =>
-        dispatch({
-          type: GET_ERRORS,
-          payload: err.response.data
+          dispatch(getInternationalLogs());
         })
-      );
+        .catch(err =>
+          dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
+          })
+        );
+    }
   }
 };
 
