@@ -21,4 +21,5 @@ export const ADD_INTERNATIONAL_LOG = "ADD_INTERNATIONAL_LOG";
 export const ADD_STATUS = "ADD_STATUS";
 
 export const DELETE_STATUS = "DELETE_STATUS";
+export const DELETE_LOG = "DELETE_LOG";
 

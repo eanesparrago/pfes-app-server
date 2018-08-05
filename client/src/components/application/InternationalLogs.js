@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Moment from "react-moment";
 import InternationalLogCreate from "./InternationalLogCreate";
+import isEmpty from "../../validation/is-empty";
 
 import { openLogView } from "../../actions/logsActions";
 
@@ -12,43 +13,71 @@ class InternationalLogs extends Component {
   render() {
     const { auth, logs } = this.props;
 
-    const tableBody = logs.map(log => {
-      return (
-        <tr
-          key={log._id}
-          data-toggle="modal"
-          data-target="#LogView"
-          onClick={() => this.props.openLogView(log)}
-        >
-          <td>
-            {log.type.slice(0, 1)}-{log.domJo}
-          </td>
+    let tableBody;
 
-          {/* If the logged in user is the associate, set color to blue */}
-          {auth.user.id === log.user ? (
-            <td>
-              <span className="text-primary">{log.associate}</span>
-            </td>
-          ) : (
-            <td>{log.associate}</td>
-          )}
-          
-          <td>{log.shipperConsignee}</td>
-          <td>{log.modeOfTransport}</td>
-          <td>{log.commodity}</td>
-          <td>{log.blAwb}</td>
-          <td>{log.origin}</td>
-          <td>{log.destination}</td>
-          <td>
-            <Moment format="MM/DD/YYYY">{log.etd}</Moment>
-          </td>
-          <td>
-            <Moment format="MM/DD/YYYY">{log.eta}</Moment>
-          </td>
-          <td>{log.status}</td>
-        </tr>
+    if (isEmpty(logs)) {
+      tableBody = <p>Empty</p>;
+    } else {
+      tableBody = (
+        <tbody>
+          {logs.map(log => {
+            const { preloading, loading, unloading } = log.operations;
+            let operationsStatus = "Preloading";
+
+            if (preloading.isFinished === true) {
+              operationsStatus = "Loading";
+
+              if (loading.isFinished === true) {
+                operationsStatus = "Unloading";
+
+                if (unloading.isFinished === true) {
+                  operationsStatus = "Delivered";
+                }
+              }
+            }
+
+            return (
+              <tr
+                key={log._id}
+                data-toggle="modal"
+                data-target="#LogView"
+                onClick={() => this.props.openLogView(log)}
+                className="pointer"
+              >
+                <td>
+                  {log.type.slice(0, 1)}-{log.domJo}
+                </td>
+
+                {/* If the logged in user is the associate, set color to blue */}
+                {auth.user.id === log.user ? (
+                  <td>
+                    <span className="text-primary">{log.associate}</span>
+                  </td>
+                ) : (
+                  <td>{log.associate}</td>
+                )}
+
+                <td>{log.shipperConsignee}</td>
+                <td>{log.modeOfTransport}</td>
+                <td>{log.commodity}</td>
+                <td>{log.blAwb}</td>
+                <td>{log.origin}</td>
+                <td>{log.destination}</td>
+                <td>
+                  <Moment format="MM/DD/YYYY">{log.etd}</Moment>
+                </td>
+                <td>
+                  <Moment format="MM/DD/YYYY">{log.eta}</Moment>
+                </td>
+                <td>
+                  {log.status} / {operationsStatus}
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
       );
-    });
+    }
 
     return (
       <div className="">
@@ -92,7 +121,7 @@ class InternationalLogs extends Component {
         </nav>
         {/* //////////////////////// TABLE //////////////////////// */}
         <div className="mt-3 table-responsive">
-          <table className="table table-hover">
+          <table className="table table-striped table-hover">
             <thead>
               <tr>
                 <th scope="col">I-JO</th>
@@ -108,7 +137,7 @@ class InternationalLogs extends Component {
                 <th scope="col">Status</th>
               </tr>
             </thead>
-            <tbody>{tableBody}</tbody>
+            {tableBody}
           </table>
         </div>
       </div>

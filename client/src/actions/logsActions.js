@@ -129,6 +129,38 @@ export const editLog = log => dispatch => {
   }
 };
 
+// ////////////////////////
+// Delete log (admin)
+export const deleteLog = log => dispatch => {
+  if (log.type === "Domestic") {
+    axios
+      .delete(`/api/logs/domestic/${log._id}`)
+      .then(res => {
+        dispatch(getDomesticLogs());
+      })
+      .catch(err =>
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+      );
+  }
+
+  if (log.type === "International") {
+    axios
+      .delete(`/api/logs/international/${log._id}`)
+      .then(res => {
+        dispatch(getInternationalLogs());
+      })
+      .catch(err =>
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+      );
+  }
+};
+
 // /////////////////////////
 // Submit complete
 export const submitComplete = (log, statusData) => dispatch => {

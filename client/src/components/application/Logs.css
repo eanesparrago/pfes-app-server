@@ -1,3 +1,7 @@
 .logs-nav {
-  border-bottom: 1px solid #007BFF;
+  border-bottom: 1px solid #007bff;
+}
+
+.pointer {
+  cursor: pointer;
 }

@@ -404,15 +404,34 @@ router.post(
 // @desc    Delete domestic log
 // @access  Private
 router.delete(
-  "/domestic",
+  "/domestic/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     // Only admin can delete logs
     if (req.user.userType !== "admin") {
-      return res.json({ unauthorized: "Unauthorized" });
+      return res.status(401).json({ unauthorized: "Unauthorized" });
     }
 
-    DomesticLog.remove({ domJo: req.body.domJo }).then(() => {
+    DomesticLog.findByIdAndRemove(req.params.id).then(() => {
+      res.json({ success: true });
+    });
+  }
+);
+
+// ////////////////////////////////////
+// @route   DELETE api/logs/domestic
+// @desc    Delete international log
+// @access  Private
+router.delete(
+  "/international/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    // Only admin can delete logs
+    if (req.user.userType !== "admin") {
+      return res.status(401).json({ unauthorized: "Unauthorized" });
+    }
+
+    InternationalLog.findByIdAndRemove(req.params.id).then(() => {
       res.json({ success: true });
     });
   }

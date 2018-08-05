@@ -42,6 +42,7 @@ class DomesticLogs extends Component {
                 data-toggle="modal"
                 data-target="#LogView"
                 onClick={() => this.props.openLogView(log)}
+                className="pointer"
               >
                 <td>
                   {log.type.slice(0, 1)}-{log.domJo}
@@ -119,7 +120,7 @@ class DomesticLogs extends Component {
 
         {/* //////////////////////// TABLE //////////////////////// */}
         <div className="mt-3 table-responsive">
-          <table className="table table-hover">
+          <table className="table table-striped table-hover">
             <thead>
               <tr>
                 <th scope="col">D-JO</th>

@@ -7,7 +7,8 @@ import moment from "moment";
 import {
   editLog,
   getDomesticLogs,
-  getInternationalLogs
+  getInternationalLogs,
+  deleteLog
 } from "../../actions/logsActions";
 
 export class LogViewEdit extends Component {
@@ -34,6 +35,7 @@ export class LogViewEdit extends Component {
     this.onChange = this.onChange.bind(this);
     this.toggleEdit = this.toggleEdit.bind(this);
     this.submitEdit = this.submitEdit.bind(this);
+    this.deleteLog = this.deleteLog.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -90,6 +92,10 @@ export class LogViewEdit extends Component {
     this.props.editLog(log);
   }
 
+  deleteLog() {
+    this.props.deleteLog(this.props.log);
+  }
+
   render() {
     const { errors, isEditable } = this.state;
     const { log, auth } = this.props;
@@ -111,10 +117,23 @@ export class LogViewEdit extends Component {
       ) : (
         <button
           type="button"
-          className="btn btn-outline-primary mr-2 mb-3"
+          className="btn btn-outline-primary mr-3 mb-3"
           onClick={this.toggleEdit}
         >
           Edit Job Order
+        </button>
+      );
+    }
+
+    let deleteControl = null;
+    if (auth.user.userType === "admin") {
+      deleteControl = (
+        <button
+          className="btn btn-outline-danger mb-3"
+          onClick={this.deleteLog}
+          data-dismiss="modal"
+        >
+          Delete
         </button>
       );
     }
@@ -130,13 +149,15 @@ export class LogViewEdit extends Component {
             isEditable ? (
               <button
                 type="button"
-                className="btn btn-secondary mb-3"
+                className="btn btn-secondary mb-3 mr-3"
                 onClick={this.toggleEdit}
               >
                 &times;
               </button>
             ) : null
           ) : null}
+
+          {deleteControl}
         </div>
 
         <form noValidate>
@@ -449,6 +470,7 @@ LogViewEdit.propTypes = {
   getDomesticLogs: PropTypes.func.isRequired,
   editLog: PropTypes.func.isRequired,
   getInternationalLogs: PropTypes.func.isRequired,
+  deleteLog: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   log: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
@@ -462,5 +484,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { editLog, getDomesticLogs, getInternationalLogs }
+  { editLog, getDomesticLogs, getInternationalLogs, deleteLog }
 )(LogViewEdit);
