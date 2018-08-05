@@ -155,10 +155,10 @@ export const submitComplete = (log, statusData) => dispatch => {
 
   if (log.type === "International") {
     axios
-      .post(`/api/operations/international/${log._id}/status`, statusData)
+      .post(`/api/operations/international/${log._id}`, statusData)
       .then(res => {
         dispatch({
-          type: ADD_STATUS,
+          type: LOG_CLICKED,
           payload: res.data
         });
 
@@ -251,6 +251,50 @@ export const deleteStatus = (log, statusData, stage) => dispatch => {
           type: DELETE_STATUS,
           payload: res.data
         });
+        dispatch(getInternationalLogs());
+      })
+      .catch(err =>
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+      );
+  }
+};
+
+// ////////////////////////
+// Delete complete
+export const deleteComplete = (log, statusData) => dispatch => {
+  dispatch(clearErrors());
+
+  if (log.type === "Domestic") {
+    axios
+      .post(`/api/operations/domestic/${log._id}`, statusData)
+      .then(res => {
+        dispatch({
+          type: LOG_CLICKED,
+          payload: res.data
+        });
+
+        dispatch(getDomesticLogs());
+      })
+      .catch(err =>
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+      );
+  }
+
+  if (log.type === "International") {
+    axios
+      .post(`/api/operations/international/${log._id}`, statusData)
+      .then(res => {
+        dispatch({
+          type: LOG_CLICKED,
+          payload: res.data
+        });
+
         dispatch(getInternationalLogs());
       })
       .catch(err =>

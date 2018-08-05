@@ -29,7 +29,7 @@ router.get(
   (req, res) => {
     const errors = {};
 
-    DomesticLog.find()
+    DomesticLog.find({ active: { $eq: true } })
       .sort({ _id: -1 })
       .then(logs => {
         if (!logs) {
@@ -43,11 +43,6 @@ router.get(
       );
   }
 );
-
-// ////////////////////////////////////
-// @route   GET api/logs/domestic/:id
-// @desc    Get domestic log by id
-// @access  Private
 
 // ////////////////////////////////////
 // @route   GET api/logs/international

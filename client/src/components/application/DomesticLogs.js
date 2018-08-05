@@ -31,7 +31,16 @@ class DomesticLogs extends Component {
                 <td>
                   {log.type.slice(0, 1)}-{log.domJo}
                 </td>
-                <td>{log.associate}</td>
+
+                {/* If the logged in user is the associate, set color to blue */}
+                {auth.user.id === log.user ? (
+                  <td>
+                    <span className="text-primary">{log.associate}</span>
+                  </td>
+                ) : (
+                  <td>{log.associate}</td>
+                )}
+
                 <td>{log.shipperConsignee}</td>
                 <td>{log.modeOfTransport}</td>
                 <td>{log.commodity}</td>
@@ -62,15 +71,15 @@ class DomesticLogs extends Component {
             className="navbar-toggler"
             type="button"
             data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
+            data-target="#domesticNavbar"
+            aria-controls="domesticNavbar"
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
             <span className="navbar-toggler-icon" />
           </button>
 
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <div className="collapse navbar-collapse" id="domesticNavbar">
             {auth.user.userType === "admin" ||
             auth.user.userType === "sales" ? (
               <DomesticLogCreate />

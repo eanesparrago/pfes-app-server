@@ -131,6 +131,126 @@ router.post(
 );
 
 // ////////////////////////////////////
+// @route   POST api/operations/international/:id
+// @desc    Edit international operations
+// @access  Private
+// @payload { isFinished, remarks, dateFinished, stage }
+router.post(
+  "/international/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    console.log(req.user);
+    // Only admin and operations can access
+    if (req.user.userType !== "admin" && req.user.userType !== "operations") {
+      return res.status(400).json({ unauthorized: "Unauthorized" });
+    }
+
+    // const { errors, isValid } = validateLogInput(req.body);
+
+    // if (!isValid) {
+    //   return res.status(400).json(errors);
+    // }
+
+    // If the field was empty it will check so that it will default to n/a instead of an empty object
+
+    InternationalLog.findById(req.params.id).then(log => {
+      const data = {};
+      if (req.body.remarks) data.remarks = req.body.remarks;
+      if (req.body.dateFinished) data.dateFinished = req.body.dateFinished;
+
+      switch (req.body.stage) {
+        case "preloading":
+          log.operations.preloading.isFinished = req.body.isFinished;
+
+          if (req.body.isFinished === true) {
+            if (req.body.remarks)
+              log.operations.preloading.remarks = data.remarks;
+            if (req.body.dateFinished)
+              log.operations.preloading.dateFinished = data.dateFinished;
+          } else if (req.body.isFinished === false) {
+            log.operations.preloading.remarks = "n/a";
+
+            log.operations.loading.isFinished = false;
+            log.operations.loading.remarks = "n/a";
+            log.operations.unloading.isFinished = false;
+            log.operations.unloading.remarks = "n/a";
+          }
+
+          log.operations.preloading.name = `${req.user.firstName} ${
+            req.user.lastName
+          }`;
+
+          log.save().then(log => res.json(log));
+          break;
+
+        case "loading":
+          if (log.operations.preloading.isFinished === false) {
+            return res.status(400).json({
+              preloadingNotFinished:
+                "Can't complete loading if preloading isn't completed yet"
+            });
+          }
+
+          log.operations.loading.isFinished = req.body.isFinished;
+
+          if (req.body.isFinished === true) {
+            if (req.body.remarks) log.operations.loading.remarks = data.remarks;
+            if (req.body.dateFinished)
+              log.operations.loading.dateFinished = data.dateFinished;
+          } else if (req.body.isFinished === false) {
+            log.operations.loading.remarks = "n/a";
+
+            log.operations.unloading.isFinished = false;
+            log.operations.unloading.remarks = "n/a";
+          }
+
+          log.operations.loading.name = `${req.user.firstName} ${
+            req.user.lastName
+          }`;
+
+          log.save().then(log => res.json(log));
+          break;
+
+        case "unloading":
+          if (log.operations.preloading.isFinished === false) {
+            return res.status(400).json({
+              loadingNotFinished:
+                "Can't complete unloading if preloading isn't completed yet"
+            });
+          }
+          if (log.operations.loading.isFinished === false) {
+            return res.status(400).json({
+              preloadingNotFinished:
+                "Can't complete unloading if loading isn't completed yet"
+            });
+          }
+
+          log.operations.unloading.isFinished = req.body.isFinished;
+
+          if (req.body.isFinished === true) {
+            if (req.body.remarks)
+              log.operations.unloading.remarks = data.remarks;
+            if (req.body.dateFinished)
+              log.operations.unloading.dateFinished = data.dateFinished;
+          } else if (req.body.isFinished === false) {
+            log.operations.unloading.remarks = "n/a";
+          }
+
+          log.operations.unloading.name = `${req.user.firstName} ${
+            req.user.lastName
+          }`;
+
+          log.save().then(log => res.json(log));
+          break;
+
+        default:
+          return res.status(400).json({ unknownStage: "Unknown stage" });
+      }
+    });
+  }
+);
+
+// ////////////////////////////////////
 // @route   POST api/operations/domestic/:id/status
 // @desc    Add domestic operations status
 // @access  Private
@@ -156,8 +276,6 @@ router.post(
     if (req.body.comment) newStatus.comment = req.body.comment;
     newStatus.name = `${req.user.firstName} ${req.user.lastName}`;
     newStatus.user = req.user.id;
-
-    console.log("USER", req.user);
 
     DomesticLog.findById(req.params.id).then(log => {
       log.dateModified = Date.now();
@@ -214,6 +332,7 @@ router.post(
     if (req.user.userType !== "admin" && req.user.userType !== "operations") {
       return res.status(400).json({ unauthorized: "Unauthorized" });
     }
+
     const { errors, isValid } = validateStatusInput(req.body);
 
     if (!isValid) {
@@ -227,9 +346,9 @@ router.post(
     newStatus.name = `${req.user.firstName} ${req.user.lastName}`;
     newStatus.user = req.user.id;
 
-    console.log("USER", req.user);
-
     InternationalLog.findById(req.params.id).then(log => {
+      console.log("FOUND");
+
       log.dateModified = Date.now();
 
       // Add to statuses array

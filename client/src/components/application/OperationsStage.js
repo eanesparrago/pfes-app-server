@@ -3,7 +3,7 @@ import classnames from "classnames";
 import isEmpty from "../../validation/is-empty";
 import Moment from "react-moment";
 import { connect } from "react-redux";
-import { deleteStatus } from "../../actions/logsActions";
+import { deleteStatus, deleteComplete } from "../../actions/logsActions";
 
 import OperationsAddStatus from "./OperationsAddStatus";
 import OperationsCompleteForm from "./OperationsCompleteForm";
@@ -20,6 +20,7 @@ class OperationsStage extends Component {
     this.toggleStatusControl = this.toggleStatusControl.bind(this);
     this.toggleMarkCompleteControl = this.toggleMarkCompleteControl.bind(this);
     this.deleteStatus = this.deleteStatus.bind(this);
+    this.deleteComplete = this.deleteComplete.bind(this);
   }
 
   toggleStatusControl() {
@@ -42,11 +43,20 @@ class OperationsStage extends Component {
     this.props.deleteStatus(this.props.log, id, stage);
   }
 
+  deleteComplete() {
+    const statusData = {
+      isFinished: false,
+      stage: this.props.stage
+    };
+
+    this.props.deleteComplete(this.props.log, statusData);
+  }
+
   render() {
     const { statusControl, markCompleteControl } = this.state;
 
-    const { data, title, stage, auth } = this.props;
-    // data contains isFinished, remarks, dateFinshed
+    const { data, title, stage, auth, log } = this.props;
+    // data contains isFinished, remarks, dateFinshed, and statuses
 
     // Show controls only to either admin or operations and isFinished must be false
     let showControls = false;
@@ -60,7 +70,7 @@ class OperationsStage extends Component {
     let statusList;
 
     // Map status array
-    if (isEmpty(data.statuses)) {
+    if (isEmpty(data.statuses) && data.isFinished === false) {
       statusList = (
         <li className="list-group-item d-flex justify-content-between align-items-center row">
           <em>No status</em>
@@ -73,33 +83,35 @@ class OperationsStage extends Component {
             key={status._id}
             className="list-group-item d-flex justify-content-between align-items-center row"
           >
-            <div className="col-lg-6">
+            <div className="col-lg-8">
               {status.comment}{" "}
               <span className="text-muted">
                 <em>&mdash; {status.name}</em>
               </span>
             </div>
-            <div className="col-lg-4">
+            <div className="col-lg-2">
               <Moment format="YYYY-MM-DD">{status.dateInput}</Moment>
             </div>
 
-            {showControls === true ? (
-              <div className="col-lg-2">
-                <button
-                  type="button"
-                  className="btn btn-outline-primary btn-sm mr-2"
-                  // onClick={this.toggleEdit}
-                >
-                  Edit
-                </button>
-                <button
-                  className="btn btn-outline-danger btn-sm"
-                  onClick={() => this.deleteStatus(status._id)}
-                >
-                  &times;
-                </button>
-              </div>
-            ) : null}
+            <div className="col-lg-2">
+              {showControls === true ? (
+                <span>
+                  {/* <button
+                    type="button"
+                    className="btn btn-outline-primary btn-sm mr-2"
+                    // onClick={this.toggleEdit}
+                  >
+                    Edit
+                  </button> */}
+                  <button
+                    className="btn btn-outline-danger btn-sm"
+                    onClick={() => this.deleteStatus(status._id)}
+                  >
+                    Delete
+                  </button>
+                </span>
+              ) : null}
+            </div>
           </li>
         );
       });
@@ -108,12 +120,12 @@ class OperationsStage extends Component {
     return (
       <li className="list-group-item pb-1">
         <div className="row mb-2">
-          <h4 className="col-lg-3">
+          <h4 className="col-lg-2">
             <div>{title}</div>
           </h4>
 
           {showControls === true ? (
-            <div className="col-lg-7">
+            <div className="col-lg-10">
               <div>
                 <button
                   type="button"
@@ -155,15 +167,28 @@ class OperationsStage extends Component {
             {/* When the stage is complete, the Completed status is shown*/}
             {data.isFinished === true ? (
               <li className="list-group-item list-group-item-success d-flex justify-content-between align-items-center row">
-                <div className="col-lg-6">
+                <div className="col-lg-8">
                   <strong className="">Completed</strong> | Remarks:{" "}
                   {data.remarks}{" "}
                   <span className="text-muted">
                     <em>&mdash; {data.name}</em>
                   </span>
                 </div>
-                <div className="col-lg-4">
+
+                {/* Undo complete button */}
+                <div className="col-lg-2">
                   <Moment format="YYYY-MM-DD">{data.dateFinished}</Moment>
+                </div>
+                <div className="col-lg-2">
+                  {auth.user.userType === "admin" ||
+                  auth.user.userType === "operations" ? (
+                    <button
+                      className="btn btn-outline-danger btn-sm"
+                      onClick={this.deleteComplete}
+                    >
+                      Undo
+                    </button>
+                  ) : null}
                 </div>
               </li>
             ) : null}
@@ -184,5 +209,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { deleteStatus }
+  { deleteStatus, deleteComplete }
 )(OperationsStage);

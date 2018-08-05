@@ -173,6 +173,11 @@ const InternationalLogSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "users"
   },
+  active: {
+    type: String,
+    default: true,
+    required: true
+  },
   date: {
     type: Date,
     default: Date.now
