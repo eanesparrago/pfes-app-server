@@ -23,7 +23,7 @@ class DomesticLogCreate extends Component {
       destination: "",
       etd: "",
       eta: "",
-      status: "Waiting",
+      status: "Ongoing",
       errors: {}
     };
 
@@ -48,7 +48,7 @@ class DomesticLogCreate extends Component {
         destination: "",
         etd: "",
         eta: "",
-        status: "Waiting",
+        status: "Ongoing",
         errors: {}
       });
 
@@ -341,9 +341,9 @@ class DomesticLogCreate extends Component {
                       value={this.state.status}
                       onChange={this.onChange}
                     >
-                      <option value="Waiting">Waiting</option>
                       <option value="Ongoing">Ongoing</option>
                       <option value="Complete">Complete</option>
+                      <option value="Waiting">Waiting</option>
                       <option value="Void">Void</option>
                     </select>
 

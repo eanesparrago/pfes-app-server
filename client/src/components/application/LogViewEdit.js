@@ -24,7 +24,7 @@ export class LogViewEdit extends Component {
       destination: "",
       etd: "",
       eta: "",
-      status: "Waiting",
+      status: "Ongoing",
       type: "",
 
       errors: {},
@@ -58,9 +58,6 @@ export class LogViewEdit extends Component {
 
         isEditable: false
       });
-
-      // this.props.getDomesticLogs();
-      // this.props.getInternationalLogs();
     }
   }
 
@@ -425,9 +422,9 @@ export class LogViewEdit extends Component {
                   value={this.state.status}
                   onChange={this.onChange}
                 >
-                  <option value="Waiting">Waiting</option>
                   <option value="Ongoing">Ongoing</option>
                   <option value="Complete">Complete</option>
+                  <option value="Waiting">Waiting</option>
                   <option value="Void">Void</option>
                 </select>
                 {errors.status && (

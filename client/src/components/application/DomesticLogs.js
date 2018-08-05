@@ -21,6 +21,21 @@ class DomesticLogs extends Component {
       tableBody = (
         <tbody>
           {logs.map(log => {
+            const { preloading, loading, unloading } = log.operations;
+            let operationsStatus = "Preloading";
+
+            if (preloading.isFinished === true) {
+              operationsStatus = "Loading";
+
+              if (loading.isFinished === true) {
+                operationsStatus = "Unloading";
+
+                if (unloading.isFinished === true) {
+                  operationsStatus = "Delivered";
+                }
+              }
+            }
+
             return (
               <tr
                 key={log._id}
@@ -53,7 +68,7 @@ class DomesticLogs extends Component {
                 <td>
                   <Moment format="MM/DD/YYYY">{log.eta}</Moment>
                 </td>
-                <td>{log.status}</td>
+                <td>{log.status} / {operationsStatus}</td>
               </tr>
             );
           })}
