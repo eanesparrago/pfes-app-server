@@ -12,10 +12,14 @@ const bodyParser = require("body-parser");
 const passport = require("passport");
 // Passport is Express-compatible authentication middleware for Node.js.
 
+const path = require("path");
+// path module part of nodejs
+
 // ////////////////////////////////////
 // ROUTES IMPORTS
 const users = require("./routes/api/users");
 const logs = require("./routes/api/logs");
+const operations = require("./routes/api/operations");
 
 // ////////////////////////////////////
 
@@ -43,6 +47,17 @@ require("./config/passport")(passport);
 //  Use routes
 app.use("/api/users", users);
 app.use("/api/logs", logs);
+app.use("/api/operations", operations);
+
+// Serve static assets if in production
+if (process.env.NODE_ENV === "production") {
+  // Set static folder
+  app.use(express.static("client/build"));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
 
 const port = process.env.PORT || 5000;
 

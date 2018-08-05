@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Moment from "react-moment";
 import DomesticLogCreate from "./DomesticLogCreate";
+import isEmpty from "../../validation/is-empty";
 
 import { openLogView } from "../../actions/logsActions";
 
@@ -12,34 +13,53 @@ class DomesticLogs extends Component {
   render() {
     const { auth, logs } = this.props;
 
-    const tableBody = logs.map(log => {
-      return (
-        <tr
-          key={log._id}
-          data-toggle="modal"
-          data-target="#LogView"
-          onClick={() => this.props.openLogView(log)}
-        >
-          <td>
-            {log.type.slice(0, 1)}-{log.domJo}
-          </td>
-          <td>{log.associate}</td>
-          <td>{log.shipperConsignee}</td>
-          <td>{log.modeOfTransport}</td>
-          <td>{log.commodity}</td>
-          <td>{log.blAwb}</td>
-          <td>{log.origin}</td>
-          <td>{log.destination}</td>
-          <td>
-            <Moment format="YYYY/MM/DD">{log.etd}</Moment>
-          </td>
-          <td>
-            <Moment format="YYYY/MM/DD">{log.eta}</Moment>
-          </td>
-          <td>{log.status}</td>
-        </tr>
+    let tableBody;
+
+    if (isEmpty(logs)) {
+      tableBody = <p>Empty</p>;
+    } else {
+      tableBody = (
+        <tbody>
+          {logs.map(log => {
+            return (
+              <tr
+                key={log._id}
+                data-toggle="modal"
+                data-target="#LogView"
+                onClick={() => this.props.openLogView(log)}
+              >
+                <td>
+                  {log.type.slice(0, 1)}-{log.domJo}
+                </td>
+
+                {/* If the logged in user is the associate, set color to blue */}
+                {auth.user.id === log.user ? (
+                  <td>
+                    <span className="text-primary">{log.associate}</span>
+                  </td>
+                ) : (
+                  <td>{log.associate}</td>
+                )}
+
+                <td>{log.shipperConsignee}</td>
+                <td>{log.modeOfTransport}</td>
+                <td>{log.commodity}</td>
+                <td>{log.blAwb}</td>
+                <td>{log.origin}</td>
+                <td>{log.destination}</td>
+                <td>
+                  <Moment format="YYYY-MM-DD">{log.etd}</Moment>
+                </td>
+                <td>
+                  <Moment format="YYYY-MM-DD">{log.eta}</Moment>
+                </td>
+                <td>{log.status}</td>
+              </tr>
+            );
+          })}
+        </tbody>
       );
-    });
+    }
 
     return (
       <div className="">
@@ -51,15 +71,15 @@ class DomesticLogs extends Component {
             className="navbar-toggler"
             type="button"
             data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
+            data-target="#domesticNavbar"
+            aria-controls="domesticNavbar"
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
             <span className="navbar-toggler-icon" />
           </button>
 
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <div className="collapse navbar-collapse" id="domesticNavbar">
             {auth.user.userType === "admin" ||
             auth.user.userType === "sales" ? (
               <DomesticLogCreate />
@@ -83,7 +103,6 @@ class DomesticLogs extends Component {
         </nav>
 
         {/* //////////////////////// TABLE //////////////////////// */}
-
         <div className="mt-3 table-responsive">
           <table className="table table-hover">
             <thead>
@@ -101,7 +120,7 @@ class DomesticLogs extends Component {
                 <th scope="col">Status</th>
               </tr>
             </thead>
-            <tbody>{tableBody}</tbody>
+            {tableBody}
           </table>
         </div>
       </div>

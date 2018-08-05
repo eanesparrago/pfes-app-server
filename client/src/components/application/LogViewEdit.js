@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 import { connect } from "react-redux";
+import moment from "moment";
 
 import {
   editLog,
@@ -50,16 +51,16 @@ export class LogViewEdit extends Component {
         blAwb: nextProps.log.blAwb,
         origin: nextProps.log.origin,
         destination: nextProps.log.destination,
-        etd: nextProps.log.etd,
-        eta: nextProps.log.eta,
+        etd: moment(nextProps.log.etd).format("YYYY-MM-DD"),
+        eta: moment(nextProps.log.eta).format("YYYY-MM-DD"),
         status: nextProps.log.status,
         type: nextProps.log.type,
 
         isEditable: false
       });
 
-      this.props.getDomesticLogs();
-      this.props.getInternationalLogs();
+      // this.props.getDomesticLogs();
+      // this.props.getInternationalLogs();
     }
   }
 
@@ -69,25 +70,11 @@ export class LogViewEdit extends Component {
 
   toggleEdit() {
     this.setState({
-      domJo: this.props.log.domJo,
-      shipperConsignee: this.props.log.shipperConsignee,
-      associate: this.props.log.associate,
-      modeOfTransport: this.props.log.modeOfTransport,
-      commodity: this.props.log.commodity,
-      blAwb: this.props.log.blAwb,
-      origin: this.props.log.origin,
-      destination: this.props.log.destination,
-      etd: this.props.log.etd,
-      eta: this.props.log.eta,
-      status: this.props.log.status,
-
       isEditable: !this.state.isEditable
     });
   }
 
   submitEdit() {
-    // console.log("STATE", this.state);
-
     const log = {
       domJo: this.state.domJo,
       shipperConsignee: this.state.shipperConsignee,
@@ -109,8 +96,6 @@ export class LogViewEdit extends Component {
   render() {
     const { errors, isEditable } = this.state;
     const { log, auth } = this.props;
-
-    console.log(auth.user.id, log.user);
 
     let editControls = null;
 

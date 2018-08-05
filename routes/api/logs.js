@@ -29,7 +29,7 @@ router.get(
   (req, res) => {
     const errors = {};
 
-    DomesticLog.find()
+    DomesticLog.find({ active: { $eq: true } })
       .sort({ _id: -1 })
       .then(logs => {
         if (!logs) {
@@ -43,11 +43,6 @@ router.get(
       );
   }
 );
-
-// ////////////////////////////////////
-// @route   GET api/logs/domestic/:id
-// @desc    Get domestic log by id
-// @access  Private
 
 // ////////////////////////////////////
 // @route   GET api/logs/international
@@ -209,7 +204,6 @@ router.post(
     const newLog = {};
 
     newLog.domJo = req.body.domJo;
-    newLog.user = req.body.user;
     if (req.body.shipperConsignee)
       newLog.shipperConsignee = req.body.shipperConsignee;
     // if (req.body.associate) newLog.associate = req.body.associate;
@@ -222,8 +216,6 @@ router.post(
     if (req.body.etd) newLog.etd = req.body.etd;
     if (req.body.eta) newLog.eta = req.body.eta;
     newLog.status = req.body.status;
-
-    newLog.user = req.user.id;
 
     newLog.dateModified = Date.now();
 
@@ -273,7 +265,6 @@ router.post(
     const newLog = {};
 
     newLog.domJo = req.body.domJo;
-    newLog.user = req.body.user;
     if (req.body.shipperConsignee)
       newLog.shipperConsignee = req.body.shipperConsignee;
     if (req.body.associate) newLog.associate = req.body.associate;
@@ -286,8 +277,6 @@ router.post(
     if (req.body.etd) newLog.etd = req.body.etd;
     if (req.body.eta) newLog.eta = req.body.eta;
     newLog.status = req.body.status;
-
-    newLog.user = req.user.id;
 
     newLog.dateModified = Date.now();
 

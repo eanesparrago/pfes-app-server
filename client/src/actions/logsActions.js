@@ -3,14 +3,16 @@ import axios from "axios";
 import {
   GET_DOMESTIC_LOGS,
   GET_INTERNATIONAL_LOGS,
-  SUCCESS_CREATE,
   GET_ERRORS,
   LOG_CLICKED,
   CLEAR_ERRORS,
   ADD_DOMESTIC_LOG,
-  ADD_INTERNATIONAL_LOG
+  ADD_INTERNATIONAL_LOG,
+  ADD_STATUS,
+  DELETE_STATUS
 } from "./types";
 
+// /////////////////////////
 // Get domestic logs
 export const getDomesticLogs = () => dispatch => {
   axios.get("/api/logs/domestic").then(res =>
@@ -21,6 +23,7 @@ export const getDomesticLogs = () => dispatch => {
   );
 };
 
+// /////////////////////////
 // Get international logs
 export const getInternationalLogs = () => dispatch => {
   axios.get("/api/logs/international").then(res =>
@@ -31,6 +34,7 @@ export const getInternationalLogs = () => dispatch => {
   );
 };
 
+// /////////////////////////
 // Create domestic log
 export const createDomesticLog = logData => dispatch => {
   dispatch(clearErrors());
@@ -51,6 +55,7 @@ export const createDomesticLog = logData => dispatch => {
     );
 };
 
+// /////////////////////////
 // Create international log
 export const createInternationalLog = logData => dispatch => {
   dispatch(clearErrors());
@@ -71,6 +76,7 @@ export const createInternationalLog = logData => dispatch => {
     );
 };
 
+// /////////////////////////
 // Open log view
 export const openLogView = log => dispatch => {
   dispatch({
@@ -79,6 +85,7 @@ export const openLogView = log => dispatch => {
   });
 };
 
+// /////////////////////////
 // Edit log
 export const editLog = log => dispatch => {
   // console.log("editLog", log);
@@ -91,6 +98,8 @@ export const editLog = log => dispatch => {
           type: LOG_CLICKED,
           payload: res.data
         });
+
+        dispatch(getDomesticLogs());
       })
       .catch(err =>
         dispatch({
@@ -108,6 +117,8 @@ export const editLog = log => dispatch => {
           type: LOG_CLICKED,
           payload: res.data
         });
+
+        dispatch(getInternationalLogs());
       })
       .catch(err =>
         dispatch({
@@ -118,6 +129,184 @@ export const editLog = log => dispatch => {
   }
 };
 
+// /////////////////////////
+// Submit complete
+export const submitComplete = (log, statusData) => dispatch => {
+  dispatch(clearErrors());
+
+  if (log.type === "Domestic") {
+    axios
+      .post(`/api/operations/domestic/${log._id}`, statusData)
+      .then(res => {
+        dispatch({
+          type: LOG_CLICKED,
+          payload: res.data
+        });
+
+        dispatch(getDomesticLogs());
+      })
+      .catch(err =>
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+      );
+  }
+
+  if (log.type === "International") {
+    axios
+      .post(`/api/operations/international/${log._id}`, statusData)
+      .then(res => {
+        dispatch({
+          type: LOG_CLICKED,
+          payload: res.data
+        });
+
+        dispatch(getInternationalLogs());
+      })
+      .catch(err =>
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+      );
+  }
+};
+
+// /////////////////////////
+// Add domestic/international log status
+export const addStatus = (log, statusData) => dispatch => {
+  dispatch(clearErrors());
+
+  console.log("log:", log);
+
+  if (log.type === "Domestic") {
+    axios
+      .post(`/api/operations/domestic/${log._id}/status`, statusData)
+      .then(res => {
+        dispatch({
+          type: ADD_STATUS,
+          payload: res.data
+        });
+
+        dispatch(getDomesticLogs());
+      })
+      .catch(err =>
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+      );
+  }
+
+  if (log.type === "International") {
+    axios
+      .post(`/api/operations/international/${log._id}/status`, statusData)
+      .then(res => {
+        dispatch({
+          type: ADD_STATUS,
+          payload: res.data
+        });
+
+        dispatch(getInternationalLogs());
+      })
+      .catch(err =>
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+      );
+  }
+};
+
+// /////////////////////////
+// Delete domestic/international status
+export const deleteStatus = (log, statusData, stage) => dispatch => {
+  if (log.type === "Domestic") {
+    axios
+      .post(`/api/operations/domestic/${log._id}/status/${statusData}`, stage)
+      .then(res => {
+        dispatch({
+          type: DELETE_STATUS,
+          payload: res.data
+        });
+        dispatch(getDomesticLogs());
+      })
+      .catch(err =>
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+      );
+  }
+
+  if (log.type === "International") {
+    axios
+      .post(
+        `/api/operations/international/${log._id}/status/${statusData}`,
+        stage
+      )
+      .then(res => {
+        dispatch({
+          type: DELETE_STATUS,
+          payload: res.data
+        });
+        dispatch(getInternationalLogs());
+      })
+      .catch(err =>
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+      );
+  }
+};
+
+// ////////////////////////
+// Delete complete
+export const deleteComplete = (log, statusData) => dispatch => {
+  dispatch(clearErrors());
+
+  if (log.type === "Domestic") {
+    axios
+      .post(`/api/operations/domestic/${log._id}`, statusData)
+      .then(res => {
+        dispatch({
+          type: LOG_CLICKED,
+          payload: res.data
+        });
+
+        dispatch(getDomesticLogs());
+      })
+      .catch(err =>
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+      );
+  }
+
+  if (log.type === "International") {
+    axios
+      .post(`/api/operations/international/${log._id}`, statusData)
+      .then(res => {
+        dispatch({
+          type: LOG_CLICKED,
+          payload: res.data
+        });
+
+        dispatch(getInternationalLogs());
+      })
+      .catch(err =>
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+      );
+  }
+};
+
+// /////////////////////////
 // Clear errors
 export const clearErrors = () => {
   return {

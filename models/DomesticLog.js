@@ -55,9 +55,15 @@ const DomesticLogSchema = new Schema({
       dateFinished: {
         type: Date
       },
-      satuses: [
+      name: {
+        type: String
+      },
+      statuses: [
         {
-          userName: {
+          name: {
+            type: String
+          },
+          user: {
             type: Schema.Types.ObjectId,
             ref: "users"
           },
@@ -88,9 +94,15 @@ const DomesticLogSchema = new Schema({
       dateFinished: {
         type: Date
       },
-      satuses: [
+      name: {
+        type: String
+      },
+      statuses: [
         {
-          userName: {
+          name: {
+            type: String
+          },
+          user: {
             type: Schema.Types.ObjectId,
             ref: "users"
           },
@@ -121,9 +133,15 @@ const DomesticLogSchema = new Schema({
       dateFinished: {
         type: Date
       },
-      satuses: [
+      name: {
+        type: String
+      },
+      statuses: [
         {
-          userName: {
+          name: {
+            type: String
+          },
+          user: {
             type: Schema.Types.ObjectId,
             ref: "users"
           },
@@ -154,6 +172,11 @@ const DomesticLogSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
     ref: "users"
+  },
+  active: {
+    type: String,
+    default: true,
+    required: true
   },
   date: {
     type: Date,

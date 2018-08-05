@@ -3,21 +3,26 @@
 import {
   GET_DOMESTIC_LOGS,
   GET_INTERNATIONAL_LOGS,
-  SUCCESS_CREATE,
-  GET_ERRORS,
   LOG_CLICKED,
   LOG_LOADING,
   ADD_DOMESTIC_LOG,
-  ADD_INTERNATIONAL_LOG
+  ADD_INTERNATIONAL_LOG,
+  ADD_STATUS,
+  DELETE_STATUS
 } from "../actions/types";
 
 const initialState = {
   domestic: null,
   international: null,
-  log: {},
+  log: {
+    operations: {
+      preloading: { statuses: [] },
+      loading: { statuses: [] },
+      unloading: { statuses: [] }
+    }
+  },
 
-  loading: false,
-  success: false
+  loading: false
 };
 
 export default function(state = initialState, action) {
@@ -52,6 +57,18 @@ export default function(state = initialState, action) {
       return {
         ...state,
         international: [action.payload, ...state.international]
+      };
+
+    case ADD_STATUS:
+      return {
+        ...state,
+        log: action.payload
+      };
+
+    case DELETE_STATUS:
+      return {
+        ...state,
+        log: action.payload
       };
 
     case LOG_CLICKED:
