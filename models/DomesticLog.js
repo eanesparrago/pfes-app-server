@@ -53,7 +53,8 @@ const DomesticLogSchema = new Schema({
         default: "n/a"
       },
       dateFinished: {
-        type: Date
+        type: Date,
+        default: Date.now
       },
       name: {
         type: String
@@ -71,9 +72,9 @@ const DomesticLogSchema = new Schema({
             type: String,
             required: true
           },
-          dateInput: {
-            type: Date
-          },
+          // dateInput: {
+          //   type: Date
+          // },
           date: {
             type: Date,
             default: Date.now
@@ -92,7 +93,8 @@ const DomesticLogSchema = new Schema({
         default: "n/a"
       },
       dateFinished: {
-        type: Date
+        type: Date,
+        default: Date.now
       },
       name: {
         type: String
@@ -131,7 +133,8 @@ const DomesticLogSchema = new Schema({
         default: "n/a"
       },
       dateFinished: {
-        type: Date
+        type: Date,
+        default: Date.now
       },
       name: {
         type: String

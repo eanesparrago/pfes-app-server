@@ -14,7 +14,7 @@ const validateStatusInput = require("../../validation/status");
 // @route   POST api/operations/domestic/:id
 // @desc    Edit domestic operations
 // @access  Private
-// @payload { isFinished, remarks, dateFinished, stage }
+// @payload { isFinished, remarks, stage }
 router.post(
   "/domestic/:id",
   passport.authenticate("jwt", { session: false }),
@@ -25,18 +25,11 @@ router.post(
       return res.status(400).json({ unauthorized: "Unauthorized" });
     }
 
-    // const { errors, isValid } = validateLogInput(req.body);
-
-    // if (!isValid) {
-    //   return res.status(400).json(errors);
-    // }
-
-    // If the field was empty it will check so that it will default to n/a instead of an empty object
+    console.log("SUBMIT COMPELTE:", req.body);
 
     DomesticLog.findById(req.params.id).then(log => {
       const data = {};
       if (req.body.remarks) data.remarks = req.body.remarks;
-      if (req.body.dateFinished) data.dateFinished = req.body.dateFinished;
 
       switch (req.body.stage) {
         case "preloading":
@@ -45,8 +38,8 @@ router.post(
           if (req.body.isFinished === true) {
             if (req.body.remarks)
               log.operations.preloading.remarks = data.remarks;
-            if (req.body.dateFinished)
-              log.operations.preloading.dateFinished = data.dateFinished;
+
+            log.operations.preloading.dateFinished = Date.now();
           } else if (req.body.isFinished === false) {
             log.operations.preloading.remarks = "n/a";
 
@@ -56,6 +49,7 @@ router.post(
             log.operations.unloading.remarks = "n/a";
           }
 
+          // Full name of the user who accessed
           log.operations.preloading.name = `${req.user.firstName} ${
             req.user.lastName
           }`;
@@ -75,8 +69,8 @@ router.post(
 
           if (req.body.isFinished === true) {
             if (req.body.remarks) log.operations.loading.remarks = data.remarks;
-            if (req.body.dateFinished)
-              log.operations.loading.dateFinished = data.dateFinished;
+
+            log.operations.loading.dateFinished = Date.now();
           } else if (req.body.isFinished === false) {
             log.operations.loading.remarks = "n/a";
 
@@ -110,8 +104,8 @@ router.post(
           if (req.body.isFinished === true) {
             if (req.body.remarks)
               log.operations.unloading.remarks = data.remarks;
-            if (req.body.dateFinished)
-              log.operations.unloading.dateFinished = data.dateFinished;
+
+            log.operations.unloading.dateFinished = Date.now();
           } else if (req.body.isFinished === false) {
             log.operations.unloading.remarks = "n/a";
           }
@@ -272,7 +266,6 @@ router.post(
 
     const newStatus = {};
 
-    if (req.body.dateInput) newStatus.dateInput = req.body.dateInput;
     if (req.body.comment) newStatus.comment = req.body.comment;
     newStatus.name = `${req.user.firstName} ${req.user.lastName}`;
     newStatus.user = req.user.id;
@@ -323,7 +316,7 @@ router.post(
 // @route   POST api/operations/international/:id/status
 // @desc    Add international operations status
 // @access  Private
-// @payload { comment, dateInput, stage }
+// @payload { comment, stage }
 router.post(
   "/international/:id/status",
   passport.authenticate("jwt", { session: false }),
@@ -341,7 +334,6 @@ router.post(
 
     const newStatus = {};
 
-    if (req.body.dateInput) newStatus.dateInput = req.body.dateInput;
     if (req.body.comment) newStatus.comment = req.body.comment;
     newStatus.name = `${req.user.firstName} ${req.user.lastName}`;
     newStatus.user = req.user.id;

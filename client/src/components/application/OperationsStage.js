@@ -90,7 +90,7 @@ class OperationsStage extends Component {
               </span>
             </div>
             <div className="col-lg-2">
-              <Moment format="YYYY-MM-DD">{status.dateInput}</Moment>
+              <Moment format="MM/DD/YYYY, h:mm:ssa">{status.date}</Moment>
             </div>
 
             <div className="col-lg-2">
@@ -177,7 +177,9 @@ class OperationsStage extends Component {
 
                 {/* Undo complete button */}
                 <div className="col-lg-2">
-                  <Moment format="YYYY-MM-DD">{data.dateFinished}</Moment>
+                  <Moment format="MM/DD/YYYY, h:mm:ssa">
+                    {data.dateFinished}
+                  </Moment>
                 </div>
                 <div className="col-lg-2">
                   {auth.user.userType === "admin" ||

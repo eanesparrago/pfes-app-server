@@ -11,7 +11,7 @@ class OperationsCompleteForm extends Component {
 
     this.state = {
       remarks: "",
-      dateFinished: ""
+      // dateFinished: ""
     };
 
     this.onChange = this.onChange.bind(this);
@@ -38,7 +38,7 @@ class OperationsCompleteForm extends Component {
     const statusData = {
       isFinished: true,
       remarks: this.state.remarks,
-      dateFinished: this.state.dateFinished,
+      // dateFinished: this.state.dateFinished,
       stage: this.props.stage
     };
 
@@ -51,7 +51,7 @@ class OperationsCompleteForm extends Component {
     return (
       <form noValidate onSubmit={this.submitComplete}>
         <div className="row">
-          <div className="form-group col-lg-5">
+          <div className="form-group col-lg-10">
             <input
               type="text"
               className={classnames("form-control form-control-sm", {
@@ -65,7 +65,7 @@ class OperationsCompleteForm extends Component {
             <small className="form-text text-muted ml-2">Optional</small>
           </div>
 
-          <div className="form-group col-lg-5">
+          {/* <div className="form-group col-lg-5">
             <input
               type="date"
               className={classnames("form-control form-control-sm", {
@@ -76,12 +76,14 @@ class OperationsCompleteForm extends Component {
               onChange={this.onChange}
             />
             <small className="form-text text-muted ml-2">
-              Defaults to today (<Moment format="YYYY-MM-DD">{Date.now()}</Moment>)
+              Defaults to today (<Moment format="MM/DD/YYYY">
+                {Date.now()}
+              </Moment>)
             </small>
-          </div>
+          </div> */}
 
           <div className="form-group col-lg-2">
-            <button className="btn btn-primary btn-sm">Submit</button>
+            <button className="btn btn-success btn-sm">Submit</button>
           </div>
         </div>
       </form>

@@ -12,8 +12,8 @@ class OperationsAddStatus extends Component {
     super(props);
 
     this.state = {
-      comment: "",
-      dateInput: ""
+      comment: ""
+      // dateInput: ""
     };
 
     this.onChange = this.onChange.bind(this);
@@ -39,7 +39,7 @@ class OperationsAddStatus extends Component {
 
     const statusData = {
       comment: this.state.comment,
-      dateInput: this.state.dateInput,
+      // dateInput: this.state.dateInput,
       stage: this.props.stage
     };
 
@@ -52,7 +52,7 @@ class OperationsAddStatus extends Component {
     return (
       <form noValidate onSubmit={this.submitStatus}>
         <div className="row">
-          <div className="form-group col-lg-5">
+          <div className="form-group col-lg-10">
             <input
               type="text"
               className={classnames("form-control form-control-sm", {
@@ -69,7 +69,7 @@ class OperationsAddStatus extends Component {
             )}
           </div>
 
-          <div className="form-group col-lg-5">
+          {/* <div className="form-group col-lg-5">
             <input
               type="date"
               className={classnames("form-control form-control-sm", {})}
@@ -78,11 +78,11 @@ class OperationsAddStatus extends Component {
               onChange={this.onChange}
             />
             <small className="form-text text-muted ml-2">
-              Defaults to today (<Moment format="YYYY-MM-DD">
+              Defaults to today (<Moment format="MM/DD/YYYY">
                 {Date.now()}
               </Moment>)
             </small>
-          </div>
+          </div> */}
 
           <div className="form-group col-lg-2">
             <button className="btn btn-primary btn-sm">Submit</button>
