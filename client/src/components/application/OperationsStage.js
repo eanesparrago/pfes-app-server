@@ -77,7 +77,7 @@ class OperationsStage extends Component {
         </li>
       );
     } else {
-      statusList = data.statuses.map(status => {
+      statusList = data.statuses.reverse().map(status => {
         return (
           <li
             key={status._id}
@@ -164,6 +164,9 @@ class OperationsStage extends Component {
 
         <div className="container">
           <ul className="list-group list-group-flush">
+            {/* List of all the statuses */}
+            {statusList}
+
             {/* When the stage is complete, the Completed status is shown*/}
             {data.isFinished === true ? (
               <li className="list-group-item list-group-item-success d-flex justify-content-between align-items-center row">
@@ -181,6 +184,7 @@ class OperationsStage extends Component {
                     {data.dateFinished}
                   </Moment>
                 </div>
+
                 <div className="col-lg-2">
                   {auth.user.userType === "admin" ||
                   auth.user.userType === "operations" ? (
@@ -194,9 +198,6 @@ class OperationsStage extends Component {
                 </div>
               </li>
             ) : null}
-
-            {/* List of all the statuses */}
-            {statusList}
           </ul>
         </div>
       </li>
