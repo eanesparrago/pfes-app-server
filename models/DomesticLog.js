@@ -55,6 +55,9 @@ const DomesticLogSchema = new Schema({
       dateFinished: {
         type: Date
       },
+      name: {
+        type: String
+      },
       statuses: [
         {
           name: {
@@ -91,6 +94,9 @@ const DomesticLogSchema = new Schema({
       dateFinished: {
         type: Date
       },
+      name: {
+        type: String
+      },
       statuses: [
         {
           name: {
@@ -126,6 +132,9 @@ const DomesticLogSchema = new Schema({
       },
       dateFinished: {
         type: Date
+      },
+      name: {
+        type: String
       },
       statuses: [
         {

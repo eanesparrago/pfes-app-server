@@ -76,16 +76,23 @@ class Operations extends Component {
           stage="preloading"
           data={log.operations.preloading}
         />
-        <OperationsStage
-          title="Loading"
-          stage="loading"
-          data={log.operations.loading}
-        />
-        <OperationsStage
-          title="Unloading"
-          stage="unloading"
-          data={log.operations.unloading}
-        />
+
+        {log.operations.preloading.isFinished === true ? (
+          <OperationsStage
+            title="Loading"
+            stage="loading"
+            data={log.operations.loading}
+          />
+        ) : null}
+
+        {log.operations.preloading.isFinished === true &&
+        log.operations.loading.isFinished === true ? (
+          <OperationsStage
+            title="Unloading"
+            stage="unloading"
+            data={log.operations.unloading}
+          />
+        ) : null}
       </div>
     );
   }

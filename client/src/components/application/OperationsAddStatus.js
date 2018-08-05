@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import classnames from "classnames";
+import Moment from "react-moment";
 
 import { clearErrors } from "../../actions/logsActions";
 
@@ -62,6 +63,7 @@ class OperationsAddStatus extends Component {
               value={this.state.comment}
               onChange={this.onChange}
             />
+            <small className="form-text text-muted ml-2">Required</small>
             {errors.comment && (
               <div className="invalid-feedback">{errors.comment}</div>
             )}
@@ -75,6 +77,11 @@ class OperationsAddStatus extends Component {
               value={this.state.dateInput}
               onChange={this.onChange}
             />
+            <small className="form-text text-muted ml-2">
+              Defaults to today (<Moment format="YYYY-MM-DD">
+                {Date.now()}
+              </Moment>)
+            </small>
           </div>
 
           <div className="form-group col-lg-2">

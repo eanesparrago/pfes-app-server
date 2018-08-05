@@ -98,6 +98,8 @@ export const editLog = log => dispatch => {
           type: LOG_CLICKED,
           payload: res.data
         });
+
+        dispatch(getDomesticLogs());
       })
       .catch(err =>
         dispatch({
@@ -115,6 +117,52 @@ export const editLog = log => dispatch => {
           type: LOG_CLICKED,
           payload: res.data
         });
+
+        dispatch(getInternationalLogs());
+      })
+      .catch(err =>
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+      );
+  }
+};
+
+// /////////////////////////
+// Submit complete
+export const submitComplete = (log, statusData) => dispatch => {
+  dispatch(clearErrors());
+
+  if (log.type === "Domestic") {
+    axios
+      .post(`/api/operations/domestic/${log._id}`, statusData)
+      .then(res => {
+        dispatch({
+          type: LOG_CLICKED,
+          payload: res.data
+        });
+
+        dispatch(getDomesticLogs());
+      })
+      .catch(err =>
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+      );
+  }
+
+  if (log.type === "International") {
+    axios
+      .post(`/api/operations/international/${log._id}/status`, statusData)
+      .then(res => {
+        dispatch({
+          type: ADD_STATUS,
+          payload: res.data
+        });
+
+        dispatch(getInternationalLogs());
       })
       .catch(err =>
         dispatch({
@@ -133,115 +181,41 @@ export const addStatus = (log, statusData) => dispatch => {
   console.log("log:", log);
 
   if (log.type === "Domestic") {
-    if (statusData.stage === "preloading") {
-      axios
-        .post(`/api/operations/domestic/${log._id}/status`, statusData)
-        .then(res => {
-          dispatch({
-            type: ADD_STATUS,
-            payload: res.data
-          });
-          console.log(res.data);
-        })
-        .catch(err =>
-          dispatch({
-            type: GET_ERRORS,
-            payload: err.response.data
-          })
-        );
-    }
+    axios
+      .post(`/api/operations/domestic/${log._id}/status`, statusData)
+      .then(res => {
+        dispatch({
+          type: ADD_STATUS,
+          payload: res.data
+        });
 
-    if (statusData.stage === "loading") {
-      axios
-        .post(`/api/operations/domestic/${log._id}/status`, statusData)
-        .then(res => {
-          dispatch({
-            type: ADD_STATUS,
-            payload: res.data
-          });
-          console.log(res.data);
+        dispatch(getDomesticLogs());
+      })
+      .catch(err =>
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
         })
-        .catch(err =>
-          dispatch({
-            type: GET_ERRORS,
-            payload: err.response.data
-          })
-        );
-    }
-
-    if (statusData.stage === "unloading") {
-      axios
-        .post(`/api/operations/domestic/${log._id}/status`, statusData)
-        .then(res => {
-          dispatch({
-            type: ADD_STATUS,
-            payload: res.data
-          });
-          console.log(res.data);
-        })
-        .catch(err =>
-          dispatch({
-            type: GET_ERRORS,
-            payload: err.response.data
-          })
-        );
-    }
+      );
   }
 
   if (log.type === "International") {
-    if (statusData.stage === "preloading") {
-      axios
-        .post(`/api/operations/international/${log._id}/status`, statusData)
-        .then(res => {
-          dispatch({
-            type: ADD_STATUS,
-            payload: res.data
-          });
-          console.log(res.data);
-        })
-        .catch(err =>
-          dispatch({
-            type: GET_ERRORS,
-            payload: err.response.data
-          })
-        );
-    }
+    axios
+      .post(`/api/operations/international/${log._id}/status`, statusData)
+      .then(res => {
+        dispatch({
+          type: ADD_STATUS,
+          payload: res.data
+        });
 
-    if (statusData.stage === "loading") {
-      axios
-        .post(`/api/operations/international/${log._id}/status`, statusData)
-        .then(res => {
-          dispatch({
-            type: ADD_STATUS,
-            payload: res.data
-          });
-          console.log(res.data);
+        dispatch(getInternationalLogs());
+      })
+      .catch(err =>
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
         })
-        .catch(err =>
-          dispatch({
-            type: GET_ERRORS,
-            payload: err.response.data
-          })
-        );
-    }
-
-    if (statusData.stage === "unloading") {
-      axios
-        .post(`/api/operations/international/${log._id}/status`, statusData)
-        .then(res => {
-          dispatch({
-            type: ADD_STATUS,
-            payload: res.data
-          });
-          console.log(res.data);
-        })
-        .catch(err =>
-          dispatch({
-            type: GET_ERRORS,
-            payload: err.response.data
-          })
-        );
-    }
+      );
   }
 };
 
@@ -251,12 +225,13 @@ export const deleteStatus = (log, statusData, stage) => dispatch => {
   if (log.type === "Domestic") {
     axios
       .post(`/api/operations/domestic/${log._id}/status/${statusData}`, stage)
-      .then(res =>
+      .then(res => {
         dispatch({
           type: DELETE_STATUS,
           payload: res.data
-        })
-      )
+        });
+        dispatch(getDomesticLogs());
+      })
       .catch(err =>
         dispatch({
           type: GET_ERRORS,
@@ -271,12 +246,13 @@ export const deleteStatus = (log, statusData, stage) => dispatch => {
         `/api/operations/international/${log._id}/status/${statusData}`,
         stage
       )
-      .then(res =>
+      .then(res => {
         dispatch({
           type: DELETE_STATUS,
           payload: res.data
-        })
-      )
+        });
+        dispatch(getInternationalLogs());
+      })
       .catch(err =>
         dispatch({
           type: GET_ERRORS,

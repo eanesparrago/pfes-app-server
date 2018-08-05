@@ -14,7 +14,7 @@ const validateStatusInput = require("../../validation/status");
 // @route   POST api/operations/domestic/:id
 // @desc    Edit domestic operations
 // @access  Private
-
+// @payload { isFinished, remarks, dateFinished, stage }
 router.post(
   "/domestic/:id",
   passport.authenticate("jwt", { session: false }),
@@ -32,159 +32,101 @@ router.post(
     // }
 
     // If the field was empty it will check so that it will default to n/a instead of an empty object
-    const operationsData = {};
 
-    operationsData.operations = {};
+    DomesticLog.findById(req.params.id).then(log => {
+      const data = {};
+      if (req.body.remarks) data.remarks = req.body.remarks;
+      if (req.body.dateFinished) data.dateFinished = req.body.dateFinished;
 
-    operationsData.operations.preloading = {};
-    operationsData.operations.loading = {};
-    operationsData.operations.unloading = {};
-    req.body.preloadingIsFinished;
-    // Preloading
-    if (req.body.preloadingIsFinished)
-      operationsData.operations.preloading.isFinished =
-        req.body.preloadingIsFinished;
+      switch (req.body.stage) {
+        case "preloading":
+          log.operations.preloading.isFinished = req.body.isFinished;
 
-    if (req.body.preloadingIsFinished === true) {
-      if (req.body.preloadingRemarks)
-        operationsData.operations.preloading.remarks =
-          req.body.preloadingRemarks;
+          if (req.body.isFinished === true) {
+            if (req.body.remarks)
+              log.operations.preloading.remarks = data.remarks;
+            if (req.body.dateFinished)
+              log.operations.preloading.dateFinished = data.dateFinished;
+          } else if (req.body.isFinished === false) {
+            log.operations.preloading.remarks = "n/a";
 
-      if (req.body.preloadingDateFinished)
-        operationsData.operations.preloading.dateFinished =
-          req.body.preloadingDateFinished;
-    } else {
-      operationsData.operations.preloading.remarks = "n/a";
-    }
+            log.operations.loading.isFinished = false;
+            log.operations.loading.remarks = "n/a";
+            log.operations.unloading.isFinished = false;
+            log.operations.unloading.remarks = "n/a";
+          }
 
-    // Loading
-    if (req.body.loadingIsFinished)
-      operationsData.operations.loading.isFinished = req.body.loadingIsFinished;
+          log.operations.preloading.name = `${req.user.firstName} ${
+            req.user.lastName
+          }`;
 
-    if (req.body.loadingIsFinished === true) {
-      if (req.body.loadingRemarks)
-        operationsData.operations.loading.remarks = req.body.loadingRemarks;
+          log.save().then(log => res.json(log));
+          break;
 
-      if (req.body.loadingDateFinished)
-        operationsData.operations.loading.dateFinished =
-          req.body.loadingDateFinished;
-    } else {
-      operationsData.operations.loading.remarks = "n/a";
-    }
+        case "loading":
+          if (log.operations.preloading.isFinished === false) {
+            return res.status(400).json({
+              preloadingNotFinished:
+                "Can't complete loading if preloading isn't completed yet"
+            });
+          }
 
-    // Unloading
-    if (req.body.unloadingIsFinished)
-      operationsData.operations.unloading.isFinished =
-        req.body.unloadingIsFinished;
+          log.operations.loading.isFinished = req.body.isFinished;
 
-    if (req.body.unloadingIsFinished === true) {
-      if (req.body.unloadingRemarks)
-        operationsData.operations.unloading.remarks = req.body.unloadingRemarks;
+          if (req.body.isFinished === true) {
+            if (req.body.remarks) log.operations.loading.remarks = data.remarks;
+            if (req.body.dateFinished)
+              log.operations.loading.dateFinished = data.dateFinished;
+          } else if (req.body.isFinished === false) {
+            log.operations.loading.remarks = "n/a";
 
-      if (req.body.unloadingDateFinished)
-        operationsData.operations.unloading.dateFinished =
-          req.body.unloadingDateFinished;
-    } else {
-      operationsData.operations.unloading.remarks = "n/a";
-    }
+            log.operations.unloading.isFinished = false;
+            log.operations.unloading.remarks = "n/a";
+          }
 
-    operationsData.dateModified = Date.now();
+          log.operations.loading.name = `${req.user.firstName} ${
+            req.user.lastName
+          }`;
 
-    DomesticLog.findByIdAndUpdate(
-      req.params.id,
-      { $set: operationsData },
-      { new: true }
-    )
-      .then(log => res.json(log))
-      .catch(err => res.err);
-  }
-);
+          log.save().then(log => res.json(log));
+          break;
 
-// ////////////////////////////////////
-// @route   POST api/operations/international/:id
-// @desc    Edit international operations
-// @access  Private
-router.post(
-  "/international/:id",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    console.log(req.user);
-    // Only admin and operations can access
-    if (req.user.userType !== "admin" && req.user.userType !== "operations") {
-      return res.status(400).json({ unauthorized: "Unauthorized" });
-    }
+        case "unloading":
+          if (log.operations.preloading.isFinished === false) {
+            return res.status(400).json({
+              loadingNotFinished:
+                "Can't complete unloading if preloading isn't completed yet"
+            });
+          }
+          if (log.operations.loading.isFinished === false) {
+            return res.status(400).json({
+              preloadingNotFinished:
+                "Can't complete unloading if loading isn't completed yet"
+            });
+          }
 
-    // const { errors, isValid } = validateLogInput(req.body);
+          log.operations.unloading.isFinished = req.body.isFinished;
 
-    // if (!isValid) {
-    //   return res.status(400).json(errors);
-    // }
+          if (req.body.isFinished === true) {
+            if (req.body.remarks)
+              log.operations.unloading.remarks = data.remarks;
+            if (req.body.dateFinished)
+              log.operations.unloading.dateFinished = data.dateFinished;
+          } else if (req.body.isFinished === false) {
+            log.operations.unloading.remarks = "n/a";
+          }
 
-    // If the field was empty it will check so that it will default to n/a instead of an empty object
-    const operationsData = {};
+          log.operations.unloading.name = `${req.user.firstName} ${
+            req.user.lastName
+          }`;
 
-    operationsData.operations = {};
+          log.save().then(log => res.json(log));
+          break;
 
-    operationsData.operations.preloading = {};
-    operationsData.operations.loading = {};
-    operationsData.operations.unloading = {};
-    req.body.preloadingIsFinished;
-    // Preloading
-    if (req.body.preloadingIsFinished)
-      operationsData.operations.preloading.isFinished =
-        req.body.preloadingIsFinished;
-
-    if (req.body.preloadingIsFinished === true) {
-      if (req.body.preloadingRemarks)
-        operationsData.operations.preloading.remarks =
-          req.body.preloadingRemarks;
-
-      if (req.body.preloadingDateFinished)
-        operationsData.operations.preloading.dateFinished =
-          req.body.preloadingDateFinished;
-    } else {
-      operationsData.operations.preloading.remarks = "n/a";
-    }
-
-    // Loading
-    if (req.body.loadingIsFinished)
-      operationsData.operations.loading.isFinished = req.body.loadingIsFinished;
-
-    if (req.body.loadingIsFinished === true) {
-      if (req.body.loadingRemarks)
-        operationsData.operations.loading.remarks = req.body.loadingRemarks;
-
-      if (req.body.loadingDateFinished)
-        operationsData.operations.loading.dateFinished =
-          req.body.loadingDateFinished;
-    } else {
-      operationsData.operations.loading.remarks = "n/a";
-    }
-    // Unloading
-    if (req.body.unloadingIsFinished)
-      operationsData.operations.unloading.isFinished =
-        req.body.unloadingIsFinished;
-
-    if (req.body.unloadingIsFinished === true) {
-      if (req.body.unloadingRemarks)
-        operationsData.operations.unloading.remarks = req.body.unloadingRemarks;
-
-      if (req.body.unloadingDateFinished)
-        operationsData.operations.unloading.dateFinished =
-          req.body.unloadingDateFinished;
-    } else {
-      operationsData.operations.unloading.remarks = "n/a";
-    }
-
-    operationsData.dateModified = Date.now();
-
-    InternationalLog.findByIdAndUpdate(
-      req.params.id,
-      { $set: operationsData },
-      { new: true }
-    )
-      .then(log => res.json(log))
-      .catch(err => res.err);
+        default:
+          return res.status(400).json({ unknownStage: "Unknown stage" });
+      }
+    });
   }
 );
 
@@ -350,6 +292,11 @@ router.post(
       .then(log => {
         switch (req.body.stage) {
           case "preloading":
+            if (log.operations.preloading.isFinished === true) {
+              return res.status(400).json({
+                alreadyFinished: "Can't delete status from a finished stage"
+              });
+            }
             if (
               log.operations.preloading.statuses.filter(
                 status => status._id.toString() === req.params.status_id
@@ -370,6 +317,11 @@ router.post(
             break;
 
           case "loading":
+            if (log.operations.loading.isFinished === true) {
+              return res.status(400).json({
+                alreadyFinished: "Can't delete status from a finished stage"
+              });
+            }
             if (
               log.operations.loading.statuses.filter(
                 status => status._id.toString() === req.params.status_id
@@ -390,6 +342,11 @@ router.post(
             break;
 
           case "unloading":
+            if (log.operations.unloading.isFinished === true) {
+              return res.status(400).json({
+                alreadyFinished: "Can't delete status from a finished stage"
+              });
+            }
             if (
               log.operations.unloading.statuses.filter(
                 status => status._id.toString() === req.params.status_id
@@ -438,6 +395,11 @@ router.post(
       .then(log => {
         switch (req.body.stage) {
           case "preloading":
+            if (log.operations.preloading.isFinished === true) {
+              return res.status(400).json({
+                alreadyFinished: "Can't delete status from a finished stage"
+              });
+            }
             if (
               log.operations.preloading.statuses.filter(
                 status => status._id.toString() === req.params.status_id
@@ -458,6 +420,11 @@ router.post(
             break;
 
           case "loading":
+            if (log.operations.loading.isFinished === true) {
+              return res.status(400).json({
+                alreadyFinished: "Can't delete status from a finished stage"
+              });
+            }
             if (
               log.operations.loading.statuses.filter(
                 status => status._id.toString() === req.params.status_id
@@ -478,6 +445,11 @@ router.post(
             break;
 
           case "unloading":
+            if (log.operations.unloading.isFinished === true) {
+              return res.status(400).json({
+                alreadyFinished: "Can't delete status from a finished stage"
+              });
+            }
             if (
               log.operations.unloading.statuses.filter(
                 status => status._id.toString() === req.params.status_id

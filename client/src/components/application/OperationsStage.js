@@ -46,10 +46,14 @@ class OperationsStage extends Component {
     const { statusControl, markCompleteControl } = this.state;
 
     const { data, title, stage, auth } = this.props;
+    // data contains isFinished, remarks, dateFinshed
 
-    // Show controls only to admin and operations
+    // Show controls only to either admin or operations and isFinished must be false
     let showControls = false;
-    if (auth.user.userType === "admin" || auth.user.userType === "operations") {
+    if (
+      (auth.user.userType === "admin" || auth.user.userType === "operations") &&
+      data.isFinished === false
+    ) {
       showControls = true;
     }
 
@@ -57,9 +61,9 @@ class OperationsStage extends Component {
 
     if (isEmpty(data.statuses)) {
       statusList = (
-        <p>
+        <li className="list-group-item d-flex justify-content-between align-items-center row">
           <em>No status</em>
-        </p>
+        </li>
       );
     } else {
       statusList = data.statuses.map(status => {
@@ -68,7 +72,12 @@ class OperationsStage extends Component {
             key={status._id}
             className="list-group-item d-flex justify-content-between align-items-center row"
           >
-            <div className="col-lg-6">{status.comment}</div>
+            <div className="col-lg-6">
+              {status.comment}{" "}
+              <span className="text-muted">
+                <em>&mdash; {status.name}</em>
+              </span>
+            </div>
             <div className="col-lg-4">
               <Moment format="YYYY-MM-DD">{status.dateInput}</Moment>
             </div>
@@ -141,7 +150,25 @@ class OperationsStage extends Component {
         ) : null}
 
         <div className="container">
-          <ul className="list-group list-group-flush">{statusList}</ul>
+          <ul className="list-group list-group-flush">
+            {data.isFinished === true ? (
+              <li className="list-group-item d-flex justify-content-between align-items-center row">
+                <div className="col-lg-6">
+                  <strong className="text-success">Completed</strong> | Remarks:{" "}
+                  {data.remarks}{" "}
+                  <span className="text-muted">
+                    <em>&mdash; {data.name}</em>
+                  </span>
+                </div>
+                <div className="col-lg-4">
+                  <Moment format="YYYY-MM-DD">{data.dateFinished}</Moment>
+                </div>
+              </li>
+            ) : null}
+
+            {/* List of all the statuses */}
+            {statusList}
+          </ul>
         </div>
       </li>
     );
