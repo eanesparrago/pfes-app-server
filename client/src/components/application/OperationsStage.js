@@ -59,6 +59,7 @@ class OperationsStage extends Component {
 
     let statusList;
 
+    // Map status array
     if (isEmpty(data.statuses)) {
       statusList = (
         <li className="list-group-item d-flex justify-content-between align-items-center row">
@@ -151,10 +152,11 @@ class OperationsStage extends Component {
 
         <div className="container">
           <ul className="list-group list-group-flush">
+            {/* When the stage is complete, the Completed status is shown*/}
             {data.isFinished === true ? (
-              <li className="list-group-item d-flex justify-content-between align-items-center row">
+              <li className="list-group-item list-group-item-success d-flex justify-content-between align-items-center row">
                 <div className="col-lg-6">
-                  <strong className="text-success">Completed</strong> | Remarks:{" "}
+                  <strong className="">Completed</strong> | Remarks:{" "}
                   {data.remarks}{" "}
                   <span className="text-muted">
                     <em>&mdash; {data.name}</em>

@@ -209,7 +209,6 @@ router.post(
     const newLog = {};
 
     newLog.domJo = req.body.domJo;
-    newLog.user = req.body.user;
     if (req.body.shipperConsignee)
       newLog.shipperConsignee = req.body.shipperConsignee;
     // if (req.body.associate) newLog.associate = req.body.associate;
@@ -222,8 +221,6 @@ router.post(
     if (req.body.etd) newLog.etd = req.body.etd;
     if (req.body.eta) newLog.eta = req.body.eta;
     newLog.status = req.body.status;
-
-    newLog.user = req.user.id;
 
     newLog.dateModified = Date.now();
 
@@ -273,7 +270,6 @@ router.post(
     const newLog = {};
 
     newLog.domJo = req.body.domJo;
-    newLog.user = req.body.user;
     if (req.body.shipperConsignee)
       newLog.shipperConsignee = req.body.shipperConsignee;
     if (req.body.associate) newLog.associate = req.body.associate;
@@ -286,8 +282,6 @@ router.post(
     if (req.body.etd) newLog.etd = req.body.etd;
     if (req.body.eta) newLog.eta = req.body.eta;
     newLog.status = req.body.status;
-
-    newLog.user = req.user.id;
 
     newLog.dateModified = Date.now();
 
