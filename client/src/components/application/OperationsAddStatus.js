@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import classnames from "classnames";
 
+import { clearErrors } from "../../actions/logsActions";
+
 import { addStatus } from "../../actions/logsActions";
 
 class OperationsAddStatus extends Component {
@@ -17,6 +19,16 @@ class OperationsAddStatus extends Component {
     this.submitStatus = this.submitStatus.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.log) {
+      this.setState({ comment: "", dateInput: "" });
+    }
+  }
+
+  componentWillUnmount() {
+    this.props.clearErrors();
+  }
+
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
@@ -30,9 +42,7 @@ class OperationsAddStatus extends Component {
       stage: this.props.stage
     };
 
-    console.log(this.props.log._id, statusData);
-
-    this.props.addStatus(this.props.log._id, statusData);
+    this.props.addStatus(this.props.log, statusData);
   }
 
   render() {
@@ -83,5 +93,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { addStatus }
+  { addStatus, clearErrors }
 )(OperationsAddStatus);

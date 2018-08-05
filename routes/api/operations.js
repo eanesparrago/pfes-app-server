@@ -197,7 +197,6 @@ router.post(
   "/domestic/:id/status",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log(req.user);
     // Only admin and operations can access
     if (req.user.userType !== "admin" && req.user.userType !== "operations") {
       return res.status(400).json({ unauthorized: "Unauthorized" });
@@ -219,13 +218,6 @@ router.post(
     console.log("USER", req.user);
 
     DomesticLog.findById(req.params.id).then(log => {
-      // const newStatus = {
-      //   name: `${req.user.firstName} ${req.user.lastName}`,
-      //   user: req.user.id,
-      //   comment: req.body.comment,
-      //   dateInput: req.body.dateInput
-      // };
-
       log.dateModified = Date.now();
 
       // Add to statuses array
@@ -276,28 +268,26 @@ router.post(
   "/international/:id/status",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log(req.user);
     // Only admin and operations can access
     if (req.user.userType !== "admin" && req.user.userType !== "operations") {
       return res.status(400).json({ unauthorized: "Unauthorized" });
     }
+    const { errors, isValid } = validateStatusInput(req.body);
 
-    // const { errors, isValid } = validateLogInput(req.body);
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
 
-    // if (!isValid) {
-    //   return res.status(400).json(errors);
-    // }
+    const newStatus = {};
+
+    if (req.body.dateInput) newStatus.dateInput = req.body.dateInput;
+    if (req.body.comment) newStatus.comment = req.body.comment;
+    newStatus.name = `${req.user.firstName} ${req.user.lastName}`;
+    newStatus.user = req.user.id;
 
     console.log("USER", req.user);
 
     InternationalLog.findById(req.params.id).then(log => {
-      const newStatus = {
-        name: `${req.user.firstName} ${req.user.lastName}`,
-        user: req.user.id,
-        comment: req.body.comment,
-        dateInput: req.body.dateInput
-      };
-
       log.dateModified = Date.now();
 
       // Add to statuses array
@@ -343,7 +333,8 @@ router.post(
 // @route   DELETE api/operations/domestic/:id/status
 // @desc    Delete domestic operations status
 // @access  Private
-router.delete(
+// @payload { stage }
+router.post(
   "/domestic/:id/status/:status_id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
@@ -353,29 +344,164 @@ router.delete(
       return res.status(400).json({ unauthorized: "Unauthorized" });
     }
 
-    // DomesticLog.findById(req.params.id)
-    //   .then(log => {
-    //     if (
-    //       log.statuses.filter(
-    //         status => status._id.toString() === req.params.status_id
-    //       ).length === 0
-    //     ) {
-    //       return res.status(404).json({ statusNotFound: "Status not found" });
-    //     }
+    console.log("stage:", req.body.stage);
 
-    //     const removeIndex = log.statuses
-    //       .map(item => item._id.toString())
-    //       .indexOf(req.params.status_id);
+    DomesticLog.findById(req.params.id)
+      .then(log => {
+        switch (req.body.stage) {
+          case "preloading":
+            if (
+              log.operations.preloading.statuses.filter(
+                status => status._id.toString() === req.params.status_id
+              ).length === 0
+            ) {
+              return res
+                .status(404)
+                .json({ statusNotFound: "Preloading status not found" });
+            } else {
+              const removeIndex = log.operations.preloading.statuses
+                .map(item => item._id.toString())
+                .indexOf(req.params.status_id);
 
-    //     log.statuses.splice(removeIndex, 1);
+              log.operations.preloading.statuses.splice(removeIndex, 1);
 
-    //     log.save().then(log => res.json(log));
-    //   })
-    //   .catch(err => res.status(404).json({ logNotFound: "No log found" }));
+              log.save().then(log => res.json(log));
+            }
+            break;
 
-    DomesticLog.findById(req.params.id).then(log => {
-      console.log(log);
-    });
+          case "loading":
+            if (
+              log.operations.loading.statuses.filter(
+                status => status._id.toString() === req.params.status_id
+              ).length === 0
+            ) {
+              return res
+                .status(404)
+                .json({ statusNotFound: "Loading status not found" });
+            } else {
+              const removeIndex = log.operations.loading.statuses
+                .map(item => item._id.toString())
+                .indexOf(req.params.status_id);
+
+              log.operations.loading.statuses.splice(removeIndex, 1);
+
+              log.save().then(log => res.json(log));
+            }
+            break;
+
+          case "unloading":
+            if (
+              log.operations.unloading.statuses.filter(
+                status => status._id.toString() === req.params.status_id
+              ).length === 0
+            ) {
+              return res
+                .status(404)
+                .json({ statusNotFound: "Preloading status not found" });
+            } else {
+              const removeIndex = log.operations.unloading.statuses
+                .map(item => item._id.toString())
+                .indexOf(req.params.status_id);
+
+              log.operations.unloading.statuses.splice(removeIndex, 1);
+
+              log.save().then(log => res.json(log));
+            }
+            break;
+
+          default:
+            return res.status(400).json({ unknownStage: "Unknown stage" });
+        }
+      })
+      .catch(err => res.status(404).json({ logNotFound: "No log found" }));
+  }
+);
+
+// ////////////////////////////////////
+// @route   DELETE api/operations/international/:id/status
+// @desc    Delete international operations status
+// @access  Private
+// @payload { stage }
+router.post(
+  "/international/:id/status/:status_id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    console.log(req.user);
+    // Only admin and operations can access
+    if (req.user.userType !== "admin" && req.user.userType !== "operations") {
+      return res.status(400).json({ unauthorized: "Unauthorized" });
+    }
+
+    console.log("stage:", req.body.stage);
+
+    InternationalLog.findById(req.params.id)
+      .then(log => {
+        switch (req.body.stage) {
+          case "preloading":
+            if (
+              log.operations.preloading.statuses.filter(
+                status => status._id.toString() === req.params.status_id
+              ).length === 0
+            ) {
+              return res
+                .status(404)
+                .json({ statusNotFound: "Preloading status not found" });
+            } else {
+              const removeIndex = log.operations.preloading.statuses
+                .map(item => item._id.toString())
+                .indexOf(req.params.status_id);
+
+              log.operations.preloading.statuses.splice(removeIndex, 1);
+
+              log.save().then(log => res.json(log));
+            }
+            break;
+
+          case "loading":
+            if (
+              log.operations.loading.statuses.filter(
+                status => status._id.toString() === req.params.status_id
+              ).length === 0
+            ) {
+              return res
+                .status(404)
+                .json({ statusNotFound: "Loading status not found" });
+            } else {
+              const removeIndex = log.operations.loading.statuses
+                .map(item => item._id.toString())
+                .indexOf(req.params.status_id);
+
+              log.operations.loading.statuses.splice(removeIndex, 1);
+
+              log.save().then(log => res.json(log));
+            }
+            break;
+
+          case "unloading":
+            if (
+              log.operations.unloading.statuses.filter(
+                status => status._id.toString() === req.params.status_id
+              ).length === 0
+            ) {
+              return res
+                .status(404)
+                .json({ statusNotFound: "Preloading status not found" });
+            } else {
+              const removeIndex = log.operations.unloading.statuses
+                .map(item => item._id.toString())
+                .indexOf(req.params.status_id);
+
+              log.operations.unloading.statuses.splice(removeIndex, 1);
+
+              log.save().then(log => res.json(log));
+            }
+            break;
+
+          default:
+            return res.status(400).json({ unknownStage: "Unknown stage" });
+        }
+      })
+      .catch(err => res.status(404).json({ logNotFound: "No log found" }));
   }
 );
 

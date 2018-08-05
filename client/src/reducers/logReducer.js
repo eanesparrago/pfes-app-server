@@ -7,7 +7,8 @@ import {
   LOG_LOADING,
   ADD_DOMESTIC_LOG,
   ADD_INTERNATIONAL_LOG,
-  ADD_STATUS
+  ADD_STATUS,
+  DELETE_STATUS
 } from "../actions/types";
 
 const initialState = {
@@ -59,6 +60,12 @@ export default function(state = initialState, action) {
       };
 
     case ADD_STATUS:
+      return {
+        ...state,
+        log: action.payload
+      };
+
+    case DELETE_STATUS:
       return {
         ...state,
         log: action.payload
