@@ -16,7 +16,13 @@ class DomesticLogs extends Component {
     let tableBody;
 
     if (isEmpty(logs)) {
-      tableBody = <p>Empty</p>;
+      tableBody = (
+        <tbody>
+          <tr>
+            <td colspan="11">Empty</td>
+          </tr>
+        </tbody>
+      );
     } else {
       tableBody = (
         <tbody>
@@ -69,7 +75,9 @@ class DomesticLogs extends Component {
                 <td>
                   <Moment format="MM/DD/YYYY">{log.eta}</Moment>
                 </td>
-                <td>{log.status} / {operationsStatus}</td>
+                <td>
+                  {log.status} / {operationsStatus}
+                </td>
               </tr>
             );
           })}

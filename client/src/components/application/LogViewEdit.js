@@ -27,6 +27,7 @@ export class LogViewEdit extends Component {
       eta: "",
       status: "Ongoing",
       type: "",
+      rating: "",
 
       errors: {},
       isEditable: false
@@ -57,6 +58,7 @@ export class LogViewEdit extends Component {
         eta: moment(nextProps.log.eta).format("YYYY-MM-DD"),
         status: nextProps.log.status,
         type: nextProps.log.type,
+        rating: nextProps.log.rating,
 
         isEditable: false
       });
@@ -86,7 +88,8 @@ export class LogViewEdit extends Component {
       etd: this.state.etd,
       eta: this.state.eta,
       status: this.state.status,
-      type: this.state.type
+      type: this.state.type,
+      rating: this.state.rating
     };
 
     this.props.editLog(log);
@@ -456,6 +459,30 @@ export class LogViewEdit extends Component {
               <div className="col-md-6 mb-2">
                 <h5>
                   Status: <strong>{this.state.status}</strong>
+                </h5>
+              </div>
+            )}
+          </div>
+
+          <div className="row">
+            {isEditable ? (
+              <div className="form-group col-md-12">
+                <label className="mb-1" htmlFor="status">
+                  Customer Satisfaction
+                </label>
+
+                <textarea
+                  className={classnames("form-control form-control-lg", {})}
+                  placeholder="Customer satisfaction"
+                  name="rating"
+                  value={this.state.rating}
+                  onChange={this.onChange}
+                />
+              </div>
+            ) : (
+              <div className="col-md-6 mb-2">
+                <h5>
+                  Customer satisfaction: <em>{this.state.rating}</em>
                 </h5>
               </div>
             )}

@@ -215,6 +215,7 @@ router.post(
     if (req.body.destination) newLog.destination = req.body.destination;
     if (req.body.etd) newLog.etd = req.body.etd;
     if (req.body.eta) newLog.eta = req.body.eta;
+    if (req.body.rating) newLog.rating = req.body.rating;
     newLog.status = req.body.status;
 
     newLog.dateModified = Date.now();
@@ -276,6 +277,8 @@ router.post(
     if (req.body.destination) newLog.destination = req.body.destination;
     if (req.body.etd) newLog.etd = req.body.etd;
     if (req.body.eta) newLog.eta = req.body.eta;
+    if (req.body.rating) newLog.rating = req.body.rating;
+
     newLog.status = req.body.status;
 
     newLog.dateModified = Date.now();

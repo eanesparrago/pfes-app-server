@@ -16,7 +16,13 @@ class InternationalLogs extends Component {
     let tableBody;
 
     if (isEmpty(logs)) {
-      tableBody = <p>Empty</p>;
+      tableBody = (
+        <tbody>
+          <tr>
+            <td colspan="11">Empty</td>
+          </tr>
+        </tbody>
+      );
     } else {
       tableBody = (
         <tbody>
