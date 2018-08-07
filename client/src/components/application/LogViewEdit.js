@@ -480,7 +480,7 @@ export class LogViewEdit extends Component {
                 />
               </div>
             ) : (
-              <div className="col-md-6 mb-2">
+              <div className="col-md-12 mb-2">
                 <h5>
                   Customer satisfaction: <em>{this.state.rating}</em>
                 </h5>

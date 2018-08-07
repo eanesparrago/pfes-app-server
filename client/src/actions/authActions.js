@@ -6,7 +6,8 @@ import {
   GET_ERRORS,
   SET_CURRENT_USER,
   REGISTER_SUCCESS,
-  USER_LOGOUT
+  USER_LOGOUT,
+  CLEAR_ERRORS
 } from "./types";
 
 // Register user
@@ -29,6 +30,8 @@ export const registerUser = userData => dispatch => {
 
 // Login - Get user token
 export const loginUser = userData => dispatch => {
+  dispatch(clearErrors());
+
   axios
     .post("/api/users/login", userData)
     .then(res => {
@@ -71,4 +74,12 @@ export const logoutUser = () => dispatch => {
 
   // dispatch({ type: CLEAR_USERS, payload: null });
   dispatch({ type: USER_LOGOUT });
+};
+
+// /////////////////////////
+// Clear errors
+export const clearErrors = () => {
+  return {
+    type: CLEAR_ERRORS
+  };
 };

@@ -17,7 +17,10 @@ class ApplicationNav extends Component {
     if (!this.props.auth.isAuthenticated) {
       this.props.history.push("/");
     } else {
-      if (this.props.location.pathname === "/app" || this.props.location.pathname === "/app/") {
+      if (
+        this.props.location.pathname === "/app" ||
+        this.props.location.pathname === "/app/"
+      ) {
         this.setState({ active: "/app/logs" });
       } else {
         this.setState({ active: this.props.location.pathname });
@@ -41,33 +44,38 @@ class ApplicationNav extends Component {
     const { auth } = this.props;
 
     return (
-      <ul className="nav nav-tabs">
-        <li className="nav-item">
-          <Link
-            className={classnames("nav-link", {
-              active: this.state.active === "/app/logs"
-            })}
-            to="/app/logs"
-            onClick={() => this.handleClick("/app/logs")}
-          >
-            Logs
-          </Link>
-        </li>
-
-        {auth.user.userType === "admin" ? (
+      <div>
+        <h3 className="mb-3">
+          <em>Hello {auth.user.firstName}.</em>
+        </h3>
+        <ul className="nav nav-tabs">
           <li className="nav-item">
             <Link
               className={classnames("nav-link", {
-                active: this.state.active === "/app/users"
+                active: this.state.active === "/app/logs"
               })}
-              to="/app/users"
-              onClick={() => this.handleClick("/app/users")}
+              to="/app/logs"
+              onClick={() => this.handleClick("/app/logs")}
             >
-              Users
+              Logs
             </Link>
           </li>
-        ) : null}
-      </ul>
+
+          {auth.user.userType === "admin" ? (
+            <li className="nav-item">
+              <Link
+                className={classnames("nav-link", {
+                  active: this.state.active === "/app/users"
+                })}
+                to="/app/users"
+                onClick={() => this.handleClick("/app/users")}
+              >
+                Users
+              </Link>
+            </li>
+          ) : null}
+        </ul>
+      </div>
     );
   }
 }
