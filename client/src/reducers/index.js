@@ -6,6 +6,7 @@ import usersReducer from "./usersReducer";
 import registerReducer from "./registerReducer";
 import successReducer from "./successReducer";
 import logReducer from "./logReducer";
+import alertReducer from "./alertReducer";
 
 export default combineReducers({
   auth: authReducer,
@@ -14,5 +15,6 @@ export default combineReducers({
   register: registerReducer,
 
   success: successReducer,
-  log: logReducer
+  log: logReducer,
+  alert: alertReducer
 });

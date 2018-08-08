@@ -14,6 +14,7 @@ import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
 
 import Navbar from "./components/layout/Navbar";
+import AlertBox from "./components/application/AlertBox";
 import Footer from "./components/layout/Footer";
 import Login from "./components/auth/Login";
 import ApplicationNav from "./components/application/ApplicationNav";
@@ -53,6 +54,8 @@ class App extends Component {
         <Router>
           <div className="App">
             <Navbar />
+
+            <AlertBox />
 
             <div className="Main container">
               <Switch>
