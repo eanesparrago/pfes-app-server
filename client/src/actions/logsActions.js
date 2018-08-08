@@ -9,7 +9,8 @@ import {
   ADD_DOMESTIC_LOG,
   ADD_INTERNATIONAL_LOG,
   ADD_STATUS,
-  DELETE_STATUS
+  DELETE_STATUS,
+  ADD_EDIT
 } from "./types";
 
 // /////////////////////////
@@ -88,7 +89,7 @@ export const openLogView = log => dispatch => {
 // /////////////////////////
 // Edit log
 export const editLog = log => dispatch => {
-  // console.log("editLog", log);
+  dispatch(clearErrors());
 
   if (log.type === "Domestic") {
     axios
@@ -98,7 +99,7 @@ export const editLog = log => dispatch => {
           type: LOG_CLICKED,
           payload: res.data
         });
-
+        
         dispatch(getDomesticLogs());
       })
       .catch(err =>

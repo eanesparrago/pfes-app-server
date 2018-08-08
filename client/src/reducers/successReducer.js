@@ -19,6 +19,8 @@ export default function(state = initialState, action) {
     case CLEAR_SUCCESS:
       return initialState;
 
+
+
     default:
       return state;
   }

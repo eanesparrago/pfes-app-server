@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 import { connect } from "react-redux";
+import Moment from "react-moment";
 import moment from "moment";
 
 import {
@@ -41,7 +42,7 @@ export class LogViewEdit extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
+      this.setState({ errors: nextProps.errors, isEditable: true });
     }
 
     if (nextProps.log) {
@@ -70,6 +71,8 @@ export class LogViewEdit extends Component {
   }
 
   toggleEdit() {
+    const { log } = this.props;
+
     this.setState({
       isEditable: !this.state.isEditable
     });
@@ -79,7 +82,6 @@ export class LogViewEdit extends Component {
     const log = {
       domJo: this.state.domJo,
       shipperConsignee: this.state.shipperConsignee,
-      // associate: this.state.associate,
       modeOfTransport: this.state.modeOfTransport,
       commodity: this.state.commodity,
       blAwb: this.state.blAwb,
@@ -188,7 +190,7 @@ export class LogViewEdit extends Component {
             ) : (
               <div className="col-md-6 mb-2">
                 <h5>
-                  Associate: <strong>{this.state.associate}</strong>
+                  Associate: <strong>{log.associate}</strong>
                 </h5>
               </div>
             )}
@@ -218,8 +220,7 @@ export class LogViewEdit extends Component {
             ) : (
               <div className="col-md-6 mb-2">
                 <h5>
-                  Shipper/Consignee:{" "}
-                  <strong>{this.state.shipperConsignee}</strong>
+                  Shipper/Consignee: <strong>{log.shipperConsignee}</strong>
                 </h5>
               </div>
             )}
@@ -251,8 +252,7 @@ export class LogViewEdit extends Component {
             ) : (
               <div className="col-md-6 mb-2">
                 <h5>
-                  Mode of Transport:{" "}
-                  <strong>{this.state.modeOfTransport}</strong>
+                  Mode of Transport: <strong>{log.modeOfTransport}</strong>
                 </h5>
               </div>
             )}
@@ -280,7 +280,7 @@ export class LogViewEdit extends Component {
             ) : (
               <div className="col-md-6 mb-2">
                 <h5>
-                  Commodity: <strong>{this.state.commodity}</strong>
+                  Commodity: <strong>{log.commodity}</strong>
                 </h5>
               </div>
             )}
@@ -310,7 +310,7 @@ export class LogViewEdit extends Component {
             ) : (
               <div className="col-md-6 mb-2">
                 <h5>
-                  BL/AWB: <strong>{this.state.blAwb}</strong>
+                  BL/AWB: <strong>{log.blAwb}</strong>
                 </h5>
               </div>
             )}
@@ -338,7 +338,7 @@ export class LogViewEdit extends Component {
             ) : (
               <div className="col-md-6 mb-2">
                 <h5>
-                  Origin: <strong>{this.state.origin}</strong>
+                  Origin: <strong>{log.origin}</strong>
                 </h5>
               </div>
             )}
@@ -368,7 +368,7 @@ export class LogViewEdit extends Component {
             ) : (
               <div className="col-md-6 mb-2">
                 <h5>
-                  Destination: <strong>{this.state.destination}</strong>
+                  Destination: <strong>{log.destination}</strong>
                 </h5>
               </div>
             )}
@@ -395,7 +395,10 @@ export class LogViewEdit extends Component {
             ) : (
               <div className="col-md-6 mb-2">
                 <h5>
-                  ETD: <strong>{this.state.etd}</strong>
+                  ETD:{" "}
+                  <strong title={moment(log.etd).format("MMMM Do YYYY")}>
+                    <Moment format="MM/DD/YYYY">{log.etd}</Moment>
+                  </strong>
                 </h5>
               </div>
             )}
@@ -424,7 +427,10 @@ export class LogViewEdit extends Component {
             ) : (
               <div className="col-md-6 mb-2">
                 <h5>
-                  ETA: <strong>{this.state.eta}</strong>
+                  ETA:{" "}
+                  <strong title={moment(log.eta).format("MMMM Do YYYY")}>
+                    <Moment format="MM/DD/YYYY">{log.eta}</Moment>
+                  </strong>
                 </h5>
               </div>
             )}
@@ -458,7 +464,7 @@ export class LogViewEdit extends Component {
             ) : (
               <div className="col-md-6 mb-2">
                 <h5>
-                  Status: <strong>{this.state.status}</strong>
+                  Status: <strong>{log.status}</strong>
                 </h5>
               </div>
             )}
@@ -506,7 +512,8 @@ LogViewEdit.propTypes = {
 const mapStateToProps = state => ({
   auth: state.auth,
   log: state.log.log,
-  errors: state.errors
+  errors: state.errors,
+  success: state.success
 });
 
 export default connect(

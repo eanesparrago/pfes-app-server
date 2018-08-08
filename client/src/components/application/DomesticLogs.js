@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Moment from "react-moment";
+import moment from "moment";
 import DomesticLogCreate from "./DomesticLogCreate";
 import isEmpty from "../../validation/is-empty";
 
@@ -19,7 +20,7 @@ class DomesticLogs extends Component {
       tableBody = (
         <tbody>
           <tr>
-            <td colspan="11">Empty</td>
+            <td colSpan="11">Empty</td>
           </tr>
         </tbody>
       );
@@ -69,10 +70,10 @@ class DomesticLogs extends Component {
                 <td>{log.blAwb}</td>
                 <td>{log.origin}</td>
                 <td>{log.destination}</td>
-                <td>
+                <td title={moment(log.etd).format("MMMM Do YYYY")}>
                   <Moment format="MM/DD/YYYY">{log.etd}</Moment>
                 </td>
-                <td>
+                <td title={moment(log.eta).format("MMMM Do YYYY")}>
                   <Moment format="MM/DD/YYYY">{log.eta}</Moment>
                 </td>
                 <td>
