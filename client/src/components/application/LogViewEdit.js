@@ -124,7 +124,7 @@ export class LogViewEdit extends Component {
       destination: this.state.destination,
       etd: this.state.etd,
       eta: this.state.eta,
-      status: this.state.status,
+      status: this.state.status, 
       type: this.state.type,
       rating: this.state.rating
     };

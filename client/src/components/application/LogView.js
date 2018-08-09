@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import Moment from "react-moment";
+import moment from "moment";
 
 import LogViewEdit from "./LogViewEdit";
 import Operations from "./Operations";
@@ -11,10 +13,6 @@ class LogView extends Component {
 
     //  This is required because you can't slice undefined
     log.type ? (log.type = log.type) : (log.type = "-");
-    log.date ? (log.date = log.date) : (log.date = "-");
-    log.dateModified
-      ? (log.dateModified = log.dateModified)
-      : (log.dateModified = "-");
 
     return (
       <div
@@ -53,10 +51,27 @@ class LogView extends Component {
 
             <div className="modal-footer">
               <div className="mr-3">
-                <small>
+                <small
+                  title={moment(log.date).format("MMMM Do YYYY, h:mm:ssa")}
+                >
                   <em>
-                    Date&nbsp;added:&nbsp;{log.date.slice(0, 10)},
-                    Date&nbsp;modified:&nbsp;{log.dateModified.slice(0, 10)}
+                    Date&nbsp;added:&nbsp;<Moment format="MM/DD/YYYY">
+                      {log.date}
+                    </Moment>,
+                  </em>
+                </small>{" "}
+                <small
+                  title={moment(log.dateModified).format(
+                    "MMMM Do YYYY, h:mm:ssa"
+                  )}
+                >
+                  <em>
+                    Date&nbsp;modified:&nbsp;
+                    {log.dateModified ? (
+                      <Moment format="MM/DD/YYYY">{log.dateModified}</Moment>
+                    ) : (
+                      " n/a"
+                    )}
                   </em>
                 </small>
               </div>

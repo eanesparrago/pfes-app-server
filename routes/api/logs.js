@@ -204,18 +204,46 @@ router.post(
     const newLog = {};
 
     newLog.domJo = req.body.domJo;
-    if (req.body.shipperConsignee)
+    if (req.body.shipperConsignee) {
       newLog.shipperConsignee = req.body.shipperConsignee;
-    // if (req.body.associate) newLog.associate = req.body.associate;
-    if (req.body.modeOfTransport)
+    } else {
+      newLog.shipperConsignee = "n/a";
+    }
+
+    if (req.body.modeOfTransport) {
       newLog.modeOfTransport = req.body.modeOfTransport;
-    if (req.body.commodity) newLog.commodity = req.body.commodity;
-    if (req.body.blAwb) newLog.blAwb = req.body.blAwb;
-    if (req.body.origin) newLog.origin = req.body.origin;
-    if (req.body.destination) newLog.destination = req.body.destination;
+    } else {
+      newLog.modeOfTransport = "n/a";
+    }
+
+    if (req.body.commodity) {
+      newLog.commodity = req.body.commodity;
+    } else {
+      newLog.commodity = "n/a";
+    }
+
+    if (req.body.blAwb) {
+      newLog.blAwb = req.body.blAwb;
+    } else {
+      newLog.blAwb = "n/a";
+    }
+
+    if (req.body.origin) {
+      newLog.origin = req.body.origin;
+    } else {
+      newLog.origin = "n/a";
+    }
+
+    if (req.body.destination) {
+      newLog.destination = req.body.destination;
+    } else {
+      newLog.destination = "n/a";
+    }
+
     if (req.body.etd) newLog.etd = req.body.etd;
     if (req.body.eta) newLog.eta = req.body.eta;
     if (req.body.rating) newLog.rating = req.body.rating;
+
     newLog.status = req.body.status;
 
     newLog.dateModified = Date.now();
@@ -266,20 +294,45 @@ router.post(
     const newLog = {};
 
     newLog.domJo = req.body.domJo;
-    if (req.body.shipperConsignee)
+    if (req.body.shipperConsignee) {
       newLog.shipperConsignee = req.body.shipperConsignee;
-    if (req.body.associate) newLog.associate = req.body.associate;
-    if (req.body.modeOfTransport)
+    } else {
+      newLog.shipperConsignee = "n/a";
+    }
+
+    if (req.body.modeOfTransport) {
       newLog.modeOfTransport = req.body.modeOfTransport;
-    if (req.body.commodity) newLog.commodity = req.body.commodity;
-    if (req.body.blAwb) newLog.blAwb = req.body.blAwb;
-    if (req.body.origin) newLog.origin = req.body.origin;
-    if (req.body.destination) newLog.destination = req.body.destination;
+    } else {
+      newLog.modeOfTransport = "n/a";
+    }
+
+    if (req.body.commodity) {
+      newLog.commodity = req.body.commodity;
+    } else {
+      newLog.commodity = "n/a";
+    }
+
+    if (req.body.blAwb) {
+      newLog.blAwb = req.body.blAwb;
+    } else {
+      newLog.blAwb = "n/a";
+    }
+
+    if (req.body.origin) {
+      newLog.origin = req.body.origin;
+    } else {
+      newLog.origin = "n/a";
+    }
+
+    if (req.body.destination) {
+      newLog.destination = req.body.destination;
+    } else {
+      newLog.destination = "n/a";
+    }
+
     if (req.body.etd) newLog.etd = req.body.etd;
     if (req.body.eta) newLog.eta = req.body.eta;
     if (req.body.rating) newLog.rating = req.body.rating;
-
-    newLog.status = req.body.status;
 
     newLog.dateModified = Date.now();
 
