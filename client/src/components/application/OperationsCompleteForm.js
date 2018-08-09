@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import classnames from "classnames";
-import Moment from "react-moment";
 
 import { submitComplete, clearErrors } from "../../actions/logsActions";
 
@@ -46,7 +45,7 @@ class OperationsCompleteForm extends Component {
   }
 
   render() {
-    const { errors, stage } = this.props;
+    const { errors } = this.props;
 
     return (
       <form noValidate onSubmit={this.submitComplete}>

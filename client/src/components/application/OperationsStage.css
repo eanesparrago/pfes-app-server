@@ -5,10 +5,21 @@
 
 .list-child-reverse {
   border: 0 none;
-
 }
 
 .list-comment {
   padding-bottom: 1rem;
   border-bottom: 1px solid #dfdfdf;
+}
+
+@media only screen and (max-width: 992px) {
+  .list-comment {
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  .list-controls {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #dfdfdf;
+  }
 }

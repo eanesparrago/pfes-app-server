@@ -57,7 +57,7 @@ class OperationsStage extends Component {
   render() {
     const { statusControl, markCompleteControl } = this.state;
 
-    const { data, title, stage, auth, log } = this.props;
+    const { data, title, stage, auth } = this.props;
     // data contains isFinished, remarks, dateFinshed, and statuses
 
     // Show controls only to either admin or operations and isFinished must be false
@@ -97,7 +97,7 @@ class OperationsStage extends Component {
               <Moment format="MM/DD/YYYY, h:mm:ssa">{status.date}</Moment>
             </div>
 
-            <div className="col-lg-2">
+            <div className="col-lg-2 list-controls">
               {showControls === true ? (
                 <span>
                   <button

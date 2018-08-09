@@ -38,32 +38,7 @@ class Operations extends Component {
   }
 
   render() {
-    const { errors, isEditable } = this.state;
-    const { log, auth } = this.props;
-
-    let controls = null;
-
-    if (auth.user.userType === "admin" || auth.user.userType === "operations") {
-      {
-        controls = isEditable ? (
-          <button
-            type="button"
-            className="btn btn-primary btn-sm mr-2 mb-3"
-            onClick={this.submitEdit}
-          >
-            Confirm
-          </button>
-        ) : (
-          <button
-            type="button"
-            className="btn btn-outline-primary btn-sm mr-2 mb-3"
-            onClick={this.toggleEdit}
-          >
-            Add Status
-          </button>
-        );
-      }
-    }
+    const { log } = this.props;
 
     return (
       <div className="mt-3">
@@ -98,10 +73,14 @@ class Operations extends Component {
   }
 }
 
+Operations.propTypes = {
+  auth: PropTypes.object.isRequired,
+  log: PropTypes.object.isRequired
+};
+
 const mapStateToProps = state => ({
   auth: state.auth,
-  log: state.log.log,
-  errors: state.errors
+  log: state.log.log
 });
 
 export default connect(

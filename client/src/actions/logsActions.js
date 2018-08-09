@@ -9,8 +9,7 @@ import {
   ADD_DOMESTIC_LOG,
   ADD_INTERNATIONAL_LOG,
   ADD_STATUS,
-  DELETE_STATUS,
-  ADD_EDIT
+  DELETE_STATUS
 } from "./types";
 
 // /////////////////////////
