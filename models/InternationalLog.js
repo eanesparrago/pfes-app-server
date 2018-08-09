@@ -1,12 +1,14 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const autoIncrement = require("mongoose-auto-increment");
+
+autoIncrement.initialize(mongoose.connection);
 
 const InternationalLogSchema = new Schema({
-  domJo: {
-    type: String,
-    required: true
-    // unique: true
-  },
+  // domJo: {
+  //   type: Number
+  //   // default: 0
+  // },
   shipperConsignee: {
     type: String,
     default: "n/a"
@@ -194,7 +196,15 @@ const InternationalLogSchema = new Schema({
     required: true
   }
 });
-module.exports = InternationalLog = mongoose.model(
+
+InternationalLogSchema.plugin(autoIncrement.plugin, {
+  model: "internationalLogs",
+  field: "domJo",
+  startAt: 1,
+  incrementBy: 1
+});
+
+module.exports = DomesticLog = mongoose.model(
   "internationalLogs",
   InternationalLogSchema
 );

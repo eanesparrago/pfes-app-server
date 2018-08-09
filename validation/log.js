@@ -6,9 +6,9 @@ module.exports = function validateLogInput(data) {
 
   data.domJo = !isEmpty(data.domJo) ? data.domJo : "";
 
-  if (Validator.isEmpty(data.domJo)) {
-    errors.domJo = "DOM/JO# is required and must be unique";
-  }
+  // if (Validator.isEmpty(data.domJo)) {
+  //   errors.domJo = "DOM/JO# is required and must be unique";
+  // }
 
   if (!Validator.isLength(data.shipperConsignee, { max: 100 })) {
     errors.shipperConsignee =

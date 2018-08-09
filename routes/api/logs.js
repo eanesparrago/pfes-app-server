@@ -92,7 +92,7 @@ router.post(
     // If the field was empty it will check so that it will default to n/a instead of an empty object
     const newLog = {};
 
-    newLog.domJo = req.body.domJo;
+    // newLog.domJo = req.body.domJo;
     newLog.user = req.body.user;
     if (req.body.shipperConsignee)
       newLog.shipperConsignee = req.body.shipperConsignee;
@@ -113,14 +113,14 @@ router.post(
 
     const newDomesticLog = new DomesticLog(newLog);
 
-    DomesticLog.findOne({ domJo: req.body.domJo }).then(log => {
-      if (log) {
-        errors.domJo = "That DOM/JO# already exists";
-        return res.status(400).json(errors);
-      }
+    // DomesticLog.findOne({ domJo: req.body.domJo }).then(log => {
+    //   if (log) {
+    //     errors.domJo = "That DOM/JO# already exists";
+    //     return res.status(400).json(errors);
+    //   }
 
-      newDomesticLog.save().then(log => res.json(log));
-    });
+    newDomesticLog.save().then(log => res.json(log));
+    // });
   }
 );
 

@@ -14,7 +14,6 @@ class InternationalLogCreate extends Component {
   constructor() {
     super();
     this.state = {
-      domJo: "",
       shipperConsignee: "",
       associate: "",
       modeOfTransport: "",
@@ -40,7 +39,6 @@ class InternationalLogCreate extends Component {
 
     if (!isEmpty(nextProps.success)) {
       this.setState({
-        domJo: "",
         shipperConsignee: "",
         associate: "",
         modeOfTransport: "",
@@ -80,7 +78,6 @@ class InternationalLogCreate extends Component {
     e.preventDefault();
 
     const newUser = {
-      domJo: this.state.domJo,
       shipperConsignee: this.state.shipperConsignee,
       modeOfTransport: this.state.modeOfTransport,
       commodity: this.state.commodity,
@@ -97,7 +94,6 @@ class InternationalLogCreate extends Component {
 
   onClose() {
     this.setState({
-      domJo: "",
       shipperConsignee: "",
       associate: "",
       modeOfTransport: "",
@@ -119,7 +115,6 @@ class InternationalLogCreate extends Component {
     const { auth } = this.props;
 
     let etaLimit;
-
     if (this.state.etd !== "") {
       etaLimit = moment(this.state.etd).format("YYYY-MM-DD");
     } else {
@@ -148,7 +143,7 @@ class InternationalLogCreate extends Component {
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title" id="exampleModalLabel">
-                  New International Job Order
+                  New Domestic Job Order
                 </h5>
                 <button
                   type="button"
@@ -163,26 +158,7 @@ class InternationalLogCreate extends Component {
                 {/* FORM */}
                 <form noValidate>
                   <div className="row">
-                    <div className="form-group col-md-6">
-                      <label className="mb-1" htmlFor="domJo">
-                        Job order number
-                      </label>
-                      <input
-                        type="text"
-                        className={classnames("form-control form-control-lg", {
-                          "is-invalid": errors.domJo
-                        })}
-                        placeholder="Job order number"
-                        name="domJo"
-                        value={this.state.domJo}
-                        onChange={this.onChange}
-                      />
-                      {errors.domJo && (
-                        <div className="invalid-feedback">{errors.domJo}</div>
-                      )}
-                    </div>
-
-                    <div className="form-group col-md-6">
+                    <div className="form-group col-md-12">
                       <label className="mb-1" htmlFor="associate">
                         Associate
                       </label>
