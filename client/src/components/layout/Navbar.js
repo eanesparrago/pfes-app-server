@@ -22,6 +22,20 @@ class Navbar extends Component {
   render() {
     const { isAuthenticated, user } = this.props.auth;
 
+    let userType;
+
+    switch (user.userType) {
+      case "admin":
+        userType = "Administrator";
+        break;
+      case "sales":
+        userType = "Sales";
+        break;
+      case "operations":
+        userType = "Operations";
+        break;
+    }
+
     const authLinks = (
       <ul className="navbar-nav ml-auto">
         <li className="nav-item dropdown">
@@ -32,7 +46,7 @@ class Navbar extends Component {
             aria-haspopup="true"
             aria-expanded="false"
           >
-            {user.userName} ({user.userType})
+            {user.userName} ({userType})
           </a>
           <div className="dropdown-menu">
             <a
