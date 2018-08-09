@@ -35,9 +35,10 @@ export class LogViewEdit extends Component {
     };
 
     this.onChange = this.onChange.bind(this);
-    this.toggleEdit = this.toggleEdit.bind(this);
+    this.enableEdit = this.enableEdit.bind(this);
     this.submitEdit = this.submitEdit.bind(this);
     this.deleteLog = this.deleteLog.bind(this);
+    this.closeEdit = this.closeEdit.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -84,11 +85,31 @@ export class LogViewEdit extends Component {
     }
   }
 
-  toggleEdit() {
+  enableEdit() {
+    this.setState({
+      isEditable: true
+    });
+  }
+
+  closeEdit() {
     const { log } = this.props;
 
     this.setState({
-      isEditable: !this.state.isEditable
+      domJo: log.domJo,
+      shipperConsignee: log.shipperConsignee,
+      associate: log.associate,
+      modeOfTransport: log.modeOfTransport,
+      commodity: log.commodity,
+      blAwb: log.blAwb,
+      origin: log.origin,
+      destination: log.destination,
+      etd: moment(log.etd).format("YYYY-MM-DD"),
+      eta: moment(log.eta).format("YYYY-MM-DD"),
+      status: log.status,
+      type: log.type,
+      rating: log.rating,
+
+      isEditable: false
     });
   }
 
@@ -144,7 +165,7 @@ export class LogViewEdit extends Component {
         <button
           type="button"
           className="btn btn-outline-primary mr-3 mb-3"
-          onClick={this.toggleEdit}
+          onClick={this.enableEdit}
         >
           Edit Job Order
         </button>
@@ -176,7 +197,7 @@ export class LogViewEdit extends Component {
               <button
                 type="button"
                 className="btn btn-secondary mb-3 mr-3"
-                onClick={this.toggleEdit}
+                onClick={this.closeEdit}
               >
                 &times;
               </button>

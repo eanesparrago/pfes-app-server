@@ -8,6 +8,8 @@ import { deleteStatus, deleteComplete } from "../../actions/logsActions";
 import OperationsAddStatus from "./OperationsAddStatus";
 import OperationsCompleteForm from "./OperationsCompleteForm";
 
+import "./OperationsStage.css";
+
 class OperationsStage extends Component {
   constructor(props) {
     super(props);
@@ -69,6 +71,8 @@ class OperationsStage extends Component {
 
     let statusList;
 
+    const statuses = data.statuses;
+
     // Map status array
     if (isEmpty(data.statuses) && data.isFinished === false) {
       statusList = (
@@ -77,13 +81,13 @@ class OperationsStage extends Component {
         </li>
       );
     } else {
-      statusList = data.statuses.reverse().map(status => {
+      statusList = statuses.map(status => {
         return (
           <li
             key={status._id}
-            className="list-group-item d-flex justify-content-between align-items-center row"
+            className="list-child-reverse list-group-item d-flex justify-content-between align-items-center row"
           >
-            <div className="col-lg-8">
+            <div className="list-comment col-lg-8">
               {status.comment}{" "}
               <span className="text-muted">
                 <em>&mdash; {status.name}</em>
@@ -96,13 +100,6 @@ class OperationsStage extends Component {
             <div className="col-lg-2">
               {showControls === true ? (
                 <span>
-                  {/* <button
-                    type="button"
-                    className="btn btn-outline-primary btn-sm mr-2"
-                    // onClick={this.toggleEdit}
-                  >
-                    Edit
-                  </button> */}
                   <button
                     className="btn btn-outline-danger btn-sm"
                     onClick={() => this.deleteStatus(status._id)}
@@ -163,13 +160,10 @@ class OperationsStage extends Component {
         ) : null}
 
         <div className="container">
-          <ul className="list-group list-group-flush">
-            {/* List of all the statuses */}
-            {statusList}
-
+          <ul className="list-parent-reverse list-group list-group-flush">
             {/* When the stage is complete, the Completed status is shown*/}
             {data.isFinished === true ? (
-              <li className="list-group-item list-group-item-success d-flex justify-content-between align-items-center row">
+              <li className="list-child-reverse list-group-item list-group-item-success d-flex justify-content-between align-items-center row">
                 <div className="col-lg-8">
                   <strong className="">Completed</strong> | Remarks:{" "}
                   {data.remarks}{" "}
@@ -198,6 +192,9 @@ class OperationsStage extends Component {
                 </div>
               </li>
             ) : null}
+
+            {/* List of all the statuses */}
+            {statusList}
           </ul>
         </div>
       </li>

@@ -57,7 +57,7 @@ class App extends Component {
 
             <AlertBox />
 
-            <div className="Main container">
+            <div className="Main container-fluid">
               <Switch>
                 {/* Login */}
                 <Route exact path="/" component={Login} />

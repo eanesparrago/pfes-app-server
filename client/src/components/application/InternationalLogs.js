@@ -89,7 +89,7 @@ class InternationalLogs extends Component {
     return (
       <div className="">
         {/* //////////////////////// NAVBAR //////////////////////// */}
-        <nav className="container logs-nav navbar navbar-expand-lg navbar-light ">
+        <nav className="logs-nav navbar navbar-expand-lg navbar-light">
           <a className="navbar-brand">International</a>
 
           <button

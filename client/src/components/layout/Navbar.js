@@ -49,7 +49,7 @@ class Navbar extends Component {
     return (
       <div>
         <nav className="navbar navbar-expand-sm navbar-dark bg-primary mb-4">
-          <div className="container">
+          <div className="container-fluid">
             <Link className="navbar-brand" to="/">
               PFES App
             </Link>

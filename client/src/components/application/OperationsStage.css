@@ -1,0 +1,14 @@
+.list-parent-reverse {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.list-child-reverse {
+  border: 0 none;
+
+}
+
+.list-comment {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #dfdfdf;
+}

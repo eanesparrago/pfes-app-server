@@ -44,9 +44,9 @@ class ApplicationNav extends Component {
     const { auth } = this.props;
 
     return (
-      <div>
+      <div className="container-fluid">
         <h3 className="mb-3">
-          <em>Hello {auth.user.firstName}.</em>
+          <em>Hello {auth.user.firstName}! SAWADIKA!!!</em>
         </h3>
         <ul className="nav nav-tabs">
           <li className="nav-item">

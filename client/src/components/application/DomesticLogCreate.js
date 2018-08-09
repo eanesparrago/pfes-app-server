@@ -5,7 +5,7 @@ import moment from "moment";
 
 import classnames from "classnames";
 import { connect } from "react-redux";
-import { createDomesticLog } from "../../actions/logsActions";
+import { createDomesticLog, clearErrors } from "../../actions/logsActions";
 import { clearSuccess } from "../../actions/successActions";
 
 import isEmpty from "../../validation/is-empty";
@@ -30,6 +30,7 @@ class DomesticLogCreate extends Component {
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onClose = this.onClose.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -92,6 +93,25 @@ class DomesticLogCreate extends Component {
     };
 
     this.props.createDomesticLog(newUser);
+  }
+
+  onClose() {
+    this.setState({
+      domJo: "",
+      shipperConsignee: "",
+      associate: "",
+      modeOfTransport: "",
+      commodity: "",
+      blAwb: "",
+      origin: "",
+      destination: "",
+      etd: moment().format("YYYY-MM-DD"),
+      eta: moment().format("YYYY-MM-DD"),
+      status: "Ongoing",
+      errors: {}
+    });
+
+    this.props.clearErrors();
   }
 
   render() {
@@ -387,6 +407,7 @@ class DomesticLogCreate extends Component {
                   type="button"
                   className="btn btn-secondary"
                   data-dismiss="modal"
+                  onClick={this.onClose}
                 >
                   Close
                 </button>
@@ -408,7 +429,8 @@ class DomesticLogCreate extends Component {
 
 DomesticLogCreate.propTypes = {
   createDomesticLog: PropTypes.func.isRequired,
-  clearSuccess: PropTypes.func.isRequired
+  clearSuccess: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -421,6 +443,7 @@ export default connect(
   mapStateToProps,
   {
     createDomesticLog,
-    clearSuccess
+    clearSuccess,
+    clearErrors
   }
 )(withRouter(DomesticLogCreate));
