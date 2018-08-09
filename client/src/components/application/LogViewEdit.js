@@ -30,6 +30,10 @@ export class LogViewEdit extends Component {
       type: "",
       rating: "",
 
+      contactName: "",
+      contactNumber: "",
+      contactEmail: "",
+
       errors: {},
       isEditable: false
     };
@@ -61,6 +65,10 @@ export class LogViewEdit extends Component {
         status: nextProps.log.status,
         type: nextProps.log.type,
         rating: nextProps.log.rating,
+
+        contactName: nextProps.log.contact.name,
+        contactNumber: nextProps.log.contact.number,
+        contactEmail: nextProps.log.contact.email,
 
         isEditable: false
       });
@@ -109,6 +117,10 @@ export class LogViewEdit extends Component {
       type: log.type,
       rating: log.rating,
 
+      contactName: log.contact.name,
+      contactNumber: log.contact.number,
+      contactEmail: log.contact.email,
+
       isEditable: false
     });
   }
@@ -124,9 +136,13 @@ export class LogViewEdit extends Component {
       destination: this.state.destination,
       etd: this.state.etd,
       eta: this.state.eta,
-      status: this.state.status, 
+      status: this.state.status,
       type: this.state.type,
-      rating: this.state.rating
+      rating: this.state.rating,
+
+      contactName: this.state.contactName,
+      contactNumber: this.state.contactNumber,
+      contactEmail: this.state.contactEmail
     };
 
     this.props.editLog(log);
@@ -527,7 +543,7 @@ export class LogViewEdit extends Component {
                 </label>
 
                 <textarea
-                  className={classnames("form-control form-control-lg", {})}
+                  className={classnames("form-control", {})}
                   placeholder="Customer satisfaction"
                   name="rating"
                   value={this.state.rating}
@@ -540,6 +556,98 @@ export class LogViewEdit extends Component {
                 <h5>
                   Customer satisfaction: <em>{this.state.rating}</em>
                 </h5>
+              </div>
+            )}
+          </div>
+
+          <div className="dropdown-divider" />
+
+          {/* CONTACT */}
+
+          <div className="row mt-3">
+            {isEditable ? (
+              <div className="form-group col-md-6">
+                <label className="mb-1" htmlFor="contactName">
+                  Contact Name
+                </label>
+                <input
+                  type="text"
+                  className={classnames("form-control", {
+                    "is-invalid": errors.contactName
+                  })}
+                  placeholder="Contact Name"
+                  name="contactName"
+                  value={this.state.contactName}
+                  onChange={this.onChange}
+                  maxLength="100"
+                />
+                {errors.contactName && (
+                  <div className="invalid-feedback">{errors.contactName}</div>
+                )}
+              </div>
+            ) : (
+              <div className="col-md-6">
+                <h6>
+                  Contact Name: <strong>{log.contact.name}</strong>
+                </h6>
+              </div>
+            )}
+
+            {isEditable ? (
+              <div className="form-group col-md-6">
+                <label className="mb-1" htmlFor="contactNumber">
+                  Contact Number
+                </label>
+                <input
+                  type="text"
+                  className={classnames("form-control", {
+                    "is-invalid": errors.contactNumber
+                  })}
+                  placeholder="Contact Name"
+                  name="contactNumber"
+                  value={this.state.contactNumber}
+                  onChange={this.onChange}
+                  maxLength="100"
+                />
+                {errors.contactNumber && (
+                  <div className="invalid-feedback">{errors.contactNumber}</div>
+                )}
+              </div>
+            ) : (
+              <div className="col-md-4">
+                <h6>
+                  Contact Number: <strong>{log.contact.number}</strong>
+                </h6>
+              </div>
+            )}
+          </div>
+
+          <div className="row">
+            {isEditable ? (
+              <div className="form-group col-md-12">
+                <label className="mb-1" htmlFor="contactEmail">
+                  Contact Email
+                </label>
+                <input
+                  type="text"
+                  className={classnames("form-control", {
+                    "is-invalid": errors.contactEmail
+                  })}
+                  placeholder="Contact Name"
+                  name="contactEmail"
+                  value={this.state.contactEmail}
+                  onChange={this.onChange}
+                  maxLength="100"
+                />
+                {errors.contactEmail && (
+                  <div className="invalid-feedback">{errors.contactEmail}</div>
+                )}
+              </div>
+            ) : (
+              <div className="col-md-12">
+                <h6>
+                  Contact Email: <strong>{log.contact.email}</strong>
+                </h6>
               </div>
             )}
           </div>

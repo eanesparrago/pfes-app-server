@@ -15,6 +15,7 @@ const initialState = {
   domestic: null,
   international: null,
   log: {
+    contact: {},
     operations: {
       preloading: { statuses: [] },
       loading: { statuses: [] },

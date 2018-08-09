@@ -107,6 +107,12 @@ router.post(
     if (req.body.eta) newLog.eta = req.body.eta;
     if (req.body.status) newLog.status = req.body.status;
 
+    newLog.contact = {};
+
+    if (req.body.contactName) newLog.contact.name = req.body.contactName;
+    if (req.body.contactNumber) newLog.contact.number = req.body.contactNumber;
+    if (req.body.contactEmail) newLog.contact.email = req.body.contactEmail;
+
     newLog.associate = `${req.user.firstName} ${req.user.lastName}`;
 
     newLog.user = req.user.id;
@@ -151,7 +157,6 @@ router.post(
     newLog.user = req.body.user;
     if (req.body.shipperConsignee)
       newLog.shipperConsignee = req.body.shipperConsignee;
-    // if (req.body.associate) newLog.associate = req.body.associate;
     if (req.body.modeOfTransport)
       newLog.modeOfTransport = req.body.modeOfTransport;
     if (req.body.commodity) newLog.commodity = req.body.commodity;
@@ -160,8 +165,13 @@ router.post(
     if (req.body.destination) newLog.destination = req.body.destination;
     if (req.body.etd) newLog.etd = req.body.etd;
     if (req.body.eta) newLog.eta = req.body.eta;
-    // if (req.body.status) newLog.status = req.body.status;
     newLog.status = req.body.status;
+
+    newLog.contact = {};
+
+    if (req.body.contactName) newLog.contact.name = req.body.contactName;
+    if (req.body.contactNumber) newLog.contact.number = req.body.contactNumber;
+    if (req.body.contactEmail) newLog.contact.email = req.body.contactEmail;
 
     newLog.associate = `${req.user.firstName} ${req.user.lastName}`;
 
@@ -245,6 +255,26 @@ router.post(
     if (req.body.rating) newLog.rating = req.body.rating;
 
     newLog.status = req.body.status;
+
+    newLog.contact = {};
+
+    if (req.body.contactName) {
+      newLog.contact.name = req.body.contactName;
+    } else {
+      newLog.contact.name = "n/a";
+    }
+
+    if (req.body.contactNumber) {
+      newLog.contact.number = req.body.contactNumber;
+    } else {
+      newLog.contact.number = "n/a";
+    }
+
+    if (req.body.contactEmail) {
+      newLog.contact.email = req.body.contactEmail;
+    } else {
+      newLog.contact.email = "n/a";
+    }
 
     newLog.dateModified = Date.now();
 
@@ -333,6 +363,28 @@ router.post(
     if (req.body.etd) newLog.etd = req.body.etd;
     if (req.body.eta) newLog.eta = req.body.eta;
     if (req.body.rating) newLog.rating = req.body.rating;
+
+    newLog.status = req.body.status;
+
+    newLog.contact = {};
+
+    if (req.body.contactName) {
+      newLog.contact.name = req.body.contactName;
+    } else {
+      newLog.contact.name = "n/a";
+    }
+
+    if (req.body.contactNumber) {
+      newLog.contact.number = req.body.contactNumber;
+    } else {
+      newLog.contact.number = "n/a";
+    }
+
+    if (req.body.contactEmail) {
+      newLog.contact.email = req.body.contactEmail;
+    } else {
+      newLog.contact.email = "n/a";
+    }
 
     newLog.dateModified = Date.now();
 

@@ -169,6 +169,20 @@ const DomesticLogSchema = new Schema({
     type: String,
     defaut: "n/a"
   },
+  contact: {
+    name: {
+      type: String,
+      default: "n/a"
+    },
+    number: {
+      type: String,
+      default: "n/a"
+    },
+    email: {
+      type: String,
+      default: "n/a"
+    }
+  },
   status: {
     type: String,
     defaut: "Waiting",

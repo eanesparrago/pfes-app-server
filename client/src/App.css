@@ -1,8 +1,13 @@
 .App {
   min-height: 100vh;
   display: flex;
-  flex-flow: column nowrap;
-  /* justify-content: flex-start; */
+  flex-flow: column nowrap; 
+
+  /* border: 1px solid magenta; */
+}
+
+.Main {
+  /* border: 1px solid magenta; */
 }
 
 a {
@@ -20,15 +25,15 @@ body {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1; 
+  background: #f1f1f1;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888; 
+  background: #888;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555; 
+  background: #555;
 }

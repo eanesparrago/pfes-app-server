@@ -1,3 +1,6 @@
 .Login {
-  margin-top: 10rem;
+  height: 65vh;
+  display: flex;
+  align-items: center;
+  /* border: 1px solid orange; */
 }

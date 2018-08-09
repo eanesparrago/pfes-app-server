@@ -24,6 +24,11 @@ class InternationalLogCreate extends Component {
       etd: moment().format("YYYY-MM-DD"),
       eta: moment().format("YYYY-MM-DD"),
       status: "Ongoing",
+
+      contactName: "",
+      contactNumber: "",
+      contactEmail: "",
+
       errors: {}
     };
 
@@ -49,6 +54,11 @@ class InternationalLogCreate extends Component {
         etd: moment().format("YYYY-MM-DD"),
         eta: moment().format("YYYY-MM-DD"),
         status: "Ongoing",
+
+        contactName: "",
+        contactNumber: "",
+        contactEmail: "",
+
         errors: {}
       });
 
@@ -86,7 +96,11 @@ class InternationalLogCreate extends Component {
       destination: this.state.destination,
       etd: this.state.etd,
       eta: this.state.eta,
-      status: this.state.status
+      status: this.state.status,
+
+      contactName: this.state.contactName,
+      contactNumber: this.state.contactNumber,
+      contactEmail: this.state.contactEmail
     };
 
     this.props.createInternationalLog(newUser);
@@ -104,6 +118,11 @@ class InternationalLogCreate extends Component {
       etd: moment().format("YYYY-MM-DD"),
       eta: moment().format("YYYY-MM-DD"),
       status: "Ongoing",
+
+      contactName: "",
+      contactNumber: "",
+      contactEmail: "",
+
       errors: {}
     });
 
@@ -143,7 +162,7 @@ class InternationalLogCreate extends Component {
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title" id="exampleModalLabel">
-                  New Domestic Job Order
+                  New International Job Order
                 </h5>
                 <button
                   type="button"
@@ -376,6 +395,78 @@ class InternationalLogCreate extends Component {
                     {errors.status && (
                       <div className="invalid-feedback">{errors.status}</div>
                     )}
+                  </div>
+
+                  <div className="dropdown-divider" />
+
+                  {/* CONTACT */}
+
+                  <div className="row mt-3">
+                    <div className="form-group col-md-4">
+                      <label className="mb-1" htmlFor="contactName">
+                        Contact Name
+                      </label>
+                      <input
+                        type="text"
+                        className={classnames("form-control form-control-lg", {
+                          "is-invalid": errors.contactName
+                        })}
+                        placeholder="Contact Name"
+                        name="contactName"
+                        value={this.state.contactName}
+                        onChange={this.onChange}
+                        maxLength="100"
+                      />
+                      {errors.contactName && (
+                        <div className="invalid-feedback">
+                          {errors.contactName}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="form-group col-md-4">
+                      <label className="mb-1" htmlFor="contactNumber">
+                        Contact Number
+                      </label>
+                      <input
+                        type="text"
+                        className={classnames("form-control form-control-lg", {
+                          "is-invalid": errors.contactNumber
+                        })}
+                        placeholder="Contact Number"
+                        name="contactNumber"
+                        value={this.state.contactNumber}
+                        onChange={this.onChange}
+                        maxLength="100"
+                      />
+                      {errors.contactNumber && (
+                        <div className="invalid-feedback">
+                          {errors.contactNumber}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="form-group col-md-4">
+                      <label className="mb-1" htmlFor="contactEmail">
+                        Contact Email
+                      </label>
+                      <input
+                        type="text"
+                        className={classnames("form-control form-control-lg", {
+                          "is-invalid": errors.contactEmail
+                        })}
+                        placeholder="Contact Email"
+                        name="contactEmail"
+                        value={this.state.contactEmail}
+                        onChange={this.onChange}
+                        maxLength="100"
+                      />
+                      {errors.contactEmail && (
+                        <div className="invalid-feedback">
+                          {errors.contactEmail}
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </form>
               </div>
