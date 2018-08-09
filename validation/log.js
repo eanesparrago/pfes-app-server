@@ -31,6 +31,8 @@ module.exports = function validateLogInput(data) {
     errors.destination = "Destination must not exceed 100 characters";
   }
 
+  
+
   return {
     errors: errors,
     isValid: isEmpty(errors)

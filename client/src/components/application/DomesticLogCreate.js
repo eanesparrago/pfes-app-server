@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
+import moment from "moment";
 
 import classnames from "classnames";
 import { connect } from "react-redux";
@@ -21,8 +22,8 @@ class DomesticLogCreate extends Component {
       blAwb: "",
       origin: "",
       destination: "",
-      etd: "",
-      eta: "",
+      etd: moment().format("YYYY-MM-DD"),
+      eta: moment().format("YYYY-MM-DD"),
       status: "Ongoing",
       errors: {}
     };
@@ -46,8 +47,8 @@ class DomesticLogCreate extends Component {
         blAwb: "",
         origin: "",
         destination: "",
-        etd: "",
-        eta: "",
+        etd: moment().format("YYYY-MM-DD"),
+        eta: moment().format("YYYY-MM-DD"),
         status: "Ongoing",
         errors: {}
       });
@@ -57,7 +58,21 @@ class DomesticLogCreate extends Component {
   }
 
   onChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
+    if (e.target.name === "etd" || e.target.name === "eta") {
+      this.setState({ [e.target.name]: e.target.value }, () => {
+        const etd = Date.parse(moment(this.state.etd).format("DD MMM YYYY"));
+        const eta = Date.parse(moment(this.state.eta).format("DD MMM YYYY"));
+
+        console.log(etd, eta);
+
+        if (etd > eta) {
+          this.setState({ eta: this.state.etd });
+          console.log("true");
+        }
+      });
+    } else {
+      this.setState({ [e.target.name]: e.target.value });
+    }
   }
 
   onSubmit(e) {
@@ -66,7 +81,6 @@ class DomesticLogCreate extends Component {
     const newUser = {
       domJo: this.state.domJo,
       shipperConsignee: this.state.shipperConsignee,
-      // associate: this.state.associate,
       modeOfTransport: this.state.modeOfTransport,
       commodity: this.state.commodity,
       blAwb: this.state.blAwb,
@@ -83,6 +97,13 @@ class DomesticLogCreate extends Component {
   render() {
     const { errors } = this.state;
     const { auth } = this.props;
+
+    let etaLimit;
+    if (this.state.etd !== "") {
+      etaLimit = moment(this.state.etd).format("YYYY-MM-DD");
+    } else {
+      etaLimit = moment().format("YYYY-MM-DD");
+    }
 
     return (
       <div className="">
@@ -177,6 +198,7 @@ class DomesticLogCreate extends Component {
                         name="shipperConsignee"
                         value={this.state.shipperConsignee}
                         onChange={this.onChange}
+                        maxLength="100"
                       />
                       {errors.shipperConsignee && (
                         <div className="invalid-feedback">
@@ -198,6 +220,7 @@ class DomesticLogCreate extends Component {
                         name="modeOfTransport"
                         value={this.state.modeOfTransport}
                         onChange={this.onChange}
+                        maxLength="100"
                       />
                       {errors.modeOfTransport && (
                         <div className="invalid-feedback">
@@ -221,6 +244,7 @@ class DomesticLogCreate extends Component {
                         name="commodity"
                         value={this.state.commodity}
                         onChange={this.onChange}
+                        maxLength="100"
                       />
                       {errors.commodity && (
                         <div className="invalid-feedback">
@@ -242,6 +266,7 @@ class DomesticLogCreate extends Component {
                         name="blAwb"
                         value={this.state.blAwb}
                         onChange={this.onChange}
+                        maxLength="100"
                       />
                       {errors.blAwb && (
                         <div className="invalid-feedback">{errors.blAwb}</div>
@@ -263,6 +288,7 @@ class DomesticLogCreate extends Component {
                         name="origin"
                         value={this.state.origin}
                         onChange={this.onChange}
+                        maxLength="100"
                       />
                       {errors.origin && (
                         <div className="invalid-feedback">{errors.origin}</div>
@@ -281,6 +307,7 @@ class DomesticLogCreate extends Component {
                         name="destination"
                         value={this.state.destination}
                         onChange={this.onChange}
+                        maxLength="100"
                       />
                       {errors.destination && (
                         <div className="invalid-feedback">
@@ -303,6 +330,7 @@ class DomesticLogCreate extends Component {
                         name="etd"
                         value={this.state.etd}
                         onChange={this.onChange}
+                        min={moment().format("YYYY-MM-DD")}
                       />
                       {errors.etd && (
                         <div className="invalid-feedback">{errors.etd}</div>
@@ -320,6 +348,7 @@ class DomesticLogCreate extends Component {
                         name="eta"
                         value={this.state.eta}
                         onChange={this.onChange}
+                        min={etaLimit}
                       />
                       {errors.eta && (
                         <div className="invalid-feedback">{errors.eta}</div>

@@ -67,7 +67,21 @@ export class LogViewEdit extends Component {
   }
 
   onChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
+    if (e.target.name === "etd" || e.target.name === "eta") {
+      this.setState({ [e.target.name]: e.target.value }, () => {
+        const etd = Date.parse(moment(this.state.etd).format("DD MMM YYYY"));
+        const eta = Date.parse(moment(this.state.eta).format("DD MMM YYYY"));
+
+        console.log(etd, eta);
+
+        if (etd > eta) {
+          this.setState({ eta: this.state.etd });
+          console.log("true");
+        }
+      });
+    } else {
+      this.setState({ [e.target.name]: e.target.value });
+    }
   }
 
   toggleEdit() {
@@ -106,6 +120,13 @@ export class LogViewEdit extends Component {
     const { log, auth } = this.props;
 
     let editControls = null;
+
+    let etaLimit;
+    if (this.state.etd !== "") {
+      etaLimit = moment(this.state.etd).format("YYYY-MM-DD");
+    } else {
+      etaLimit = moment().format("YYYY-MM-DD");
+    }
 
     if (
       auth.user.userType === "admin" ||
@@ -210,6 +231,7 @@ export class LogViewEdit extends Component {
                   name="shipperConsignee"
                   value={this.state.shipperConsignee}
                   onChange={this.onChange}
+                  maxLength="100"
                 />
                 {errors.shipperConsignee && (
                   <div className="invalid-feedback">
@@ -242,6 +264,7 @@ export class LogViewEdit extends Component {
                   name="modeOfTransport"
                   value={this.state.modeOfTransport}
                   onChange={this.onChange}
+                  maxLength="100"
                 />
                 {errors.modeOfTransport && (
                   <div className="invalid-feedback">
@@ -272,6 +295,7 @@ export class LogViewEdit extends Component {
                   name="commodity"
                   value={this.state.commodity}
                   onChange={this.onChange}
+                  maxLength="100"
                 />
                 {errors.commodity && (
                   <div className="invalid-feedback">{errors.commodity}</div>
@@ -302,6 +326,7 @@ export class LogViewEdit extends Component {
                   name="blAwb"
                   value={this.state.blAwb}
                   onChange={this.onChange}
+                  maxLength="100"
                 />
                 {errors.blAwb && (
                   <div className="invalid-feedback">{errors.blAwb}</div>
@@ -330,6 +355,7 @@ export class LogViewEdit extends Component {
                   name="origin"
                   value={this.state.origin}
                   onChange={this.onChange}
+                  maxLength="100"
                 />
                 {errors.origin && (
                   <div className="invalid-feedback">{errors.origin}</div>
@@ -360,6 +386,7 @@ export class LogViewEdit extends Component {
                   name="destination"
                   value={this.state.destination}
                   onChange={this.onChange}
+                  maxLength="100"
                 />
                 {errors.destination && (
                   <div className="invalid-feedback">{errors.destination}</div>
@@ -419,6 +446,7 @@ export class LogViewEdit extends Component {
                   name="eta"
                   value={this.state.eta}
                   onChange={this.onChange}
+                  min={etaLimit}
                 />
                 {errors.eta && (
                   <div className="invalid-feedback">{errors.eta}</div>
@@ -483,6 +511,7 @@ export class LogViewEdit extends Component {
                   name="rating"
                   value={this.state.rating}
                   onChange={this.onChange}
+                  maxLength="300"
                 />
               </div>
             ) : (
