@@ -23,6 +23,14 @@ module.exports = function validateLogInput(data) {
     errors.blAwb = "BL/AWB must not exceed 100 characters";
   }
 
+  if (Validator.isEmpty(data.origin)) {
+    errors.origin = "Origin is required";
+  }
+
+  if (Validator.isEmpty(data.destination)) {
+    errors.destination = "Destination is required";
+  }
+
   if (!Validator.isLength(data.origin, { max: 100 })) {
     errors.origin = "Origin must not exceed 100 characters";
   }
@@ -30,8 +38,6 @@ module.exports = function validateLogInput(data) {
   if (!Validator.isLength(data.destination, { max: 100 })) {
     errors.destination = "Destination must not exceed 100 characters";
   }
-
-  
 
   return {
     errors: errors,

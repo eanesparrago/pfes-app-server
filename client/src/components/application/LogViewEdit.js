@@ -9,7 +9,8 @@ import {
   editLog,
   getDomesticLogs,
   getInternationalLogs,
-  deleteLog
+  deleteLog,
+  clearErrors
 } from "../../actions/logsActions";
 
 export class LogViewEdit extends Component {
@@ -97,6 +98,8 @@ export class LogViewEdit extends Component {
     this.setState({
       isEditable: true
     });
+
+    this.props.clearErrors();
   }
 
   closeEdit() {
@@ -662,6 +665,7 @@ LogViewEdit.propTypes = {
   editLog: PropTypes.func.isRequired,
   getInternationalLogs: PropTypes.func.isRequired,
   deleteLog: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   log: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
@@ -676,5 +680,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { editLog, getDomesticLogs, getInternationalLogs, deleteLog }
+  { editLog, getDomesticLogs, getInternationalLogs, deleteLog, clearErrors }
 )(LogViewEdit);
