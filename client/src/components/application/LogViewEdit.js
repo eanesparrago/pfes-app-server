@@ -25,8 +25,8 @@ export class LogViewEdit extends Component {
       blAwb: "",
       origin: "",
       destination: "",
-      etd: "",
-      eta: "",
+      etd: moment().format("YYYY-MM-DD"),
+      eta: moment().format("YYYY-MM-DD"),
       status: "Ongoing",
       type: "",
       rating: "",
@@ -35,11 +35,16 @@ export class LogViewEdit extends Component {
       contactNumber: "",
       contactEmail: "",
 
+      tagUrgent: false,
+      tagImportant: false,
+      tagInsured: false,
+
       errors: {},
       isEditable: false
     };
 
     this.onChange = this.onChange.bind(this);
+    this.toggleCheck = this.toggleCheck.bind(this);
     this.enableEdit = this.enableEdit.bind(this);
     this.submitEdit = this.submitEdit.bind(this);
     this.deleteLog = this.deleteLog.bind(this);
@@ -66,6 +71,10 @@ export class LogViewEdit extends Component {
         status: nextProps.log.status,
         type: nextProps.log.type,
         rating: nextProps.log.rating,
+
+        tagUrgent: nextProps.log.tags.urgent,
+        tagImportant: nextProps.log.tags.important,
+        tagInsured: nextProps.log.tags.insured,
 
         contactName: nextProps.log.contact.name,
         contactNumber: nextProps.log.contact.number,
@@ -94,6 +103,12 @@ export class LogViewEdit extends Component {
     }
   }
 
+  toggleCheck(e) {
+    this.setState({ [e.target.name]: !this.state[e.target.name] }, () => {
+      console.log(this.state);
+    });
+  }
+
   enableEdit() {
     this.setState({
       isEditable: true
@@ -120,6 +135,10 @@ export class LogViewEdit extends Component {
       type: log.type,
       rating: log.rating,
 
+      tagUrgent: log.tags.urgent,
+      tagImportant: log.tags.important,
+      tagInsured: log.tags.insured,
+
       contactName: log.contact.name,
       contactNumber: log.contact.number,
       contactEmail: log.contact.email,
@@ -142,6 +161,10 @@ export class LogViewEdit extends Component {
       status: this.state.status,
       type: this.state.type,
       rating: this.state.rating,
+
+      tagUrgent: this.state.tagUrgent,
+      tagImportant: this.state.tagImportant,
+      tagInsured: this.state.tagInsured,
 
       contactName: this.state.contactName,
       contactNumber: this.state.contactNumber,
@@ -167,6 +190,12 @@ export class LogViewEdit extends Component {
     } else {
       etaLimit = moment().format("YYYY-MM-DD");
     }
+
+    let tags = [];
+
+    if (log.tags.urgent === true) tags.push("Urgent");
+    if (log.tags.important === true) tags.push("Important");
+    if (log.tags.insured === true) tags.push("Insured");
 
     if (
       auth.user.userType === "admin" ||
@@ -229,7 +258,7 @@ export class LogViewEdit extends Component {
         <form noValidate>
           <div className="row">
             {isEditable ? (
-              <div className="form-group col-md-6">
+              <div className="form-group col-md-12">
                 <label className="mb-1" htmlFor="associate">
                   Associate
                 </label>
@@ -255,7 +284,9 @@ export class LogViewEdit extends Component {
                 </h5>
               </div>
             )}
+          </div>
 
+          <div className="row">
             {isEditable ? (
               <div className="form-group col-md-6">
                 <label className="mb-1" htmlFor="shipperConsignee">
@@ -286,9 +317,7 @@ export class LogViewEdit extends Component {
                 </h5>
               </div>
             )}
-          </div>
 
-          <div className="row">
             {isEditable ? (
               <div className="form-group col-md-6">
                 <label className="mb-1" htmlFor="modeOfTransport">
@@ -319,7 +348,9 @@ export class LogViewEdit extends Component {
                 </h5>
               </div>
             )}
+          </div>
 
+          <div className="row">
             {isEditable ? (
               <div className="form-group col-md-6">
                 <label className="mb-1" htmlFor="commodity">
@@ -348,9 +379,7 @@ export class LogViewEdit extends Component {
                 </h5>
               </div>
             )}
-          </div>
 
-          <div className="row">
             {isEditable ? (
               <div className="form-group col-md-6">
                 <label className="mb-1" htmlFor="blAwb">
@@ -379,7 +408,9 @@ export class LogViewEdit extends Component {
                 </h5>
               </div>
             )}
+          </div>
 
+          <div className="row">
             {isEditable ? (
               <div className="form-group col-md-6">
                 <label className="mb-1" htmlFor="origin">
@@ -408,9 +439,7 @@ export class LogViewEdit extends Component {
                 </h5>
               </div>
             )}
-          </div>
 
-          <div className="row">
             {isEditable ? (
               <div className="form-group col-md-6">
                 <label className="mb-1" htmlFor="destination">
@@ -439,7 +468,9 @@ export class LogViewEdit extends Component {
                 </h5>
               </div>
             )}
+          </div>
 
+          <div className="row">
             {isEditable ? (
               <div className="form-group col-md-6">
                 <label className="mb-1" htmlFor="etd">
@@ -469,9 +500,7 @@ export class LogViewEdit extends Component {
                 </h5>
               </div>
             )}
-          </div>
 
-          <div className="row">
             {isEditable ? (
               <div className="form-group col-md-6">
                 <label className="mb-1" htmlFor="eta">
@@ -502,7 +531,9 @@ export class LogViewEdit extends Component {
                 </h5>
               </div>
             )}
+          </div>
 
+          <div className="row">
             {isEditable ? (
               <div className="form-group col-md-6">
                 <label className="mb-1" htmlFor="status">
@@ -533,6 +564,69 @@ export class LogViewEdit extends Component {
               <div className="col-md-6 mb-2">
                 <h5>
                   Status: <strong>{log.status}</strong>
+                </h5>
+              </div>
+            )}
+
+            {isEditable ? (
+              <div className="form-group col-md-6">
+                <label className="mb-1" htmlFor="status">
+                  Tags
+                </label>
+
+                <div className="form-control form-control-lg">
+                  <div className="form-check form-check-inline">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      id="tagUrgent"
+                      name="tagUrgent"
+                      checked={this.state.tagUrgent}
+                      onChange={this.toggleCheck}
+                    />
+                    <label className="form-check-label" htmlFor="tagUrgent">
+                      Urgent
+                    </label>
+                  </div>
+
+                  <div className="form-check form-check-inline">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      id="tagImportant"
+                      name="tagImportant"
+                      checked={this.state.tagImportant}
+                      onChange={this.toggleCheck}
+                    />
+                    <label className="form-check-label" htmlFor="tagImportant">
+                      Important
+                    </label>
+                  </div>
+
+                  <div className="form-check form-check-inline">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      id="tagInsured"
+                      name="tagInsured"
+                      checked={this.state.tagInsured}
+                      onChange={this.toggleCheck}
+                    />
+                    <label className="form-check-label" htmlFor="tagInsured">
+                      Insured
+                    </label>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="col-md-6 mb-2">
+                <h5>
+                  Tags:{" "}
+                  {tags.length ? (
+                    <strong> {tags.join(", ")} </strong>
+                  ) : (
+                    <em>No tags</em>
+                  )}
                 </h5>
               </div>
             )}
