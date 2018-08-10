@@ -185,8 +185,22 @@ const DomesticLogSchema = new Schema({
   },
   status: {
     type: String,
-    defaut: "Waiting",
+    defaut: "Ongoing",
     required: true
+  },
+  tags: {
+    urgent: {
+      type: Boolean,
+      default: false
+    },
+    important: {
+      type: Boolean,
+      default: false
+    },
+    insured: {
+      type: Boolean,
+      default: false
+    }
   },
   user: {
     type: Schema.Types.ObjectId,

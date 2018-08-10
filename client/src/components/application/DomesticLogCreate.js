@@ -29,12 +29,17 @@ class DomesticLogCreate extends Component {
       contactNumber: "",
       contactEmail: "",
 
+      tagUrgent: false,
+      tagImportant: false,
+      tagInsured: false,
+
       errors: {}
     };
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onClose = this.onClose.bind(this);
+    this.toggleCheck = this.toggleCheck.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -58,6 +63,10 @@ class DomesticLogCreate extends Component {
         contactName: "",
         contactNumber: "",
         contactEmail: "",
+
+        tagUrgent: false,
+        tagImportant: false,
+        tagInsured: false,
 
         errors: {}
       });
@@ -84,6 +93,12 @@ class DomesticLogCreate extends Component {
     }
   }
 
+  toggleCheck(e) {
+    this.setState({ [e.target.name]: !this.state[e.target.name] }, () => {
+      console.log(this.state);
+    });
+  }
+
   onSubmit(e) {
     e.preventDefault();
 
@@ -97,6 +112,10 @@ class DomesticLogCreate extends Component {
       etd: this.state.etd,
       eta: this.state.eta,
       status: this.state.status,
+
+      tagUrgent: this.state.tagUrgent,
+      tagImportant: this.state.tagImportant,
+      tagInsured: this.state.tagInsured,
 
       contactName: this.state.contactName,
       contactNumber: this.state.contactNumber,
@@ -122,6 +141,10 @@ class DomesticLogCreate extends Component {
       contactName: "",
       contactNumber: "",
       contactEmail: "",
+
+      tagUrgent: false,
+      tagImportant: false,
+      tagInsured: false,
 
       errors: {}
     });
@@ -372,29 +395,90 @@ class DomesticLogCreate extends Component {
                     </div>
                   </div>
 
-                  <div className="form-group">
-                    <label className="mb-1" htmlFor="status">
-                      Status
-                    </label>
+                  <div className="row">
+                    <div className="form-group col-md-6">
+                      <label className="mb-1" htmlFor="status">
+                        Status
+                      </label>
 
-                    <select
-                      className={classnames("form-control form-control-lg", {
-                        "is-invalid": errors.status
-                      })}
-                      id="status"
-                      name="status"
-                      value={this.state.status}
-                      onChange={this.onChange}
-                    >
-                      <option value="Ongoing">Ongoing</option>
-                      <option value="Complete">Complete</option>
-                      <option value="Waiting">Waiting</option>
-                      <option value="Void">Void</option>
-                    </select>
+                      <select
+                        className={classnames("form-control form-control-lg", {
+                          "is-invalid": errors.status
+                        })}
+                        id="status"
+                        name="status"
+                        value={this.state.status}
+                        onChange={this.onChange}
+                      >
+                        <option value="Ongoing">Ongoing</option>
+                        <option value="Complete">Complete</option>
+                        <option value="Waiting">Waiting</option>
+                        <option value="Void">Void</option>
+                      </select>
 
-                    {errors.status && (
-                      <div className="invalid-feedback">{errors.status}</div>
-                    )}
+                      {errors.status && (
+                        <div className="invalid-feedback">{errors.status}</div>
+                      )}
+                    </div>
+
+                    <div className="form-group col-md-6">
+                      <label className="mb-1" htmlFor="status">
+                        Tags
+                      </label>
+
+                      <div className="form-control form-control-lg">
+                        <div className="form-check form-check-inline">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="tagUrgent"
+                            name="tagUrgent"
+                            checked={this.state.tagUrgent}
+                            onChange={this.toggleCheck}
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="tagUrgent"
+                          >
+                            Urgent
+                          </label>
+                        </div>
+
+                        <div className="form-check form-check-inline">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="tagImportant"
+                            name="tagImportant"
+                            checked={this.state.tagImportant}
+                            onChange={this.toggleCheck}
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="tagImportant"
+                          >
+                            Important
+                          </label>
+                        </div>
+
+                        <div className="form-check form-check-inline">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="tagInsured"
+                            name="tagInsured"
+                            checked={this.state.tagInsured}
+                            onChange={this.toggleCheck}
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="tagInsured"
+                          >
+                            Insured
+                          </label>
+                        </div>
+                      </div>
+                    </div>
                   </div>
 
                   <div className="dropdown-divider" />

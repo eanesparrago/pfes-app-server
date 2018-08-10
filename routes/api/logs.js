@@ -92,11 +92,9 @@ router.post(
     // If the field was empty it will check so that it will default to n/a instead of an empty object
     const newLog = {};
 
-    // newLog.domJo = req.body.domJo;
     newLog.user = req.body.user;
     if (req.body.shipperConsignee)
       newLog.shipperConsignee = req.body.shipperConsignee;
-    // if (req.body.associate) newLog.associate = req.body.associate;
     if (req.body.modeOfTransport)
       newLog.modeOfTransport = req.body.modeOfTransport;
     if (req.body.commodity) newLog.commodity = req.body.commodity;
@@ -106,6 +104,12 @@ router.post(
     if (req.body.etd) newLog.etd = req.body.etd;
     if (req.body.eta) newLog.eta = req.body.eta;
     if (req.body.status) newLog.status = req.body.status;
+
+    newLog.tags = {};
+
+    if (req.body.tagUrgent) newLog.tags.urgent = req.body.tagUrgent;
+    if (req.body.tagImportant) newLog.tags.important = req.body.tagImportant;
+    if (req.body.tagInsured) newLog.tags.insured = req.body.tagInsured;
 
     newLog.contact = {};
 
@@ -119,14 +123,7 @@ router.post(
 
     const newDomesticLog = new DomesticLog(newLog);
 
-    // DomesticLog.findOne({ domJo: req.body.domJo }).then(log => {
-    //   if (log) {
-    //     errors.domJo = "That DOM/JO# already exists";
-    //     return res.status(400).json(errors);
-    //   }
-
     newDomesticLog.save().then(log => res.json(log));
-    // });
   }
 );
 
@@ -166,6 +163,12 @@ router.post(
     if (req.body.etd) newLog.etd = req.body.etd;
     if (req.body.eta) newLog.eta = req.body.eta;
     newLog.status = req.body.status;
+
+    newLog.tags = {};
+
+    if (req.body.tagUrgent) newLog.tags.urgent = req.body.tagUrgent;
+    if (req.body.tagImportant) newLog.tags.important = req.body.tagImportant;
+    if (req.body.tagInsured) newLog.tags.insured = req.body.tagInsured;
 
     newLog.contact = {};
 
