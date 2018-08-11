@@ -53,7 +53,7 @@ export class LogViewEdit extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors, isEditable: true });
+      this.setState({ errors: nextProps.errors });
     }
 
     if (nextProps.log) {
@@ -101,6 +101,15 @@ export class LogViewEdit extends Component {
       return;
     } else if (e.target.name === "contactName") {
       const regex = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u;
+
+      if (e.target.value === "") {
+        this.setState({ [e.target.name]: e.target.value });
+      } else if (regex.test(e.target.value)) {
+        this.setState({ [e.target.name]: e.target.value });
+      }
+      return;
+    } else if (e.target.name === "contactNumber") {
+      const regex = /[\d-]+$/u;
 
       if (e.target.value === "") {
         this.setState({ [e.target.name]: e.target.value });

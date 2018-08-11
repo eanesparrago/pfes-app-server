@@ -99,6 +99,15 @@ class InternationalLogCreate extends Component {
         this.setState({ [e.target.name]: e.target.value });
       }
       return;
+    } else if (e.target.name === "contactNumber") {
+      const regex = /[\d-]+$/u;
+
+      if (e.target.value === "") {
+        this.setState({ [e.target.name]: e.target.value });
+      } else if (regex.test(e.target.value)) {
+        this.setState({ [e.target.name]: e.target.value });
+      }
+      return;
     } else {
       this.setState({ [e.target.name]: e.target.value });
     }
