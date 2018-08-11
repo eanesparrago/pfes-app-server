@@ -1,7 +1,7 @@
 .App {
   min-height: 100vh;
   display: flex;
-  flex-flow: column nowrap; 
+  flex-flow: column nowrap;
 
   /* border: 1px solid magenta; */
 }
@@ -16,6 +16,11 @@ a {
 
 body {
   overflow-y: scroll;
+  background-image: url(./img/bg.jpg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: bottom;
+  background-size: cover;
 }
 
 /* width */

@@ -5,6 +5,7 @@ import { loginUser } from "../../actions/authActions";
 import TextFieldGroup from "../common/TextFieldGroup";
 
 import "./Login.css";
+import logo from "../../img/pfes-logo.png";
 
 class Login extends Component {
   constructor() {
@@ -71,10 +72,17 @@ class Login extends Component {
       <div className="Login">
         <div className="container">
           <div className="row">
-            <div className="col-md-8 m-auto">
-              <h1 className="display-4 text-center">Welcome</h1>
-              <p className="lead text-center">Log in to your PFES account</p>
+            <div className="col-lg-6 m-auto">
+              <div className="Logo">
+                <img className="Logo-img" src={logo} alt="PFES Logo" />
+              </div>
+            </div>
 
+            <div className="col-lg-6">
+              <h1 className="display-4 text-center">Welcome</h1>
+              <p className="lead text-center">
+                Log in to your PFES App account
+              </p>
               <form onSubmit={this.onSubmit}>
                 <TextFieldGroup
                   placeholder="Username"

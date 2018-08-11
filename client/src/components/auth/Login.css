@@ -1,4 +1,18 @@
+.Logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.Logo-img {
+  height: auto;
+  width: auto;
+  max-width: 20rem;
+  max-height: 20rem;
+}
+
 .Login {
+  margin-top: 2rem;
   height: 65vh;
   display: flex;
   align-items: center;
