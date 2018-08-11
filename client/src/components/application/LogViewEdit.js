@@ -51,10 +51,6 @@ export class LogViewEdit extends Component {
     this.closeEdit = this.closeEdit.bind(this);
   }
 
-  // componentDidMount() {
-  //   this.setState({isEditable: false});
-  // }
-
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });

@@ -88,9 +88,18 @@ class OperationsStage extends Component {
             className="fade-in list-child-reverse list-group-item d-flex justify-content-between align-items-center row"
           >
             <div className="list-comment col-lg-8">
-              {status.comment}{" "}
+              <span
+                className={classnames("", {
+                  "text-info": status.type === "Info",
+                  "text-warning": status.type === "Warning",
+                  "text-danger": status.type === "Problem"
+                })}
+              >
+                {status.type}:{" "}
+              </span>
+              {status.comment}
               <span className="text-muted">
-                <em>&mdash; {status.name}</em>
+                <em> &mdash; {status.name}</em>
               </span>
             </div>
             <div className="col-lg-2">

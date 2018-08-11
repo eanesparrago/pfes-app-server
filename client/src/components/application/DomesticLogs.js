@@ -6,6 +6,8 @@ import moment from "moment";
 import DomesticLogCreate from "./DomesticLogCreate";
 import isEmpty from "../../validation/is-empty";
 
+import classnames from "classnames";
+
 import { openLogView } from "../../actions/logsActions";
 
 import "./Logs.css";
@@ -28,30 +30,83 @@ class DomesticLogs extends Component {
       tableBody = (
         <tbody>
           {logs.map(log => {
+            {
+              /* Generate the operations status element */
+            }
             const { preloading, loading, unloading } = log.operations;
-            let operationsStatus = "Preloading";
-            let operationsStatusRemarks = "No remarks";
 
-            if (preloading.statuses[0])
-              operationsStatusRemarks =
-                preloading.statuses[0].comment;
+            let operationsStatus = (
+              <span className="badge badge-primary">Preloading</span>
+            );
+
+            let operationsStatusRemarks = "No status";
+
+            if (preloading.statuses[0]) {
+              operationsStatusRemarks = preloading.statuses[0].comment;
+
+              operationsStatus = (
+                <span
+                  className={classnames("badge", {
+                    "badge-info": preloading.statuses[0].type === "Info",
+                    "badge-warning": preloading.statuses[0].type === "Warning",
+                    "badge-danger": preloading.statuses[0].type === "Problem"
+                  })}
+                >
+                  Preloading
+                </span>
+              );
+            }
 
             if (preloading.isFinished === true) {
-              operationsStatus = "Loading";
+              operationsStatus = (
+                <span className="badge badge-primary">Loading</span>
+              );
 
-              if (loading.statuses[0])
-                operationsStatusRemarks =
-                  loading.statuses[0].comment;
+              if (loading.statuses[0]) {
+                operationsStatusRemarks = loading.statuses[0].comment;
+
+                operationsStatus = (
+                  <span
+                    className={classnames("badge", {
+                      "badge-info": loading.statuses[0].type === "Info",
+                      "badge-warning": loading.statuses[0].type === "Warning",
+                      "badge-danger": loading.statuses[0].type === "Problem"
+                    })}
+                  >
+                    Loading
+                  </span>
+                );
+              } else {
+                operationsStatusRemarks = "No status";
+              }
 
               if (loading.isFinished === true) {
-                operationsStatus = "Unloading";
+                operationsStatus = (
+                  <span className="badge badge-primary">Unloading</span>
+                );
 
-                if (unloading.statuses[0])
-                  operationsStatusRemarks =
-                    unloading.statuses[0].comment;
+                if (unloading.statuses[0]) {
+                  operationsStatusRemarks = unloading.statuses[0].comment;
+                  operationsStatus = (
+                    <span
+                      className={classnames("badge", {
+                        "badge-info": unloading.statuses[0].type === "Info",
+                        "badge-warning":
+                          unloading.statuses[0].type === "Warning",
+                        "badge-danger": unloading.statuses[0].type === "Problem"
+                      })}
+                    >
+                      Unloading
+                    </span>
+                  );
+                } else {
+                  operationsStatusRemarks = "No status";
+                }
 
                 if (unloading.isFinished === true) {
-                  operationsStatus = "Delivered";
+                  operationsStatus = (
+                    <span className="badge badge-success">Delivered</span>
+                  );
 
                   operationsStatusRemarks = unloading.remarks;
                 }
@@ -92,7 +147,7 @@ class DomesticLogs extends Component {
                   <Moment format="MM/DD/YYYY">{log.eta}</Moment>
                 </td>
                 <td title={operationsStatusRemarks}>
-                  {log.status} ({operationsStatus})
+                  {log.status} {operationsStatus}
                 </td>
               </tr>
             );

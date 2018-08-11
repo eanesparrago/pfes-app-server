@@ -261,6 +261,8 @@ router.post(
     const newStatus = {};
 
     if (req.body.comment) newStatus.comment = req.body.comment;
+    if (req.body.type) newStatus.type = req.body.type;
+    
     newStatus.name = `${req.user.firstName} ${req.user.lastName}`;
     newStatus.user = req.user.id;
 

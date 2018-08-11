@@ -50,23 +50,24 @@ class OperationsCompleteForm extends Component {
     return (
       <form className="fade-in" noValidate onSubmit={this.submitComplete}>
         <div className="row">
-          <div className="form-group col-lg-10">
+          <div className="input-group input-group-sm mb-3 col-lg-12">
             <input
               type="text"
-              className={classnames("form-control form-control-sm", {
+              className={classnames("form-control", {
                 "is-invalid": errors.remark
               })}
-              placeholder="Completion remarks"
+              aria-label="Text input with dropdown button"
+              placeholder="Completion remarks (Optional)"
               name="remarks"
               value={this.state.remarks}
               onChange={this.onChange}
             />
-            <small className="form-text text-muted ml-2">Optional</small>
-          </div>
 
-          <div className="form-group col-lg-2">
-            <button className="btn btn-success btn-sm">Submit</button>
+            <div className="input-group-append">
+              <button className="btn btn-success btn-sm">Submit</button>
+            </div>
           </div>
+      
         </div>
       </form>
     );

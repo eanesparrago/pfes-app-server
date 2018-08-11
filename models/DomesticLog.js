@@ -63,6 +63,11 @@ const DomesticLogSchema = new Schema({
             type: String,
             required: true
           },
+          type: {
+            type: String,
+            required: true,
+            default: "Info"
+          },
           date: {
             type: Date,
             default: Date.now
@@ -100,8 +105,10 @@ const DomesticLogSchema = new Schema({
             type: String,
             required: true
           },
-          dateInput: {
-            type: Date
+          type: {
+            type: String,
+            required: true,
+            default: "Info"
           },
           date: {
             type: Date,
@@ -140,8 +147,10 @@ const DomesticLogSchema = new Schema({
             type: String,
             required: true
           },
-          dateInput: {
-            type: Date
+          type: {
+            type: String,
+            required: true,
+            default: "Info"
           },
           date: {
             type: Date,
