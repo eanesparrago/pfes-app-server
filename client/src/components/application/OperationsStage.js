@@ -85,7 +85,7 @@ class OperationsStage extends Component {
         return (
           <li
             key={status._id}
-            className="list-child-reverse list-group-item d-flex justify-content-between align-items-center row"
+            className="fade-in list-child-reverse list-group-item d-flex justify-content-between align-items-center row"
           >
             <div className="list-comment col-lg-8">
               {status.comment}{" "}
@@ -115,7 +115,7 @@ class OperationsStage extends Component {
     }
 
     return (
-      <li className="list-group-item pb-1">
+      <li className="fade-in list-group-item pb-1">
         <div className="row mb-2">
           <h4 className="col-lg-2">
             <div>{title}</div>
@@ -127,8 +127,8 @@ class OperationsStage extends Component {
                 <button
                   type="button"
                   className={classnames("btn btn-sm mr-2 mb-1", {
-                    "btn-secondary": statusControl === true,
-                    "btn-outline-secondary": statusControl === false
+                    "btn-primary active": statusControl === true,
+                    "btn-outline-primary": statusControl === false
                   })}
                   onClick={this.toggleStatusControl}
                 >
@@ -137,7 +137,7 @@ class OperationsStage extends Component {
                 <button
                   type="button"
                   className={classnames("btn btn-sm mr-2 mb-1", {
-                    "btn-success": markCompleteControl === true,
+                    "btn-success active": markCompleteControl === true,
                     "btn-outline-success": markCompleteControl === false
                   })}
                   onClick={this.toggleMarkCompleteControl}
@@ -163,7 +163,7 @@ class OperationsStage extends Component {
           <ul className="list-parent-reverse list-group list-group-flush">
             {/* When the stage is complete, the Completed status is shown*/}
             {data.isFinished === true ? (
-              <li className="list-child-reverse list-group-item list-group-item-success d-flex justify-content-between align-items-center row">
+              <li className="fade-in list-child-reverse list-group-item list-group-item-success d-flex justify-content-between align-items-center row">
                 <div className="col-lg-8">
                   <strong className="">Completed</strong> | Remarks:{" "}
                   {data.remarks}{" "}

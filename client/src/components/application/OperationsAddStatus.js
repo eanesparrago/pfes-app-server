@@ -49,7 +49,7 @@ class OperationsAddStatus extends Component {
     const { errors } = this.props;
 
     return (
-      <form noValidate onSubmit={this.submitStatus}>
+      <form class="fade-in" noValidate onSubmit={this.submitStatus}>
         <div className="row">
           <div className="form-group col-lg-10">
             <input
@@ -67,21 +67,6 @@ class OperationsAddStatus extends Component {
               <div className="invalid-feedback">{errors.comment}</div>
             )}
           </div>
-
-          {/* <div className="form-group col-lg-5">
-            <input
-              type="date"
-              className={classnames("form-control form-control-sm", {})}
-              name="dateInput"
-              value={this.state.dateInput}
-              onChange={this.onChange}
-            />
-            <small className="form-text text-muted ml-2">
-              Defaults to today (<Moment format="MM/DD/YYYY">
-                {Date.now()}
-              </Moment>)
-            </small>
-          </div> */}
 
           <div className="form-group col-lg-2">
             <button className="btn btn-primary btn-sm">Submit</button>

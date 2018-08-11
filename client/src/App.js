@@ -57,7 +57,7 @@ class App extends Component {
 
             <AlertBox />
 
-            <div className="Main container-fluid">
+            <div className="fade-in-2 Main container-fluid">
               <Switch>
                 {/* Login */}
                 <Route exact path="/" component={Login} />
@@ -80,7 +80,7 @@ class App extends Component {
               />
             </div>
 
-            <div className="container-fluid ">
+            <div className="fade-in container-fluid ">
               {/* Log management */}
               <Route exact path="/app/logs" component={Logs} />
               {/* Admin - user management */}

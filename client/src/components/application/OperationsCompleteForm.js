@@ -9,7 +9,7 @@ class OperationsCompleteForm extends Component {
     super(props);
 
     this.state = {
-      remarks: "",
+      remarks: ""
       // dateFinished: ""
     };
 
@@ -48,7 +48,7 @@ class OperationsCompleteForm extends Component {
     const { errors } = this.props;
 
     return (
-      <form noValidate onSubmit={this.submitComplete}>
+      <form className="fade-in" noValidate onSubmit={this.submitComplete}>
         <div className="row">
           <div className="form-group col-lg-10">
             <input
@@ -63,23 +63,6 @@ class OperationsCompleteForm extends Component {
             />
             <small className="form-text text-muted ml-2">Optional</small>
           </div>
-
-          {/* <div className="form-group col-lg-5">
-            <input
-              type="date"
-              className={classnames("form-control form-control-sm", {
-                "is-invalid": errors.dateFinished
-              })}
-              name="dateFinished"
-              value={this.state.dateFinished}
-              onChange={this.onChange}
-            />
-            <small className="form-text text-muted ml-2">
-              Defaults to today (<Moment format="MM/DD/YYYY">
-                {Date.now()}
-              </Moment>)
-            </small>
-          </div> */}
 
           <div className="form-group col-lg-2">
             <button className="btn btn-success btn-sm">Submit</button>

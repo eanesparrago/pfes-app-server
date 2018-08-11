@@ -30,15 +30,30 @@ class DomesticLogs extends Component {
           {logs.map(log => {
             const { preloading, loading, unloading } = log.operations;
             let operationsStatus = "Preloading";
+            let operationsStatusRemarks = "No remarks";
+
+            if (preloading.statuses[0])
+              operationsStatusRemarks =
+                preloading.statuses[0].comment;
 
             if (preloading.isFinished === true) {
               operationsStatus = "Loading";
 
+              if (loading.statuses[0])
+                operationsStatusRemarks =
+                  loading.statuses[0].comment;
+
               if (loading.isFinished === true) {
                 operationsStatus = "Unloading";
 
+                if (unloading.statuses[0])
+                  operationsStatusRemarks =
+                    unloading.statuses[0].comment;
+
                 if (unloading.isFinished === true) {
                   operationsStatus = "Delivered";
+
+                  operationsStatusRemarks = unloading.remarks;
                 }
               }
             }
@@ -49,7 +64,7 @@ class DomesticLogs extends Component {
                 data-toggle="modal"
                 data-target="#LogView"
                 onClick={() => this.props.openLogView(log)}
-                className="pointer"
+                className="fade-in pointer"
               >
                 <td>
                   {log.type.slice(0, 1)}-{log.domJo}
@@ -76,8 +91,8 @@ class DomesticLogs extends Component {
                 <td title={moment(log.eta).format("MMMM Do YYYY")}>
                   <Moment format="MM/DD/YYYY">{log.eta}</Moment>
                 </td>
-                <td>
-                  {log.status} / {operationsStatus}
+                <td title={operationsStatusRemarks}>
+                  {log.status} ({operationsStatus})
                 </td>
               </tr>
             );
