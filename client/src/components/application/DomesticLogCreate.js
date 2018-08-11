@@ -38,6 +38,7 @@ class DomesticLogCreate extends Component {
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onOpen = this.onOpen.bind(this);
     this.onClose = this.onClose.bind(this);
     this.toggleCheck = this.toggleCheck.bind(this);
   }
@@ -88,8 +89,22 @@ class DomesticLogCreate extends Component {
           console.log("true");
         }
       });
+      return;
+    } else if (e.target.name === "contactName") {
+      const regex = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u;
+
+      if (e.target.value === "") {
+        this.setState({ [e.target.name]: e.target.value });
+      } else if (regex.test(e.target.value)) {
+        this.setState({ [e.target.name]: e.target.value });
+      }
+      return;
     } else {
       this.setState({ [e.target.name]: e.target.value });
+    }
+
+    if (e.target.name === "modeOfTransport") {
+      this.setState({ blAwb: "" });
     }
   }
 
@@ -123,6 +138,33 @@ class DomesticLogCreate extends Component {
     };
 
     this.props.createDomesticLog(newUser);
+  }
+
+  onOpen() {
+    this.setState({
+      shipperConsignee: "",
+      associate: "",
+      modeOfTransport: "",
+      commodity: "",
+      blAwb: "",
+      origin: "",
+      destination: "",
+      etd: moment().format("YYYY-MM-DD"),
+      eta: moment().format("YYYY-MM-DD"),
+      status: "Ongoing",
+
+      contactName: "",
+      contactNumber: "",
+      contactEmail: "",
+
+      tagUrgent: false,
+      tagImportant: false,
+      tagInsured: false,
+
+      errors: {}
+    });
+
+    this.props.clearErrors();
   }
 
   onClose() {
@@ -170,6 +212,7 @@ class DomesticLogCreate extends Component {
           className="btn btn-primary mr-3"
           data-toggle="modal"
           data-target="#domesticLogCreate"
+          onClick={this.onOpen}
         >
           New Job Order
         </button>
@@ -192,6 +235,7 @@ class DomesticLogCreate extends Component {
                   className="close"
                   data-dismiss="modal"
                   aria-label="Close"
+                  onClick={this.onClose}
                 >
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -247,30 +291,6 @@ class DomesticLogCreate extends Component {
                     </div>
 
                     <div className="form-group col-md-6">
-                      <label className="mb-1" htmlFor="modeOfTransport">
-                        Mode of Transport
-                      </label>
-                      <input
-                        type="text"
-                        className={classnames("form-control form-control-lg", {
-                          "is-invalid": errors.modeOfTransport
-                        })}
-                        placeholder="Mode of Transport"
-                        name="modeOfTransport"
-                        value={this.state.modeOfTransport}
-                        onChange={this.onChange}
-                        maxLength="100"
-                      />
-                      {errors.modeOfTransport && (
-                        <div className="invalid-feedback">
-                          {errors.modeOfTransport}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="row">
-                    <div className="form-group col-md-6">
                       <label className="mb-1" htmlFor="commodity">
                         Commodity
                       </label>
@@ -291,17 +311,89 @@ class DomesticLogCreate extends Component {
                         </div>
                       )}
                     </div>
+                  </div>
+
+                  <div className="row">
+                    <div className="form-group col-md-6">
+                      <label className="mb-1" htmlFor="modeOfTransport">
+                        Mode of Transport
+                      </label>
+
+                      <select
+                        className={classnames("form-control form-control-lg", {
+                          "is-invalid": errors.modeOfTransport
+                        })}
+                        id="modeOfTransport"
+                        name="modeOfTransport"
+                        value={this.state.modeOfTransport}
+                        onChange={this.onChange}
+                      >
+                        <option value="" disabled defaultValue>
+                          Select a Mode of Transport
+                        </option>
+                        <option value="Truck">Truck</option>
+                        <option value="Sea">Sea</option>
+                        <option value="Air">Air</option>
+                      </select>
+
+                      {errors.modeOfTransport && (
+                        <div className="invalid-feedback">
+                          {errors.modeOfTransport}
+                        </div>
+                      )}
+                    </div>
 
                     <div className="form-group col-md-6">
-                      <label className="mb-1" htmlFor="blAwb">
-                        BL/AWB
-                      </label>
+                      {this.state.modeOfTransport === "" ||
+                      this.state.modeOfTransport === "Truck" ? (
+                        <label className="mb-1" htmlFor="blAwb">
+                          <span className="text-muted">
+                            <em>For Air and Sea transport only</em>
+                          </span>
+                        </label>
+                      ) : this.state.modeOfTransport === "Sea" ? (
+                        <label className="mb-1" htmlFor="blAwb">
+                          Bill of Lading Number{" "}
+                          <span className="text-muted">
+                            <em>- Optional</em>
+                          </span>
+                        </label>
+                      ) : this.state.modeOfTransport === "Air" ? (
+                        <label className="mb-1" htmlFor="blAwb">
+                          Air Waybill Number{" "}
+                          <span className="text-muted">
+                            <em>- Optional</em>
+                          </span>
+                        </label>
+                      ) : (
+                        <label className="mb-1" htmlFor="blAwb">
+                          <span className="text-muted">
+                            <em>For Air and Sea transport only</em>
+                          </span>
+                        </label>
+                      )}
+
                       <input
+                        readOnly={
+                          this.state.modeOfTransport === "" ||
+                          this.state.modeOfTransport === "Truck"
+                            ? true
+                            : false
+                        }
                         type="text"
                         className={classnames("form-control form-control-lg", {
                           "is-invalid": errors.blAwb
                         })}
-                        placeholder="BL/AWB"
+                        placeholder={
+                          this.state.modeOfTransport === "" ||
+                          this.state.modeOfTransport === "Truck"
+                            ? ""
+                            : this.state.modeOfTransport === "Sea"
+                              ? "Bill of Lading Number"
+                              : this.state.modeOfTransport === "Air"
+                                ? "Air Waybill Number"
+                                : ""
+                        }
                         name="blAwb"
                         value={this.state.blAwb}
                         onChange={this.onChange}
@@ -485,6 +577,13 @@ class DomesticLogCreate extends Component {
 
                   {/* CONTACT */}
 
+                  <h5 className="mt-3">
+                    Contact Details
+                    <span className="text-muted ">
+                      <em> - Optional</em>
+                    </span>
+                  </h5>
+
                   <div className="row mt-3">
                     <div className="form-group col-md-4">
                       <label className="mb-1" htmlFor="contactName">
@@ -532,7 +631,7 @@ class DomesticLogCreate extends Component {
 
                     <div className="form-group col-md-4">
                       <label className="mb-1" htmlFor="contactEmail">
-                        Contact Email
+                        Contact Email{" "}
                       </label>
                       <input
                         type="text"
@@ -552,24 +651,25 @@ class DomesticLogCreate extends Component {
                       )}
                     </div>
                   </div>
+
+                  <div className="modal-footer pb-0 pr-0">
+                    <button
+                      type="submit"
+                      className="btn btn-secondary"
+                      data-dismiss="modal"
+                      onClick={this.onClose}
+                    >
+                      Close
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      onClick={this.onSubmit}
+                    >
+                      Create Job Order
+                    </button>
+                  </div>
                 </form>
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  data-dismiss="modal"
-                  onClick={this.onClose}
-                >
-                  Close
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={this.onSubmit}
-                >
-                  Create Job Order
-                </button>
               </div>
             </div>
           </div>

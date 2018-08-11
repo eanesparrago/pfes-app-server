@@ -5,37 +5,26 @@ const autoIncrement = require("mongoose-auto-increment");
 autoIncrement.initialize(mongoose.connection);
 
 const DomesticLogSchema = new Schema({
-  // domJo: {
-  //   type: Number
-  //   // default: 0
-  // },
   shipperConsignee: {
-    type: String,
-    default: "n/a"
+    type: String
   },
   associate: {
-    type: String,
-    default: "n/a"
+    type: String
   },
   modeOfTransport: {
-    type: String,
-    default: "n/a"
+    type: String
   },
   commodity: {
-    type: String,
-    default: "n/a"
+    type: String
   },
   blAwb: {
-    type: String,
-    default: "n/a"
+    type: String
   },
   origin: {
-    type: String,
-    default: "n/a"
+    type: String
   },
   destination: {
-    type: String,
-    default: "n/a"
+    type: String
   },
   etd: {
     type: Date
@@ -74,9 +63,6 @@ const DomesticLogSchema = new Schema({
             type: String,
             required: true
           },
-          // dateInput: {
-          //   type: Date
-          // },
           date: {
             type: Date,
             default: Date.now
@@ -172,15 +158,15 @@ const DomesticLogSchema = new Schema({
   contact: {
     name: {
       type: String,
-      default: "n/a"
+      default: ""
     },
     number: {
       type: String,
-      default: "n/a"
+      default: ""
     },
     email: {
       type: String,
-      default: "n/a"
+      default: ""
     }
   },
   status: {

@@ -94,13 +94,19 @@ router.post(
 
     newLog.user = req.body.user;
     if (req.body.shipperConsignee)
-      newLog.shipperConsignee = req.body.shipperConsignee;
+      newLog.shipperConsignee = req.body.shipperConsignee.trim();
     if (req.body.modeOfTransport)
       newLog.modeOfTransport = req.body.modeOfTransport;
-    if (req.body.commodity) newLog.commodity = req.body.commodity;
-    if (req.body.blAwb) newLog.blAwb = req.body.blAwb;
-    if (req.body.origin) newLog.origin = req.body.origin;
-    if (req.body.destination) newLog.destination = req.body.destination;
+    if (req.body.commodity) newLog.commodity = req.body.commodity.trim();
+
+    if (req.body.blAwb) {
+      newLog.blAwb = req.body.blAwb.trim();
+    } else {
+      newLog.blAwb = "";
+    }
+
+    if (req.body.origin) newLog.origin = req.body.origin.trim();
+    if (req.body.destination) newLog.destination = req.body.destination.trim();
     if (req.body.etd) newLog.etd = req.body.etd;
     if (req.body.eta) newLog.eta = req.body.eta;
     if (req.body.status) newLog.status = req.body.status;
@@ -113,9 +119,23 @@ router.post(
 
     newLog.contact = {};
 
-    if (req.body.contactName) newLog.contact.name = req.body.contactName;
-    if (req.body.contactNumber) newLog.contact.number = req.body.contactNumber;
-    if (req.body.contactEmail) newLog.contact.email = req.body.contactEmail;
+    if (req.body.contactName) {
+      newLog.contact.name = req.body.contactName.trim();
+    } else {
+      newLog.contact.name = "";
+    }
+
+    if (req.body.contactNumber) {
+      newLog.contact.number = req.body.contactNumber.trim();
+    } else {
+      newLog.contact.number = "";
+    }
+
+    if (req.body.contactEmail) {
+      newLog.contact.email = req.body.contactEmail.trim();
+    } else {
+      newLog.contact.email = "";
+    }
 
     newLog.associate = `${req.user.firstName} ${req.user.lastName}`;
 
@@ -150,19 +170,23 @@ router.post(
     // If the field was empty it will check so that it will default to n/a instead of an empty object
     const newLog = {};
 
-    newLog.domJo = req.body.domJo;
     newLog.user = req.body.user;
     if (req.body.shipperConsignee)
-      newLog.shipperConsignee = req.body.shipperConsignee;
+      newLog.shipperConsignee = req.body.shipperConsignee.trim();
     if (req.body.modeOfTransport)
       newLog.modeOfTransport = req.body.modeOfTransport;
-    if (req.body.commodity) newLog.commodity = req.body.commodity;
-    if (req.body.blAwb) newLog.blAwb = req.body.blAwb;
-    if (req.body.origin) newLog.origin = req.body.origin;
-    if (req.body.destination) newLog.destination = req.body.destination;
+    if (req.body.commodity) newLog.commodity = req.body.commodity.trim();
+
+    if (req.body.blAwb) {
+      newLog.blAwb = req.body.blAwb.trim();
+    } else {
+      newLog.blAwb = "";
+    }
+    if (req.body.origin) newLog.origin = req.body.origin.trim();
+    if (req.body.destination) newLog.destination = req.body.destination.trim();
     if (req.body.etd) newLog.etd = req.body.etd;
     if (req.body.eta) newLog.eta = req.body.eta;
-    newLog.status = req.body.status;
+    if (req.body.status) newLog.status = req.body.status;
 
     newLog.tags = {};
 
@@ -172,9 +196,23 @@ router.post(
 
     newLog.contact = {};
 
-    if (req.body.contactName) newLog.contact.name = req.body.contactName;
-    if (req.body.contactNumber) newLog.contact.number = req.body.contactNumber;
-    if (req.body.contactEmail) newLog.contact.email = req.body.contactEmail;
+    if (req.body.contactName) {
+      newLog.contact.name = req.body.contactName.trim();
+    } else {
+      newLog.contact.name = "";
+    }
+
+    if (req.body.contactNumber) {
+      newLog.contact.number = req.body.contactNumber.trim();
+    } else {
+      newLog.contact.number = "";
+    }
+
+    if (req.body.contactEmail) {
+      newLog.contact.email = req.body.contactEmail.trim();
+    } else {
+      newLog.contact.email = "";
+    }
 
     newLog.associate = `${req.user.firstName} ${req.user.lastName}`;
 
@@ -213,49 +251,48 @@ router.post(
       return res.status(400).json(errors);
     }
 
-    // If the field was empty it will check so that it will default to n/a instead of an empty object
+    // If the field was empty it will check so that it will default to "" instead of an empty object
     const newLog = {};
 
-    newLog.domJo = req.body.domJo;
     if (req.body.shipperConsignee) {
-      newLog.shipperConsignee = req.body.shipperConsignee;
+      newLog.shipperConsignee = req.body.shipperConsignee.trim();
     } else {
-      newLog.shipperConsignee = "n/a";
+      newLog.shipperConsignee = "";
+    }
+
+    if (req.body.commodity) {
+      newLog.commodity = req.body.commodity.trim();
+    } else {
+      newLog.commodity = "";
     }
 
     if (req.body.modeOfTransport) {
       newLog.modeOfTransport = req.body.modeOfTransport;
     } else {
-      newLog.modeOfTransport = "n/a";
-    }
-
-    if (req.body.commodity) {
-      newLog.commodity = req.body.commodity;
-    } else {
-      newLog.commodity = "n/a";
+      newLog.modeOfTransport = "";
     }
 
     if (req.body.blAwb) {
-      newLog.blAwb = req.body.blAwb;
+      newLog.blAwb = req.body.blAwb.trim();
     } else {
-      newLog.blAwb = "n/a";
+      newLog.blAwb = "";
     }
 
     if (req.body.origin) {
-      newLog.origin = req.body.origin;
+      newLog.origin = req.body.origin.trim();
     } else {
-      newLog.origin = "n/a";
+      newLog.origin = "";
     }
 
     if (req.body.destination) {
-      newLog.destination = req.body.destination;
+      newLog.destination = req.body.destination.trim();
     } else {
-      newLog.destination = "n/a";
+      newLog.destination = "";
     }
 
     if (req.body.etd) newLog.etd = req.body.etd;
     if (req.body.eta) newLog.eta = req.body.eta;
-    if (req.body.rating) newLog.rating = req.body.rating;
+    if (req.body.rating) newLog.rating = req.body.rating.trim();
 
     newLog.status = req.body.status;
 
@@ -268,21 +305,21 @@ router.post(
     newLog.contact = {};
 
     if (req.body.contactName) {
-      newLog.contact.name = req.body.contactName;
+      newLog.contact.name = req.body.contactName.trim();
     } else {
-      newLog.contact.name = "n/a";
+      newLog.contact.name = "";
     }
 
     if (req.body.contactNumber) {
-      newLog.contact.number = req.body.contactNumber;
+      newLog.contact.number = req.body.contactNumber.trim();
     } else {
-      newLog.contact.number = "n/a";
+      newLog.contact.number = "";
     }
 
     if (req.body.contactEmail) {
-      newLog.contact.email = req.body.contactEmail;
+      newLog.contact.email = req.body.contactEmail.trim();
     } else {
-      newLog.contact.email = "n/a";
+      newLog.contact.email = "";
     }
 
     newLog.dateModified = Date.now();
@@ -332,67 +369,72 @@ router.post(
     // If the field was empty it will check so that it will default to n/a instead of an empty object
     const newLog = {};
 
-    newLog.domJo = req.body.domJo;
     if (req.body.shipperConsignee) {
-      newLog.shipperConsignee = req.body.shipperConsignee;
+      newLog.shipperConsignee = req.body.shipperConsignee.trim();
     } else {
-      newLog.shipperConsignee = "n/a";
+      newLog.shipperConsignee = "";
+    }
+
+    if (req.body.commodity) {
+      newLog.commodity = req.body.commodity.trim();
+    } else {
+      newLog.commodity = "";
     }
 
     if (req.body.modeOfTransport) {
       newLog.modeOfTransport = req.body.modeOfTransport;
     } else {
-      newLog.modeOfTransport = "n/a";
-    }
-
-    if (req.body.commodity) {
-      newLog.commodity = req.body.commodity;
-    } else {
-      newLog.commodity = "n/a";
+      newLog.modeOfTransport = "";
     }
 
     if (req.body.blAwb) {
-      newLog.blAwb = req.body.blAwb;
+      newLog.blAwb = req.body.blAwb.trim();
     } else {
-      newLog.blAwb = "n/a";
+      newLog.blAwb = "";
     }
 
     if (req.body.origin) {
-      newLog.origin = req.body.origin;
+      newLog.origin = req.body.origin.trim();
     } else {
-      newLog.origin = "n/a";
+      newLog.origin = "";
     }
 
     if (req.body.destination) {
-      newLog.destination = req.body.destination;
+      newLog.destination = req.body.destination.trim();
     } else {
-      newLog.destination = "n/a";
+      newLog.destination = "";
     }
 
     if (req.body.etd) newLog.etd = req.body.etd;
     if (req.body.eta) newLog.eta = req.body.eta;
-    if (req.body.rating) newLog.rating = req.body.rating;
+    if (req.body.rating) newLog.rating = req.body.rating.trim();
 
     newLog.status = req.body.status;
+
+    newLog.tags = {};
+
+    if (req.body.tagUrgent) newLog.tags.urgent = req.body.tagUrgent;
+    if (req.body.tagImportant) newLog.tags.important = req.body.tagImportant;
+    if (req.body.tagInsured) newLog.tags.insured = req.body.tagInsured;
 
     newLog.contact = {};
 
     if (req.body.contactName) {
-      newLog.contact.name = req.body.contactName;
+      newLog.contact.name = req.body.contactName.trim();
     } else {
-      newLog.contact.name = "n/a";
+      newLog.contact.name = "";
     }
 
     if (req.body.contactNumber) {
-      newLog.contact.number = req.body.contactNumber;
+      newLog.contact.number = req.body.contactNumber.trim();
     } else {
-      newLog.contact.number = "n/a";
+      newLog.contact.number = "";
     }
 
     if (req.body.contactEmail) {
-      newLog.contact.email = req.body.contactEmail;
+      newLog.contact.email = req.body.contactEmail.trim();
     } else {
-      newLog.contact.email = "n/a";
+      newLog.contact.email = "";
     }
 
     newLog.dateModified = Date.now();

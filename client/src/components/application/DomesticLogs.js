@@ -65,9 +65,9 @@ class DomesticLogs extends Component {
                 )}
 
                 <td>{log.shipperConsignee}</td>
-                <td>{log.modeOfTransport}</td>
                 <td>{log.commodity}</td>
-                <td>{log.blAwb}</td>
+                <td>{log.modeOfTransport}</td>
+                <td>{log.blAwb ? log.blAwb : "n/a"}</td>
                 <td>{log.origin}</td>
                 <td>{log.destination}</td>
                 <td title={moment(log.etd).format("MMMM Do YYYY")}>
@@ -135,9 +135,9 @@ class DomesticLogs extends Component {
                 <th scope="col">D-JO</th>
                 <th scope="col">Associate</th>
                 <th scope="col">Shipper/Consignee</th>
-                <th scope="col">Mode of Transport</th>
                 <th scope="col">Commodity</th>
-                <th scope="col">BL/AWB</th>
+                <th scope="col">Mode of Transport</th>
+                <th scope="col">BL/AWB#</th>
                 <th scope="col">Origin</th>
                 <th scope="col">Destination</th>
                 <th scope="col">ETD</th>

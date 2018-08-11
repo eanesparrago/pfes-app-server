@@ -78,9 +78,9 @@ export class LogViewEdit extends Component {
 
         contactName: nextProps.log.contact.name,
         contactNumber: nextProps.log.contact.number,
-        contactEmail: nextProps.log.contact.email,
+        contactEmail: nextProps.log.contact.email
 
-        isEditable: false
+        // isEditable: false
       });
     }
   }
@@ -98,8 +98,22 @@ export class LogViewEdit extends Component {
           console.log("true");
         }
       });
+      return;
+    } else if (e.target.name === "contactName") {
+      const regex = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u;
+
+      if (e.target.value === "") {
+        this.setState({ [e.target.name]: e.target.value });
+      } else if (regex.test(e.target.value)) {
+        this.setState({ [e.target.name]: e.target.value });
+      }
+      return;
     } else {
       this.setState({ [e.target.name]: e.target.value });
+    }
+
+    if (e.target.name === "modeOfTransport") {
+      this.setState({ blAwb: "" });
     }
   }
 
@@ -320,39 +334,6 @@ export class LogViewEdit extends Component {
 
             {isEditable ? (
               <div className="form-group col-md-6">
-                <label className="mb-1" htmlFor="modeOfTransport">
-                  Mode of Transport
-                </label>
-                <input
-                  readOnly={!isEditable}
-                  type="text"
-                  className={classnames("form-control", {
-                    "is-invalid": errors.modeOfTransport
-                  })}
-                  placeholder="Mode of Transport"
-                  name="modeOfTransport"
-                  value={this.state.modeOfTransport}
-                  onChange={this.onChange}
-                  maxLength="100"
-                />
-                {errors.modeOfTransport && (
-                  <div className="invalid-feedback">
-                    {errors.modeOfTransport}
-                  </div>
-                )}
-              </div>
-            ) : (
-              <div className="col-md-6 mb-2">
-                <h5>
-                  Mode of Transport: <strong>{log.modeOfTransport}</strong>
-                </h5>
-              </div>
-            )}
-          </div>
-
-          <div className="row">
-            {isEditable ? (
-              <div className="form-group col-md-6">
                 <label className="mb-1" htmlFor="commodity">
                   Commodity
                 </label>
@@ -379,19 +360,100 @@ export class LogViewEdit extends Component {
                 </h5>
               </div>
             )}
+          </div>
+
+          <div className="row">
+            {isEditable ? (
+              <div className="form-group col-md-6">
+                <label className="mb-1" htmlFor="modeOfTransport">
+                  Mode of Transport
+                </label>
+
+                <select
+                  className={classnames("form-control", {
+                    "is-invalid": errors.modeOfTransport
+                  })}
+                  id="modeOfTransport"
+                  name="modeOfTransport"
+                  value={this.state.modeOfTransport}
+                  onChange={this.onChange}
+                >
+                  <option value="" disabled defaultValue>
+                    Select a Mode of Transport
+                  </option>
+                  {log.type === "Domestic" ? (
+                    <option value="Truck">Truck</option>
+                  ) : null}
+                  <option value="Sea">Sea</option>
+                  <option value="Air">Air</option>
+                </select>
+
+                {errors.modeOfTransport && (
+                  <div className="invalid-feedback">
+                    {errors.modeOfTransport}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="col-md-6 mb-2">
+                <h5>
+                  Mode of Transport: <strong>{log.modeOfTransport}</strong>
+                </h5>
+              </div>
+            )}
 
             {isEditable ? (
               <div className="form-group col-md-6">
-                <label className="mb-1" htmlFor="blAwb">
-                  BL/AWB
-                </label>
+                {this.state.modeOfTransport === "" ||
+                this.state.modeOfTransport === "Truck" ? (
+                  <label className="mb-1" htmlFor="blAwb">
+                    <span className="text-muted">
+                      <em>For Air and Sea transport only</em>
+                    </span>
+                  </label>
+                ) : this.state.modeOfTransport === "Sea" ? (
+                  <label className="mb-1" htmlFor="blAwb">
+                    Bill of Lading Number{" "}
+                    <span className="text-muted">
+                      <em>- Optional</em>
+                    </span>
+                  </label>
+                ) : this.state.modeOfTransport === "Air" ? (
+                  <label className="mb-1" htmlFor="blAwb">
+                    Air Waybill Number{" "}
+                    <span className="text-muted">
+                      <em>- Optional</em>
+                    </span>
+                  </label>
+                ) : (
+                  <label className="mb-1" htmlFor="blAwb">
+                    <span className="text-muted">
+                      <em>For Air and Sea transport only</em>
+                    </span>
+                  </label>
+                )}
+
                 <input
-                  readOnly={!isEditable}
+                  readOnly={
+                    this.state.modeOfTransport === "" ||
+                    this.state.modeOfTransport === "Truck"
+                      ? true
+                      : false
+                  }
                   type="text"
                   className={classnames("form-control", {
                     "is-invalid": errors.blAwb
                   })}
-                  placeholder="BL/AWB"
+                  placeholder={
+                    this.state.modeOfTransport === "" ||
+                    this.state.modeOfTransport === "Truck"
+                      ? ""
+                      : this.state.modeOfTransport === "Sea"
+                        ? "Bill of Lading Number"
+                        : this.state.modeOfTransport === "Air"
+                          ? "Air Waybill Number"
+                          : ""
+                  }
                   name="blAwb"
                   value={this.state.blAwb}
                   onChange={this.onChange}
@@ -404,7 +466,8 @@ export class LogViewEdit extends Component {
             ) : (
               <div className="col-md-6 mb-2">
                 <h5>
-                  BL/AWB: <strong>{log.blAwb}</strong>
+                  BL/AWB#:{" "}
+                  {log.blAwb ? <strong>{log.blAwb}</strong> : <em>n/a</em>}
                 </h5>
               </div>
             )}
@@ -574,7 +637,7 @@ export class LogViewEdit extends Component {
                   Tags
                 </label>
 
-                <div className="form-control form-control-lg">
+                <div className="form-control">
                   <div className="form-check form-check-inline">
                     <input
                       className="form-check-input"

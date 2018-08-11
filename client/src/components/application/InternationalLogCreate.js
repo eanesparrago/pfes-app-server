@@ -29,12 +29,18 @@ class InternationalLogCreate extends Component {
       contactNumber: "",
       contactEmail: "",
 
+      tagUrgent: false,
+      tagImportant: false,
+      tagInsured: false,
+
       errors: {}
     };
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onOpen = this.onOpen.bind(this);
     this.onClose = this.onClose.bind(this);
+    this.toggleCheck = this.toggleCheck.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -59,6 +65,10 @@ class InternationalLogCreate extends Component {
         contactNumber: "",
         contactEmail: "",
 
+        tagUrgent: false,
+        tagImportant: false,
+        tagInsured: false,
+
         errors: {}
       });
 
@@ -79,9 +89,29 @@ class InternationalLogCreate extends Component {
           console.log("true");
         }
       });
+      return;
+    } else if (e.target.name === "contactName") {
+      const regex = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u;
+
+      if (e.target.value === "") {
+        this.setState({ [e.target.name]: e.target.value });
+      } else if (regex.test(e.target.value)) {
+        this.setState({ [e.target.name]: e.target.value });
+      }
+      return;
     } else {
       this.setState({ [e.target.name]: e.target.value });
     }
+
+    if (e.target.name === "modeOfTransport") {
+      this.setState({ blAwb: "" });
+    }
+  }
+
+  toggleCheck(e) {
+    this.setState({ [e.target.name]: !this.state[e.target.name] }, () => {
+      console.log(this.state);
+    });
   }
 
   onSubmit(e) {
@@ -98,12 +128,43 @@ class InternationalLogCreate extends Component {
       eta: this.state.eta,
       status: this.state.status,
 
+      tagUrgent: this.state.tagUrgent,
+      tagImportant: this.state.tagImportant,
+      tagInsured: this.state.tagInsured,
+
       contactName: this.state.contactName,
       contactNumber: this.state.contactNumber,
       contactEmail: this.state.contactEmail
     };
 
     this.props.createInternationalLog(newUser);
+  }
+
+  onOpen() {
+    this.setState({
+      shipperConsignee: "",
+      associate: "",
+      modeOfTransport: "",
+      commodity: "",
+      blAwb: "",
+      origin: "",
+      destination: "",
+      etd: moment().format("YYYY-MM-DD"),
+      eta: moment().format("YYYY-MM-DD"),
+      status: "Ongoing",
+
+      contactName: "",
+      contactNumber: "",
+      contactEmail: "",
+
+      tagUrgent: false,
+      tagImportant: false,
+      tagInsured: false,
+
+      errors: {}
+    });
+
+    this.props.clearErrors();
   }
 
   onClose() {
@@ -122,6 +183,10 @@ class InternationalLogCreate extends Component {
       contactName: "",
       contactNumber: "",
       contactEmail: "",
+
+      tagUrgent: false,
+      tagImportant: false,
+      tagInsured: false,
 
       errors: {}
     });
@@ -147,6 +212,7 @@ class InternationalLogCreate extends Component {
           className="btn btn-primary mr-3"
           data-toggle="modal"
           data-target="#internationalLogCreate"
+          onClick={this.onOpen}
         >
           New Job Order
         </button>
@@ -169,6 +235,7 @@ class InternationalLogCreate extends Component {
                   className="close"
                   data-dismiss="modal"
                   aria-label="Close"
+                  onClick={this.onClose}
                 >
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -224,30 +291,6 @@ class InternationalLogCreate extends Component {
                     </div>
 
                     <div className="form-group col-md-6">
-                      <label className="mb-1" htmlFor="modeOfTransport">
-                        Mode of Transport
-                      </label>
-                      <input
-                        type="text"
-                        className={classnames("form-control form-control-lg", {
-                          "is-invalid": errors.modeOfTransport
-                        })}
-                        placeholder="Mode of Transport"
-                        name="modeOfTransport"
-                        value={this.state.modeOfTransport}
-                        onChange={this.onChange}
-                        maxLength="100"
-                      />
-                      {errors.modeOfTransport && (
-                        <div className="invalid-feedback">
-                          {errors.modeOfTransport}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="row">
-                    <div className="form-group col-md-6">
                       <label className="mb-1" htmlFor="commodity">
                         Commodity
                       </label>
@@ -268,17 +311,88 @@ class InternationalLogCreate extends Component {
                         </div>
                       )}
                     </div>
+                  </div>
+
+                  <div className="row">
+                    <div className="form-group col-md-6">
+                      <label className="mb-1" htmlFor="modeOfTransport">
+                        Mode of Transport
+                      </label>
+
+                      <select
+                        className={classnames("form-control form-control-lg", {
+                          "is-invalid": errors.modeOfTransport
+                        })}
+                        id="modeOfTransport"
+                        name="modeOfTransport"
+                        value={this.state.modeOfTransport}
+                        onChange={this.onChange}
+                      >
+                        <option value="" disabled defaultValue>
+                          Select a Mode of Transport
+                        </option>
+                        <option value="Sea">Sea</option>
+                        <option value="Air">Air</option>
+                      </select>
+
+                      {errors.modeOfTransport && (
+                        <div className="invalid-feedback">
+                          {errors.modeOfTransport}
+                        </div>
+                      )}
+                    </div>
 
                     <div className="form-group col-md-6">
-                      <label className="mb-1" htmlFor="blAwb">
-                        BL/AWB
-                      </label>
+                      {this.state.modeOfTransport === "" ||
+                      this.state.modeOfTransport === "Truck" ? (
+                        <label className="mb-1" htmlFor="blAwb">
+                          <span className="text-muted">
+                            <em>BL/AWB#</em>
+                          </span>
+                        </label>
+                      ) : this.state.modeOfTransport === "Sea" ? (
+                        <label className="mb-1" htmlFor="blAwb">
+                          Bill of Lading Number{" "}
+                          <span className="text-muted">
+                            <em>- Optional</em>
+                          </span>
+                        </label>
+                      ) : this.state.modeOfTransport === "Air" ? (
+                        <label className="mb-1" htmlFor="blAwb">
+                          Air Waybill Number{" "}
+                          <span className="text-muted">
+                            <em>- Optional</em>
+                          </span>
+                        </label>
+                      ) : (
+                        <label className="mb-1" htmlFor="blAwb">
+                          <span className="text-muted">
+                            <em>BL/AWB#</em>
+                          </span>
+                        </label>
+                      )}
+
                       <input
+                        readOnly={
+                          this.state.modeOfTransport === "" ||
+                          this.state.modeOfTransport === "Truck"
+                            ? true
+                            : false
+                        }
                         type="text"
                         className={classnames("form-control form-control-lg", {
                           "is-invalid": errors.blAwb
                         })}
-                        placeholder="BL/AWB"
+                        placeholder={
+                          this.state.modeOfTransport === "" ||
+                          this.state.modeOfTransport === "Truck"
+                            ? ""
+                            : this.state.modeOfTransport === "Sea"
+                              ? "Bill of Lading Number"
+                              : this.state.modeOfTransport === "Air"
+                                ? "Air Waybill Number"
+                                : ""
+                        }
                         name="blAwb"
                         value={this.state.blAwb}
                         onChange={this.onChange}
@@ -372,34 +486,102 @@ class InternationalLogCreate extends Component {
                     </div>
                   </div>
 
-                  <div className="form-group">
-                    <label className="mb-1" htmlFor="status">
-                      Status
-                    </label>
+                  <div className="row">
+                    <div className="form-group col-md-6">
+                      <label className="mb-1" htmlFor="status">
+                        Status
+                      </label>
 
-                    <select
-                      className={classnames("form-control form-control-lg", {
-                        "is-invalid": errors.status
-                      })}
-                      id="status"
-                      name="status"
-                      value={this.state.status}
-                      onChange={this.onChange}
-                    >
-                      <option value="Ongoing">Ongoing</option>
-                      <option value="Complete">Complete</option>
-                      <option value="Waiting">Waiting</option>
-                      <option value="Void">Void</option>
-                    </select>
+                      <select
+                        className={classnames("form-control form-control-lg", {
+                          "is-invalid": errors.status
+                        })}
+                        id="status"
+                        name="status"
+                        value={this.state.status}
+                        onChange={this.onChange}
+                      >
+                        <option value="Ongoing">Ongoing</option>
+                        <option value="Complete">Complete</option>
+                        <option value="Waiting">Waiting</option>
+                        <option value="Void">Void</option>
+                      </select>
 
-                    {errors.status && (
-                      <div className="invalid-feedback">{errors.status}</div>
-                    )}
+                      {errors.status && (
+                        <div className="invalid-feedback">{errors.status}</div>
+                      )}
+                    </div>
+
+                    <div className="form-group col-md-6">
+                      <label className="mb-1" htmlFor="status">
+                        Tags
+                      </label>
+
+                      <div className="form-control form-control-lg">
+                        <div className="form-check form-check-inline">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="tagUrgent"
+                            name="tagUrgent"
+                            checked={this.state.tagUrgent}
+                            onChange={this.toggleCheck}
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="tagUrgent"
+                          >
+                            Urgent
+                          </label>
+                        </div>
+
+                        <div className="form-check form-check-inline">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="tagImportant"
+                            name="tagImportant"
+                            checked={this.state.tagImportant}
+                            onChange={this.toggleCheck}
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="tagImportant"
+                          >
+                            Important
+                          </label>
+                        </div>
+
+                        <div className="form-check form-check-inline">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="tagInsured"
+                            name="tagInsured"
+                            checked={this.state.tagInsured}
+                            onChange={this.toggleCheck}
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="tagInsured"
+                          >
+                            Insured
+                          </label>
+                        </div>
+                      </div>
+                    </div>
                   </div>
 
                   <div className="dropdown-divider" />
 
                   {/* CONTACT */}
+
+                  <h5 className="mt-3">
+                    Contact Details
+                    <span className="text-muted ">
+                      <em> - Optional</em>
+                    </span>
+                  </h5>
 
                   <div className="row mt-3">
                     <div className="form-group col-md-4">
@@ -448,7 +630,7 @@ class InternationalLogCreate extends Component {
 
                     <div className="form-group col-md-4">
                       <label className="mb-1" htmlFor="contactEmail">
-                        Contact Email
+                        Contact Email{" "}
                       </label>
                       <input
                         type="text"
@@ -468,24 +650,25 @@ class InternationalLogCreate extends Component {
                       )}
                     </div>
                   </div>
+
+                  <div className="modal-footer pb-0 pr-0">
+                    <button
+                      type="submit"
+                      className="btn btn-secondary"
+                      data-dismiss="modal"
+                      onClick={this.onClose}
+                    >
+                      Close
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      onClick={this.onSubmit}
+                    >
+                      Create Job Order
+                    </button>
+                  </div>
                 </form>
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  data-dismiss="modal"
-                  onClick={this.onClose}
-                >
-                  Close
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={this.onSubmit}
-                >
-                  Create Job Order
-                </button>
               </div>
             </div>
           </div>
