@@ -106,7 +106,6 @@ class OperationsAddStatus extends Component {
               className={classnames("form-control", {
                 "is-invalid": errors.comment
               })}
-              placeholder="Status"
               aria-label="Text input with dropdown button"
               placeholder="Status (Required)"
               name="comment"

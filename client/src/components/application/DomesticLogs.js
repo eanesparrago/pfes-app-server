@@ -30,9 +30,7 @@ class DomesticLogs extends Component {
       tableBody = (
         <tbody>
           {logs.map(log => {
-            {
-              /* Generate the operations status element */
-            }
+            /* Generate the operations status element */
             const { preloading, loading, unloading } = log.operations;
 
             let operationsStatus = (

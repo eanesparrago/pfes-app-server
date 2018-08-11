@@ -67,7 +67,6 @@ class OperationsCompleteForm extends Component {
               <button className="btn btn-success btn-sm">Submit</button>
             </div>
           </div>
-      
         </div>
       </form>
     );
