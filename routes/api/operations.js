@@ -139,7 +139,7 @@ router.post(
       return res.status(400).json({ unauthorized: "Unauthorized" });
     }
 
-    console.log("SUBMIT COMPELTE:", req.body);
+    console.log("SUBMIT COMPLETE:", req.body);
 
     InternationalLog.findById(req.params.id).then(log => {
       const data = {};
@@ -262,7 +262,7 @@ router.post(
 
     if (req.body.comment) newStatus.comment = req.body.comment;
     if (req.body.type) newStatus.type = req.body.type;
-    
+
     newStatus.name = `${req.user.firstName} ${req.user.lastName}`;
     newStatus.user = req.user.id;
 
@@ -417,6 +417,18 @@ router.post(
                 .map(item => item._id.toString())
                 .indexOf(req.params.status_id);
 
+              // Validate if the operations user account owns the status
+              if (
+                req.user.userType === "operations" &&
+                log.operations.preloading.statuses[
+                  removeIndex
+                ].user.toString() !== req.user.id
+              ) {
+                return res.status(400).json({
+                  unauthorized: "Cannot delete status"
+                });
+              }
+
               log.operations.preloading.statuses.splice(removeIndex, 1);
 
               log.save().then(log => res.json(log));
@@ -442,6 +454,17 @@ router.post(
                 .map(item => item._id.toString())
                 .indexOf(req.params.status_id);
 
+              // Validate if the operations user account owns the status
+              if (
+                req.user.userType === "operations" &&
+                log.operations.loading.statuses[removeIndex].user.toString() !==
+                  req.user.id
+              ) {
+                return res.status(400).json({
+                  unauthorized: "Cannot delete status"
+                });
+              }
+
               log.operations.loading.statuses.splice(removeIndex, 1);
 
               log.save().then(log => res.json(log));
@@ -466,6 +489,18 @@ router.post(
               const removeIndex = log.operations.unloading.statuses
                 .map(item => item._id.toString())
                 .indexOf(req.params.status_id);
+
+              // Validate if the operations user account owns the status
+              if (
+                req.user.userType === "operations" &&
+                log.operations.unloading.statuses[
+                  removeIndex
+                ].user.toString() !== req.user.id
+              ) {
+                return res.status(400).json({
+                  unauthorized: "Cannot delete status"
+                });
+              }
 
               log.operations.unloading.statuses.splice(removeIndex, 1);
 
@@ -520,6 +555,18 @@ router.post(
                 .map(item => item._id.toString())
                 .indexOf(req.params.status_id);
 
+              // Validate if the operations user account owns the status
+              if (
+                req.user.userType === "operations" &&
+                log.operations.preloading.statuses[
+                  removeIndex
+                ].user.toString() !== req.user.id
+              ) {
+                return res.status(400).json({
+                  unauthorized: "Cannot delete status"
+                });
+              }
+
               log.operations.preloading.statuses.splice(removeIndex, 1);
 
               log.save().then(log => res.json(log));
@@ -545,6 +592,17 @@ router.post(
                 .map(item => item._id.toString())
                 .indexOf(req.params.status_id);
 
+              // Validate if the operations user account owns the status
+              if (
+                req.user.userType === "operations" &&
+                log.operations.loading.statuses[removeIndex].user.toString() !==
+                  req.user.id
+              ) {
+                return res.status(400).json({
+                  unauthorized: "Cannot delete status"
+                });
+              }
+
               log.operations.loading.statuses.splice(removeIndex, 1);
 
               log.save().then(log => res.json(log));
@@ -569,6 +627,18 @@ router.post(
               const removeIndex = log.operations.unloading.statuses
                 .map(item => item._id.toString())
                 .indexOf(req.params.status_id);
+
+              // Validate if the operations user account owns the status
+              if (
+                req.user.userType === "operations" &&
+                log.operations.unloading.statuses[
+                  removeIndex
+                ].user.toString() !== req.user.id
+              ) {
+                return res.status(400).json({
+                  unauthorized: "Cannot delete status"
+                });
+              }
 
               log.operations.unloading.statuses.splice(removeIndex, 1);
 

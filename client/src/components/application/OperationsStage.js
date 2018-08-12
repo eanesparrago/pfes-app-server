@@ -107,7 +107,9 @@ class OperationsStage extends Component {
             </div>
 
             <div className="col-lg-2 list-controls">
-              {showControls === true ? (
+              {(auth.user.userType === "admin" ||
+                status.user === auth.user.id) &&
+              showControls === true ? (
                 <span>
                   <button
                     className="btn btn-outline-danger btn-sm"
