@@ -8,6 +8,7 @@
     "jwt-decode": "^2.2.0",
     "moment": "^2.22.2",
     "react": "^16.4.1",
+    "react-big-calendar": "^0.19.2",
     "react-dom": "^16.4.1",
     "react-moment": "^0.7.9",
     "react-redux": "^5.0.7",

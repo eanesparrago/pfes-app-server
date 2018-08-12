@@ -3,6 +3,11 @@ import { Link } from "react-router-dom";
 import classnames from "classnames";
 import { connect } from "react-redux";
 
+import {
+  getDomesticLogs,
+  getInternationalLogs
+} from "../../actions/logsActions";
+
 class ApplicationNav extends Component {
   constructor() {
     super();
@@ -11,6 +16,11 @@ class ApplicationNav extends Component {
     };
 
     this.handleClick = this.handleClick.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.getDomesticLogs();
+    this.props.getInternationalLogs();
   }
 
   componentWillMount() {
@@ -27,8 +37,6 @@ class ApplicationNav extends Component {
       }
     }
   }
-
-  componentDidMount() {}
 
   componentWillUnmount() {
     if (this.props.auth.isAuthenticated) {
@@ -61,6 +69,18 @@ class ApplicationNav extends Component {
             </Link>
           </li>
 
+          <li className="nav-item">
+            <Link
+              className={classnames("nav-link", {
+                active: this.state.active === "/app/calendar"
+              })}
+              to="/app/calendar"
+              onClick={() => this.handleClick("/app/calendar")}
+            >
+              Calendar
+            </Link>
+          </li>
+
           {auth.user.userType === "admin" ? (
             <li className="nav-item">
               <Link
@@ -86,5 +106,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  null
+  { getDomesticLogs, getInternationalLogs }
 )(ApplicationNav);

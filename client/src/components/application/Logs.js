@@ -7,17 +7,7 @@ import InternationalLogs from "./InternationalLogs";
 import LogView from "./LogView";
 import Spinner from "../common/Spinner";
 
-import {
-  getDomesticLogs,
-  getInternationalLogs
-} from "../../actions/logsActions";
-
 class Logs extends Component {
-  componentDidMount() {
-    this.props.getDomesticLogs();
-    this.props.getInternationalLogs();
-  }
-
   render() {
     const { log } = this.props;
 
@@ -43,8 +33,6 @@ class Logs extends Component {
 }
 
 Logs.propTypes = {
-  getDomesticLogs: PropTypes.func.isRequired,
-  getInternationalLogs: PropTypes.func.isRequired,
   log: PropTypes.object.isRequired
 };
 
@@ -52,7 +40,4 @@ const mapStateToProps = state => ({
   log: state.log
 });
 
-export default connect(
-  mapStateToProps,
-  { getDomesticLogs, getInternationalLogs }
-)(Logs);
+export default connect(mapStateToProps)(Logs);

@@ -133,8 +133,6 @@ class InternationalLogs extends Component {
                 <i title="Insured" className="fas fa-shield-alt text-info" />
               );
 
-            console.log(operationsStatusIcons);
-
             return (
               <tr
                 key={log._id}

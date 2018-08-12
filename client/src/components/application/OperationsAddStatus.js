@@ -121,23 +121,6 @@ class OperationsAddStatus extends Component {
               <div className="d-block invalid-feedback">{errors.comment}</div>
             ) : null}
           </div>
-
-          {/* <div className="form-group col-lg-10">
-            <input
-              type="text"
-              className={classnames("form-control form-control-sm", {
-                "is-invalid": errors.comment
-              })}
-              placeholder="Status"
-              name="comment"
-              value={this.state.comment}
-              onChange={this.onChange}
-            />
-            <small className="form-text text-muted ml-2">Required</small>
-            {errors.comment && (
-              <div className="d-block invalid-feedback">{errors.comment}</div>
-            )}
-          </div> */}
         </div>
       </form>
     );
