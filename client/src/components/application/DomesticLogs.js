@@ -114,24 +114,44 @@ class DomesticLogs extends Component {
             /* Generate the operations status icons */
             let operationsStatusIcons = [];
 
-            if (log.tags.urgent)
+            if (log.tags.urgent) {
               operationsStatusIcons.push(
                 <i
                   title="Urgent"
                   className="fas fa-exclamation text-danger mr-2"
                 />
               );
-            if (log.tags.important)
+            } else {
+              operationsStatusIcons.push(
+                <i className="invisible fas fa-exclamation text-danger mr-2" />
+              );
+            }
+
+            if (log.tags.important) {
               operationsStatusIcons.push(
                 <i
                   title="Important"
                   className="fas fa-star text-warning mr-2"
                 />
               );
-            if (log.tags.insured)
+            } else {
               operationsStatusIcons.push(
-                <i title="Insured" className="fas fa-shield-alt text-info" />
+                <i className="invisible fas fa-star text-warning mr-2" />
               );
+            }
+
+            if (log.tags.insured) {
+              operationsStatusIcons.push(
+                <i
+                  title="Insured"
+                  className="fas fa-shield-alt text-info mr-2"
+                />
+              );
+            } else {
+              operationsStatusIcons.push(
+                <i className="invisible fas fa-shield-alt text-info mr-2" />
+              );
+            }
 
             return (
               <tr
@@ -160,17 +180,22 @@ class DomesticLogs extends Component {
                 <td>{log.blAwb ? log.blAwb : "n/a"}</td>
                 <td>{log.origin}</td>
                 <td>{log.destination}</td>
+
                 <td title={moment(log.etd).format("MMMM Do YYYY")}>
                   <Moment format="MM/DD/YYYY">{log.etd}</Moment>
                 </td>
                 <td title={moment(log.eta).format("MMMM Do YYYY")}>
                   <Moment format="MM/DD/YYYY">{log.eta}</Moment>
                 </td>
+
                 <td>
                   {log.status}{" "}
                   <span title={operationsStatusRemarks}>
                     {operationsStatus}
-                  </span>{" "}
+                  </span>
+                </td>
+
+                <td>
                   <span className="ml-2" style={{ whiteSpace: "nowrap" }}>
                     {operationsStatusIcons.map((icon, index) => {
                       return <span key={index}>{icon}</span>;
@@ -241,6 +266,7 @@ class DomesticLogs extends Component {
                 <th scope="col">ETD</th>
                 <th scope="col">ETA</th>
                 <th scope="col">Status</th>
+                <th scope="col">Tags</th>
               </tr>
             </thead>
             {tableBody}

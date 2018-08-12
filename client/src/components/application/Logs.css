@@ -2,6 +2,11 @@
   border-bottom: 1px solid #007bff;
 }
 
+.logs-nav-2 {
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #DEE2E6;
+}
+
 .pointer {
   cursor: pointer;
 }

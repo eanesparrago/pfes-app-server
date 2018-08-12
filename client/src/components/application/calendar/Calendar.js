@@ -129,46 +129,46 @@ class Calendar extends Component {
       content = <Spinner />;
     } else {
       content = (
-        <div style={{ height: "60rem" }} className="fade-in m-3">
+        <div style={{ height: "60rem" }} className="m-3 mx-5 mb-2 pb-5">
           <div className="text-center mb-2">
-            <div class="form-check form-check-inline">
+            <div className="form-check form-check-inline">
               <input
-                class="form-check-input"
+                className="form-check-input"
                 type="checkbox"
                 id="showDomestic"
                 name="showDomestic"
                 checked={this.state.showDomestic}
                 onChange={this.toggleCheck}
               />
-              <label class="form-check-label" for="showDomestic">
+              <label className="form-check-label" htmlFor="showDomestic">
                 Show Domestic Logs
               </label>
             </div>
 
-            <div class="form-check form-check-inline">
+            <div className="form-check form-check-inline">
               <input
-                class="form-check-input"
+                className="form-check-input"
                 type="checkbox"
                 name="showInternational"
                 id="showInternational"
                 checked={this.state.showInternational}
                 onChange={this.toggleCheck}
               />
-              <label class="form-check-label" for="showInternational">
+              <label className="form-check-label" htmlFor="showInternational">
                 Show International Logs
               </label>
             </div>
 
-            <div class="form-check form-check-inline">
+            <div className="form-check form-check-inline">
               <input
-                class="form-check-input"
+                className="form-check-input"
                 type="checkbox"
                 name="showHolidays"
                 id="showHolidays"
                 checked={this.state.showHolidays}
                 onChange={this.toggleCheck}
               />
-              <label class="form-check-label" for="showHolidays">
+              <label className="form-check-label" htmlFor="showHolidays">
                 Show Holidays
               </label>
             </div>
@@ -203,6 +203,8 @@ class Calendar extends Component {
 
                 case "Holiday":
                   classes = "bg-secondary";
+                  style = { cursor: "unset" };
+
                   break;
 
                 default:
@@ -219,7 +221,7 @@ class Calendar extends Component {
       );
     }
 
-    return <div>{content}</div>;
+    return <div className="fade-in">{content}</div>;
   }
 }
 
