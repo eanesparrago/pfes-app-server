@@ -11,6 +11,12 @@
   max-height: 20rem;
 }
 
+@media only screen and (max-width: 576px) {
+  .Logo-img {
+    display: none;
+  }
+}
+
 .Login {
   margin-top: 2rem;
   height: 65vh;
