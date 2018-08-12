@@ -26,6 +26,10 @@
   <script src="js/bootstrap.min.js"></script> -->
   <!-- <script src="js/bootstrap.bundle.min.js"></script> -->
 
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
+    crossorigin="anonymous">
+
+
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B"
     crossorigin="anonymous">
 
@@ -56,11 +60,11 @@
     crossorigin="anonymous"></script>
 
   <!-- Bootstrap JS local fallback -->
-  <script>if(typeof($.fn.modal) === 'undefined') {document.write('<script src="/js/bootstrap.min.js"><\/script>')}</script>
+  <script>if (typeof ($.fn.modal) === 'undefined') { document.write('<script src="/js/bootstrap.min.js"><\/script>') }</script>
   <!-- Bootstrap CSS local fallback -->
   <div id="bootstrapCssTest" class="hidden"></div>
   <script>
-    $(function() {
+    $(function () {
       if ($('#bootstrapCssTest').is(':visible')) {
         $("head").prepend('<link rel="stylesheet" href="/css/bootstrap.min.css">');
       }

@@ -111,6 +111,30 @@ class DomesticLogs extends Component {
               }
             }
 
+            /* Generate the operations status icons */
+            let operationsStatusIcons = [];
+
+            if (log.tags.urgent)
+              operationsStatusIcons.push(
+                <i
+                  title="Urgent"
+                  className="fas fa-exclamation text-danger mr-2"
+                />
+              );
+            if (log.tags.important)
+              operationsStatusIcons.push(
+                <i
+                  title="Important"
+                  className="fas fa-star text-warning mr-2"
+                />
+              );
+            if (log.tags.insured)
+              operationsStatusIcons.push(
+                <i title="Insured" className="fas fa-shield-alt text-info" />
+              );
+
+            console.log(operationsStatusIcons);
+
             return (
               <tr
                 key={log._id}
@@ -144,8 +168,16 @@ class DomesticLogs extends Component {
                 <td title={moment(log.eta).format("MMMM Do YYYY")}>
                   <Moment format="MM/DD/YYYY">{log.eta}</Moment>
                 </td>
-                <td title={operationsStatusRemarks}>
-                  {log.status} {operationsStatus}
+                <td>
+                  {log.status}{" "}
+                  <span title={operationsStatusRemarks}>
+                    {operationsStatus}
+                  </span>{" "}
+                  <span className="ml-2">
+                    {operationsStatusIcons.map((icon, index) => {
+                      return <span key={index}>{icon}</span>;
+                    })}
+                  </span>
                 </td>
               </tr>
             );
