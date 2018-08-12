@@ -116,11 +116,17 @@ class InternationalLogs extends Component {
 
             if (log.tags.urgent)
               operationsStatusIcons.push(
-                <i title="Urgent" className="fas fa-exclamation text-danger mr-2" />
+                <i
+                  title="Urgent"
+                  className="fas fa-exclamation text-danger mr-2"
+                />
               );
             if (log.tags.important)
               operationsStatusIcons.push(
-                <i title="Important" className="fas fa-star text-warning mr-2" />
+                <i
+                  title="Important"
+                  className="fas fa-star text-warning mr-2"
+                />
               );
             if (log.tags.insured)
               operationsStatusIcons.push(
@@ -164,12 +170,10 @@ class InternationalLogs extends Component {
                 </td>
                 <td>
                   {log.status}{" "}
-
                   <span title={operationsStatusRemarks}>
                     {operationsStatus}
                   </span>{" "}
-
-                  <span className="ml-2">
+                  <span className="ml-2" style={{ whiteSpace: "nowrap" }}>
                     {operationsStatusIcons.map((icon, index) => {
                       return <span key={index}>{icon}</span>;
                     })}

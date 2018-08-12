@@ -173,7 +173,7 @@ class DomesticLogs extends Component {
                   <span title={operationsStatusRemarks}>
                     {operationsStatus}
                   </span>{" "}
-                  <span className="ml-2">
+                  <span className="ml-2" style={{ whiteSpace: "nowrap" }}>
                     {operationsStatusIcons.map((icon, index) => {
                       return <span key={index}>{icon}</span>;
                     })}
