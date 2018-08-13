@@ -254,20 +254,60 @@ class InternationalLogs extends Component {
           <table className="table table-striped table-hover">
             <thead>
               <tr>
-                <th scope="col">I-JO</th>
-                <th scope="col">Associate</th>
-                <th scope="col">Shipper/Consignee</th>
-                <th scope="col">Commodity</th>
-                <th scope="col">Mode of Transport</th>
-                <th scope="col">BL/AWB#</th>
-                <th scope="col">Origin</th>
-                <th scope="col">Destination</th>
-                <th scope="col">ETD</th>
-                <th scope="col">ETA</th>
-                <th scope="col">Status</th>
-                <th scope="col">Tags</th>
+                <th scope="col" style={{ width: "5rem" }}>
+                  #
+                </th>
+
+                <th scope="col" style={{ width: "9rem" }}>
+                  Associate
+                </th>
+
+                <th scope="col" style={{ width: "9rem" }}>
+                  Shipper/Consignee
+                </th>
+
+                <th scope="col" style={{ width: "9rem" }}>
+                  Commodity
+                </th>
+
+                <th
+                  scope="col"
+                  title="Mode of Transport"
+                  style={{ width: "5rem" }}
+                >
+                  MOT
+                </th>
+
+                <th scope="col" style={{ width: "9rem" }}>
+                  BL/AWB#
+                </th>
+
+                <th scope="col" style={{ minWidth: "10rem" }}>
+                  Origin
+                </th>
+
+                <th scope="col" style={{ minWidth: "10rem" }}>
+                  Destination
+                </th>
+
+                <th scope="col" style={{ width: "7rem" }}>
+                  ETD
+                </th>
+
+                <th scope="col" style={{ width: "7rem" }}>
+                  ETA
+                </th>
+
+                <th scope="col" style={{ width: "7rem" }}>
+                  Status
+                </th>
+
+                <th scope="col" style={{ width: "7rem" }}>
+                  Tags
+                </th>
               </tr>
             </thead>
+            
             {tableBody}
           </table>
         </div>
