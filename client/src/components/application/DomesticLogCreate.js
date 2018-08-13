@@ -10,6 +10,9 @@ import { clearSuccess } from "../../actions/successActions";
 
 import isEmpty from "../../validation/is-empty";
 
+const provinces = require("philippines/provinces");
+const cities = require("philippines/cities");
+
 class DomesticLogCreate extends Component {
   constructor() {
     super();
@@ -19,8 +22,17 @@ class DomesticLogCreate extends Component {
       modeOfTransport: "",
       commodity: "",
       blAwb: "",
-      origin: "",
-      destination: "",
+
+      originProvinceName: "",
+      originProvinceKey: "",
+      originCity: "",
+      originLocation: "",
+
+      destinationProvinceName: "",
+      destinationProvinceKey: "",
+      destinationCity: "",
+      destinationLocation: "",
+
       etd: moment().format("YYYY-MM-DD"),
       eta: moment().format("YYYY-MM-DD"),
       status: "Ongoing",
@@ -55,8 +67,17 @@ class DomesticLogCreate extends Component {
         modeOfTransport: "",
         commodity: "",
         blAwb: "",
-        origin: "",
-        destination: "",
+
+        originProvinceName: "",
+        originProvinceKey: "",
+        originCity: "",
+        originLocation: "",
+
+        destinationProvinceName: "",
+        destinationProvinceKey: "",
+        destinationCity: "",
+        destinationLocation: "",
+
         etd: moment().format("YYYY-MM-DD"),
         eta: moment().format("YYYY-MM-DD"),
         status: "Ongoing",
@@ -76,17 +97,15 @@ class DomesticLogCreate extends Component {
     }
   }
 
+  // @onChange
   onChange(e) {
     if (e.target.name === "etd" || e.target.name === "eta") {
       this.setState({ [e.target.name]: e.target.value }, () => {
         const etd = Date.parse(moment(this.state.etd).format("DD MMM YYYY"));
         const eta = Date.parse(moment(this.state.eta).format("DD MMM YYYY"));
 
-        console.log(etd, eta);
-
         if (etd > eta) {
           this.setState({ eta: this.state.etd });
-          console.log("true");
         }
       });
       return;
@@ -108,6 +127,37 @@ class DomesticLogCreate extends Component {
         this.setState({ [e.target.name]: e.target.value });
       }
       return;
+    } else if (e.target.name === "originProvinceKey") {
+      const province = provinces.filter(
+        province => province.key === e.target.value
+      );
+
+      this.setState({
+        originProvinceKey: e.target.value,
+        originProvinceName: province[0].name,
+        originCity: ""
+      });
+    } else if (e.target.name === "originCity") {
+      this.setState({
+        originCity: e.target.value,
+        originLocation: ""
+      });
+    } else if (e.target.name === "destinationProvinceKey") {
+      const province = provinces.filter(
+        province => province.key === e.target.value
+      );
+
+      this.setState({
+        destinationProvinceKey: e.target.value,
+        destinationProvinceName: province[0].name,
+        destinationCity: "",
+        destinationLocation: ""
+      });
+    } else if (e.target.name === "destinationCity") {
+      this.setState({
+        destinationCity: e.target.value,
+        destinationLocation: ""
+      });
     } else {
       this.setState({ [e.target.name]: e.target.value });
     }
@@ -118,21 +168,28 @@ class DomesticLogCreate extends Component {
   }
 
   toggleCheck(e) {
-    this.setState({ [e.target.name]: !this.state[e.target.name] }, () => {
-      console.log(this.state);
-    });
+    this.setState({ [e.target.name]: !this.state[e.target.name] });
   }
 
   onSubmit(e) {
     e.preventDefault();
 
-    const newUser = {
+    const logData = {
       shipperConsignee: this.state.shipperConsignee,
       modeOfTransport: this.state.modeOfTransport,
       commodity: this.state.commodity,
       blAwb: this.state.blAwb,
-      origin: this.state.origin,
-      destination: this.state.destination,
+
+      originProvinceName: this.state.originProvinceName,
+      originProvinceKey: this.state.originProvinceKey,
+      originCity: this.state.originCity,
+      originLocation: this.state.originLocation,
+
+      destinationProvinceName: this.state.destinationProvinceName,
+      destinationProvinceKey: this.state.destinationProvinceKey,
+      destinationCity: this.state.destinationCity,
+      destinationLocation: this.state.destinationLocation,
+
       etd: this.state.etd,
       eta: this.state.eta,
       status: this.state.status,
@@ -143,10 +200,12 @@ class DomesticLogCreate extends Component {
 
       contactName: this.state.contactName,
       contactNumber: this.state.contactNumber,
-      contactEmail: this.state.contactEmail
+      contactEmail: this.state.contactEmail,
+
+      type: "Domestic"
     };
 
-    this.props.createDomesticLog(newUser);
+    this.props.createDomesticLog(logData);
   }
 
   onOpen() {
@@ -156,8 +215,16 @@ class DomesticLogCreate extends Component {
       modeOfTransport: "",
       commodity: "",
       blAwb: "",
-      origin: "",
-      destination: "",
+
+      originProvinceName: "",
+      originProvinceKey: "",
+      originCity: "",
+
+      destinationProvinceName: "",
+      destinationProvinceKey: "",
+      destinationCity: "",
+      destinationLocation: "",
+
       etd: moment().format("YYYY-MM-DD"),
       eta: moment().format("YYYY-MM-DD"),
       status: "Ongoing",
@@ -183,8 +250,16 @@ class DomesticLogCreate extends Component {
       modeOfTransport: "",
       commodity: "",
       blAwb: "",
-      origin: "",
-      destination: "",
+
+      originProvinceName: "",
+      originProvinceKey: "",
+      originCity: "",
+      originLocation: "",
+
+      destinationLocation: "",
+      destinationCity: "",
+      destinationProvince: "",
+
       etd: moment().format("YYYY-MM-DD"),
       eta: moment().format("YYYY-MM-DD"),
       status: "Ongoing",
@@ -260,7 +335,7 @@ class DomesticLogCreate extends Component {
                       <input
                         readOnly
                         type="text"
-                        className={classnames("form-control form-control-lg", {
+                        className={classnames("form-control", {
                           "is-invalid": errors.associate
                         })}
                         placeholder="Associate"
@@ -283,7 +358,7 @@ class DomesticLogCreate extends Component {
                       </label>
                       <input
                         type="text"
-                        className={classnames("form-control form-control-lg", {
+                        className={classnames("form-control", {
                           "is-invalid": errors.shipperConsignee
                         })}
                         placeholder="Shipper/Consignee"
@@ -305,7 +380,7 @@ class DomesticLogCreate extends Component {
                       </label>
                       <input
                         type="text"
-                        className={classnames("form-control form-control-lg", {
+                        className={classnames("form-control", {
                           "is-invalid": errors.commodity
                         })}
                         placeholder="Commodity"
@@ -329,7 +404,7 @@ class DomesticLogCreate extends Component {
                       </label>
 
                       <select
-                        className={classnames("form-control form-control-lg", {
+                        className={classnames("form-control", {
                           "is-invalid": errors.modeOfTransport
                         })}
                         id="modeOfTransport"
@@ -390,7 +465,7 @@ class DomesticLogCreate extends Component {
                             : false
                         }
                         type="text"
-                        className={classnames("form-control form-control-lg", {
+                        className={classnames("form-control", {
                           "is-invalid": errors.blAwb
                         })}
                         placeholder={
@@ -414,48 +489,248 @@ class DomesticLogCreate extends Component {
                     </div>
                   </div>
 
+                  <div className="dropdown-divider" />
+
+                  {/* @origin */}
                   <div className="row">
-                    <div className="form-group col-md-6">
-                      <label className="mb-1" htmlFor="origin">
-                        Origin
+                    <div className="form-group col-lg-4">
+                      <label className="mb-1" htmlFor="originProvinceKey">
+                        Origin Address
                       </label>
-                      <input
-                        type="text"
-                        className={classnames("form-control form-control-lg", {
-                          "is-invalid": errors.origin
+
+                      <select
+                        className={classnames("form-control", {
+                          "is-invalid": errors.originProvinceKey
                         })}
-                        placeholder="Origin"
-                        name="origin"
-                        value={this.state.origin}
+                        id="originProvinceKey"
+                        name="originProvinceKey"
+                        value={this.state.originProvinceKey}
                         onChange={this.onChange}
-                        maxLength="100"
-                      />
-                      {errors.origin && (
-                        <div className="invalid-feedback">{errors.origin}</div>
+                      >
+                        <option value="" disabled defaultValue>
+                          Select a Province
+                        </option>
+
+                        {provinces.map((province, index) => {
+                          return (
+                            <option key={index} value={province.key}>
+                              {province.name}
+                            </option>
+                          );
+                        })}
+                      </select>
+
+                      <small className="form-text text-muted">Province</small>
+
+                      {errors.originProvinceKey && (
+                        <div className="invalid-feedback">
+                          {errors.originProvinceKey}
+                        </div>
                       )}
                     </div>
-                    <div className="form-group col-md-6">
-                      <label className="mb-1" htmlFor="destination">
-                        Destination
+
+                    <div className="form-group col-lg-4">
+                      <label className="mb-1" htmlFor="originCity">
+                        &nbsp;
                       </label>
-                      <input
-                        type="text"
-                        className={classnames("form-control form-control-lg", {
-                          "is-invalid": errors.destination
+
+                      <select
+                        disabled={
+                          this.state.originProvinceKey === "" ? true : false
+                        }
+                        className={classnames("form-control", {
+                          "is-invalid": errors.originCity
                         })}
-                        placeholder="Destination"
-                        name="destination"
-                        value={this.state.destination}
+                        id="originCity"
+                        name="originCity"
+                        value={this.state.originCity}
+                        onChange={this.onChange}
+                      >
+                        <option value="" disabled defaultValue>
+                          Select a City/Municipality
+                        </option>
+
+                        {this.state.originProvinceKey === ""
+                          ? null
+                          : cities
+                              .filter(
+                                city =>
+                                  city.province === this.state.originProvinceKey
+                              )
+                              .map((city, index) => {
+                                return (
+                                  <option key={index} value={city.name}>
+                                    {city.name}
+                                  </option>
+                                );
+                              })}
+                      </select>
+
+                      <small className="form-text text-muted">
+                        City/Municipality
+                      </small>
+
+                      {errors.originCity && (
+                        <div className="invalid-feedback">
+                          {errors.originCity}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="form-group col-lg-4">
+                      <label className="mb-1" htmlFor="originLocation">
+                        &nbsp;
+                      </label>
+
+                      <input
+                        disabled={this.state.originCity === "" ? true : false}
+                        type="text"
+                        className={classnames("form-control", {
+                          "is-invalid": errors.originLocation
+                        })}
+                        placeholder="Building, Street Name, Barangay"
+                        name="originLocation"
+                        value={this.state.originLocation}
                         onChange={this.onChange}
                         maxLength="100"
                       />
-                      {errors.destination && (
+
+                      <small className="form-text text-muted">
+                        Building, Street Name, Barangay
+                      </small>
+
+                      {errors.originLocation && (
                         <div className="invalid-feedback">
-                          {errors.destination}
+                          {errors.originLocation}
                         </div>
                       )}
                     </div>
                   </div>
+
+                  <div className="dropdown-divider" />
+
+                  {/* @destination */}
+                  <div className="row">
+                    <div className="form-group col-lg-4">
+                      <label className="mb-1" htmlFor="destinationProvinceKey">
+                        Destination Address
+                      </label>
+
+                      <select
+                        className={classnames("form-control", {
+                          "is-invalid": errors.destinationProvinceKey
+                        })}
+                        id="destinationProvinceKey"
+                        name="destinationProvinceKey"
+                        value={this.state.destinationProvinceKey}
+                        onChange={this.onChange}
+                      >
+                        <option value="" disabled defaultValue>
+                          Select a Province
+                        </option>
+
+                        {provinces.map((province, index) => {
+                          return (
+                            <option key={index} value={province.key}>
+                              {province.name}
+                            </option>
+                          );
+                        })}
+                      </select>
+
+                      <small className="form-text text-muted">Province</small>
+
+                      {errors.destinationProvinceKey && (
+                        <div className="invalid-feedback">
+                          {errors.destinationProvinceKey}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="form-group col-lg-4">
+                      <label className="mb-1" htmlFor="destinationCity">
+                        &nbsp;
+                      </label>
+
+                      <select
+                        disabled={
+                          this.state.destinationProvinceKey === ""
+                            ? true
+                            : false
+                        }
+                        className={classnames("form-control", {
+                          "is-invalid": errors.destinationCity
+                        })}
+                        id="destinationCity"
+                        name="destinationCity"
+                        value={this.state.destinationCity}
+                        onChange={this.onChange}
+                      >
+                        <option value="" disabled defaultValue>
+                          Select a City/Municipality
+                        </option>
+
+                        {this.state.destinationProvinceKey === ""
+                          ? null
+                          : cities
+                              .filter(
+                                city =>
+                                  city.province ===
+                                  this.state.destinationProvinceKey
+                              )
+                              .map((city, index) => {
+                                return (
+                                  <option key={index} value={city.name}>
+                                    {city.name}
+                                  </option>
+                                );
+                              })}
+                      </select>
+
+                      <small className="form-text text-muted">
+                        City/Municipality
+                      </small>
+
+                      {errors.destinationCity && (
+                        <div className="invalid-feedback">
+                          {errors.destinationCity}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="form-group col-lg-4">
+                      <label className="mb-1" htmlFor="destinationLocation">
+                        &nbsp;
+                      </label>
+
+                      <input
+                        disabled={
+                          this.state.destinationCity === "" ? true : false
+                        }
+                        type="text"
+                        className={classnames("form-control", {
+                          "is-invalid": errors.destinationLocation
+                        })}
+                        placeholder="Building, Street Name, Barangay"
+                        name="destinationLocation"
+                        value={this.state.destinationLocation}
+                        onChange={this.onChange}
+                        maxLength="100"
+                      />
+
+                      <small className="form-text text-muted">
+                        Building, Street Name, Barangay
+                      </small>
+
+                      {errors.originLocation && (
+                        <div className="invalid-feedback">
+                          {errors.originLocation}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="dropdown-divider" />
 
                   <div className="row">
                     <div className="form-group col-md-6">
@@ -464,7 +739,7 @@ class DomesticLogCreate extends Component {
                       </label>
                       <input
                         type="date"
-                        className={classnames("form-control form-control-lg", {
+                        className={classnames("form-control", {
                           "is-invalid": errors.etd
                         })}
                         name="etd"
@@ -482,7 +757,7 @@ class DomesticLogCreate extends Component {
                       </label>
                       <input
                         type="date"
-                        className={classnames("form-control form-control-lg", {
+                        className={classnames("form-control", {
                           "is-invalid": errors.eta
                         })}
                         name="eta"
@@ -503,7 +778,7 @@ class DomesticLogCreate extends Component {
                       </label>
 
                       <select
-                        className={classnames("form-control form-control-lg", {
+                        className={classnames("form-control", {
                           "is-invalid": errors.status
                         })}
                         id="status"
@@ -527,7 +802,7 @@ class DomesticLogCreate extends Component {
                         Tags
                       </label>
 
-                      <div className="form-control form-control-lg">
+                      <div className="form-control">
                         <div className="form-check form-check-inline">
                           <input
                             className="form-check-input"
@@ -600,7 +875,7 @@ class DomesticLogCreate extends Component {
                       </label>
                       <input
                         type="text"
-                        className={classnames("form-control form-control-lg", {
+                        className={classnames("form-control", {
                           "is-invalid": errors.contactName
                         })}
                         placeholder="Contact Name"
@@ -622,7 +897,7 @@ class DomesticLogCreate extends Component {
                       </label>
                       <input
                         type="text"
-                        className={classnames("form-control form-control-lg", {
+                        className={classnames("form-control", {
                           "is-invalid": errors.contactNumber
                         })}
                         placeholder="Contact Number"
@@ -644,7 +919,7 @@ class DomesticLogCreate extends Component {
                       </label>
                       <input
                         type="text"
-                        className={classnames("form-control form-control-lg", {
+                        className={classnames("form-control", {
                           "is-invalid": errors.contactEmail
                         })}
                         placeholder="Contact Email"

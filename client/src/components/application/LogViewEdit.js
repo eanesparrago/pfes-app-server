@@ -13,6 +13,9 @@ import {
   clearErrors
 } from "../../actions/logsActions";
 
+const provinces = require("philippines/provinces");
+const cities = require("philippines/cities");
+
 export class LogViewEdit extends Component {
   constructor() {
     super();
@@ -23,8 +26,25 @@ export class LogViewEdit extends Component {
       modeOfTransport: "",
       commodity: "",
       blAwb: "",
-      origin: "",
-      destination: "",
+
+      // Domestic
+      originProvinceName: "",
+      originProvinceKey: "",
+      originCity: "",
+      originLocation: "",
+
+      destinationProvinceName: "",
+      destinationProvinceKey: "",
+      destinationCity: "",
+      destinationLocation: "",
+
+      // International
+      originInternationalCountry: "",
+      originInternationalLocation: "",
+
+      destinationInternationalCountry: "",
+      destinationInternationalLocation: "",
+
       etd: moment().format("YYYY-MM-DD"),
       eta: moment().format("YYYY-MM-DD"),
       status: "Ongoing",
@@ -51,6 +71,7 @@ export class LogViewEdit extends Component {
     this.closeEdit = this.closeEdit.bind(this);
   }
 
+  // @componentswillreceiveprops
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
@@ -64,8 +85,7 @@ export class LogViewEdit extends Component {
         modeOfTransport: nextProps.log.modeOfTransport,
         commodity: nextProps.log.commodity,
         blAwb: nextProps.log.blAwb,
-        origin: nextProps.log.origin,
-        destination: nextProps.log.destination,
+
         etd: moment(nextProps.log.etd).format("YYYY-MM-DD"),
         eta: moment(nextProps.log.eta).format("YYYY-MM-DD"),
         status: nextProps.log.status,
@@ -82,20 +102,34 @@ export class LogViewEdit extends Component {
 
         // isEditable: false
       });
+
+      // Domestic
+      if (nextProps.log.type === "Domestic") {
+        this.setState({
+          originProvinceName: nextProps.log.origin.provinceName,
+          originProvinceKey: nextProps.log.origin.provinceKey,
+          originCity: nextProps.log.origin.city,
+          originLocation: nextProps.log.origin.location,
+
+          destinationProvinceName: nextProps.log.destination.provinceName,
+          destinationProvinceKey: nextProps.log.destination.provinceKey,
+          destinationCity: nextProps.log.destination.city,
+          destinationLocation: nextProps.log.destination.location
+        });
+      } else if (nextProps.log.type === "International") {
+      }
     }
   }
 
+  // @onChange
   onChange(e) {
     if (e.target.name === "etd" || e.target.name === "eta") {
       this.setState({ [e.target.name]: e.target.value }, () => {
         const etd = Date.parse(moment(this.state.etd).format("DD MMM YYYY"));
         const eta = Date.parse(moment(this.state.eta).format("DD MMM YYYY"));
 
-        console.log(etd, eta);
-
         if (etd > eta) {
           this.setState({ eta: this.state.etd });
-          console.log("true");
         }
       });
       return;
@@ -117,6 +151,37 @@ export class LogViewEdit extends Component {
         this.setState({ [e.target.name]: e.target.value });
       }
       return;
+    } else if (e.target.name === "originProvinceKey") {
+      const province = provinces.filter(
+        province => province.key === e.target.value
+      );
+
+      this.setState({
+        originProvinceKey: e.target.value,
+        originProvinceName: province[0].name,
+        originCity: ""
+      });
+    } else if (e.target.name === "originCity") {
+      this.setState({
+        originCity: e.target.value,
+        originLocation: ""
+      });
+    } else if (e.target.name === "destinationProvinceKey") {
+      const province = provinces.filter(
+        province => province.key === e.target.value
+      );
+
+      this.setState({
+        destinationProvinceKey: e.target.value,
+        destinationProvinceName: province[0].name,
+        destinationCity: "",
+        destinationLocation: ""
+      });
+    } else if (e.target.name === "destinationCity") {
+      this.setState({
+        destinationCity: e.target.value,
+        destinationLocation: ""
+      });
     } else {
       this.setState({ [e.target.name]: e.target.value });
     }
@@ -127,9 +192,7 @@ export class LogViewEdit extends Component {
   }
 
   toggleCheck(e) {
-    this.setState({ [e.target.name]: !this.state[e.target.name] }, () => {
-      console.log(this.state);
-    });
+    this.setState({ [e.target.name]: !this.state[e.target.name] }, () => {});
   }
 
   enableEdit() {
@@ -150,8 +213,7 @@ export class LogViewEdit extends Component {
       modeOfTransport: log.modeOfTransport,
       commodity: log.commodity,
       blAwb: log.blAwb,
-      origin: log.origin,
-      destination: log.destination,
+
       etd: moment(log.etd).format("YYYY-MM-DD"),
       eta: moment(log.eta).format("YYYY-MM-DD"),
       status: log.status,
@@ -168,8 +230,25 @@ export class LogViewEdit extends Component {
 
       isEditable: false
     });
+
+    if (log.type === "Domestic") {
+      this.setState({
+        originProvinceName: log.origin.provinceName,
+        originProvinceKey: log.origin.provinceKey,
+        originCity: log.origin.city,
+        originLocation: log.origin.location,
+
+        destinationProvinceName: log.destination.provinceName,
+        destinationProvinceKey: log.destination.provinceKey,
+        destinationCity: log.destination.city,
+        destinationLocation: log.destination.location
+      });
+    } else if (log.type === "International") {
+      // TODO
+    }
   }
 
+  // @submitEdit
   submitEdit() {
     const log = {
       domJo: this.state.domJo,
@@ -184,7 +263,7 @@ export class LogViewEdit extends Component {
       status: this.state.status,
       type: this.state.type,
       rating: this.state.rating,
-
+      // TODO
       tagUrgent: this.state.tagUrgent,
       tagImportant: this.state.tagImportant,
       tagInsured: this.state.tagInsured,
@@ -253,6 +332,273 @@ export class LogViewEdit extends Component {
         >
           Delete
         </button>
+      );
+    }
+
+    // Define domestic origin and destination inputs
+    // @defineDomesticOriginAndDestinationInputs
+    let originDestinationInputs = null;
+
+    if (log.type === "Domestic") {
+      originDestinationInputs = (
+        <React.Fragment>
+          <div className="row">
+            {isEditable ? (
+              <React.Fragment>
+                <div className="form-group col-lg-4">
+                  <label className="mb-1" htmlFor="originProvinceKey">
+                    Origin Address
+                  </label>
+
+                  <select
+                    className={classnames("form-control", {
+                      "is-invalid": errors.originProvinceKey
+                    })}
+                    id="originProvinceKey"
+                    name="originProvinceKey"
+                    value={this.state.originProvinceKey}
+                    onChange={this.onChange}
+                  >
+                    <option value="" disabled defaultValue>
+                      Select a Province
+                    </option>
+
+                    {provinces.map((province, index) => {
+                      return (
+                        <option key={index} value={province.key}>
+                          {province.name}
+                        </option>
+                      );
+                    })}
+                  </select>
+
+                  <small className="form-text text-muted">Province</small>
+
+                  {errors.originProvinceKey && (
+                    <div className="invalid-feedback">
+                      {errors.originProvinceKey}
+                    </div>
+                  )}
+                </div>
+
+                <div className="form-group col-lg-4">
+                  <label className="mb-1" htmlFor="originCity">
+                    &nbsp;
+                  </label>
+
+                  <select
+                    disabled={
+                      this.state.originProvinceKey === "" ? true : false
+                    }
+                    className={classnames("form-control", {
+                      "is-invalid": errors.originCity
+                    })}
+                    id="originCity"
+                    name="originCity"
+                    value={this.state.originCity}
+                    onChange={this.onChange}
+                  >
+                    <option value="" disabled defaultValue>
+                      Select a City/Municipality
+                    </option>
+
+                    {this.state.originProvinceKey === ""
+                      ? null
+                      : cities
+                          .filter(
+                            city =>
+                              city.province === this.state.originProvinceKey
+                          )
+                          .map((city, index) => {
+                            return (
+                              <option key={index} value={city.name}>
+                                {city.name}
+                              </option>
+                            );
+                          })}
+                  </select>
+
+                  <small className="form-text text-muted">
+                    City/Municipality
+                  </small>
+
+                  {errors.originCity && (
+                    <div className="invalid-feedback">{errors.originCity}</div>
+                  )}
+                </div>
+
+                <div className="form-group col-lg-4">
+                  <label className="mb-1" htmlFor="originLocation">
+                    &nbsp;
+                  </label>
+
+                  <input
+                    disabled={this.state.originCity === "" ? true : false}
+                    type="text"
+                    className={classnames("form-control", {
+                      "is-invalid": errors.originLocation
+                    })}
+                    placeholder="Building, Street Name, Barangay"
+                    name="originLocation"
+                    value={this.state.originLocation}
+                    onChange={this.onChange}
+                    maxLength="100"
+                  />
+
+                  <small className="form-text text-muted">
+                    Building, Street Name, Barangay
+                  </small>
+
+                  {errors.originLocation && (
+                    <div className="invalid-feedback">
+                      {errors.originLocation}
+                    </div>
+                  )}
+                </div>
+              </React.Fragment>
+            ) : (
+              <div className="col-md-12 mb-2">
+                <h5>
+                  Origin:{" "}
+                  <strong>
+                    {log.origin.location}, {log.origin.city},{" "}
+                    {log.origin.provinceName}
+                  </strong>
+                </h5>
+              </div>
+            )}
+          </div>
+
+          <div className="row">
+            {isEditable ? (
+              <React.Fragment>
+                <div className="form-group col-lg-4">
+                  <label className="mb-1" htmlFor="destinationProvinceKey">
+                    Destination Address
+                  </label>
+
+                  <select
+                    className={classnames("form-control", {
+                      "is-invalid": errors.destinationProvinceKey
+                    })}
+                    id="destinationProvinceKey"
+                    name="destinationProvinceKey"
+                    value={this.state.destinationProvinceKey}
+                    onChange={this.onChange}
+                  >
+                    <option value="" disabled defaultValue>
+                      Select a Province
+                    </option>
+
+                    {provinces.map((province, index) => {
+                      return (
+                        <option key={index} value={province.key}>
+                          {province.name}
+                        </option>
+                      );
+                    })}
+                  </select>
+
+                  <small className="form-text text-muted">Province</small>
+
+                  {errors.destinationProvinceKey && (
+                    <div className="invalid-feedback">
+                      {errors.destinationProvinceKey}
+                    </div>
+                  )}
+                </div>
+
+                <div className="form-group col-lg-4">
+                  <label className="mb-1" htmlFor="destinationCity">
+                    &nbsp;
+                  </label>
+
+                  <select
+                    disabled={
+                      this.state.destinationProvinceKey === "" ? true : false
+                    }
+                    className={classnames("form-control", {
+                      "is-invalid": errors.destinationCity
+                    })}
+                    id="destinationCity"
+                    name="destinationCity"
+                    value={this.state.destinationCity}
+                    onChange={this.onChange}
+                  >
+                    <option value="" disabled defaultValue>
+                      Select a City/Municipality
+                    </option>
+
+                    {this.state.destinationProvinceKey === ""
+                      ? null
+                      : cities
+                          .filter(
+                            city =>
+                              city.province ===
+                              this.state.destinationProvinceKey
+                          )
+                          .map((city, index) => {
+                            return (
+                              <option key={index} value={city.name}>
+                                {city.name}
+                              </option>
+                            );
+                          })}
+                  </select>
+
+                  <small className="form-text text-muted">
+                    City/Municipality
+                  </small>
+
+                  {errors.destinationCity && (
+                    <div className="invalid-feedback">
+                      {errors.destinationCity}
+                    </div>
+                  )}
+                </div>
+
+                <div className="form-group col-lg-4">
+                  <label className="mb-1" htmlFor="destinationLocation">
+                    &nbsp;
+                  </label>
+
+                  <input
+                    disabled={this.state.destinationCity === "" ? true : false}
+                    type="text"
+                    className={classnames("form-control", {
+                      "is-invalid": errors.destinationLocation
+                    })}
+                    placeholder="Building, Street Name, Barangay"
+                    name="destinationLocation"
+                    value={this.state.destinationLocation}
+                    onChange={this.onChange}
+                    maxLength="100"
+                  />
+
+                  <small className="form-text text-muted">
+                    Building, Street Name, Barangay
+                  </small>
+
+                  {errors.destinationLocation && (
+                    <div className="invalid-feedback">
+                      {errors.destinationLocation}
+                    </div>
+                  )}
+                </div>
+              </React.Fragment>
+            ) : (
+              <div className="col-md-12 mb-2">
+                <h5>
+                  Destination:{" "}
+                  <strong>
+                    {log.destination.location}, {log.destination.city},{" "}
+                    {log.destination.provinceName}
+                  </strong>
+                </h5>
+              </div>
+            )}
+          </div>
+        </React.Fragment>
       );
     }
 
@@ -390,6 +736,7 @@ export class LogViewEdit extends Component {
                   <option value="" disabled defaultValue>
                     Select a Mode of Transport
                   </option>
+
                   {log.type === "Domestic" ? (
                     <option value="Truck">Truck</option>
                   ) : null}
@@ -482,65 +829,12 @@ export class LogViewEdit extends Component {
             )}
           </div>
 
-          <div className="row">
-            {isEditable ? (
-              <div className="form-group col-md-6">
-                <label className="mb-1" htmlFor="origin">
-                  Origin
-                </label>
-                <input
-                  readOnly={!isEditable}
-                  type="text"
-                  className={classnames("form-control", {
-                    "is-invalid": errors.origin
-                  })}
-                  placeholder="Origin"
-                  name="origin"
-                  value={this.state.origin}
-                  onChange={this.onChange}
-                  maxLength="100"
-                />
-                {errors.origin && (
-                  <div className="invalid-feedback">{errors.origin}</div>
-                )}
-              </div>
-            ) : (
-              <div className="col-md-6 mb-2">
-                <h5>
-                  Origin: <strong>{log.origin}</strong>
-                </h5>
-              </div>
-            )}
+          <div className="dropdown-divider mb-3" />
 
-            {isEditable ? (
-              <div className="form-group col-md-6">
-                <label className="mb-1" htmlFor="destination">
-                  Destination
-                </label>
-                <input
-                  readOnly={!isEditable}
-                  type="text"
-                  className={classnames("form-control", {
-                    "is-invalid": errors.destination
-                  })}
-                  placeholder="Destination"
-                  name="destination"
-                  value={this.state.destination}
-                  onChange={this.onChange}
-                  maxLength="100"
-                />
-                {errors.destination && (
-                  <div className="invalid-feedback">{errors.destination}</div>
-                )}
-              </div>
-            ) : (
-              <div className="col-md-6 mb-2">
-                <h5>
-                  Destination: <strong>{log.destination}</strong>
-                </h5>
-              </div>
-            )}
-          </div>
+          {/* @origin */}
+          {originDestinationInputs}
+
+          <div className="dropdown-divider mb-3" />
 
           <div className="row">
             {isEditable ? (
@@ -729,11 +1023,11 @@ export class LogViewEdit extends Component {
             )}
           </div>
 
-          <div className="dropdown-divider" />
+          <div className="dropdown-divider mb-3" />
 
           {/* CONTACT */}
 
-          <div className="row mt-3">
+          <div className="row">
             {isEditable ? (
               <div className="form-group col-md-6">
                 <label className="mb-1" htmlFor="contactName">

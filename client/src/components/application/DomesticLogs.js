@@ -178,8 +178,15 @@ class DomesticLogs extends Component {
                 <td>{log.commodity}</td>
                 <td>{log.modeOfTransport}</td>
                 <td>{log.blAwb ? log.blAwb : "n/a"}</td>
-                <td>{log.origin}</td>
-                <td>{log.destination}</td>
+
+                <td>
+                  {log.origin.location}, {log.origin.city},{" "}
+                  {log.origin.provinceName}
+                </td>
+                <td>
+                  {log.destination.location}, {log.destination.city},{" "}
+                  {log.destination.provinceName}
+                </td>
 
                 <td title={moment(log.etd).format("MMMM Do YYYY")}>
                   <Moment format="MM/DD/YYYY">{log.etd}</Moment>

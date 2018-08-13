@@ -64,7 +64,11 @@ class Calendar extends Component {
         return <span>{event.title}</span>;
       } else {
         return (
-          <span>
+          <span
+            title={`${event.title} ${event.shipperConsignee} (${
+              event.status
+            } - ${event.operationsStatus}) — ${event.associate}`}
+          >
             <strong>{event.title}</strong> {event.shipperConsignee} (
             {event.status} - {event.operationsStatus}) &mdash;{" "}
             <em>{event.associate}</em>

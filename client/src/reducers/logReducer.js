@@ -17,6 +17,8 @@ const initialState = {
   log: {
     tags: {},
     contact: {},
+    origin: {},
+    destination: {},
     operations: {
       preloading: { statuses: [] },
       loading: { statuses: [] },

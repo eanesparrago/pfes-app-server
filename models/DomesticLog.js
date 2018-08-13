@@ -21,10 +21,40 @@ const DomesticLogSchema = new Schema({
     type: String
   },
   origin: {
-    type: String
+    provinceName: {
+      type: String,
+      required: true
+    },
+    provinceKey: {
+      type: String,
+      required: true
+    },
+    city: {
+      type: String,
+      required: true
+    },
+    location: {
+      type: String,
+      required: true
+    }
   },
   destination: {
-    type: String
+    provinceName: {
+      type: String,
+      required: true
+    },
+    provinceKey: {
+      type: String,
+      required: true
+    },
+    city: {
+      type: String,
+      required: true
+    },
+    location: {
+      type: String,
+      required: true
+    }
   },
   etd: {
     type: Date

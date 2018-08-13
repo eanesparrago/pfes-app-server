@@ -106,7 +106,20 @@ router.post(
     }
 
     if (req.body.origin) newLog.origin = req.body.origin.trim();
-    if (req.body.destination) newLog.destination = req.body.destination.trim();
+
+    newLog.origin = {};
+    newLog.destination = {};
+
+    newLog.origin.provinceKey = req.body.originProvinceKey;
+    newLog.origin.provinceName = req.body.originProvinceName;
+    newLog.origin.city = req.body.originCity;
+    newLog.origin.location = req.body.originLocation.trim();
+
+    newLog.destination.provinceKey = req.body.destinationProvinceKey;
+    newLog.destination.provinceName = req.body.destinationProvinceName;
+    newLog.destination.city = req.body.destinationCity;
+    newLog.destination.location = req.body.destinationLocation.trim();
+
     if (req.body.etd) newLog.etd = req.body.etd;
     if (req.body.eta) newLog.eta = req.body.eta;
     if (req.body.status) newLog.status = req.body.status;
