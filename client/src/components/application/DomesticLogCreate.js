@@ -360,7 +360,7 @@ class DomesticLogCreate extends Component {
                         className={classnames("form-control", {
                           "is-invalid": errors.shipperConsignee
                         })}
-                        placeholder="Shipper/Consignee"
+                        placeholder="Enter Shipper/Consignee"
                         name="shipperConsignee"
                         value={this.state.shipperConsignee}
                         onChange={this.onChange}
@@ -382,7 +382,7 @@ class DomesticLogCreate extends Component {
                         className={classnames("form-control", {
                           "is-invalid": errors.commodity
                         })}
-                        placeholder="Commodity"
+                        placeholder="Enter Commodity"
                         name="commodity"
                         value={this.state.commodity}
                         onChange={this.onChange}
@@ -472,9 +472,9 @@ class DomesticLogCreate extends Component {
                           this.state.modeOfTransport === "Truck"
                             ? ""
                             : this.state.modeOfTransport === "Sea"
-                              ? "Bill of Lading Number"
+                              ? "Enter Bill of Lading Number"
                               : this.state.modeOfTransport === "Air"
-                                ? "Air Waybill Number"
+                                ? "Enter Air Waybill Number"
                                 : ""
                         }
                         name="blAwb"
@@ -502,7 +502,7 @@ class DomesticLogCreate extends Component {
                         className={classnames("form-control", {
                           "is-invalid": errors.originLocation
                         })}
-                        placeholder="Building, Street Name, Barangay"
+                        placeholder="Enter Origin Address"
                         name="originLocation"
                         value={this.state.originLocation}
                         onChange={this.onChange}
@@ -616,7 +616,7 @@ class DomesticLogCreate extends Component {
                         className={classnames("form-control", {
                           "is-invalid": errors.destinationLocation
                         })}
-                        placeholder="Building, Street Name, Barangay"
+                        placeholder="Enter Destination Address"
                         name="destinationLocation"
                         value={this.state.destinationLocation}
                         onChange={this.onChange}
@@ -869,7 +869,7 @@ class DomesticLogCreate extends Component {
                         className={classnames("form-control", {
                           "is-invalid": errors.contactName
                         })}
-                        placeholder="Contact Name"
+                        placeholder="Enter Contact Name"
                         name="contactName"
                         value={this.state.contactName}
                         onChange={this.onChange}
@@ -891,7 +891,7 @@ class DomesticLogCreate extends Component {
                         className={classnames("form-control", {
                           "is-invalid": errors.contactNumber
                         })}
-                        placeholder="Contact Number"
+                        placeholder="Enter Contact Number"
                         name="contactNumber"
                         value={this.state.contactNumber}
                         onChange={this.onChange}
@@ -913,7 +913,7 @@ class DomesticLogCreate extends Component {
                         className={classnames("form-control", {
                           "is-invalid": errors.contactEmail
                         })}
-                        placeholder="Contact Email"
+                        placeholder="Enter Contact Email"
                         name="contactEmail"
                         value={this.state.contactEmail}
                         onChange={this.onChange}
