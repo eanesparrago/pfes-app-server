@@ -135,7 +135,8 @@ class DomesticLogCreate extends Component {
       this.setState({
         originProvinceKey: e.target.value,
         originProvinceName: province[0].name,
-        originCity: ""
+        originCity: "",
+        originLocation: ""
       });
     } else if (e.target.name === "originCity") {
       this.setState({
@@ -171,6 +172,7 @@ class DomesticLogCreate extends Component {
     this.setState({ [e.target.name]: !this.state[e.target.name] });
   }
 
+  // @onSubmit
   onSubmit(e) {
     e.preventDefault();
 

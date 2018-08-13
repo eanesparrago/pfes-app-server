@@ -28,13 +28,13 @@ export class LogViewEdit extends Component {
       blAwb: "",
 
       // Domestic
-      originProvinceName: "",
       originProvinceKey: "",
+      originProvinceName: "",
       originCity: "",
       originLocation: "",
 
-      destinationProvinceName: "",
       destinationProvinceKey: "",
+      destinationProvinceName: "",
       destinationCity: "",
       destinationLocation: "",
 
@@ -106,13 +106,13 @@ export class LogViewEdit extends Component {
       // Domestic
       if (nextProps.log.type === "Domestic") {
         this.setState({
-          originProvinceName: nextProps.log.origin.provinceName,
           originProvinceKey: nextProps.log.origin.provinceKey,
+          originProvinceName: nextProps.log.origin.provinceName,
           originCity: nextProps.log.origin.city,
           originLocation: nextProps.log.origin.location,
 
-          destinationProvinceName: nextProps.log.destination.provinceName,
           destinationProvinceKey: nextProps.log.destination.provinceKey,
+          destinationProvinceName: nextProps.log.destination.provinceName,
           destinationCity: nextProps.log.destination.city,
           destinationLocation: nextProps.log.destination.location
         });
@@ -159,7 +159,8 @@ export class LogViewEdit extends Component {
       this.setState({
         originProvinceKey: e.target.value,
         originProvinceName: province[0].name,
-        originCity: ""
+        originCity: "",
+        originLocation: ""
       });
     } else if (e.target.name === "originCity") {
       this.setState({
@@ -233,13 +234,13 @@ export class LogViewEdit extends Component {
 
     if (log.type === "Domestic") {
       this.setState({
-        originProvinceName: log.origin.provinceName,
         originProvinceKey: log.origin.provinceKey,
+        originProvinceName: log.origin.provinceName,
         originCity: log.origin.city,
         originLocation: log.origin.location,
 
-        destinationProvinceName: log.destination.provinceName,
         destinationProvinceKey: log.destination.provinceKey,
+        destinationProvinceName: log.destination.provinceName,
         destinationCity: log.destination.city,
         destinationLocation: log.destination.location
       });
@@ -250,30 +251,46 @@ export class LogViewEdit extends Component {
 
   // @submitEdit
   submitEdit() {
-    const log = {
-      domJo: this.state.domJo,
-      shipperConsignee: this.state.shipperConsignee,
-      modeOfTransport: this.state.modeOfTransport,
-      commodity: this.state.commodity,
-      blAwb: this.state.blAwb,
-      origin: this.state.origin,
-      destination: this.state.destination,
-      etd: this.state.etd,
-      eta: this.state.eta,
-      status: this.state.status,
-      type: this.state.type,
-      rating: this.state.rating,
-      // TODO
-      tagUrgent: this.state.tagUrgent,
-      tagImportant: this.state.tagImportant,
-      tagInsured: this.state.tagInsured,
+    const { log } = this.props;
 
-      contactName: this.state.contactName,
-      contactNumber: this.state.contactNumber,
-      contactEmail: this.state.contactEmail
-    };
+    if (log.type === "Domestic") {
+      const editLog = {
+        domJo: log.domJo,
+        shipperConsignee: this.state.shipperConsignee,
+        modeOfTransport: this.state.modeOfTransport,
+        commodity: this.state.commodity,
+        blAwb: this.state.blAwb,
 
-    this.props.editLog(log);
+        originProvinceKey: this.state.originProvinceKey,
+        originProvinceName: this.state.originProvinceName,
+        originCity: this.state.originCity,
+        originLocation: this.state.originLocation,
+
+        destinationProvinceKey: this.state.destinationProvinceKey,
+        destinationProvinceName: this.state.destinationProvinceName,
+        destinationCity: this.state.destinationCity,
+        destinationLocation: this.state.destinationLocation,
+
+        etd: this.state.etd,
+        eta: this.state.eta,
+        status: this.state.status,
+
+        tagUrgent: this.state.tagUrgent,
+        tagImportant: this.state.tagImportant,
+        tagInsured: this.state.tagInsured,
+
+        contactName: this.state.contactName,
+        contactNumber: this.state.contactNumber,
+        contactEmail: this.state.contactEmail,
+
+        type: "Domestic"
+      };
+
+      console.log(editLog);
+
+      this.props.editLog(editLog);
+    } else if (log.type === "International") {
+    }
   }
 
   deleteLog() {
@@ -342,7 +359,7 @@ export class LogViewEdit extends Component {
     if (log.type === "Domestic") {
       originDestinationInputs = (
         <React.Fragment>
-          <div className="row">
+          <div className="row mt-3">
             {isEditable ? (
               <React.Fragment>
                 <div className="form-group col-lg-4">
@@ -829,14 +846,15 @@ export class LogViewEdit extends Component {
             )}
           </div>
 
-          <div className="dropdown-divider mb-3" />
+          <div className="dropdown-divider" />
 
-          {/* @origin */}
+          {/* @originDestination */}
           {originDestinationInputs}
 
-          <div className="dropdown-divider mb-3" />
+          <div className="dropdown-divider" />
 
-          <div className="row">
+          {/* @eta */}
+          <div className="row mt-3">
             {isEditable ? (
               <div className="form-group col-md-6">
                 <label className="mb-1" htmlFor="etd">
@@ -1023,11 +1041,11 @@ export class LogViewEdit extends Component {
             )}
           </div>
 
-          <div className="dropdown-divider mb-3" />
+          <div className="dropdown-divider" />
 
           {/* CONTACT */}
 
-          <div className="row">
+          <div className="row mt-3">
             {isEditable ? (
               <div className="form-group col-md-6">
                 <label className="mb-1" htmlFor="contactName">
