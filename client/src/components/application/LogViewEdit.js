@@ -159,13 +159,11 @@ export class LogViewEdit extends Component {
       this.setState({
         originProvinceKey: e.target.value,
         originProvinceName: province[0].name,
-        originCity: "",
-        originLocation: ""
+        originCity: ""
       });
     } else if (e.target.name === "originCity") {
       this.setState({
-        originCity: e.target.value,
-        originLocation: ""
+        originCity: e.target.value
       });
     } else if (e.target.name === "destinationProvinceKey") {
       const province = provinces.filter(
@@ -175,13 +173,11 @@ export class LogViewEdit extends Component {
       this.setState({
         destinationProvinceKey: e.target.value,
         destinationProvinceName: province[0].name,
-        destinationCity: "",
-        destinationLocation: ""
+        destinationCity: ""
       });
     } else if (e.target.name === "destinationCity") {
       this.setState({
-        destinationCity: e.target.value,
-        destinationLocation: ""
+        destinationCity: e.target.value
       });
     } else {
       this.setState({ [e.target.name]: e.target.value });
@@ -367,6 +363,33 @@ export class LogViewEdit extends Component {
                     Origin Address
                   </label>
 
+                  <input
+                    type="text"
+                    className={classnames("form-control", {
+                      "is-invalid": errors.originLocation
+                    })}
+                    placeholder="Building, Street Name, Barangay"
+                    name="originLocation"
+                    value={this.state.originLocation}
+                    onChange={this.onChange}
+                    maxLength="100"
+                  />
+
+                  <small className="form-text text-muted">
+                    Building, Street Name, Barangay
+                  </small>
+
+                  {errors.originLocation && (
+                    <div className="invalid-feedback">
+                      {errors.originLocation}
+                    </div>
+                  )}
+                </div>
+
+                <div className="form-group col-lg-4">
+                  <label className="mb-1" htmlFor="originCity">
+                    &nbsp;
+                  </label>
                   <select
                     className={classnames("form-control", {
                       "is-invalid": errors.originProvinceKey
@@ -399,7 +422,7 @@ export class LogViewEdit extends Component {
                 </div>
 
                 <div className="form-group col-lg-4">
-                  <label className="mb-1" htmlFor="originCity">
+                  <label className="mb-1" htmlFor="originLocation">
                     &nbsp;
                   </label>
 
@@ -443,35 +466,6 @@ export class LogViewEdit extends Component {
                     <div className="invalid-feedback">{errors.originCity}</div>
                   )}
                 </div>
-
-                <div className="form-group col-lg-4">
-                  <label className="mb-1" htmlFor="originLocation">
-                    &nbsp;
-                  </label>
-
-                  <input
-                    disabled={this.state.originCity === "" ? true : false}
-                    type="text"
-                    className={classnames("form-control", {
-                      "is-invalid": errors.originLocation
-                    })}
-                    placeholder="Building, Street Name, Barangay"
-                    name="originLocation"
-                    value={this.state.originLocation}
-                    onChange={this.onChange}
-                    maxLength="100"
-                  />
-
-                  <small className="form-text text-muted">
-                    Building, Street Name, Barangay
-                  </small>
-
-                  {errors.originLocation && (
-                    <div className="invalid-feedback">
-                      {errors.originLocation}
-                    </div>
-                  )}
-                </div>
               </React.Fragment>
             ) : (
               <div className="col-md-12 mb-2">
@@ -494,6 +488,33 @@ export class LogViewEdit extends Component {
                     Destination Address
                   </label>
 
+                  <input
+                    type="text"
+                    className={classnames("form-control", {
+                      "is-invalid": errors.destinationLocation
+                    })}
+                    placeholder="Building, Street Name, Barangay"
+                    name="destinationLocation"
+                    value={this.state.destinationLocation}
+                    onChange={this.onChange}
+                    maxLength="100"
+                  />
+
+                  <small className="form-text text-muted">
+                    Building, Street Name, Barangay
+                  </small>
+
+                  {errors.destinationLocation && (
+                    <div className="invalid-feedback">
+                      {errors.destinationLocation}
+                    </div>
+                  )}
+                </div>
+
+                <div className="form-group col-lg-4">
+                  <label className="mb-1" htmlFor="destinationCity">
+                    &nbsp;
+                  </label>
                   <select
                     className={classnames("form-control", {
                       "is-invalid": errors.destinationProvinceKey
@@ -526,7 +547,7 @@ export class LogViewEdit extends Component {
                 </div>
 
                 <div className="form-group col-lg-4">
-                  <label className="mb-1" htmlFor="destinationCity">
+                  <label className="mb-1" htmlFor="destinationLocation">
                     &nbsp;
                   </label>
 
@@ -567,39 +588,8 @@ export class LogViewEdit extends Component {
                     City/Municipality
                   </small>
 
-                  {errors.destinationCity && (
-                    <div className="invalid-feedback">
-                      {errors.destinationCity}
-                    </div>
-                  )}
-                </div>
-
-                <div className="form-group col-lg-4">
-                  <label className="mb-1" htmlFor="destinationLocation">
-                    &nbsp;
-                  </label>
-
-                  <input
-                    disabled={this.state.destinationCity === "" ? true : false}
-                    type="text"
-                    className={classnames("form-control", {
-                      "is-invalid": errors.destinationLocation
-                    })}
-                    placeholder="Building, Street Name, Barangay"
-                    name="destinationLocation"
-                    value={this.state.destinationLocation}
-                    onChange={this.onChange}
-                    maxLength="100"
-                  />
-
-                  <small className="form-text text-muted">
-                    Building, Street Name, Barangay
-                  </small>
-
-                  {errors.destinationLocation && (
-                    <div className="invalid-feedback">
-                      {errors.destinationLocation}
-                    </div>
+                  {errors.originCity && (
+                    <div className="invalid-feedback">{errors.originCity}</div>
                   )}
                 </div>
               </React.Fragment>
