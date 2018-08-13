@@ -49,7 +49,7 @@ class Logs extends Component {
               className={classnames("nav-item nav-link", {
                 active: view === "all"
               })}
-              href="#all"
+              href="# "
               onClick={() => this.navigate("all")}
             >
               All
@@ -58,7 +58,7 @@ class Logs extends Component {
               className={classnames("nav-item nav-link", {
                 active: view === "domestic"
               })}
-              href="#domestic"
+              href="# "
               onClick={() => this.navigate("domestic")}
             >
               Domestic
@@ -67,7 +67,7 @@ class Logs extends Component {
               className={classnames("nav-item nav-link", {
                 active: view === "international"
               })}
-              href="#international"
+              href="# "
               onClick={() => this.navigate("international")}
             >
               International

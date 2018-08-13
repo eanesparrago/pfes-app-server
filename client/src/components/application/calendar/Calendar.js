@@ -133,7 +133,7 @@ class Calendar extends Component {
       content = <Spinner />;
     } else {
       content = (
-        <div style={{ height: "60rem" }} className="m-3 mx-5 mb-2 pb-5">
+        <div style={{ height: "60rem" }} className="m-3 mb-2 pb-5">
           <div className="text-center mb-2">
             <div className="form-check form-check-inline">
               <input

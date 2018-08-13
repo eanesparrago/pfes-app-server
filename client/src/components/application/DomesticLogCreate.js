@@ -521,7 +521,10 @@ class DomesticLogCreate extends Component {
                     </div>
 
                     <div className="form-group col-lg-4">
-                      <label className="mb-1" htmlFor="originCity">
+                      <label
+                        className="mb-1 d-none d-lg-block"
+                        htmlFor="originCity"
+                      >
                         &nbsp;
                       </label>
                       <select
@@ -556,7 +559,10 @@ class DomesticLogCreate extends Component {
                     </div>
 
                     <div className="form-group col-lg-4">
-                      <label className="mb-1" htmlFor="originLocation">
+                      <label
+                        className="mb-1 d-none d-lg-block"
+                        htmlFor="originLocation"
+                      >
                         &nbsp;
                       </label>
 
@@ -635,7 +641,7 @@ class DomesticLogCreate extends Component {
                     </div>
 
                     <div className="form-group col-lg-4">
-                      <label className="mb-1" htmlFor="destinationCity">
+                      <label className="mb-1 d-none d-lg-block" htmlFor="destinationCity">
                         &nbsp;
                       </label>
                       <select
@@ -670,7 +676,7 @@ class DomesticLogCreate extends Component {
                     </div>
 
                     <div className="form-group col-lg-4">
-                      <label className="mb-1" htmlFor="destinationLocation">
+                      <label className="mb-1 d-none d-lg-block" htmlFor="destinationLocation">
                         &nbsp;
                       </label>
 
