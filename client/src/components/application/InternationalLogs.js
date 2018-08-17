@@ -10,11 +10,41 @@ import classnames from "classnames";
 
 import { openLogView } from "../../actions/logsActions";
 
+import logSorting from "../../utils/logSorting";
+
 import "./Logs.css";
 
 class InternationalLogs extends Component {
+  constructor(props) {
+    super(props);
+
+    // @state
+    this.state = {
+      sortKey: "domJo",
+      sortOrder: true
+    };
+
+    this.onClickSort = this.onClickSort.bind(this);
+  }
+
+  onClickSort(sortKey) {
+    if (sortKey === this.state.sortKey) {
+      this.setState({
+        sortOrder: !this.state.sortOrder
+      });
+    } else if (sortKey !== this.state.sortKey) {
+      this.setState({
+        sortKey: sortKey,
+        sortOrder: false
+      });
+    }
+  }
+
   render() {
     const { auth, logs } = this.props;
+    const { sortKey, sortOrder } = this.state;
+
+    const logList = logs.sort(logSorting(sortKey, sortOrder));
 
     let tableBody;
 
@@ -29,7 +59,7 @@ class InternationalLogs extends Component {
     } else {
       tableBody = (
         <tbody>
-          {logs.map(log => {
+          {logList.map(log => {
             /* Generate the operations status element */
             const { preloading, loading, unloading } = log.operations;
 
@@ -178,8 +208,14 @@ class InternationalLogs extends Component {
                 <td>{log.commodity}</td>
                 <td>{log.modeOfTransport}</td>
                 <td>{log.blAwb ? log.blAwb : "n/a"}</td>
-                <td>{log.origin}</td>
-                <td>{log.destination}</td>
+
+                <td>
+                  {log.origin.location}, {log.origin.country}
+                </td>
+
+                <td>
+                  {log.destination.location}, {log.destination.country}
+                </td>
 
                 <td title={moment(log.etd).format("MMMM Do YYYY")}>
                   <Moment format="MM/DD/YYYY">{log.etd}</Moment>
@@ -254,55 +290,221 @@ class InternationalLogs extends Component {
           <table className="table table-striped table-hover">
             <thead>
               <tr>
-                <th scope="col" style={{ width: "5rem" }}>
-                  #
-                </th>
-
-                <th scope="col" style={{ width: "9rem" }}>
-                  Associate
-                </th>
-
-                <th scope="col" style={{ width: "9rem" }}>
-                  Shipper/Consignee
-                </th>
-
-                <th scope="col" style={{ width: "9rem" }}>
-                  Commodity
+                <th
+                  className="text-nowrap"
+                  scope="col"
+                  style={{ width: "5rem" }}
+                >
+                  #&nbsp;
+                  <i
+                    className={classnames("far fa-caret-square-down", {
+                      "text-primary": sortKey === "domJo",
+                      "text-secondary": sortKey !== "domJo",
+                      "fas fa-caret-square-down":
+                        sortKey === "domJo" && sortOrder === false,
+                      "fas fa-caret-square-up":
+                        sortKey === "domJo" && sortOrder === true
+                    })}
+                    onClick={() => this.onClickSort("domJo")}
+                  />
                 </th>
 
                 <th
+                  className="text-nowrap"
+                  scope="col"
+                  style={{ width: "9rem" }}
+                >
+                  Associate&nbsp;
+                  <i
+                    className={classnames("far fa-caret-square-down", {
+                      "text-primary": sortKey === "associate",
+                      "text-secondary": sortKey !== "associate",
+                      "fas fa-caret-square-down":
+                        sortKey === "associate" && sortOrder === false,
+                      "fas fa-caret-square-up":
+                        sortKey === "associate" && sortOrder === true
+                    })}
+                    onClick={() => this.onClickSort("associate")}
+                  />
+                </th>
+
+                <th
+                  className="text-nowrap"
+                  scope="col"
+                  style={{ width: "9rem" }}
+                >
+                  Shipper&nbsp;
+                  <i
+                    className={classnames("far fa-caret-square-down", {
+                      "text-primary": sortKey === "shipperConsignee",
+                      "text-secondary": sortKey !== "shipperConsignee",
+                      "fas fa-caret-square-down":
+                        sortKey === "shipperConsignee" && sortOrder === false,
+                      "fas fa-caret-square-up":
+                        sortKey === "shipperConsignee" && sortOrder === true
+                    })}
+                    onClick={() => this.onClickSort("shipperConsignee")}
+                  />
+                </th>
+
+                <th
+                  className="text-nowrap"
+                  scope="col"
+                  style={{ width: "9rem" }}
+                >
+                  Commodity&nbsp;
+                  <i
+                    className={classnames("far fa-caret-square-down", {
+                      "text-primary": sortKey === "commodity",
+                      "text-secondary": sortKey !== "commodity",
+                      "fas fa-caret-square-down":
+                        sortKey === "commodity" && sortOrder === false,
+                      "fas fa-caret-square-up":
+                        sortKey === "commodity" && sortOrder === true
+                    })}
+                    onClick={() => this.onClickSort("commodity")}
+                  />
+                </th>
+
+                <th
+                  className="text-nowrap"
                   scope="col"
                   title="Mode of Transport"
                   style={{ width: "5rem" }}
                 >
-                  MOT
+                  MOT&nbsp;
+                  <i
+                    className={classnames("far fa-caret-square-down", {
+                      "text-primary": sortKey === "modeOfTransport",
+                      "text-secondary": sortKey !== "modeOfTransport",
+                      "fas fa-caret-square-down":
+                        sortKey === "modeOfTransport" && sortOrder === false,
+                      "fas fa-caret-square-up":
+                        sortKey === "modeOfTransport" && sortOrder === true
+                    })}
+                    onClick={() => this.onClickSort("modeOfTransport")}
+                  />
                 </th>
 
-                <th scope="col" style={{ width: "9rem" }}>
-                  BL/AWB#
+                <th
+                  className="text-nowrap"
+                  scope="col"
+                  style={{ width: "9rem" }}
+                >
+                  BL/AWB#&nbsp;
+                  <i
+                    className={classnames("far fa-caret-square-down", {
+                      "text-primary": sortKey === "blAwb",
+                      "text-secondary": sortKey !== "blAwb",
+                      "fas fa-caret-square-down":
+                        sortKey === "blAwb" && sortOrder === false,
+                      "fas fa-caret-square-up":
+                        sortKey === "blAwb" && sortOrder === true
+                    })}
+                    onClick={() => this.onClickSort("blAwb")}
+                  />
                 </th>
 
-                <th scope="col" style={{ minWidth: "10rem" }}>
-                  Origin
+                <th
+                  className="text-nowrap"
+                  scope="col"
+                  style={{ minWidth: "10rem" }}
+                >
+                  Origin&nbsp;
+                  <i
+                    className={classnames("far fa-caret-square-down", {
+                      "text-primary": sortKey === "origin",
+                      "text-secondary": sortKey !== "origin",
+                      "fas fa-caret-square-down":
+                        sortKey === "origin" && sortOrder === false,
+                      "fas fa-caret-square-up":
+                        sortKey === "origin" && sortOrder === true
+                    })}
+                    onClick={() => this.onClickSort("origin")}
+                  />
                 </th>
 
-                <th scope="col" style={{ minWidth: "10rem" }}>
-                  Destination
+                <th
+                  className="text-nowrap"
+                  scope="col"
+                  style={{ minWidth: "10rem" }}
+                >
+                  Destination&nbsp;
+                  <i
+                    className={classnames("far fa-caret-square-down", {
+                      "text-primary": sortKey === "destination",
+                      "text-secondary": sortKey !== "destination",
+                      "fas fa-caret-square-down":
+                        sortKey === "destination" && sortOrder === false,
+                      "fas fa-caret-square-up":
+                        sortKey === "destination" && sortOrder === true
+                    })}
+                    onClick={() => this.onClickSort("destination")}
+                  />
                 </th>
 
-                <th scope="col" style={{ width: "7rem" }}>
-                  ETD
+                <th
+                  className="text-nowrap"
+                  scope="col"
+                  style={{ width: "7rem" }}
+                >
+                  ETD&nbsp;
+                  <i
+                    className={classnames("far fa-caret-square-down", {
+                      "text-primary": sortKey === "etd",
+                      "text-secondary": sortKey !== "etd",
+                      "fas fa-caret-square-down":
+                        sortKey === "etd" && sortOrder === false,
+                      "fas fa-caret-square-up":
+                        sortKey === "etd" && sortOrder === true
+                    })}
+                    onClick={() => this.onClickSort("etd")}
+                  />
                 </th>
 
-                <th scope="col" style={{ width: "7rem" }}>
-                  ETA
+                <th
+                  className="text-nowrap"
+                  scope="col"
+                  style={{ width: "7rem" }}
+                >
+                  ETA&nbsp;
+                  <i
+                    className={classnames("far fa-caret-square-down", {
+                      "text-primary": sortKey === "eta",
+                      "text-secondary": sortKey !== "eta",
+                      "fas fa-caret-square-down":
+                        sortKey === "eta" && sortOrder === false,
+                      "fas fa-caret-square-up":
+                        sortKey === "eta" && sortOrder === true
+                    })}
+                    onClick={() => this.onClickSort("eta")}
+                  />
                 </th>
 
-                <th scope="col" style={{ width: "7rem" }}>
-                  Status
+                <th
+                  className="text-nowrap"
+                  scope="col"
+                  style={{ width: "7rem" }}
+                >
+                  Status&nbsp;
+                  <i
+                    className={classnames("far  fa-caret-square-down", {
+                      "text-primary": sortKey === "status",
+                      "text-secondary": sortKey !== "status",
+                      "fas fa-caret-square-down":
+                        sortKey === "status" && sortOrder === false,
+                      "fas fa-caret-square-up":
+                        sortKey === "status" && sortOrder === true
+                    })}
+                    onClick={() => this.onClickSort("status")}
+                  />
                 </th>
 
-                <th scope="col" style={{ width: "7rem" }}>
+                <th
+                  className="text-nowrap"
+                  scope="col"
+                  style={{ width: "7rem" }}
+                >
                   Tags
                 </th>
               </tr>

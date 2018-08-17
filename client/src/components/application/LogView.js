@@ -22,6 +22,8 @@ class LogView extends Component {
         role="dialog"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
+        data-backdrop="static"
+        data-keyboard="false"
       >
         <div className="modal-dialog modal-lg" role="dialog">
           <div className="modal-content">
@@ -55,9 +57,8 @@ class LogView extends Component {
                   title={moment(log.date).format("MMMM Do YYYY, h:mm:ssa")}
                 >
                   <em>
-                    Date&nbsp;added:&nbsp;<Moment format="MM/DD/YYYY">
-                      {log.date}
-                    </Moment>,
+                    Date&nbsp;added:&nbsp;
+                    <Moment format="MM/DD/YYYY">{log.date}</Moment>,
                   </em>
                 </small>{" "}
                 <small

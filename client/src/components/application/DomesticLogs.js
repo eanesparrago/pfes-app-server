@@ -293,7 +293,11 @@ class DomesticLogs extends Component {
           <table className="table table-striped table-hover">
             <thead>
               <tr>
-                <th scope="col" style={{ width: "5rem" }}>
+                <th
+                  className="text-nowrap"
+                  scope="col"
+                  style={{ width: "5rem" }}
+                >
                   #&nbsp;
                   <i
                     className={classnames("far fa-caret-square-down", {
@@ -308,7 +312,11 @@ class DomesticLogs extends Component {
                   />
                 </th>
 
-                <th scope="col" style={{ width: "9rem" }}>
+                <th
+                  className="text-nowrap"
+                  scope="col"
+                  style={{ width: "9rem" }}
+                >
                   Associate&nbsp;
                   <i
                     className={classnames("far fa-caret-square-down", {
@@ -323,7 +331,11 @@ class DomesticLogs extends Component {
                   />
                 </th>
 
-                <th scope="col" style={{ width: "9rem" }}>
+                <th
+                  className="text-nowrap"
+                  scope="col"
+                  style={{ width: "9rem" }}
+                >
                   Shipper&nbsp;
                   <i
                     className={classnames("far fa-caret-square-down", {
@@ -338,7 +350,11 @@ class DomesticLogs extends Component {
                   />
                 </th>
 
-                <th scope="col" style={{ width: "9rem" }}>
+                <th
+                  className="text-nowrap"
+                  scope="col"
+                  style={{ width: "9rem" }}
+                >
                   Commodity&nbsp;
                   <i
                     className={classnames("far fa-caret-square-down", {
@@ -354,6 +370,7 @@ class DomesticLogs extends Component {
                 </th>
 
                 <th
+                  className="text-nowrap"
                   scope="col"
                   title="Mode of Transport"
                   style={{ width: "5rem" }}
@@ -372,7 +389,11 @@ class DomesticLogs extends Component {
                   />
                 </th>
 
-                <th scope="col" style={{ width: "9rem" }}>
+                <th
+                  className="text-nowrap"
+                  scope="col"
+                  style={{ width: "9rem" }}
+                >
                   BL/AWB#&nbsp;
                   <i
                     className={classnames("far fa-caret-square-down", {
@@ -387,15 +408,49 @@ class DomesticLogs extends Component {
                   />
                 </th>
 
-                <th scope="col" style={{ minWidth: "10rem" }}>
-                  Origin
+                <th
+                  className="text-nowrap"
+                  scope="col"
+                  style={{ minWidth: "10rem" }}
+                >
+                  Origin&nbsp;
+                  <i
+                    className={classnames("far fa-caret-square-down", {
+                      "text-primary": sortKey === "origin",
+                      "text-secondary": sortKey !== "origin",
+                      "fas fa-caret-square-down":
+                        sortKey === "origin" && sortOrder === false,
+                      "fas fa-caret-square-up":
+                        sortKey === "origin" && sortOrder === true
+                    })}
+                    onClick={() => this.onClickSort("origin")}
+                  />
                 </th>
 
-                <th scope="col" style={{ minWidth: "10rem" }}>
-                  Destination
+                <th
+                  className="text-nowrap"
+                  scope="col"
+                  style={{ minWidth: "10rem" }}
+                >
+                  Destination&nbsp;
+                  <i
+                    className={classnames("far fa-caret-square-down", {
+                      "text-primary": sortKey === "destination",
+                      "text-secondary": sortKey !== "destination",
+                      "fas fa-caret-square-down":
+                        sortKey === "destination" && sortOrder === false,
+                      "fas fa-caret-square-up":
+                        sortKey === "destination" && sortOrder === true
+                    })}
+                    onClick={() => this.onClickSort("destination")}
+                  />
                 </th>
 
-                <th scope="col" style={{ width: "7rem" }}>
+                <th
+                  className="text-nowrap"
+                  scope="col"
+                  style={{ width: "7rem" }}
+                >
                   ETD&nbsp;
                   <i
                     className={classnames("far fa-caret-square-down", {
@@ -410,7 +465,11 @@ class DomesticLogs extends Component {
                   />
                 </th>
 
-                <th scope="col" style={{ width: "7rem" }}>
+                <th
+                  className="text-nowrap"
+                  scope="col"
+                  style={{ width: "7rem" }}
+                >
                   ETA&nbsp;
                   <i
                     className={classnames("far fa-caret-square-down", {
@@ -425,7 +484,11 @@ class DomesticLogs extends Component {
                   />
                 </th>
 
-                <th scope="col" style={{ width: "7rem" }}>
+                <th
+                  className="text-nowrap"
+                  scope="col"
+                  style={{ width: "7rem" }}
+                >
                   Status&nbsp;
                   <i
                     className={classnames("far  fa-caret-square-down", {
@@ -440,7 +503,11 @@ class DomesticLogs extends Component {
                   />
                 </th>
 
-                <th scope="col" style={{ width: "7rem" }}>
+                <th
+                  className="text-nowrap"
+                  scope="col"
+                  style={{ width: "7rem" }}
+                >
                   Tags
                 </th>
               </tr>

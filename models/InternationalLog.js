@@ -21,10 +21,24 @@ const InternationalLogSchema = new Schema({
     type: String
   },
   origin: {
-    type: String
+    country: {
+      type: String,
+      required: true
+    },
+    location: {
+      type: String,
+      required: true
+    }
   },
   destination: {
-    type: String
+    country: {
+      type: String,
+      required: true
+    },
+    location: {
+      type: String,
+      required: true
+    }
   },
   etd: {
     type: Date

@@ -65,18 +65,31 @@ module.exports = function validateLogInput(data) {
       errors.destinationLocation =
         "Destination location must not exceed 100 characters";
     }
-  } else {
-    if (!Validator.isLength(data.origin, { max: 100 })) {
-      errors.origin = "Origin must not exceed 100 characters";
+  } else if (data.type === "International") {
+    if (Validator.isEmpty(data.originCountry)) {
+      errors.originCountry = "Origin country is required";
     }
-    if (Validator.isEmpty(data.origin)) {
-      errors.origin = "Origin is required";
+
+    if (Validator.isEmpty(data.originLocation)) {
+      errors.originLocation = "Origin location is required";
     }
-    if (!Validator.isLength(data.destination, { max: 100 })) {
-      errors.destination = "Destination must not exceed 100 characters";
+
+    if (!Validator.isLength(data.destinationLocation, { max: 100 })) {
+      errors.destinationLocation =
+        "Destination location must not exceed 100 characters";
     }
-    if (Validator.isEmpty(data.destination)) {
-      errors.destination = "Destination is required";
+
+    if (Validator.isEmpty(data.destinationCountry)) {
+      errors.destinationCountry = "Destination country is required";
+    }
+
+    if (Validator.isEmpty(data.destinationLocation)) {
+      errors.destinationLocation = "Destination location is required";
+    }
+
+    if (!Validator.isLength(data.destinationLocation, { max: 100 })) {
+      errors.destinationLocation =
+        "Destination location must not exceed 100 characters";
     }
   }
 

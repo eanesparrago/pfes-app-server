@@ -5,8 +5,21 @@ export default (key, order = false) => {
       return 0;
     }
 
-    const varA = typeof a[key] === "string" ? a[key].toUpperCase() : a[key];
-    const varB = typeof b[key] === "string" ? b[key].toUpperCase() : b[key];
+    let varA;
+    let varB;
+
+    if(key === "origin") {
+      varA = a.origin.location.toUpperCase();
+      varB = b.origin.location.toUpperCase();
+    } else if(key === "destination") {
+      varA = a.destination.location.toUpperCase();
+      varB = b.destination.location.toUpperCase();
+    } else {
+      varA = typeof a[key] === "string" ? a[key].toUpperCase() : a[key];
+      varB = typeof b[key] === "string" ? b[key].toUpperCase() : b[key];
+    }
+    
+
 
     let comparison = 0;
     if (varA > varB) {

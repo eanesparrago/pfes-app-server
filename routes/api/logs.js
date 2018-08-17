@@ -196,10 +196,21 @@ router.post(
     } else {
       newLog.blAwb = "";
     }
+
     if (req.body.origin) newLog.origin = req.body.origin.trim();
-    if (req.body.destination) newLog.destination = req.body.destination.trim();
+
+    newLog.origin = {};
+    newLog.destination = {};
+
+    newLog.origin.country = req.body.originCountry;
+    newLog.origin.location = req.body.originLocation.trim();
+
+    newLog.destination.country = req.body.destinationCountry;
+    newLog.destination.location = req.body.destinationLocation.trim();
+
     if (req.body.etd) newLog.etd = req.body.etd;
     if (req.body.eta) newLog.eta = req.body.eta;
+
     if (req.body.status) newLog.status = req.body.status;
 
     newLog.tags = {};
@@ -402,17 +413,14 @@ router.post(
       newLog.blAwb = "";
     }
 
-    if (req.body.origin) {
-      newLog.origin = req.body.origin.trim();
-    } else {
-      newLog.origin = "";
-    }
+    newLog.origin = {};
+    newLog.destination = {};
 
-    if (req.body.destination) {
-      newLog.destination = req.body.destination.trim();
-    } else {
-      newLog.destination = "";
-    }
+    newLog.origin.country = req.body.originCountry;
+    newLog.origin.location = req.body.originLocation.trim();
+
+    newLog.destination.country = req.body.destinationCountry;
+    newLog.destination.location = req.body.destinationLocation.trim();
 
     if (req.body.etd) newLog.etd = req.body.etd;
     if (req.body.eta) newLog.eta = req.body.eta;

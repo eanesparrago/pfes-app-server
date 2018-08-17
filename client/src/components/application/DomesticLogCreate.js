@@ -300,12 +300,14 @@ class DomesticLogCreate extends Component {
           New Job Order
         </button>
         <div
-          className="modal fade"
+          className="modal fade "
           id="domesticLogCreate"
           tabIndex="-1"
           role="dialog"
           aria-labelledby="exampleModalLabel"
           aria-hidden="true"
+          data-backdrop="static"
+          data-keyboard="false"
         >
           <div className="modal-dialog modal-lg" role="dialog">
             <div className="modal-content">
@@ -313,6 +315,7 @@ class DomesticLogCreate extends Component {
                 <h5 className="modal-title" id="exampleModalLabel">
                   New Domestic Job Order
                 </h5>
+
                 <button
                   type="button"
                   className="close"
@@ -323,6 +326,7 @@ class DomesticLogCreate extends Component {
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
+
               <div className="modal-body">
                 {/* FORM */}
                 <form noValidate>
@@ -493,7 +497,7 @@ class DomesticLogCreate extends Component {
                   {/* @origin */}
                   <div className="row mt-3">
                     <div className="form-group col-lg-4">
-                      <label className="mb-1" htmlFor="originProvinceKey">
+                      <label className="mb-1" htmlFor="originLocation">
                         Origin Address
                       </label>
 
@@ -523,7 +527,7 @@ class DomesticLogCreate extends Component {
                     <div className="form-group col-lg-4">
                       <label
                         className="mb-1 d-none d-lg-block"
-                        htmlFor="originCity"
+                        htmlFor="originProvinceKey"
                       >
                         &nbsp;
                       </label>
@@ -641,7 +645,10 @@ class DomesticLogCreate extends Component {
                     </div>
 
                     <div className="form-group col-lg-4">
-                      <label className="mb-1 d-none d-lg-block" htmlFor="destinationCity">
+                      <label
+                        className="mb-1 d-none d-lg-block"
+                        htmlFor="destinationCity"
+                      >
                         &nbsp;
                       </label>
                       <select
@@ -676,7 +683,10 @@ class DomesticLogCreate extends Component {
                     </div>
 
                     <div className="form-group col-lg-4">
-                      <label className="mb-1 d-none d-lg-block" htmlFor="destinationLocation">
+                      <label
+                        className="mb-1 d-none d-lg-block"
+                        htmlFor="destinationCity"
+                      >
                         &nbsp;
                       </label>
 
@@ -866,7 +876,7 @@ class DomesticLogCreate extends Component {
                   </h5>
 
                   <div className="row mt-3">
-                    <div className="form-group col-md-4">
+                    <div className="form-group col-lg-4">
                       <label className="mb-1" htmlFor="contactName">
                         Contact Name
                       </label>
@@ -888,7 +898,7 @@ class DomesticLogCreate extends Component {
                       )}
                     </div>
 
-                    <div className="form-group col-md-4">
+                    <div className="form-group col-lg-4">
                       <label className="mb-1" htmlFor="contactNumber">
                         Contact Number
                       </label>
@@ -910,7 +920,7 @@ class DomesticLogCreate extends Component {
                       )}
                     </div>
 
-                    <div className="form-group col-md-4">
+                    <div className="form-group col-lg-4">
                       <label className="mb-1" htmlFor="contactEmail">
                         Contact Email{" "}
                       </label>
