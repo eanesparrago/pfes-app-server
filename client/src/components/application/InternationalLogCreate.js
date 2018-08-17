@@ -95,11 +95,8 @@ class InternationalLogCreate extends Component {
         const etd = Date.parse(moment(this.state.etd).format("DD MMM YYYY"));
         const eta = Date.parse(moment(this.state.eta).format("DD MMM YYYY"));
 
-        console.log(etd, eta);
-
         if (etd > eta) {
           this.setState({ eta: this.state.etd });
-          console.log("true");
         }
       });
       return;
@@ -537,9 +534,7 @@ class InternationalLogCreate extends Component {
                         maxLength="100"
                       />
 
-                      <small className="form-text text-muted">
-                        Address
-                      </small>
+                      <small className="form-text text-muted">Address</small>
 
                       {errors.destinationLocation && (
                         <div className="invalid-feedback">

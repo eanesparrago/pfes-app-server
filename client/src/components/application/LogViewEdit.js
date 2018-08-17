@@ -296,8 +296,6 @@ export class LogViewEdit extends Component {
         type: "Domestic"
       };
 
-      console.log(editLog);
-
       this.props.editLog(editLog);
     }
 
@@ -329,8 +327,6 @@ export class LogViewEdit extends Component {
 
         type: "International"
       };
-
-      console.log(editLog);
 
       this.props.editLog(editLog);
     }
