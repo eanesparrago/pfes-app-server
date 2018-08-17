@@ -21,6 +21,7 @@ import AlertBox from "./components/application/AlertBox";
 import ApplicationNav from "./components/application/ApplicationNav";
 import Logs from "./components/application/Logs";
 import Calendar from "./components/application/calendar/Calendar";
+import Statistics from "./components/application/statistics/Statistics";
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -87,6 +88,9 @@ class App extends Component {
 
               {/* Calendar */}
               <Route exact path="/app/calendar" component={Calendar} />
+
+              {/* Statistics */}
+              <Route exact path="/app/statistics" component={Statistics} />
 
               {/* Admin - user management */}
               <Route exact path="/app/users" component={Users} />

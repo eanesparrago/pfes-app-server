@@ -92,7 +92,7 @@ class Calendar extends Component {
           <div className="container text-center mb-3">
             <h2>{this.props.label}</h2>
 
-            <div className="btn-group" role="group" aria-label="Basic example">
+            <div className="btn-group shadow-sm" role="group" aria-label="Basic example">
               <button
                 type="button"
                 className="btn btn-outline-primary"

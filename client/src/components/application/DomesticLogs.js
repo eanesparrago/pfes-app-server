@@ -10,11 +10,41 @@ import classnames from "classnames";
 
 import { openLogView } from "../../actions/logsActions";
 
+import logSorting from "../../utils/logSorting";
+
 import "./Logs.css";
 
 class DomesticLogs extends Component {
+  constructor(props) {
+    super(props);
+
+    // @state
+    this.state = {
+      sortKey: "domJo",
+      sortOrder: true
+    };
+
+    this.onClickSort = this.onClickSort.bind(this);
+  }
+
+  onClickSort(sortKey) {
+    if (sortKey === this.state.sortKey) {
+      this.setState({
+        sortOrder: !this.state.sortOrder
+      });
+    } else if (sortKey !== this.state.sortKey) {
+      this.setState({
+        sortKey: sortKey,
+        sortOrder: false
+      });
+    }
+  }
+
   render() {
     const { auth, logs } = this.props;
+    const { sortKey, sortOrder } = this.state;
+
+    const logList = logs.sort(logSorting(sortKey, sortOrder));
 
     let tableBody;
 
@@ -29,7 +59,7 @@ class DomesticLogs extends Component {
     } else {
       tableBody = (
         <tbody>
-          {logs.map(log => {
+          {logList.map(log => {
             /* Generate the operations status element */
             const { preloading, loading, unloading } = log.operations;
 
@@ -257,25 +287,68 @@ class DomesticLogs extends Component {
           </div>
         </nav>
 
+        {/* @table */}
         {/* //////////////////////// TABLE //////////////////////// */}
         <div className="mt-3 table-responsive">
           <table className="table table-striped table-hover">
             <thead>
               <tr>
                 <th scope="col" style={{ width: "5rem" }}>
-                  #
+                  #&nbsp;
+                  <i
+                    className={classnames("fas fa-caret-square-down", {
+                      "text-primary": sortKey === "domJo",
+                      "text-secondary": sortKey !== "domJo",
+                      "fa-caret-square-down": sortOrder === false,
+                      "fa-caret-square-up": sortOrder === true
+                    })}
+                    onClick={() => this.onClickSort("domJo")}
+                  />
                 </th>
 
                 <th scope="col" style={{ width: "9rem" }}>
-                  Associate
+                  Associate&nbsp;
+                  <i
+                    className={classnames("fas fa-caret-square-down", {
+                      "text-primary": sortKey === "associate",
+                      "text-secondary": sortKey !== "associate",
+                      "fa-caret-square-down":
+                        sortKey === "associate" && sortOrder === false,
+                      "fa-caret-square-up":
+                        sortKey === "associate" && sortOrder === true
+                    })}
+                    onClick={() => this.onClickSort("associate")}
+                  />
                 </th>
 
                 <th scope="col" style={{ width: "9rem" }}>
-                  Shipper/Consignee
+                  Shipper&nbsp;
+                  <i
+                    className={classnames("fas fa-caret-square-down", {
+                      "text-primary": sortKey === "shipperConsignee",
+                      "text-secondary": sortKey !== "shipperConsignee",
+                      "fa-caret-square-down":
+                        sortKey === "shipperConsignee" && sortOrder === false,
+                      "fa-caret-square-up":
+                        sortKey === "shipperConsignee" && sortOrder === true
+                    })}
+                    onClick={() => this.onClickSort("shipperConsignee")}
+                  />
                 </th>
 
                 <th scope="col" style={{ width: "9rem" }}>
-                  Commodity
+                  Commodity&nbsp;
+                  <i
+                    className={classnames("fas fa-caret-square-down", {
+                      "text-primary": sortKey === "commodity",
+                      "text-secondary": sortKey !== "commodity",
+                      "fa-caret-square-down":
+                        sortKey === "commodity" && sortOrder === false,
+                      "fa-caret-square-up":
+                        sortKey === "commodity" && sortOrder === true
+                    })}
+                    onClick={() => this.onClickSort("commodity")}
+                  />
                 </th>
 
                 <th
@@ -283,11 +356,33 @@ class DomesticLogs extends Component {
                   title="Mode of Transport"
                   style={{ width: "5rem" }}
                 >
-                  MOT
+                  MOT&nbsp;
+                  <i
+                    className={classnames("fas fa-caret-square-down", {
+                      "text-primary": sortKey === "modeOfTransport",
+                      "text-secondary": sortKey !== "modeOfTransport",
+                      "fa-caret-square-down":
+                        sortKey === "modeOfTransport" && sortOrder === false,
+                      "fa-caret-square-up":
+                        sortKey === "modeOfTransport" && sortOrder === true
+                    })}
+                    onClick={() => this.onClickSort("modeOfTransport")}
+                  />
                 </th>
 
                 <th scope="col" style={{ width: "9rem" }}>
-                  BL/AWB#
+                  BL/AWB#&nbsp;
+                  <i
+                    className={classnames("fas fa-caret-square-down", {
+                      "text-primary": sortKey === "blAwb",
+                      "text-secondary": sortKey !== "blAwb",
+                      "fa-caret-square-down":
+                        sortKey === "blAwb" && sortOrder === false,
+                      "fa-caret-square-up":
+                        sortKey === "blAwb" && sortOrder === true
+                    })}
+                    onClick={() => this.onClickSort("blAwb")}
+                  />
                 </th>
 
                 <th scope="col" style={{ minWidth: "10rem" }}>
@@ -299,15 +394,48 @@ class DomesticLogs extends Component {
                 </th>
 
                 <th scope="col" style={{ width: "7rem" }}>
-                  ETD
+                  ETD&nbsp;
+                  <i
+                    className={classnames("fas fa-caret-square-down", {
+                      "text-primary": sortKey === "etd",
+                      "text-secondary": sortKey !== "etd",
+                      "fa-caret-square-down":
+                        sortKey === "etd" && sortOrder === false,
+                      "fa-caret-square-up":
+                        sortKey === "etd" && sortOrder === true
+                    })}
+                    onClick={() => this.onClickSort("etd")}
+                  />
                 </th>
 
                 <th scope="col" style={{ width: "7rem" }}>
-                  ETA
+                  ETA&nbsp;
+                  <i
+                    className={classnames("fas fa-caret-square-down", {
+                      "text-primary": sortKey === "eta",
+                      "text-secondary": sortKey !== "eta",
+                      "fa-caret-square-down":
+                        sortKey === "eta" && sortOrder === false,
+                      "fa-caret-square-up":
+                        sortKey === "eta" && sortOrder === true
+                    })}
+                    onClick={() => this.onClickSort("eta")}
+                  />
                 </th>
 
                 <th scope="col" style={{ width: "7rem" }}>
-                  Status
+                  Status&nbsp;
+                  <i
+                    className={classnames("fas fa-caret-square-down", {
+                      "text-primary": sortKey === "status",
+                      "text-secondary": sortKey !== "status",
+                      "fa-caret-square-down":
+                        sortKey === "status" && sortOrder === false,
+                      "fa-caret-square-up":
+                        sortKey === "status" && sortOrder === true
+                    })}
+                    onClick={() => this.onClickSort("status")}
+                  />
                 </th>
 
                 <th scope="col" style={{ width: "7rem" }}>
@@ -315,7 +443,7 @@ class DomesticLogs extends Component {
                 </th>
               </tr>
             </thead>
-            
+
             {tableBody}
           </table>
         </div>

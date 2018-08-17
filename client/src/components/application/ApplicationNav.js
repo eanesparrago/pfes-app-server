@@ -80,6 +80,18 @@ class ApplicationNav extends Component {
               Calendar
             </Link>
           </li>
+          
+          <li className="nav-item">
+            <Link
+              className={classnames("nav-link", {
+                active: this.state.active === "/app/statistics"
+              })}
+              to="/app/statistics"
+              onClick={() => this.handleClick("/app/statistics")}
+            >
+              Statistics
+            </Link>
+          </li>
 
           {auth.user.userType === "admin" ? (
             <li className="nav-item">

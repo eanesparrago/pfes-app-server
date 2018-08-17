@@ -292,7 +292,7 @@ class DomesticLogCreate extends Component {
       <div className="">
         <button
           type="button"
-          className="btn btn-primary mr-3"
+          className="btn btn-primary mr-3 shadow-sm"
           data-toggle="modal"
           data-target="#domesticLogCreate"
           onClick={this.onOpen}

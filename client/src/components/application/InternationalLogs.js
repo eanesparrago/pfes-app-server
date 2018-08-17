@@ -307,7 +307,7 @@ class InternationalLogs extends Component {
                 </th>
               </tr>
             </thead>
-            
+
             {tableBody}
           </table>
         </div>
