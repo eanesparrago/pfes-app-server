@@ -7,11 +7,13 @@ import InternationalLogCreate from "./InternationalLogCreate";
 import isEmpty from "../../validation/is-empty";
 import classnames from "classnames";
 import ReactToPrint from "react-to-print";
+import { CSVLink } from "react-csv";
 
 import { openLogView } from "../../actions/logsActions";
 
 import logSorting from "../../utils/logSorting";
 import logSearching from "../../utils/logSearching";
+import generateCSV from "../../utils/generateCSV";
 
 import logo from "../../img/pfes-logo.png";
 
@@ -75,6 +77,10 @@ class InternationalLogs extends Component {
 
     logList = logList.sort(logSorting(sortKey, sortOrder));
 
+    // Generate CSV
+    const logsCSV = generateCSV(logList, "international");
+
+    // Generate logs table body
     let tableBody;
 
     if (isEmpty(logList)) {
@@ -410,7 +416,7 @@ class InternationalLogs extends Component {
                 <button
                   title="Print Log"
                   type="button"
-                  className="btn btn-outline-primary shadow-sm mt-2 mt-lg-0"
+                  className="btn btn-outline-primary shadow-sm mt-2 mt-lg-0 mr-2"
                 >
                   <i className="fas fa-print" />
                 </button>
@@ -418,6 +424,17 @@ class InternationalLogs extends Component {
               content={() => this.toPrint.current}
             />
           </div>
+
+          {/* @csv */}
+          <CSVLink data={logsCSV} filename={"pfes-international-logs-csv.csv"}>
+            <button
+              title="Export CSV"
+              type="button"
+              className="btn btn-outline-primary shadow-sm mt-2 mt-lg-0"
+            >
+              <i className="fas fa-file-export" />
+            </button>
+          </CSVLink>
         </nav>
 
         {/* @table */}

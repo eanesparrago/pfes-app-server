@@ -7,11 +7,13 @@ import DomesticLogCreate from "./DomesticLogCreate";
 import isEmpty from "../../validation/is-empty";
 import classnames from "classnames";
 import ReactToPrint from "react-to-print";
+import { CSVLink } from "react-csv";
 
 import { openLogView } from "../../actions/logsActions";
 
 import logSorting from "../../utils/logSorting";
 import logSearching from "../../utils/logSearching";
+import generateCSV from "../../utils/generateCSV";
 
 import logo from "../../img/pfes-logo.png";
 
@@ -63,6 +65,7 @@ class DomesticLogs extends Component {
     });
   }
 
+  // @render
   render() {
     const { auth, logs } = this.props;
     const { sortKey, sortOrder, searchValue, searchCategory } = this.state;
@@ -74,6 +77,9 @@ class DomesticLogs extends Component {
     }
 
     logList = logList.sort(logSorting(sortKey, sortOrder));
+
+    // Generate CSV
+    const logsCSV = generateCSV(logList, "domestic");
 
     // Generate logs table body
     let tableBody;
@@ -418,13 +424,24 @@ class DomesticLogs extends Component {
                 <button
                   title="Print Table"
                   type="button"
-                  className="btn btn-outline-primary shadow-sm mt-2 mt-lg-0"
+                  className="btn btn-outline-primary shadow-sm mt-2 mt-lg-0 mr-2"
                 >
                   <i className="fas fa-print" />
                 </button>
               )}
               content={() => this.toPrint.current}
             />
+
+            {/* @csv */}
+            <CSVLink data={logsCSV} filename={"pfes-domestic-logs-csv.csv"}>
+              <button
+                title="Export CSV"
+                type="button"
+                className="btn btn-outline-primary shadow-sm mt-2 mt-lg-0"
+              >
+                <i className="fas fa-file-export" />
+              </button>
+            </CSVLink>
           </div>
         </nav>
 

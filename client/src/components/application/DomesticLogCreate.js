@@ -950,7 +950,7 @@ class DomesticLogCreate extends Component {
                       data-dismiss="modal"
                       onClick={this.onClose}
                     >
-                      Close
+                      Cancel
                     </button>
                     <button
                       type="button"

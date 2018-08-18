@@ -49,25 +49,25 @@ class Logs extends Component {
               className={classnames("nav-item nav-link", {
                 active: view === "all"
               })}
-              href="# "
+              href="#all"
               onClick={() => this.navigate("all")}
             >
               All
             </a>
             <a
-              className={classnames("nav-item nav-link", {
+              className={classnames("nav-item nav-link text-nowrap", {
                 active: view === "domestic"
               })}
-              href="# "
+              href="#domestic"
               onClick={() => this.navigate("domestic")}
             >
               <i className="fas fa-building" /> Domestic
             </a>
             <a
-              className={classnames("nav-item nav-link", {
+              className={classnames("nav-item nav-link text-nowrap", {
                 active: view === "international"
               })}
-              href="# "
+              href="#international"
               onClick={() => this.navigate("international")}
             >
               <i className="fas fa-globe-americas" /> International

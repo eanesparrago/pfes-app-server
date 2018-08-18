@@ -45,8 +45,6 @@ export default (logs, category, value) => {
     search.addIndex(["destination", "provinceName"]);
     return search.search(value);
   } else if (category === "tags") {
-    console.log("tags");
-
     switch (value) {
       case "urgent":
         return logs.filter(log => {

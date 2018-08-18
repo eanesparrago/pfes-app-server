@@ -128,9 +128,7 @@ class InternationalLogCreate extends Component {
   }
 
   toggleCheck(e) {
-    this.setState({ [e.target.name]: !this.state[e.target.name] }, () => {
-      console.log(this.state);
-    });
+    this.setState({ [e.target.name]: !this.state[e.target.name] });
   }
 
   // @onSubmit
@@ -796,7 +794,7 @@ class InternationalLogCreate extends Component {
                       data-dismiss="modal"
                       onClick={this.onClose}
                     >
-                      Close
+                      Cancel
                     </button>
                     <button
                       type="button"
