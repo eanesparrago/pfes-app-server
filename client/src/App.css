@@ -6,13 +6,11 @@
   /* border: 1px solid magenta; */
 }
 
-
 a {
   cursor: pointer;
 }
 
 body {
-  /* overflow-y: scroll; */
   background-image: url(./img/bg.jpg);
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -83,5 +81,28 @@ body {
     margin-right: 0px !important;
     padding-left: 0px !important;
     padding-right: 0px !important;
+  }
+}
+
+.pfes-header-logo {
+  width: 6rem;
+  height: auto;
+}
+
+.pfes-print-element {
+  display: none;
+}
+
+@media only print {
+  .pfes-print-element {
+    display: block;
+  }
+
+  .pfes-print-hide {
+    display: none;
+  }
+
+  .pfes-print-container {
+    margin-top: 2rem;
   }
 }

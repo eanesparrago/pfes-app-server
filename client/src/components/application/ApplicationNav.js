@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import classnames from "classnames";
 import { connect } from "react-redux";
 
+import logo from "../../img/pfes-logo.png";
+
 import {
   getDomesticLogs,
   getInternationalLogs
@@ -53,9 +55,12 @@ class ApplicationNav extends Component {
 
     return (
       <div className="container-fluid">
-        <h3 className="mb-3">
-          <em>Hello {auth.user.firstName}!</em>
-        </h3>
+        <div className="card mb-3 shadow-sm pfes-header">
+          <div className="card-body">
+            <h2 className="">Hello {auth.user.firstName}!</h2>
+          </div>
+        </div>
+
         <ul className="nav nav-tabs">
           <li className="nav-item">
             <Link
