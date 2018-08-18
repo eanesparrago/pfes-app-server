@@ -59,7 +59,7 @@ class App extends Component {
 
             <AlertBox />
 
-            <div className="fade-in-2 Main container-fluid">
+            <div className="fade-in-2 container-fluid mobile-margin">
               <Switch>
                 {/* Login */}
                 <Route exact path="/" component={Login} />

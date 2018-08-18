@@ -251,7 +251,7 @@ class InternationalLogCreate extends Component {
           data-target="#internationalLogCreate"
           onClick={this.onOpen}
         >
-          <i class="far fa-edit" /> New Job Order
+          <i className="far fa-edit" /> New Job Order
         </button>
         <div
           className="modal fade"

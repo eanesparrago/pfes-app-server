@@ -61,7 +61,7 @@ class Logs extends Component {
               href="# "
               onClick={() => this.navigate("domestic")}
             >
-              <i class="fas fa-building" /> Domestic
+              <i className="fas fa-building" /> Domestic
             </a>
             <a
               className={classnames("nav-item nav-link", {
@@ -70,7 +70,7 @@ class Logs extends Component {
               href="# "
               onClick={() => this.navigate("international")}
             >
-              <i class="fas fa-globe-americas" /> International
+              <i className="fas fa-globe-americas" /> International
             </a>
           </nav>
         </div>
@@ -102,7 +102,7 @@ class Logs extends Component {
     }
 
     return (
-      <div className="fade-in mx-3 mt-3">
+      <div className="fade-in m-3 mobile-margin">
         {contentNav}
 
         {content}

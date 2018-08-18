@@ -65,7 +65,7 @@ class ApplicationNav extends Component {
               to="/app/logs"
               onClick={() => this.handleClick("/app/logs")}
             >
-              <i class="fas fa-book" /> Logs
+              <i className="fas fa-book" /> Logs
             </Link>
           </li>
 

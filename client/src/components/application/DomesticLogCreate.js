@@ -297,7 +297,7 @@ class DomesticLogCreate extends Component {
           data-target="#domesticLogCreate"
           onClick={this.onOpen}
         >
-          <i class="far fa-edit" /> New Job Order
+          <i className="far fa-edit" /> New Job Order
         </button>
         <div
           className="modal fade "

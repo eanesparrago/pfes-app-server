@@ -6,9 +6,6 @@
   /* border: 1px solid magenta; */
 }
 
-.Main {
-  /* border: 1px solid magenta; */
-}
 
 a {
   cursor: pointer;
@@ -77,5 +74,14 @@ body {
   100% {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@media (max-width: 720px) {
+  .mobile-margin {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
   }
 }
