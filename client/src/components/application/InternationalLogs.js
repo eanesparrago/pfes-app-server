@@ -423,18 +423,21 @@ class InternationalLogs extends Component {
               )}
               content={() => this.toPrint.current}
             />
-          </div>
 
-          {/* @csv */}
-          <CSVLink data={logsCSV} filename={"pfes-international-logs-csv.csv"}>
-            <button
-              title="Export CSV"
-              type="button"
-              className="btn btn-outline-primary shadow-sm mt-2 mt-lg-0"
+            {/* @csv */}
+            <CSVLink
+              data={logsCSV}
+              filename={"pfes-international-logs-csv.csv"}
             >
-              <i className="fas fa-file-export" />
-            </button>
-          </CSVLink>
+              <button
+                title="Export CSV"
+                type="button"
+                className="btn btn-outline-primary shadow-sm mt-2 mt-lg-0"
+              >
+                <i className="fas fa-file-export" />
+              </button>
+            </CSVLink>
+          </div>
         </nav>
 
         {/* @table */}
