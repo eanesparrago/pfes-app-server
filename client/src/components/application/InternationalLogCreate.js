@@ -251,7 +251,7 @@ class InternationalLogCreate extends Component {
           data-target="#internationalLogCreate"
           onClick={this.onOpen}
         >
-          New Job Order
+          <i class="far fa-edit" /> New Job Order
         </button>
         <div
           className="modal fade"
@@ -294,7 +294,7 @@ class InternationalLogCreate extends Component {
                         className={classnames("form-control", {
                           "is-invalid": errors.associate
                         })}
-                        placeholder="Associate"
+                        placeholder=""
                         name="associate"
                         value={`${auth.user.firstName} ${auth.user.lastName}`}
                         // onChange={this.onChange}
@@ -317,7 +317,7 @@ class InternationalLogCreate extends Component {
                         className={classnames("form-control", {
                           "is-invalid": errors.shipperConsignee
                         })}
-                        placeholder="Shipper/Consignee"
+                        placeholder=""
                         name="shipperConsignee"
                         value={this.state.shipperConsignee}
                         onChange={this.onChange}
@@ -339,7 +339,7 @@ class InternationalLogCreate extends Component {
                         className={classnames("form-control", {
                           "is-invalid": errors.commodity
                         })}
-                        placeholder="Commodity"
+                        placeholder=""
                         name="commodity"
                         value={this.state.commodity}
                         onChange={this.onChange}
@@ -428,9 +428,9 @@ class InternationalLogCreate extends Component {
                           this.state.modeOfTransport === "Truck"
                             ? ""
                             : this.state.modeOfTransport === "Sea"
-                              ? "Bill of Lading Number"
+                              ? ""
                               : this.state.modeOfTransport === "Air"
-                                ? "Air Waybill Number"
+                                ? ""
                                 : ""
                         }
                         name="blAwb"
@@ -458,7 +458,7 @@ class InternationalLogCreate extends Component {
                         className={classnames("form-control", {
                           "is-invalid": errors.originLocation
                         })}
-                        placeholder="Enter Origin Address"
+                        placeholder=""
                         name="originLocation"
                         value={this.state.originLocation}
                         onChange={this.onChange}
@@ -527,7 +527,7 @@ class InternationalLogCreate extends Component {
                         className={classnames("form-control", {
                           "is-invalid": errors.destinationLocation
                         })}
-                        placeholder="Enter Destination Address"
+                        placeholder=""
                         name="destinationLocation"
                         value={this.state.destinationLocation}
                         onChange={this.onChange}
@@ -731,7 +731,7 @@ class InternationalLogCreate extends Component {
                         className={classnames("form-control", {
                           "is-invalid": errors.contactName
                         })}
-                        placeholder="Contact Name"
+                        placeholder=""
                         name="contactName"
                         value={this.state.contactName}
                         onChange={this.onChange}
@@ -753,7 +753,7 @@ class InternationalLogCreate extends Component {
                         className={classnames("form-control", {
                           "is-invalid": errors.contactNumber
                         })}
-                        placeholder="Contact Number"
+                        placeholder=""
                         name="contactNumber"
                         value={this.state.contactNumber}
                         onChange={this.onChange}
@@ -775,7 +775,7 @@ class InternationalLogCreate extends Component {
                         className={classnames("form-control", {
                           "is-invalid": errors.contactEmail
                         })}
-                        placeholder="Contact Email"
+                        placeholder="example@address.com"
                         name="contactEmail"
                         value={this.state.contactEmail}
                         onChange={this.onChange}

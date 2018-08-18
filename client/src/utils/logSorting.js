@@ -19,8 +19,6 @@ export default (key, order = false) => {
       varB = typeof b[key] === "string" ? b[key].toUpperCase() : b[key];
     }
     
-
-
     let comparison = 0;
     if (varA > varB) {
       comparison = 1;

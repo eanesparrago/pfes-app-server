@@ -11,6 +11,7 @@ import classnames from "classnames";
 import { openLogView } from "../../actions/logsActions";
 
 import logSorting from "../../utils/logSorting";
+import logSearching from "../../utils/logSearching";
 
 import "./Logs.css";
 
@@ -21,10 +22,15 @@ class DomesticLogs extends Component {
     // @state
     this.state = {
       sortKey: "domJo",
-      sortOrder: true
+      sortOrder: true,
+
+      searchValue: "",
+      searchCategory: "all"
     };
 
     this.onClickSort = this.onClickSort.bind(this);
+    this.onChangeSearchValue = this.onChangeSearchValue.bind(this);
+    this.onChangeSearchCategory = this.onChangeSearchCategory.bind(this);
   }
 
   onClickSort(sortKey) {
@@ -40,19 +46,41 @@ class DomesticLogs extends Component {
     }
   }
 
+  onChangeSearchValue(e) {
+    this.setState({ [e.target.name]: e.target.value }, () => {
+      console.log(this.state);
+    });
+  }
+
+  onChangeSearchCategory(e) {
+    this.setState({
+      searchValue: "",
+      searchCategory: e.target.value
+    });
+  }
+
   render() {
     const { auth, logs } = this.props;
-    const { sortKey, sortOrder } = this.state;
+    const { sortKey, sortOrder, searchValue, searchCategory } = this.state;
 
-    const logList = logs.sort(logSorting(sortKey, sortOrder));
+    let logList = logs;
 
+    if (searchValue !== "") {
+      logList = logSearching(logList, searchCategory, searchValue);
+    }
+
+    logList = logList.sort(logSorting(sortKey, sortOrder));
+
+    // Generate logs table body
     let tableBody;
 
-    if (isEmpty(logs)) {
+    if (isEmpty(logList)) {
       tableBody = (
         <tbody>
           <tr>
-            <td colSpan="11">Empty</td>
+            <td className="text-center" colSpan="12">
+              <em className="text-muted">No logs found</em>
+            </td>
           </tr>
         </tbody>
       );
@@ -251,7 +279,6 @@ class DomesticLogs extends Component {
         {/* //////////////////////// NAVBAR //////////////////////// */}
         <nav className="logs-nav navbar navbar-expand-lg navbar-light ">
           <a className="navbar-brand">Domestic</a>
-
           <button
             className="navbar-toggler"
             type="button"
@@ -264,26 +291,121 @@ class DomesticLogs extends Component {
             <span className="navbar-toggler-icon" />
           </button>
 
+          {/* @navbar */}
           <div className="collapse navbar-collapse" id="domesticNavbar">
             {auth.user.userType === "admin" ||
             auth.user.userType === "sales" ? (
               <DomesticLogCreate />
             ) : null}
 
-            <form className="form-inline my-2 my-lg-0">
-              <input
-                className="form-control mr-sm-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button
-                className="btn btn-outline-primary my-2 my-sm-0"
-                // type="submit"
+            {/* @search */}
+            <div className="input-group my-2 my-lg-0 mr-2">
+              <div className="input-group-prepend">
+                <span className="input-group-text" id="basic-addon1">
+                  <i className="fas fa-search" />
+                </span>
+              </div>
+
+              <select
+                className="custom-select"
+                name="searchCategory"
+                id="searchCategory"
+                value={this.state.searchCategory}
+                onChange={this.onChangeSearchCategory}
               >
-                Search
-              </button>
-            </form>
+                <option value="all" defaultValue>
+                  All Categories
+                </option>
+                <option value="domJo">Job Order #</option>
+                <option value="associate">Associate</option>
+                <option value="shipperConsignee">Shipper</option>
+                <option value="commodity">Commodity</option>
+                <option value="modeOfTransport">Mode of Transport</option>
+                <option value="blAwb">BL/AWB#</option>
+                <option value="originLocation">Origin Address</option>
+                <option value="originCity">Origin City/Municipality</option>
+                <option value="originProvince">Origin Province</option>
+                <option value="destinationLocation">Destination Address</option>
+                <option value="destinationCity">
+                  Destination City/Municipality
+                </option>
+                <option value="destinationProvince">
+                  Destination Province
+                </option>
+                <option value="etd">ETD</option>
+                <option value="eta">ETA</option>
+                <option value="status">Status</option>
+                <option value="tags">Tags</option>
+              </select>
+            </div>
+
+            <div className="input-group">
+              {(() => {
+                switch (searchCategory) {
+                  case "status":
+                    return (
+                      <select
+                        className="custom-select"
+                        name="searchValue"
+                        id="searchValue"
+                        value={this.state.searchValue}
+                        onChange={this.onChangeSearchValue}
+                      >
+                        <option value="" defaultValue>
+                          Any Status
+                        </option>
+                        <option value="Ongoing">Ongoing</option>
+                        <option value="Complete">Complete</option>
+                        <option value="Waiting">Waiting</option>
+                        <option value="Void">Void</option>
+                      </select>
+                    );
+
+                  case "etd":
+                  case "eta":
+                    return (
+                      <input
+                        type="date"
+                        className="custom-select mr-2"
+                        name="searchValue"
+                        value={this.state.searchValue}
+                        onChange={this.onChangeSearchValue}
+                      />
+                    );
+
+                  case "tags":
+                    return (
+                      <select
+                        className="custom-select"
+                        name="searchValue"
+                        id="searchValue"
+                        value={this.state.searchValue}
+                        onChange={this.onChangeSearchValue}
+                      >
+                        <option value="" defaultValue>
+                          All Tags
+                        </option>
+                        <option value="urgent">Urgent</option>
+                        <option value="important">Important</option>
+                        <option value="insured">Insured</option>
+                      </select>
+                    );
+
+                  default:
+                    return (
+                      <input
+                        type="text"
+                        className="form-control"
+                        aria-label="Search input with dropdown button"
+                        placeholder="Enter Search Value"
+                        name="searchValue"
+                        value={this.state.searchValue}
+                        onChange={this.onChangeSearchValue}
+                      />
+                    );
+                }
+              })()}
+            </div>
           </div>
         </nav>
 

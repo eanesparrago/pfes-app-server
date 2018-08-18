@@ -54,7 +54,7 @@ class ApplicationNav extends Component {
     return (
       <div className="container-fluid">
         <h3 className="mb-3">
-          <em>Hello {auth.user.firstName}! SAWADIKA!!!</em>
+          <em>Hello {auth.user.firstName}!</em>
         </h3>
         <ul className="nav nav-tabs">
           <li className="nav-item">
@@ -65,7 +65,7 @@ class ApplicationNav extends Component {
               to="/app/logs"
               onClick={() => this.handleClick("/app/logs")}
             >
-              Logs
+              <i class="fas fa-book" /> Logs
             </Link>
           </li>
 
@@ -77,10 +77,10 @@ class ApplicationNav extends Component {
               to="/app/calendar"
               onClick={() => this.handleClick("/app/calendar")}
             >
-              Calendar
+              <i className="far fa-calendar-alt" /> Calendar
             </Link>
           </li>
-          
+
           <li className="nav-item">
             <Link
               className={classnames("nav-link", {
@@ -89,7 +89,7 @@ class ApplicationNav extends Component {
               to="/app/statistics"
               onClick={() => this.handleClick("/app/statistics")}
             >
-              Statistics
+              <i className="fas fa-chart-bar" /> Statistics
             </Link>
           </li>
 
@@ -102,7 +102,7 @@ class ApplicationNav extends Component {
                 to="/app/users"
                 onClick={() => this.handleClick("/app/users")}
               >
-                Users
+                <i className="fas fa-users" /> Users
               </Link>
             </li>
           ) : null}

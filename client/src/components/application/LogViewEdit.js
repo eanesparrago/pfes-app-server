@@ -412,7 +412,7 @@ export class LogViewEdit extends Component {
                     className={classnames("form-control", {
                       "is-invalid": errors.originLocation
                     })}
-                    placeholder="Enter Origin Address"
+                    placeholder=""
                     name="originLocation"
                     value={this.state.originLocation}
                     onChange={this.onChange}
@@ -543,7 +543,7 @@ export class LogViewEdit extends Component {
                     className={classnames("form-control", {
                       "is-invalid": errors.destinationLocation
                     })}
-                    placeholder="Enter Destination Address"
+                    placeholder=""
                     name="destinationLocation"
                     value={this.state.destinationLocation}
                     onChange={this.onChange}
@@ -681,7 +681,7 @@ export class LogViewEdit extends Component {
                     className={classnames("form-control", {
                       "is-invalid": errors.originLocation
                     })}
-                    placeholder="Enter Origin Address"
+                    placeholder=""
                     name="originLocation"
                     value={this.state.originLocation}
                     onChange={this.onChange}
@@ -763,7 +763,7 @@ export class LogViewEdit extends Component {
                     className={classnames("form-control", {
                       "is-invalid": errors.destinationLocation
                     })}
-                    placeholder="Enter Destination Address"
+                    placeholder=""
                     name="destinationLocation"
                     value={this.state.destinationLocation}
                     onChange={this.onChange}
@@ -870,7 +870,7 @@ export class LogViewEdit extends Component {
                   className={classnames("form-control", {
                     "is-invalid": errors.associate
                   })}
-                  placeholder="Enter Associate"
+                  placeholder=""
                   name="associate"
                   value={this.state.associate}
                   // onChange={this.onChange}
@@ -900,7 +900,7 @@ export class LogViewEdit extends Component {
                   className={classnames("form-control", {
                     "is-invalid": errors.shipperConsignee
                   })}
-                  placeholder="Enter Shipper/Consignee"
+                  placeholder=""
                   name="shipperConsignee"
                   value={this.state.shipperConsignee}
                   onChange={this.onChange}
@@ -931,7 +931,7 @@ export class LogViewEdit extends Component {
                   className={classnames("form-control", {
                     "is-invalid": errors.commodity
                   })}
-                  placeholder="Enter Commodity"
+                  placeholder=""
                   name="commodity"
                   value={this.state.commodity}
                   onChange={this.onChange}
@@ -1038,9 +1038,9 @@ export class LogViewEdit extends Component {
                     this.state.modeOfTransport === "Truck"
                       ? ""
                       : this.state.modeOfTransport === "Sea"
-                        ? "Enter Bill of Lading Number"
+                        ? ""
                         : this.state.modeOfTransport === "Air"
-                          ? "Enter Air Waybill Number"
+                          ? ""
                           : ""
                   }
                   name="blAwb"
@@ -1241,7 +1241,7 @@ export class LogViewEdit extends Component {
 
                 <textarea
                   className={classnames("form-control", {})}
-                  placeholder="Enter Customer Satisfaction"
+                  placeholder=""
                   name="rating"
                   value={this.state.rating}
                   onChange={this.onChange}
@@ -1272,7 +1272,7 @@ export class LogViewEdit extends Component {
                   className={classnames("form-control", {
                     "is-invalid": errors.contactName
                   })}
-                  placeholder="Enter Contact Name"
+                  placeholder=""
                   name="contactName"
                   value={this.state.contactName}
                   onChange={this.onChange}
@@ -1300,7 +1300,7 @@ export class LogViewEdit extends Component {
                   className={classnames("form-control", {
                     "is-invalid": errors.contactNumber
                   })}
-                  placeholder="Enter Contact Name"
+                  placeholder=""
                   name="contactNumber"
                   value={this.state.contactNumber}
                   onChange={this.onChange}
@@ -1330,7 +1330,7 @@ export class LogViewEdit extends Component {
                   className={classnames("form-control", {
                     "is-invalid": errors.contactEmail
                   })}
-                  placeholder="Enter Contact Name"
+                  placeholder="example@address.com"
                   name="contactEmail"
                   value={this.state.contactEmail}
                   onChange={this.onChange}
