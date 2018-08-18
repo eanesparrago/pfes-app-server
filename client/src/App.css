@@ -95,6 +95,7 @@ body {
 
 @media only print {
   .pfes-print-element {
+    margin-top: 1rem;
     display: block;
   }
 

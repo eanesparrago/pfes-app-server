@@ -34,7 +34,7 @@ class InternationalLogs extends Component {
     this.onChangeSearchValue = this.onChangeSearchValue.bind(this);
     this.onChangeSearchCategory = this.onChangeSearchCategory.bind(this);
 
-    this.logsTable = React.createRef();
+    this.toPrint = React.createRef();
   }
 
   onClickSort(sortKey) {
@@ -408,14 +408,14 @@ class InternationalLogs extends Component {
             <ReactToPrint
               trigger={() => (
                 <button
-                  title="Print Table"
+                  title="Print Log"
                   type="button"
                   className="btn btn-outline-primary shadow-sm mt-2 mt-lg-0"
                 >
                   <i className="fas fa-print" />
                 </button>
               )}
-              content={() => this.logsTable.current}
+              content={() => this.toPrint.current}
             />
           </div>
         </nav>
@@ -423,7 +423,7 @@ class InternationalLogs extends Component {
         {/* @table */}
         {/* //////////////////////// TABLE //////////////////////// */}
         <div className="mt-3 table-responsive">
-          <div className="pfes-print-container" ref={this.logsTable}>
+          <div className="pfes-print-container" ref={this.toPrint}>
             <div className="pfes-print-element">
               <div>
                 <img

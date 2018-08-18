@@ -34,7 +34,7 @@ class DomesticLogs extends Component {
     this.onChangeSearchValue = this.onChangeSearchValue.bind(this);
     this.onChangeSearchCategory = this.onChangeSearchCategory.bind(this);
 
-    this.logsTable = React.createRef();
+    this.toPrint = React.createRef();
   }
 
   onClickSort(sortKey) {
@@ -423,7 +423,7 @@ class DomesticLogs extends Component {
                   <i className="fas fa-print" />
                 </button>
               )}
-              content={() => this.logsTable.current}
+              content={() => this.toPrint.current}
             />
           </div>
         </nav>
@@ -431,7 +431,7 @@ class DomesticLogs extends Component {
         {/* @table */}
         {/* //////////////////////// TABLE //////////////////////// */}
         <div className="mt-3 table-responsive">
-          <div className="pfes-print-container" ref={this.logsTable}>
+          <div className="pfes-print-container" ref={this.toPrint}>
             <div className="pfes-print-element">
               <div>
                 <img

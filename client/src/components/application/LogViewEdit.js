@@ -4,6 +4,7 @@ import classnames from "classnames";
 import { connect } from "react-redux";
 import Moment from "react-moment";
 import moment from "moment";
+import ReactToPrint from "react-to-print";
 
 import {
   editLog,
@@ -14,6 +15,7 @@ import {
 } from "../../actions/logsActions";
 
 import countries from "../../assets/countries.json";
+import logo from "../../img/pfes-logo.png";
 
 const provinces = require("philippines/provinces");
 const cities = require("philippines/cities");
@@ -69,6 +71,8 @@ export class LogViewEdit extends Component {
     this.submitEdit = this.submitEdit.bind(this);
     this.deleteLog = this.deleteLog.bind(this);
     this.closeEdit = this.closeEdit.bind(this);
+
+    this.toPrint = React.createRef();
   }
 
   // @componentswillreceiveprops
@@ -371,7 +375,7 @@ export class LogViewEdit extends Component {
       ) : (
         <button
           type="button"
-          className="btn btn-outline-primary mr-3 mb-3"
+          className="btn btn-outline-primary mr-2 mb-3 pfes-print-hide"
           onClick={this.enableEdit}
         >
           Edit Job Order
@@ -383,7 +387,7 @@ export class LogViewEdit extends Component {
     if (auth.user.userType === "admin") {
       deleteControl = (
         <button
-          className="btn btn-outline-danger mb-3"
+          className="btn btn-outline-danger mb-3 mr-2 pfes-print-hide"
           onClick={this.deleteLog}
           data-dismiss="modal"
         >
@@ -688,9 +692,7 @@ export class LogViewEdit extends Component {
                     maxLength="100"
                   />
 
-                  <small className="form-text text-muted">
-                    Address
-                  </small>
+                  <small className="form-text text-muted">Address</small>
 
                   {errors.originLocation && (
                     <div className="invalid-feedback">
@@ -770,9 +772,7 @@ export class LogViewEdit extends Component {
                     maxLength="100"
                   />
 
-                  <small className="form-text text-muted">
-                    Address
-                  </small>
+                  <small className="form-text text-muted">Address</small>
 
                   {errors.destinationLocation && (
                     <div className="invalid-feedback">
@@ -835,10 +835,24 @@ export class LogViewEdit extends Component {
       );
     }
 
+    // @return
     return (
-      <div>
+      <div ref={this.toPrint}>
         <div className="container row">
-          <h2 className="mr-3">Details</h2>
+          <div className="pfes-print-element">
+            <div>
+              <img
+                src={logo}
+                alt="Logo print"
+                style={{ width: "10rem", height: "auto", margin: "1rem" }}
+              />
+            </div>
+            <h2>
+              {log.type} Job Order #{log.domJo}
+            </h2>
+          </div>
+
+          <h2 className="mr-3 pfes-print-hide">Details</h2>
 
           {editControls}
 
@@ -846,7 +860,7 @@ export class LogViewEdit extends Component {
             isEditable ? (
               <button
                 type="button"
-                className="btn btn-secondary mb-3 mr-3"
+                className="btn btn-secondary mb-3 mr-2"
                 onClick={this.closeEdit}
               >
                 &times;
@@ -855,6 +869,22 @@ export class LogViewEdit extends Component {
           ) : null}
 
           {deleteControl}
+
+          {/* @print */}
+          {isEditable ? null : (
+            <ReactToPrint
+              trigger={() => (
+                <button
+                  title="Print Log"
+                  type="button"
+                  className="btn btn-outline-primary shadow-sm mb-3 pfes-print-hide"
+                >
+                  <i className="fas fa-print" />
+                </button>
+              )}
+              content={() => this.toPrint.current}
+            />
+          )}
         </div>
 
         <form noValidate>
