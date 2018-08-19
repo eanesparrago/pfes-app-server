@@ -28,8 +28,6 @@ const operations = require("./routes/api/operations");
 const app = express();
 
 // Body parser middleware
-app.use(cors());
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -47,6 +45,8 @@ app.use(passport.initialize());
 
 // Passport config
 require("./config/passport")(passport);
+
+app.use(cors({ credentials: true, origin: true }));
 
 //  Use routes
 app.use("/api/users", users);
