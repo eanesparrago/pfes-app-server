@@ -15,6 +15,8 @@ const passport = require("passport");
 const path = require("path");
 // path module part of nodejs
 
+const cors = require("cors");
+
 // ////////////////////////////////////
 // ROUTES IMPORTS
 const users = require("./routes/api/users");
@@ -26,6 +28,8 @@ const operations = require("./routes/api/operations");
 const app = express();
 
 // Body parser middleware
+app.use(cors());
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
