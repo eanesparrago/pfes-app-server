@@ -20,7 +20,6 @@ class Weather extends Component {
 
     switch (weather) {
       case "clear-day":
-      case "wind":
         icon = <ion-icon size="large" name="sunny" />;
         break;
 
@@ -38,6 +37,7 @@ class Weather extends Component {
         icon = <ion-icon size="large" name="cloud" />;
         break;
 
+      case "wind":
       case "partly-cloudy-day":
         icon = <ion-icon size="large" name="cloudy" />;
         break;

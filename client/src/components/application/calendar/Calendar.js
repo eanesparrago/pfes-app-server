@@ -41,6 +41,10 @@ class Calendar extends Component {
 
     let domesticEvents = [];
     let internationalEvents = [];
+    
+    if (showHolidays === true) {
+      events = events.concat(holidays);
+    }
 
     if (domestic !== null && international !== null) {
       domesticEvents = generateEvents(domestic);
@@ -52,10 +56,6 @@ class Calendar extends Component {
       if (showInternational === true) {
         events = events.concat(internationalEvents);
       }
-    }
-
-    if (showHolidays === true) {
-      events = events.concat(holidays);
     }
 
     // Format for the event text
@@ -92,7 +92,11 @@ class Calendar extends Component {
           <div className="container text-center mb-3">
             <h2>{this.props.label}</h2>
 
-            <div className="btn-group shadow-sm" role="group" aria-label="Basic example">
+            <div
+              className="btn-group shadow-sm"
+              role="group"
+              aria-label="Basic example"
+            >
               <button
                 type="button"
                 className="btn btn-outline-primary"
