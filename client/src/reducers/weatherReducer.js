@@ -1,7 +1,8 @@
 import { GET_WEATHER, USER_LOGOUT } from "../actions/types";
 
 const initialState = {
-  weather: {}
+  weather: {},
+  loading: false
 };
 
 export default function(state = initialState, action) {
@@ -9,7 +10,8 @@ export default function(state = initialState, action) {
     case GET_WEATHER:
       return {
         ...state,
-        weather: action.payload
+        weather: action.payload,
+        loading: false
       };
 
     case USER_LOGOUT:

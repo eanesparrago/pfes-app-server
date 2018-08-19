@@ -57,10 +57,14 @@ class ApplicationNav extends Component {
     return (
       <div className="container-fluid">
         <div className="card mb-3 shadow-sm pfes-header">
-          <div className="card-body">
-            <h2 className="">Hello {auth.user.firstName}!</h2>
+          <div className="card-body row">
+            <div className="col-sm-6">
+              <h2 className="">Hello {auth.user.firstName}!</h2>
+            </div>
 
-            <Weather />
+            <div className="col-sm-6">
+              <Weather />
+            </div>
           </div>
         </div>
 

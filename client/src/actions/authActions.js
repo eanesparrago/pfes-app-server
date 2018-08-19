@@ -77,7 +77,6 @@ const getWeather = () => dispatch => {
     )
       .then(res => res.json())
       .then(data => {
-        console.log(data);
         dispatch({
           type: GET_WEATHER,
           payload: data
@@ -96,7 +95,6 @@ export const setCurrentUser = decoded => {
 
 // Log user out
 export const logoutUser = () => dispatch => {
-  console.log("logoutuser");
   // Remove token from localStorage
   localStorage.removeItem("jwtToken");
   // Remove auth header for future requests
