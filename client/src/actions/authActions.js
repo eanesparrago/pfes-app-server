@@ -7,7 +7,8 @@ import {
   SET_CURRENT_USER,
   REGISTER_SUCCESS,
   USER_LOGOUT,
-  CLEAR_ERRORS
+  CLEAR_ERRORS,
+  GET_WEATHER
 } from "./types";
 
 // Register user
@@ -45,6 +46,8 @@ export const loginUser = userData => dispatch => {
       const decoded = jwt_decode(token);
       // Set current user
       dispatch(setCurrentUser(decoded));
+
+      dispatch(getWeather());
     })
     .catch(err => {
       dispatch({
@@ -52,6 +55,35 @@ export const loginUser = userData => dispatch => {
         payload: err.response.data
       });
     });
+};
+
+/*
+The weather is fetched from https://darksky.net/.
+It is limited to 1,000 API requests per day.
+Thus, the weathe is only fetched whenever the user logs in.
+*/
+const getWeather = () => dispatch => {
+  const geolocation = navigator.geolocation;
+
+  let coordinates;
+
+  geolocation.getCurrentPosition(position => {
+    coordinates = position.coords;
+
+    fetch(
+      `https://api.darksky.net/forecast/19218d2614796b023be50699767d8e21/${
+        coordinates.latitude
+      },${coordinates.longitude}`
+    )
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        dispatch({
+          type: GET_WEATHER,
+          payload: data
+        });
+      });
+  });
 };
 
 // Set logged in user

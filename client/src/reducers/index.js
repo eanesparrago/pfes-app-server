@@ -7,6 +7,7 @@ import registerReducer from "./registerReducer";
 import successReducer from "./successReducer";
 import logReducer from "./logReducer";
 import alertReducer from "./alertReducer";
+import weatherReducer from "./weatherReducer";
 
 export default combineReducers({
   auth: authReducer,
@@ -16,5 +17,7 @@ export default combineReducers({
 
   success: successReducer,
   log: logReducer,
-  alert: alertReducer
+  alert: alertReducer,
+
+  weather: weatherReducer
 });

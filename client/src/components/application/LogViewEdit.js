@@ -389,7 +389,6 @@ export class LogViewEdit extends Component {
         <button
           className="btn btn-outline-danger mb-3 mr-2 pfes-print-hide"
           onClick={this.deleteLog}
-          data-dismiss="modal"
         >
           Delete
         </button>

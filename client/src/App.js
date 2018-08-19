@@ -7,7 +7,9 @@ import {
 } from "react-router-dom";
 import "./App.css";
 import { Provider } from "react-redux";
-import store from "./store";
+import { PersistGate } from "redux-persist/integration/react";
+
+import { persistor, store } from "./store";
 
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
@@ -37,7 +39,8 @@ if (localStorage.jwtToken) {
   if (decoded.exp < currentTime) {
     // Logout user
     store.dispatch(logoutUser());
-    // Clear current profile
+
+    persistor.purge();
 
     //  Redirect to login
     window.location.href = "/";
@@ -53,52 +56,54 @@ class App extends Component {
 
     return (
       <Provider store={store}>
-        <Router>
-          <div className="App">
-            <Navbar />
+        <PersistGate loading={null} persistor={persistor}>
+          <Router>
+            <div className="App">
+              <Navbar />
 
-            <AlertBox />
+              <AlertBox />
 
-            <div className="fade-in-2 container-fluid mobile-margin">
-              <Switch>
-                {/* Login */}
-                <Route exact path="/" component={Login} />
-                {/* App navigation tabs */}
-                <Route path="/app" component={ApplicationNav} />
-                {/* 404 */}
-                <Route render={() => <h1>Not found</h1>} />
-              </Switch>
+              <div className="fade-in-2 container-fluid mobile-margin">
+                <Switch>
+                  {/* Login */}
+                  <Route exact path="/" component={Login} />
+                  {/* App navigation tabs */}
+                  <Route path="/app" component={ApplicationNav} />
+                  {/* 404 */}
+                  <Route render={() => <h1>Not found</h1>} />
+                </Switch>
 
-              <Route
-                exact
-                path="/app"
-                render={() =>
-                  isAuthenticated ? (
-                    <Redirect to="/app/logs" />
-                  ) : (
-                    <Redirect to="/" />
-                  )
-                }
-              />
+                <Route
+                  exact
+                  path="/app"
+                  render={() =>
+                    isAuthenticated ? (
+                      <Redirect to="/app/logs" />
+                    ) : (
+                      <Redirect to="/" />
+                    )
+                  }
+                />
+              </div>
+
+              <div className="fade-in container-fluid ">
+                {/* Log management */}
+                <Route exact path="/app/logs" component={Logs} />
+
+                {/* Calendar */}
+                <Route exact path="/app/calendar" component={Calendar} />
+
+                {/* Statistics */}
+                <Route exact path="/app/statistics" component={Statistics} />
+
+                {/* Admin - user management */}
+                <Route exact path="/app/users" component={Users} />
+              </div>
+
+              <Footer />
             </div>
-
-            <div className="fade-in container-fluid ">
-              {/* Log management */}
-              <Route exact path="/app/logs" component={Logs} />
-
-              {/* Calendar */}
-              <Route exact path="/app/calendar" component={Calendar} />
-
-              {/* Statistics */}
-              <Route exact path="/app/statistics" component={Statistics} />
-
-              {/* Admin - user management */}
-              <Route exact path="/app/users" component={Users} />
-            </div>
-
-            <Footer />
-          </div>
-        </Router>
+          </Router>
+        </PersistGate>
       </Provider>
     );
   }

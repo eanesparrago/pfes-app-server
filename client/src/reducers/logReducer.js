@@ -8,7 +8,8 @@ import {
   ADD_DOMESTIC_LOG,
   ADD_INTERNATIONAL_LOG,
   ADD_STATUS,
-  DELETE_STATUS
+  DELETE_STATUS,
+  USER_LOGOUT
 } from "../actions/types";
 
 const initialState = {
@@ -81,6 +82,9 @@ export default function(state = initialState, action) {
         log: action.payload
       };
 
+    case USER_LOGOUT:
+      return initialState;
+      
     default:
       return state;
   }

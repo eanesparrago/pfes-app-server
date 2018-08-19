@@ -24,3 +24,5 @@ export const DELETE_STATUS = "DELETE_STATUS";
 export const DELETE_LOG = "DELETE_LOG";
 
 export const CLEAR_ALERT = "CLEAR_ALERT";
+
+export const GET_WEATHER = "GET_WEATHER";
