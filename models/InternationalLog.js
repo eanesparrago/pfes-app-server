@@ -174,6 +174,13 @@ const InternationalLogSchema = new Schema({
       ]
     }
   },
+  isCompleted: {
+    type: Boolean,
+    default: false
+  },
+  dateCompleted: {
+    type: Date
+  },
   rating: {
     type: String,
     defaut: "n/a"

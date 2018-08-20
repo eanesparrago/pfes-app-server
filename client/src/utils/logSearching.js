@@ -4,7 +4,6 @@ export default (logs, category, value) => {
   var search = new JsSearch.Search("_id");
 
   search.addDocuments(logs);
-  console.log(search);
 
   if (category === "originLocation") {
     search.addIndex(["origin", "location"]);

@@ -8,6 +8,26 @@ import LogViewEdit from "./LogViewEdit";
 import Operations from "./Operations";
 
 class LogView extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isOpen: false
+    };
+
+    this.close = this.close.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.log) {
+      this.setState({ isOpen: true });
+    }
+  }
+
+  close() {
+    this.setState({ isOpen: false });
+  }
+
   render() {
     const { log } = this.props;
 
@@ -38,17 +58,21 @@ class LogView extends Component {
                 data-dismiss="modal"
                 aria-label="Close"
               >
-                <span aria-hidden="true">&times;</span>
+                <span aria-hidden="true" onClick={this.close}>
+                  &times;
+                </span>
               </button>
             </div>
             <div className="modal-body">
               {/* //////////// FORM //////////// */}
-              <LogViewEdit />
-
-              <div className="dropdown-divider" />
+              <LogViewEdit isOpen={this.state.isOpen} />
 
               {/* //////////// OPERATIONS //////////// */}
-              <Operations />
+              <React.Fragment>
+                <div className="dropdown-divider" />
+
+                <Operations />
+              </React.Fragment>
             </div>
 
             <div className="modal-footer">
@@ -80,6 +104,7 @@ class LogView extends Component {
                 type="button"
                 className="btn btn-secondary"
                 data-dismiss="modal"
+                onClick={this.close}
               >
                 Close
               </button>

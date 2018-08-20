@@ -262,10 +262,18 @@ class DomesticLogs extends Component {
                 </td>
 
                 <td>
-                  {log.status}{" "}
-                  <span title={operationsStatusRemarks}>
-                    {operationsStatus}
-                  </span>
+                  <span
+                    className={classnames("", {
+                      "text-success": log.isCompleted
+                    })}
+                  >
+                    {log.status}
+                  </span>{" "}
+                  {!log.isCompleted ? (
+                    <span title={operationsStatusRemarks}>
+                      {operationsStatus}
+                    </span>
+                  ) : null}
                 </td>
 
                 <td>
@@ -371,16 +379,6 @@ class DomesticLogs extends Component {
                     );
 
                   case "etd":
-                    return (
-                      <input
-                        type="date"
-                        className="custom-select mr-2"
-                        name="searchValue"
-                        value={this.state.searchValue}
-                        onChange={this.onChangeSearchValue}
-                      />
-                    );
-
                   case "eta":
                     return (
                       <input

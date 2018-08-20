@@ -190,7 +190,14 @@ const DomesticLogSchema = new Schema({
       ]
     }
   },
-  rating: {
+  isCompleted: {
+    type: Boolean,
+    default: false
+  },
+  dateCompleted: {
+    type: Date
+  },
+  remarks: {
     type: String,
     defaut: "n/a"
   },

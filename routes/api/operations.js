@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const mongoose = require("mongoose").set("debug", true);
 const passport = require("passport");
 
 // Log model

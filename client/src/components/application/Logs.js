@@ -54,6 +54,7 @@ class Logs extends Component {
             >
               All
             </a>
+
             <a
               className={classnames("nav-item nav-link text-nowrap", {
                 active: view === "domestic"
@@ -63,6 +64,7 @@ class Logs extends Component {
             >
               <i className="fas fa-building" /> Domestic
             </a>
+
             <a
               className={classnames("nav-item nav-link text-nowrap", {
                 active: view === "international"
@@ -85,12 +87,15 @@ class Logs extends Component {
             </div>
           );
           break;
+
         case "domestic":
           content = <div>{domesticContent}</div>;
           break;
+
         case "international":
           content = <div>{internationalContent}</div>;
           break;
+
         default:
           content = (
             <div>

@@ -98,7 +98,7 @@ export const editLog = log => dispatch => {
           type: LOG_CLICKED,
           payload: res.data
         });
-        
+
         dispatch(getDomesticLogs());
       })
       .catch(err =>
@@ -127,6 +127,26 @@ export const editLog = log => dispatch => {
         })
       );
   }
+};
+
+// ////////////////////////
+// Submit Complete Log
+export const submitCompleteLog = data => dispatch => {
+  axios.post("/api/logs/complete", data).then(res => {
+    if (data.type === "Domestic") {
+      dispatch({
+        type: LOG_CLICKED,
+        payload: res.data
+      });
+      dispatch(getDomesticLogs());
+    } else if (data.type === "International") {
+      dispatch({
+        type: LOG_CLICKED,
+        payload: res.data
+      });
+      dispatch(getInternationalLogs());
+    }
+  });
 };
 
 // ////////////////////////

@@ -638,7 +638,6 @@ class InternationalLogCreate extends Component {
                         onChange={this.onChange}
                       >
                         <option value="Ongoing">Ongoing</option>
-                        <option value="Complete">Complete</option>
                         <option value="Waiting">Waiting</option>
                         <option value="Void">Void</option>
                       </select>

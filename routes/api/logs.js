@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const mongoose = require("mongoose");
 const passport = require("passport");
 
 // Log model
@@ -77,7 +76,6 @@ router.post(
   "/domestic",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log(req.user);
     // Only admin and sales can create logs
     if (req.user.userType !== "admin" && req.user.userType !== "sales") {
       return res.status(400).json({ unauthorized: "Unauthorized" });
@@ -169,7 +167,6 @@ router.post(
   "/international",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log(req.user);
     // Only admin and sales can create logs
     if (req.user.userType !== "admin" && req.user.userType !== "sales") {
       return res.json({ unauthorized: "Unauthorized" });
@@ -264,7 +261,6 @@ router.post(
   "/domestic/edit",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log(req.user);
     // Only admin and sales can edit logs
     if (req.user.userType !== "admin" && req.user.userType !== "sales") {
       return res.status(401).json({ unauthorized: "Unauthorized" });
@@ -374,7 +370,6 @@ router.post(
   "/international/edit",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log(req.user);
     // Only admin and sales can edit logs
     if (req.user.userType !== "admin" && req.user.userType !== "sales") {
       return res.json({ unauthorized: "Unauthorized" });
@@ -479,14 +474,67 @@ router.post(
 );
 
 // ////////////////////////////////////
+// @route   POST api/logs/complete/
+// @desc    Submit complete log
+// @access  Private
+router.post(
+  "/complete",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    if (req.user.userType !== "admin" && req.user.userType !== "sales") {
+      return res.json({ unauthorized: "Unauthorized" });
+    }
+
+    if (req.user.userType === "sales") {
+      if (req.user.id !== String(req.body.user)) {
+        return res.status(401).json({ unauthorized: "Unauthorized" });
+      }
+    }
+
+    const update = {};
+
+    update.isCompleted = true;
+    update.dateCompleted = Date.now();
+    update.dateModified = Date.now();
+    update.remarks = req.body.remarks;
+    update.status = "Complete";
+
+    console.log(req.body);
+
+    if (req.body.type === "Domestic") {
+      DomesticLog.findOne({ domJo: req.body.domJo }).then(log => {
+        if (log) {
+          // Update
+          DomesticLog.findOneAndUpdate(
+            { domJo: req.body.domJo },
+            { $set: update },
+            { new: true }
+          ).then(log => res.json(log));
+        }
+      });
+    } else if (req.body.type === "International") {
+      InternationalLog.findOne({ domJo: req.body.domJo }).then(log => {
+        if (log) {
+          // Update
+          InternationalLog.findOneAndUpdate(
+            { domJo: req.body.domJo },
+            { $set: update },
+            { new: true }
+          ).then(log => res.json(log));
+        }
+      });
+    }
+  }
+);
+
+// ////////////////////////////////////
 // @route   POST api/logs/domestic/operations/
 // @desc    Edit domestic operations log
 // @access  Private
 router.post(
-  "/domestic/operations/",
+  "/domestic/operations",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log(req.user);
     // Only admin and operations can edit operations status
     if (req.user.userType !== "admin" && req.user.userType !== "operations") {
       return res.json({ unauthorized: "Unauthorized" });

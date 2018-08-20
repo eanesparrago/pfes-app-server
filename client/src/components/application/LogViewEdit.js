@@ -11,7 +11,8 @@ import {
   getDomesticLogs,
   getInternationalLogs,
   deleteLog,
-  clearErrors
+  clearErrors,
+  submitCompleteLog
 } from "../../actions/logsActions";
 
 import countries from "../../assets/countries.json";
@@ -51,7 +52,7 @@ export class LogViewEdit extends Component {
       eta: moment().format("YYYY-MM-DD"),
       status: "Ongoing",
       type: "",
-      rating: "",
+      remarks: "",
 
       contactName: "",
       contactNumber: "",
@@ -62,7 +63,9 @@ export class LogViewEdit extends Component {
       tagInsured: false,
 
       errors: {},
-      isEditable: false
+      isEditable: false,
+
+      isToggleComplete: false
     };
 
     this.onChange = this.onChange.bind(this);
@@ -71,6 +74,10 @@ export class LogViewEdit extends Component {
     this.submitEdit = this.submitEdit.bind(this);
     this.deleteLog = this.deleteLog.bind(this);
     this.closeEdit = this.closeEdit.bind(this);
+    this.closeComplete = this.closeComplete.bind(this);
+    this.toggleComplete = this.toggleComplete.bind(this);
+
+    this.submitCompleteLog = this.submitCompleteLog.bind(this);
 
     this.toPrint = React.createRef();
   }
@@ -79,6 +86,12 @@ export class LogViewEdit extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
+    }
+
+    if (nextProps.isOpen) {
+      if (nextProps.isOpen === true) {
+        this.setState({ isEditable: false, isToggleComplete: false });
+      }
     }
 
     if (nextProps.log) {
@@ -94,7 +107,7 @@ export class LogViewEdit extends Component {
         eta: moment(nextProps.log.eta).format("YYYY-MM-DD"),
         status: nextProps.log.status,
         type: nextProps.log.type,
-        rating: nextProps.log.rating,
+        remarks: nextProps.log.remarks,
 
         tagUrgent: nextProps.log.tags.urgent,
         tagImportant: nextProps.log.tags.important,
@@ -106,8 +119,6 @@ export class LogViewEdit extends Component {
 
         originLocation: nextProps.log.origin.location,
         destinationLocation: nextProps.log.destination.location
-
-        // isEditable: false
       });
 
       // Domestic
@@ -205,10 +216,30 @@ export class LogViewEdit extends Component {
 
   enableEdit() {
     this.setState({
-      isEditable: true
+      isEditable: true,
+      isToggleComplete: false
     });
+  }
 
-    this.props.clearErrors();
+  toggleComplete() {
+    this.setState({
+      isToggleComplete: true,
+      isEditable: false
+    });
+  }
+
+  // @submitCompleteLog
+  submitCompleteLog() {
+    const { log } = this.props;
+
+    const data = {
+      domJo: log.domJo,
+      remarks: this.state.remarks,
+      type: log.type,
+      user: log.user
+    };
+
+    this.props.submitCompleteLog(data);
   }
 
   closeEdit() {
@@ -226,7 +257,7 @@ export class LogViewEdit extends Component {
       eta: moment(log.eta).format("YYYY-MM-DD"),
       status: log.status,
       type: log.type,
-      rating: log.rating,
+      remarks: log.remarks,
 
       tagUrgent: log.tags.urgent,
       tagImportant: log.tags.important,
@@ -261,6 +292,11 @@ export class LogViewEdit extends Component {
         destinationCountry: log.destination.country
       });
     }
+    this.props.clearErrors();
+  }
+
+  closeComplete() {
+    this.setState({ isToggleComplete: false });
   }
 
   // @submitEdit
@@ -342,7 +378,7 @@ export class LogViewEdit extends Component {
 
   // @render
   render() {
-    const { errors, isEditable } = this.state;
+    const { errors, isEditable, isToggleComplete } = this.state;
     const { log, auth } = this.props;
 
     let editControls = null;
@@ -364,35 +400,86 @@ export class LogViewEdit extends Component {
       auth.user.userType === "admin" ||
       (auth.user.userType === "sales" && auth.user.id === log.user)
     ) {
-      editControls = isEditable ? (
-        <button
-          type="button"
-          className="btn btn-primary mr-2 mb-3"
-          onClick={this.submitEdit}
-        >
-          Confirm
-        </button>
-      ) : (
-        <button
-          type="button"
-          className="btn btn-outline-primary mr-2 mb-3 pfes-print-hide"
-          onClick={this.enableEdit}
-        >
-          Edit Job Order
-        </button>
-      );
+      if (!isToggleComplete && log.isCompleted === false) {
+        editControls = (
+          <button
+            type="button"
+            className="btn btn-outline-primary mr-2 mb-3 pfes-print-hide"
+            onClick={this.enableEdit}
+          >
+            Edit Job Order
+          </button>
+        );
+
+        if (isEditable && log.isCompleted === false) {
+          editControls = (
+            <button
+              type="button"
+              className="btn btn-primary mr-2 mb-3"
+              onClick={this.submitEdit}
+            >
+              Confirm Edit
+            </button>
+          );
+        }
+      }
     }
+
+    let completeControl = null;
+    if (
+      auth.user.userType === "admin" ||
+      (auth.user.userType === "sales" && auth.user.id === log.user)
+    )
+      if (!isEditable && log.isCompleted === false) {
+        completeControl = (
+          <button
+            title={
+              !log.operations.unloading.isFinished
+                ? "Operations must be finished before this log can be marked as complete"
+                : null
+            }
+            disabled={!log.operations.unloading.isFinished}
+            type="button"
+            className={classnames("btn mr-2 mb-3 pfes-print-hide", {
+              "btn-secondary": !log.operations.unloading.isFinished,
+              "btn-outline-success": log.operations.unloading.isFinished
+            })}
+            onClick={this.toggleComplete}
+          >
+            Mark as Complete
+          </button>
+        );
+
+        if (
+          isToggleComplete &&
+          log.isCompleted === false &&
+          log.operations.unloading.isFinished
+        ) {
+          completeControl = (
+            <button
+              type="button"
+              className="btn btn-success mr-2 mb-3 pfes-print-hide"
+              onClick={this.submitCompleteLog}
+            >
+              Confirm Complete
+            </button>
+          );
+        }
+      } else if (log.isCompleted === true) {
+      }
 
     let deleteControl = null;
     if (auth.user.userType === "admin") {
-      deleteControl = (
-        <button
-          className="btn btn-outline-danger mb-3 mr-2 pfes-print-hide"
-          onClick={this.deleteLog}
-        >
-          Delete
-        </button>
-      );
+      deleteControl =
+        isEditable || isToggleComplete ? null : (
+          <button
+            title="Delete Log"
+            className="btn btn-outline-danger mb-3 mr-2 pfes-print-hide"
+            onClick={this.deleteLog}
+          >
+            <i className="fas fa-trash-alt" />
+          </button>
+        );
     }
 
     // Define domestic origin and destination inputs
@@ -853,38 +940,118 @@ export class LogViewEdit extends Component {
 
           <h2 className="mr-3 pfes-print-hide">Details</h2>
 
-          {editControls}
+          <div className="d-block">
+            {log.isCompleted ? null : editControls}
 
-          {editControls !== null ? (
-            isEditable ? (
-              <button
-                type="button"
-                className="btn btn-secondary mb-3 mr-2"
-                onClick={this.closeEdit}
-              >
-                &times;
-              </button>
-            ) : null
-          ) : null}
-
-          {deleteControl}
-
-          {/* @print */}
-          {isEditable ? null : (
-            <ReactToPrint
-              trigger={() => (
+            {editControls !== null ? (
+              isEditable ? (
                 <button
-                  title="Print Log"
                   type="button"
-                  className="btn btn-outline-primary shadow-sm mb-3 pfes-print-hide"
+                  className="btn btn-secondary mb-3 mr-2"
+                  onClick={this.closeEdit}
                 >
-                  <i className="fas fa-print" />
+                  Cancel
                 </button>
-              )}
-              content={() => this.toPrint.current}
-            />
-          )}
+              ) : null
+            ) : null}
+
+            {completeControl}
+
+            {completeControl !== null && log.operations.unloading.isFinished ? (
+              isToggleComplete ? (
+                <button
+                  type="button"
+                  className="btn btn-secondary mb-3 mr-2"
+                  onClick={this.closeComplete}
+                >
+                  Cancel
+                </button>
+              ) : null
+            ) : null}
+          </div>
+
+          <div className="d-block">
+            {deleteControl}
+
+            {/* @print */}
+            {isEditable || isToggleComplete ? null : (
+              <ReactToPrint
+                trigger={() => (
+                  <button
+                    title="Print Log"
+                    type="button"
+                    className="btn btn-outline-primary shadow-sm mb-3 pfes-print-hide"
+                  >
+                    <i className="fas fa-print" />
+                  </button>
+                )}
+                content={() => this.toPrint.current}
+              />
+            )}
+          </div>
         </div>
+
+        {(() => {
+          if (
+            isToggleComplete &&
+            log.isCompleted === false &&
+            log.operations.unloading.isFinished
+          ) {
+            return (
+              <form noValidate>
+                <div className="row">
+                  <div className="col-12">
+                    <textarea
+                      type="text"
+                      className="form-control mb-3"
+                      name="remarks"
+                      placeholder="Job Order Completion Remarks (Optional)"
+                      value={this.remarks}
+                      onChange={this.onChange}
+                    />
+                  </div>
+                </div>
+              </form>
+            );
+          }
+        })()}
+
+        {(() => {
+          if (log.isCompleted === true) {
+            return (
+              <div className="row">
+                <div className="col-12">
+                  <div className="mb-3">
+                    <h2>
+                      <span className="badge badge-success">Complete</span>
+                    </h2>
+                  </div>
+
+                  <div className="mb-3">
+                    <h5
+                      title={moment(log.dateCompleted).format(
+                        "MMMM Do YYYY, h:mm:ssa"
+                      )}
+                    >
+                      Date Completed:{" "}
+                      <strong>
+                        {moment(log.dateCompleted).format("MMMM Do YYYY")}
+                      </strong>
+                    </h5>
+                  </div>
+
+                  <div className="mb-3">
+                    <h5>
+                      Completion Remarks: <strong>{log.remarks}</strong>
+                    </h5>
+                  </div>
+
+                  <div className="dropdown-divider mb-3" />
+                </div>
+              </div>
+            );
+          }
+        })()}
 
         <form noValidate>
           <div className="row">
@@ -1181,7 +1348,6 @@ export class LogViewEdit extends Component {
                   onChange={this.onChange}
                 >
                   <option value="Ongoing">Ongoing</option>
-                  <option value="Complete">Complete</option>
                   <option value="Waiting">Waiting</option>
                   <option value="Void">Void</option>
                 </select>
@@ -1256,31 +1422,6 @@ export class LogViewEdit extends Component {
                   ) : (
                     <em>No tags</em>
                   )}
-                </h5>
-              </div>
-            )}
-          </div>
-
-          <div className="row">
-            {isEditable ? (
-              <div className="form-group col-md-12">
-                <label className="mb-1" htmlFor="status">
-                  Customer Satisfaction
-                </label>
-
-                <textarea
-                  className={classnames("form-control", {})}
-                  placeholder=""
-                  name="rating"
-                  value={this.state.rating}
-                  onChange={this.onChange}
-                  maxLength="300"
-                />
-              </div>
-            ) : (
-              <div className="col-md-12 mb-2">
-                <h5>
-                  Customer Satisfaction: <em>{this.state.rating}</em>
                 </h5>
               </div>
             )}
@@ -1387,6 +1528,7 @@ LogViewEdit.propTypes = {
   getDomesticLogs: PropTypes.func.isRequired,
   editLog: PropTypes.func.isRequired,
   getInternationalLogs: PropTypes.func.isRequired,
+  submitCompleteLog: PropTypes.func.isRequired,
   deleteLog: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
@@ -1403,5 +1545,12 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { editLog, getDomesticLogs, getInternationalLogs, deleteLog, clearErrors }
+  {
+    editLog,
+    getDomesticLogs,
+    getInternationalLogs,
+    deleteLog,
+    clearErrors,
+    submitCompleteLog
+  }
 )(LogViewEdit);

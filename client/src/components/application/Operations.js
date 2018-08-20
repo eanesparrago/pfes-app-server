@@ -49,6 +49,7 @@ class Operations extends Component {
         <OperationsStage
           title="Preloading"
           stage="preloading"
+          isSucceedingFinished={log.operations.loading.isFinished}
           data={log.operations.preloading}
         />
 
@@ -56,6 +57,7 @@ class Operations extends Component {
           <OperationsStage
             title="Loading"
             stage="loading"
+            isSucceedingFinished={log.operations.unloading.isFinished}
             data={log.operations.loading}
           />
         ) : null}

@@ -57,7 +57,7 @@ class OperationsStage extends Component {
   render() {
     const { statusControl, markCompleteControl } = this.state;
 
-    const { data, title, stage, auth } = this.props;
+    const { log, data, title, stage, auth, isSucceedingFinished } = this.props;
     // data contains isFinished, remarks, dateFinshed, and statuses
 
     // Show controls only to either admin or operations and isFinished must be false
@@ -109,7 +109,8 @@ class OperationsStage extends Component {
             <div className="col-lg-2 list-controls">
               {(auth.user.userType === "admin" ||
                 status.user === auth.user.id) &&
-              showControls === true ? (
+              showControls === true &&
+              !log.isCompleted ? (
                 <span>
                   <button
                     className="btn btn-outline-danger btn-sm"
@@ -132,7 +133,7 @@ class OperationsStage extends Component {
             <div>{title}</div>
           </h4>
 
-          {showControls === true ? (
+          {!log.isCompleted && showControls === true ? (
             <div className="col-lg-10">
               <div>
                 <button
@@ -161,12 +162,14 @@ class OperationsStage extends Component {
         </div>
 
         {/* Add Status Form */}
-        {showControls === true && statusControl === true ? (
+        {!log.isCompleted && showControls === true && statusControl === true ? (
           <OperationsAddStatus data={data} stage={stage} />
         ) : null}
 
         {/* Mark as Complete Form */}
-        {showControls === true && markCompleteControl === true ? (
+        {!log.isCompleted &&
+        showControls === true &&
+        markCompleteControl === true ? (
           <OperationsCompleteForm stage={stage} />
         ) : null}
 
@@ -183,16 +186,19 @@ class OperationsStage extends Component {
                   </span>
                 </div>
 
-                {/* Undo complete button */}
                 <div className="col-lg-2">
                   <Moment format="MM/DD/YYYY, h:mm:ssa">
                     {data.dateFinished}
                   </Moment>
                 </div>
 
+                {/* Undo complete button */}
                 <div className="col-lg-2">
-                  {auth.user.userType === "admin" ||
-                  auth.user.userType === "operations" ? (
+                  {!log.isCompleted &&
+                  !isSucceedingFinished &&
+                  stage !== "unloading" &&
+                  (auth.user.userType === "admin" ||
+                    auth.user.userType === "operations") ? (
                     <button
                       className="btn btn-outline-danger btn-sm"
                       onClick={this.deleteComplete}

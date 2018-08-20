@@ -81,7 +81,7 @@ class Weather extends Component {
             </div>
 
             <span>
-              <small>{hourly.summary}</small>
+              <small>{currently.summary}</small>
             </span>
           </div>
 
