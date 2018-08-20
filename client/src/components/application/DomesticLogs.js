@@ -371,6 +371,16 @@ class DomesticLogs extends Component {
                     );
 
                   case "etd":
+                    return (
+                      <input
+                        type="date"
+                        className="custom-select mr-2"
+                        name="searchValue"
+                        value={this.state.searchValue}
+                        onChange={this.onChangeSearchValue}
+                      />
+                    );
+
                   case "eta":
                     return (
                       <input

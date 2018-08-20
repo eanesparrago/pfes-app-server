@@ -1,9 +1,10 @@
 const JsSearch = require("js-search");
 
-var search = new JsSearch.Search("_id");
-
 export default (logs, category, value) => {
+  var search = new JsSearch.Search("_id");
+
   search.addDocuments(logs);
+  console.log(search);
 
   if (category === "originLocation") {
     search.addIndex(["origin", "location"]);
