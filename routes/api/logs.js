@@ -12,6 +12,10 @@ const User = require("../../models/User");
 // Log validation
 const validateLogInput = require("../../validation/log");
 
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 // ////////////////////////////////////
 // @route   GET api/logs/test
 // @desc    Test logs route
@@ -92,10 +96,13 @@ router.post(
 
     newLog.user = req.body.user;
     if (req.body.shipperConsignee)
-      newLog.shipperConsignee = req.body.shipperConsignee.trim();
+      newLog.shipperConsignee = capitalizeFirstLetter(
+        req.body.shipperConsignee.trim()
+      );
     if (req.body.modeOfTransport)
       newLog.modeOfTransport = req.body.modeOfTransport;
-    if (req.body.commodity) newLog.commodity = req.body.commodity.trim();
+    if (req.body.commodity)
+      newLog.commodity = capitalizeFirstLetter(req.body.commodity.trim());
 
     if (req.body.blAwb) {
       newLog.blAwb = req.body.blAwb.trim();
@@ -103,20 +110,22 @@ router.post(
       newLog.blAwb = "";
     }
 
-    if (req.body.origin) newLog.origin = req.body.origin.trim();
-
     newLog.origin = {};
     newLog.destination = {};
 
     newLog.origin.provinceKey = req.body.originProvinceKey;
     newLog.origin.provinceName = req.body.originProvinceName;
     newLog.origin.city = req.body.originCity;
-    newLog.origin.location = req.body.originLocation.trim();
+    newLog.origin.location = capitalizeFirstLetter(
+      req.body.originLocation.trim()
+    );
 
     newLog.destination.provinceKey = req.body.destinationProvinceKey;
     newLog.destination.provinceName = req.body.destinationProvinceName;
     newLog.destination.city = req.body.destinationCity;
-    newLog.destination.location = req.body.destinationLocation.trim();
+    newLog.destination.location = capitalizeFirstLetter(
+      req.body.destinationLocation.trim()
+    );
 
     if (req.body.etd) newLog.etd = req.body.etd;
     if (req.body.eta) newLog.eta = req.body.eta;
@@ -132,7 +141,7 @@ router.post(
     newLog.contact = {};
 
     if (req.body.contactName) {
-      newLog.contact.name = req.body.contactName.trim();
+      newLog.contact.name = capitalizeFirstLetter(req.body.contactName.trim());
     } else {
       newLog.contact.name = "";
     }
@@ -183,10 +192,13 @@ router.post(
 
     newLog.user = req.body.user;
     if (req.body.shipperConsignee)
-      newLog.shipperConsignee = req.body.shipperConsignee.trim();
+      newLog.shipperConsignee = capitalizeFirstLetter(
+        req.body.shipperConsignee.trim()
+      );
     if (req.body.modeOfTransport)
       newLog.modeOfTransport = req.body.modeOfTransport;
-    if (req.body.commodity) newLog.commodity = req.body.commodity.trim();
+    if (req.body.commodity)
+      capitalizeFirstLetter((newLog.commodity = req.body.commodity.trim()));
 
     if (req.body.blAwb) {
       newLog.blAwb = req.body.blAwb.trim();
@@ -194,16 +206,18 @@ router.post(
       newLog.blAwb = "";
     }
 
-    if (req.body.origin) newLog.origin = req.body.origin.trim();
-
     newLog.origin = {};
     newLog.destination = {};
 
     newLog.origin.country = req.body.originCountry;
-    newLog.origin.location = req.body.originLocation.trim();
+    newLog.origin.location = capitalizeFirstLetter(
+      req.body.originLocation.trim()
+    );
 
     newLog.destination.country = req.body.destinationCountry;
-    newLog.destination.location = req.body.destinationLocation.trim();
+    newLog.destination.location = capitalizeFirstLetter(
+      req.body.destinationLocation.trim()
+    );
 
     if (req.body.etd) newLog.etd = req.body.etd;
     if (req.body.eta) newLog.eta = req.body.eta;
@@ -219,7 +233,7 @@ router.post(
     newLog.contact = {};
 
     if (req.body.contactName) {
-      newLog.contact.name = req.body.contactName.trim();
+      newLog.contact.name = capitalizeFirstLetter(req.body.contactName.trim());
     } else {
       newLog.contact.name = "";
     }
@@ -272,15 +286,16 @@ router.post(
       return res.status(400).json(errors);
     }
 
-    // If the field was empty it will check so that it will default to "" instead of an empty object
     const newLog = {};
 
     if (req.body.shipperConsignee) {
-      newLog.shipperConsignee = req.body.shipperConsignee.trim();
+      newLog.shipperConsignee = capitalizeFirstLetter(
+        req.body.shipperConsignee.trim()
+      );
     }
 
     if (req.body.commodity) {
-      newLog.commodity = req.body.commodity.trim();
+      newLog.commodity = capitalizeFirstLetter(req.body.commodity.trim());
     }
 
     if (req.body.modeOfTransport) {
@@ -299,16 +314,19 @@ router.post(
     newLog.origin.provinceKey = req.body.originProvinceKey;
     newLog.origin.provinceName = req.body.originProvinceName;
     newLog.origin.city = req.body.originCity;
-    newLog.origin.location = req.body.originLocation.trim();
+    newLog.origin.location = capitalizeFirstLetter(
+      req.body.originLocation.trim()
+    );
 
     newLog.destination.provinceKey = req.body.destinationProvinceKey;
     newLog.destination.provinceName = req.body.destinationProvinceName;
     newLog.destination.city = req.body.destinationCity;
-    newLog.destination.location = req.body.destinationLocation.trim();
+    newLog.destination.location = capitalizeFirstLetter(
+      req.body.destinationLocation.trim()
+    );
 
     if (req.body.etd) newLog.etd = req.body.etd;
     if (req.body.eta) newLog.eta = req.body.eta;
-    if (req.body.rating) newLog.rating = req.body.rating.trim();
 
     newLog.status = req.body.status;
 
@@ -321,7 +339,7 @@ router.post(
     newLog.contact = {};
 
     if (req.body.contactName) {
-      newLog.contact.name = req.body.contactName.trim();
+      newLog.contact.name = capitalizeFirstLetter(req.body.contactName.trim());
     } else {
       newLog.contact.name = "";
     }
@@ -381,17 +399,18 @@ router.post(
       return res.status(400).json(errors);
     }
 
-    // If the field was empty it will check so that it will default to n/a instead of an empty object
     const newLog = {};
 
     if (req.body.shipperConsignee) {
-      newLog.shipperConsignee = req.body.shipperConsignee.trim();
+      newLog.shipperConsignee = capitalizeFirstLetter(
+        req.body.shipperConsignee.trim()
+      );
     } else {
       newLog.shipperConsignee = "";
     }
 
     if (req.body.commodity) {
-      newLog.commodity = req.body.commodity.trim();
+      newLog.commodity = capitalizeFirstLetter(req.body.commodity.trim());
     } else {
       newLog.commodity = "";
     }
@@ -412,14 +431,17 @@ router.post(
     newLog.destination = {};
 
     newLog.origin.country = req.body.originCountry;
-    newLog.origin.location = req.body.originLocation.trim();
+    newLog.origin.location = capitalizeFirstLetter(
+      req.body.originLocation.trim()
+    );
 
     newLog.destination.country = req.body.destinationCountry;
-    newLog.destination.location = req.body.destinationLocation.trim();
+    newLog.destination.location = capitalizeFirstLetter(
+      req.body.destinationLocation.trim()
+    );
 
     if (req.body.etd) newLog.etd = req.body.etd;
     if (req.body.eta) newLog.eta = req.body.eta;
-    if (req.body.rating) newLog.rating = req.body.rating.trim();
 
     newLog.status = req.body.status;
 
@@ -432,7 +454,7 @@ router.post(
     newLog.contact = {};
 
     if (req.body.contactName) {
-      newLog.contact.name = req.body.contactName.trim();
+      newLog.contact.name = capitalizeFirstLetter(req.body.contactName.trim());
     } else {
       newLog.contact.name = "";
     }
@@ -496,7 +518,7 @@ router.post(
     update.isCompleted = true;
     update.dateCompleted = Date.now();
     update.dateModified = Date.now();
-    update.remarks = req.body.remarks;
+    update.remarks = capitalizeFirstLetter(req.body.remarks);
     update.status = "Complete";
 
     console.log(req.body);
