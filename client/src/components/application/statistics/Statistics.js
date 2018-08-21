@@ -106,25 +106,7 @@ class Statistics extends Component {
     );
     return (
       <div className="fade-in m-3">
-        {/* <div className="row mb-3">
-          <div className="col-lg-3">
-            <h2>Log Statistics</h2>
-          </div>
-
-          <div className="col-lg-3">
-            <input
-              type="month"
-              className="form-control form-control"
-              name="date"
-              value={date}
-              onChange={this.onChangeDate}
-              min="2018-01"
-              max={moment().format("YYYY-MM")}
-            />
-          </div>
-        </div> */}
-
-        <nav className="logs-nav navbar navbar-expand-lg navbar-light mb-3">
+        <nav className="logs-nav navbar navbar-expand-sm navbar-light mb-3">
           <span className="navbar-brand">Log Statistics</span>
           <button
             className="navbar-toggler"
@@ -142,7 +124,7 @@ class Statistics extends Component {
           <div className="collapse navbar-collapse" id="domesticNavbar">
             <input
               type="month"
-              style={{maxWidth: "30rem"}}
+              style={{ maxWidth: "30rem" }}
               className="form-control form-control"
               name="date"
               value={date}
@@ -156,8 +138,8 @@ class Statistics extends Component {
         <div className="row">
           <div className="col-lg-6">
             <MediaQuery minWidth={601}>
-              <div className="card shadow-sm border-primary mb-3">
-                <div className="card-body text-center text-primary">
+              <div className="card shadow-sm mb-3">
+                <div className="card-body text-center">
                   <h3>Completed Job Orders in Year {renderYear}</h3>
 
                   <Line data={completedData} />
@@ -208,7 +190,7 @@ class Statistics extends Component {
             <MediaQuery minWidth={601}>
               <div className="card shadow-sm mb-3">
                 <div className="card-body text-center">
-                  <h3>Shippers in {renderDate}</h3>
+                  <h3>Top Shippers in {renderDate}</h3>
 
                   <div className="row">
                     <div className="col-md-6 mb-3 mb-md-0">
@@ -260,7 +242,7 @@ class Statistics extends Component {
             <MediaQuery minWidth={601}>
               <div className="card shadow-sm mb-3">
                 <div className="card-body text-center">
-                  <h3>Job Orders by Associates in {renderDate}</h3>
+                  <h3>Associates in {renderDate}</h3>
 
                   <div className="row">
                     <div className="col-md-6 mb-3 mb-md-0">
@@ -286,7 +268,7 @@ class Statistics extends Component {
             <MediaQuery maxWidth={600}>
               <div className="mb-4">
                 <div className="text-center">
-                  <h3>Job Orders by Associates in {renderDate}</h3>
+                  <h3>Associates in {renderDate}</h3>
 
                   <div className="row">
                     <div className="col-md-6 mb-3 mb-md-0">

@@ -41,7 +41,7 @@ class Calendar extends Component {
 
     let domesticEvents = [];
     let internationalEvents = [];
-    
+
     if (showHolidays === true) {
       events = events.concat(holidays);
     }
@@ -89,37 +89,53 @@ class Calendar extends Component {
 
       render() {
         return (
-          <div className="container text-center mb-3">
-            <h2>{this.props.label}</h2>
+          <nav className="logs-nav navbar navbar-expand-sm navbar-light mb-3">
+            <span className="navbar-brand">{this.props.label}</span>
 
-            <div
-              className="btn-group shadow-sm"
-              role="group"
-              aria-label="Basic example"
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#domesticNavbar"
+              aria-controls="domesticNavbar"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
             >
-              <button
-                type="button"
-                className="btn btn-outline-primary"
-                onClick={() => this.navigate("PREV")}
+              <span className="navbar-toggler-icon" />
+            </button>
+
+            {/* @navbar */}
+            <div className="collapse navbar-collapse" id="domesticNavbar">
+              {" "}
+              <div
+                className="btn-group shadow-sm"
+                role="group"
+                aria-label="Basic example"
               >
-                Back
-              </button>
-              <button
-                type="button"
-                className="btn btn-outline-primary"
-                onClick={() => this.navigate("TODAY")}
-              >
-                Today
-              </button>
-              <button
-                type="button"
-                className="btn btn-outline-primary"
-                onClick={() => this.navigate("NEXT")}
-              >
-                Next
-              </button>
+                <button
+                  type="button"
+                  className="btn btn-outline-primary"
+                  onClick={() => this.navigate("PREV")}
+                >
+                  Back
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-outline-primary"
+                  onClick={() => this.navigate("TODAY")}
+                >
+                  Today
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-outline-primary"
+                  onClick={() => this.navigate("NEXT")}
+                >
+                  Next
+                </button>
+              </div>
             </div>
-          </div>
+          </nav>
         );
       }
     }
@@ -138,7 +154,8 @@ class Calendar extends Component {
     } else {
       content = (
         <div style={{ height: "100rem" }} className="m-3 mb-2 pb-5">
-          <div className="text-center mb-2">
+          {/* Visibility controls. Hidden for now because they ugly */}
+          {/* <div className="text-center mb-2">
             <div className="form-check form-check-inline">
               <input
                 className="form-check-input"
@@ -180,7 +197,7 @@ class Calendar extends Component {
                 Show Holidays
               </label>
             </div>
-          </div>
+          </div> */}
 
           <BigCalendar
             events={events}

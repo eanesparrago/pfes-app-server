@@ -146,7 +146,7 @@ h3 {
 }
 
 .pfes-header-text {
-  width: 20rem;
+  max-width: 50rem;
 }
 
 @media (max-width: 992px) {

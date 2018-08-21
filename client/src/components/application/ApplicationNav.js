@@ -56,6 +56,45 @@ class ApplicationNav extends Component {
   render() {
     const { auth } = this.props;
 
+    let badge = null;
+    switch (auth.user.userType) {
+      case "admin":
+        badge = (
+          <span className="badge badge-primary">
+            <i class="fas fa-toolbox" /> Admin
+          </span>
+        );
+        break;
+
+      case "sales":
+        badge = (
+          <span className="badge badge-primary">
+            <i class="fas fa-comments" /> Sales
+          </span>
+        );
+        break;
+
+      case "operations":
+        badge = (
+          <span className="badge badge-primary">
+            <i class="fas fa-truck-loading" /> Operations
+          </span>
+        );
+        break;
+
+      case "viewer":
+        badge = (
+          <span className="badge badge-primary">
+            <i class="fas fa-book-open" /> Viewer
+          </span>
+        );
+        break;
+
+      default:
+        badge = <span className="badge badge-primary">Unknown</span>;
+        break;
+    }
+
     return (
       <div className="container-fluid">
         <div className="card mb-3 shadow-sm pfes-header">
@@ -72,7 +111,9 @@ class ApplicationNav extends Component {
 
                 <div className="pfes-header-text">
                   <div className="pfes-header-name">
-                    <h2 className="">Hello {auth.user.firstName}!</h2>
+                    <h2 className="">
+                      Hello {auth.user.firstName}! {badge}
+                    </h2>
                   </div>
 
                   <div className="pfes-header-date">

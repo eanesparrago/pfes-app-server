@@ -28,7 +28,7 @@ class Navbar extends Component {
       case "admin":
         userType = "Administrator";
         break;
-        
+
       case "sales":
         userType = "Sales";
         break;
@@ -37,8 +37,12 @@ class Navbar extends Component {
         userType = "Operations";
         break;
 
+      case "viewer":
+        userType = "Viewer";
+        break;
+
       default:
-        userType = "";
+        userType = "Unknown";
     }
 
     const authLinks = (
