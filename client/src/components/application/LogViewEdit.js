@@ -5,6 +5,9 @@ import { connect } from "react-redux";
 import Moment from "react-moment";
 import moment from "moment";
 import ReactToPrint from "react-to-print";
+import AlertBox from "./AlertBox";
+
+import { clearAlert } from "../../actions/alertActions";
 
 import {
   editLog,
@@ -88,8 +91,8 @@ export class LogViewEdit extends Component {
       this.setState({ errors: nextProps.errors });
     }
 
-    if (nextProps.isOpen) {
-      if (nextProps.isOpen === true) {
+    if (nextProps.alert) {
+      if (nextProps.alert.success === true) {
         this.setState({ isEditable: false, isToggleComplete: false });
       }
     }
@@ -302,6 +305,8 @@ export class LogViewEdit extends Component {
   // @submitEdit
   submitEdit() {
     const { log } = this.props;
+
+    this.props.clearAlert();
 
     if (log.type === "Domestic") {
       const editLog = {
@@ -924,6 +929,7 @@ export class LogViewEdit extends Component {
     // @return
     return (
       <div ref={this.toPrint}>
+        <AlertBox />
         <div className="container row">
           <div className="pfes-print-element">
             <div>
@@ -1531,6 +1537,7 @@ LogViewEdit.propTypes = {
   submitCompleteLog: PropTypes.func.isRequired,
   deleteLog: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
+  clearAlert: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   log: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
@@ -1540,7 +1547,8 @@ const mapStateToProps = state => ({
   auth: state.auth,
   log: state.log.log,
   errors: state.errors,
-  success: state.success
+  success: state.success,
+  alert: state.alert
 });
 
 export default connect(
@@ -1551,6 +1559,7 @@ export default connect(
     getInternationalLogs,
     deleteLog,
     clearErrors,
-    submitCompleteLog
+    submitCompleteLog,
+    clearAlert
   }
 )(LogViewEdit);

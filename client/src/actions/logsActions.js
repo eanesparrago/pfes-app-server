@@ -9,7 +9,8 @@ import {
   ADD_DOMESTIC_LOG,
   ADD_INTERNATIONAL_LOG,
   ADD_STATUS,
-  DELETE_STATUS
+  DELETE_STATUS,
+  SHOW_ALERT
 } from "./types";
 
 // /////////////////////////
@@ -41,12 +42,19 @@ export const createDomesticLog = logData => dispatch => {
 
   axios
     .post("/api/logs/domestic", logData)
-    .then(res =>
+    .then(res => {
       dispatch({
         type: ADD_DOMESTIC_LOG,
         payload: res.data
-      })
-    )
+      });
+
+      dispatch({
+        type: SHOW_ALERT,
+        payload: `Domestic Job Order #${
+          res.data.domJo
+        } was successfully created`
+      });
+    })
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
@@ -62,12 +70,19 @@ export const createInternationalLog = logData => dispatch => {
 
   axios
     .post("/api/logs/international", logData)
-    .then(res =>
+    .then(res => {
       dispatch({
         type: ADD_INTERNATIONAL_LOG,
         payload: res.data
-      })
-    )
+      });
+
+      dispatch({
+        type: SHOW_ALERT,
+        payload: `International Job Order #${
+          res.data.domJo
+        } was successfully created`
+      });
+    })
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
@@ -99,6 +114,13 @@ export const editLog = log => dispatch => {
           payload: res.data
         });
 
+        dispatch({
+          type: SHOW_ALERT,
+          payload: `Domestic Job Order #${
+            res.data.domJo
+          } was successfully edited`
+        });
+
         dispatch(getDomesticLogs());
       })
       .catch(err =>
@@ -116,6 +138,13 @@ export const editLog = log => dispatch => {
         dispatch({
           type: LOG_CLICKED,
           payload: res.data
+        });
+
+        dispatch({
+          type: SHOW_ALERT,
+          payload: `International Job Order #${
+            res.data.domJo
+          } was successfully edited`
         });
 
         dispatch(getInternationalLogs());
@@ -139,11 +168,25 @@ export const submitCompleteLog = data => dispatch => {
         payload: res.data
       });
 
+      dispatch({
+        type: SHOW_ALERT,
+        payload: `Domestic Job Order #${
+          res.data.domJo
+        } was successfully marked as complete`
+      });
+
       dispatch(getDomesticLogs());
     } else if (data.type === "International") {
       dispatch({
         type: LOG_CLICKED,
         payload: res.data
+      });
+
+      dispatch({
+        type: SHOW_ALERT,
+        payload: `Domestic Job Order #${
+          res.data.domJo
+        } was successfully marked as complete`
       });
 
       dispatch(getInternationalLogs());

@@ -26,3 +26,5 @@ export const DELETE_LOG = "DELETE_LOG";
 export const CLEAR_ALERT = "CLEAR_ALERT";
 
 export const GET_WEATHER = "GET_WEATHER";
+
+export const SHOW_ALERT = "SHOW_ALERT";

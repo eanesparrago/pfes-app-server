@@ -7,6 +7,8 @@ import moment from "moment";
 import LogViewEdit from "./LogViewEdit";
 import Operations from "./Operations";
 
+import { clearAlert } from "../../actions/alertActions";
+
 class LogView extends Component {
   constructor(props) {
     super(props);
@@ -26,6 +28,7 @@ class LogView extends Component {
 
   close() {
     this.setState({ isOpen: false });
+    this.props.clearAlert();
   }
 
   render() {
@@ -117,6 +120,7 @@ class LogView extends Component {
 }
 
 LogView.propTypes = {
+  clearAlert: PropTypes.func.isRequired,
   log: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired
 };
@@ -128,5 +132,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  null
+  { clearAlert }
 )(LogView);

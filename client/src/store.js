@@ -11,7 +11,8 @@ const middleware = [thunk];
 const persistConfig = {
   key: "root",
   storage: storage,
-  stateReconciler: autoMergeLevel2
+  stateReconciler: autoMergeLevel2,
+  blacklist: ["alert, errors"]
 };
 
 const initialState = {};

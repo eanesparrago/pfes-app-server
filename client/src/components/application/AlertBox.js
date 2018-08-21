@@ -15,11 +15,6 @@ class AlertBox extends Component {
     };
   }
 
-  // componentDidMount() {
-  //   const { show, success, message } = this.props.alert;
-  //   this.setState({ show: show, success: success, message: message });
-  // }
-
   componentWillReceiveProps(nextProps) {
     if (nextProps.alert) {
       const { show, success, message } = nextProps.alert;
@@ -34,25 +29,23 @@ class AlertBox extends Component {
 
     if (show === true) {
       alert = (
-        <div className="container">
-          <div
-            class={classnames("alert alert-dismissible fade show", {
-              "alert-success": success === true,
-              "alert-danger": success === false
-            })}
-            role="alert"
+        <div
+          class={classnames("alert alert-dismissible fade show", {
+            "alert-success": success === true,
+            "alert-danger": success === false
+          })}
+          role="alert"
+        >
+          {message}
+          <button
+            type="button"
+            class="close"
+            data-dismiss="alert"
+            aria-label="Close"
+            onClick={this.props.clearAlert}
           >
-            {message}
-            <button
-              type="button"
-              class="close"
-              data-dismiss="alert"
-              aria-label="Close"
-              onClick={this.props.clearAlert}
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
       );
     }

@@ -7,6 +7,9 @@ import classnames from "classnames";
 import { connect } from "react-redux";
 import { createInternationalLog, clearErrors } from "../../actions/logsActions";
 import { clearSuccess } from "../../actions/successActions";
+import { clearAlert } from "../../actions/alertActions";
+
+import AlertBox from "./AlertBox";
 
 import isEmpty from "../../validation/is-empty";
 
@@ -227,6 +230,7 @@ class InternationalLogCreate extends Component {
     });
 
     this.props.clearErrors();
+    this.props.clearAlert();
   }
 
   render() {
@@ -279,6 +283,8 @@ class InternationalLogCreate extends Component {
                 </button>
               </div>
               <div className="modal-body">
+                <AlertBox />
+
                 {/* FORM */}
                 <form noValidate>
                   <div className="row">
@@ -793,7 +799,7 @@ class InternationalLogCreate extends Component {
                       data-dismiss="modal"
                       onClick={this.onClose}
                     >
-                      Cancel
+                      Close
                     </button>
                     <button
                       type="button"
@@ -816,7 +822,8 @@ class InternationalLogCreate extends Component {
 InternationalLogCreate.propTypes = {
   createInternationalLog: PropTypes.func.isRequired,
   clearSuccess: PropTypes.func.isRequired,
-  clearErrors: PropTypes.func.isRequired
+  clearErrors: PropTypes.func.isRequired,
+  clearAlert: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -830,6 +837,7 @@ export default connect(
   {
     createInternationalLog,
     clearSuccess,
-    clearErrors
+    clearErrors,
+    clearAlert
   }
 )(withRouter(InternationalLogCreate));

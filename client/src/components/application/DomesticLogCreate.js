@@ -7,6 +7,9 @@ import classnames from "classnames";
 import { connect } from "react-redux";
 import { createDomesticLog, clearErrors } from "../../actions/logsActions";
 import { clearSuccess } from "../../actions/successActions";
+import { clearAlert } from "../../actions/alertActions";
+
+import AlertBox from "./AlertBox";
 
 import isEmpty from "../../validation/is-empty";
 
@@ -275,6 +278,7 @@ class DomesticLogCreate extends Component {
     });
 
     this.props.clearErrors();
+    this.props.clearAlert();
   }
 
   render() {
@@ -328,6 +332,9 @@ class DomesticLogCreate extends Component {
               </div>
 
               <div className="modal-body">
+                {/* @alert */}
+                <AlertBox />
+
                 {/* FORM */}
                 <form noValidate>
                   <div className="row">
@@ -949,7 +956,7 @@ class DomesticLogCreate extends Component {
                       data-dismiss="modal"
                       onClick={this.onClose}
                     >
-                      Cancel
+                      Close
                     </button>
                     <button
                       type="button"
@@ -972,7 +979,8 @@ class DomesticLogCreate extends Component {
 DomesticLogCreate.propTypes = {
   createDomesticLog: PropTypes.func.isRequired,
   clearSuccess: PropTypes.func.isRequired,
-  clearErrors: PropTypes.func.isRequired
+  clearErrors: PropTypes.func.isRequired,
+  clearAlert: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -986,6 +994,7 @@ export default connect(
   {
     createDomesticLog,
     clearSuccess,
-    clearErrors
+    clearErrors,
+    clearAlert
   }
 )(withRouter(DomesticLogCreate));

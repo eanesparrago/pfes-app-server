@@ -90,7 +90,9 @@ class Calendar extends Component {
       render() {
         return (
           <nav className="logs-nav navbar navbar-expand-sm navbar-light mb-3">
-            <span className="navbar-brand">{this.props.label}</span>
+            <div style={{width: "12rem"}}>
+              <span className="navbar-brand">{this.props.label}</span>
+            </div>
 
             <button
               className="navbar-toggler"

@@ -19,7 +19,6 @@ import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import Login from "./components/auth/Login";
 import Users from "./components/admin/users/Users";
-import AlertBox from "./components/application/AlertBox";
 import ApplicationNav from "./components/application/ApplicationNav";
 import Logs from "./components/application/Logs";
 import Calendar from "./components/application/calendar/Calendar";
@@ -60,8 +59,6 @@ class App extends Component {
           <Router>
             <div className="App">
               <Navbar />
-
-              <AlertBox />
 
               <div className="fade-in-2 container-fluid mobile-margin">
                 <Switch>
