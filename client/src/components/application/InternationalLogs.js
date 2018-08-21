@@ -292,7 +292,7 @@ class InternationalLogs extends Component {
       <div className="">
         {/* //////////////////////// NAVBAR //////////////////////// */}
         <nav className="logs-nav navbar navbar-expand-lg navbar-light">
-          <a className="navbar-brand">International</a>
+          <span className="navbar-brand">International Job Orders</span>
 
           <button
             className="navbar-toggler"

@@ -36,7 +36,7 @@ class LogView extends Component {
 
     return (
       <div
-        className="modal fade"
+        className="modal fade-in-2"
         id="LogView"
         tabIndex="-1"
         role="dialog"

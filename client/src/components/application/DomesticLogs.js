@@ -295,7 +295,7 @@ class DomesticLogs extends Component {
       <div className="">
         {/* //////////////////////// NAVBAR //////////////////////// */}
         <nav className="logs-nav navbar navbar-expand-lg navbar-light ">
-          <a className="navbar-brand">Domestic</a>
+          <span className="navbar-brand">Domestic Job Orders</span>
           <button
             className="navbar-toggler"
             type="button"

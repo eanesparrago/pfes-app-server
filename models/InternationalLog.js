@@ -223,7 +223,7 @@ const InternationalLogSchema = new Schema({
     ref: "users"
   },
   active: {
-    type: String,
+    type: Boolean,
     default: true,
     required: true
   },

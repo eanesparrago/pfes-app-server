@@ -28,7 +28,7 @@ router.get(
   (req, res) => {
     const errors = {};
 
-    DomesticLog.find({ active: { $eq: true } })
+    DomesticLog.find()
       .sort({ _id: -1 })
       .then(logs => {
         if (!logs) {

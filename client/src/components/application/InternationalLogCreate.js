@@ -252,7 +252,7 @@ class InternationalLogCreate extends Component {
           <i className="far fa-edit" /> New Job Order
         </button>
         <div
-          className="modal fade"
+          className="modal fade-in-2"
           id="internationalLogCreate"
           tabIndex="-1"
           role="dialog"
@@ -448,7 +448,7 @@ class InternationalLogCreate extends Component {
                   <div className="row mt-3">
                     <div className="form-group col-lg-8">
                       <label className="mb-1" htmlFor="originLocation">
-                        Address
+                        Origin Address
                       </label>
 
                       <input

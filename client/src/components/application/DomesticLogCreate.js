@@ -300,7 +300,7 @@ class DomesticLogCreate extends Component {
           <i className="far fa-edit" /> New Job Order
         </button>
         <div
-          className="modal fade "
+          className="modal fade-in-2"
           id="domesticLogCreate"
           tabIndex="-1"
           role="dialog"

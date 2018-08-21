@@ -25,6 +25,9 @@ export default (logs, type) => {
         "Urgent",
         "Important",
         "Insured",
+        "Is Completed?",
+        "Date Completed",
+        "Completion Remarks",
         "Date Added",
         "Date Last Modified",
         "Type"
@@ -56,6 +59,9 @@ export default (logs, type) => {
         log.tags.urgent === true ? "YES" : "NO",
         log.tags.important === true ? "YES" : "NO",
         log.tags.insured === true ? "YES" : "NO",
+        log.isCompleted === true ? "YES" : "NO",
+        log.dateCompleted,
+        log.remarks,
         log.date,
         log.dateModified,
         log.type
