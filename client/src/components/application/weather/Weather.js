@@ -55,7 +55,7 @@ class Weather extends Component {
 
   render() {
     const { weather } = this.props;
-    const { currently, hourly, daily } = weather;
+    const { currently, daily } = weather;
 
     let content = null;
 

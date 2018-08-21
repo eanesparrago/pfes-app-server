@@ -61,7 +61,7 @@ class ApplicationNav extends Component {
       case "admin":
         badge = (
           <span className="badge badge-primary">
-            <i class="fas fa-toolbox" /> Admin
+            <i className="fas fa-toolbox" /> Admin
           </span>
         );
         break;
@@ -69,7 +69,7 @@ class ApplicationNav extends Component {
       case "sales":
         badge = (
           <span className="badge badge-primary">
-            <i class="fas fa-comments" /> Sales
+            <i className="fas fa-comments" /> Sales
           </span>
         );
         break;
@@ -77,7 +77,7 @@ class ApplicationNav extends Component {
       case "operations":
         badge = (
           <span className="badge badge-primary">
-            <i class="fas fa-truck-loading" /> Operations
+            <i className="fas fa-truck-loading" /> Operations
           </span>
         );
         break;
