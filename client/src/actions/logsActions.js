@@ -138,12 +138,14 @@ export const submitCompleteLog = data => dispatch => {
         type: LOG_CLICKED,
         payload: res.data
       });
+
       dispatch(getDomesticLogs());
     } else if (data.type === "International") {
       dispatch({
         type: LOG_CLICKED,
         payload: res.data
       });
+
       dispatch(getInternationalLogs());
     }
   });
@@ -152,7 +154,7 @@ export const submitCompleteLog = data => dispatch => {
 // ////////////////////////
 // Delete log (admin)
 export const deleteLog = log => dispatch => {
-  if (window.confirm("Are you sure?")) {
+  if (window.confirm("Are you sure? This log will be permanently deleted.")) {
     if (log.type === "Domestic") {
       axios
         .delete(`/api/logs/domestic/${log._id}`)

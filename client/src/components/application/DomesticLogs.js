@@ -359,6 +359,24 @@ class DomesticLogs extends Component {
             <div className="input-group mr-3">
               {(() => {
                 switch (searchCategory) {
+                  case "modeOfTransport":
+                    return (
+                      <select
+                        className="custom-select"
+                        name="searchValue"
+                        id="searchValue"
+                        value={this.state.searchValue}
+                        onChange={this.onChangeSearchValue}
+                      >
+                        <option value="" defaultValue>
+                          All Mode of Transport
+                        </option>
+                        <option value="Truck">Truck</option>
+                        <option value="Sea">Sea</option>
+                        <option value="Air">Air</option>
+                      </select>
+                    );
+
                   case "status":
                     return (
                       <select
@@ -369,7 +387,7 @@ class DomesticLogs extends Component {
                         onChange={this.onChangeSearchValue}
                       >
                         <option value="" defaultValue>
-                          Any Status
+                          All Statuses
                         </option>
                         <option value="Ongoing">Ongoing</option>
                         <option value="Complete">Complete</option>

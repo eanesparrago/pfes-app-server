@@ -260,10 +260,18 @@ class InternationalLogs extends Component {
                 </td>
 
                 <td>
-                  {log.status}{" "}
-                  <span title={operationsStatusRemarks}>
-                    {operationsStatus}
-                  </span>
+                  <span
+                    className={classnames("", {
+                      "text-success": log.isCompleted
+                    })}
+                  >
+                    {log.status}
+                  </span>{" "}
+                  {!log.isCompleted ? (
+                    <span title={operationsStatusRemarks}>
+                      {operationsStatus}
+                    </span>
+                  ) : null}
                 </td>
 
                 <td>
@@ -343,6 +351,23 @@ class InternationalLogs extends Component {
             <div className="input-group mr-3">
               {(() => {
                 switch (searchCategory) {
+                  case "modeOfTransport":
+                    return (
+                      <select
+                        className="custom-select"
+                        name="searchValue"
+                        id="searchValue"
+                        value={this.state.searchValue}
+                        onChange={this.onChangeSearchValue}
+                      >
+                        <option value="" defaultValue>
+                          All Mode of Transport
+                        </option>
+                        <option value="Sea">Sea</option>
+                        <option value="Air">Air</option>
+                      </select>
+                    );
+
                   case "status":
                     return (
                       <select
@@ -353,7 +378,7 @@ class InternationalLogs extends Component {
                         onChange={this.onChangeSearchValue}
                       >
                         <option value="" defaultValue>
-                          Any Status
+                          All Statuses
                         </option>
                         <option value="Ongoing">Ongoing</option>
                         <option value="Complete">Complete</option>
