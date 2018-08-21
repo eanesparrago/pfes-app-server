@@ -351,6 +351,18 @@ class InternationalLogs extends Component {
             <div className="input-group mr-3">
               {(() => {
                 switch (searchCategory) {
+                  case "domJo":
+                    return (
+                      <input
+                        type="number"
+                        className="form-control"
+                        placeholder="Enter Log #"
+                        name="searchValue"
+                        value={this.state.searchValue}
+                        onChange={this.onChangeSearchValue}
+                      />
+                    );
+                    
                   case "modeOfTransport":
                     return (
                       <select
