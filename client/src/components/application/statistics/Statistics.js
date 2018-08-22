@@ -190,7 +190,7 @@ class Statistics extends Component {
             <MediaQuery minWidth={601}>
               <div className="card shadow-sm mb-3">
                 <div className="card-body text-center">
-                  <h3>Top Shippers in {renderDate}</h3>
+                  <h3>Shippers in {renderDate}</h3>
 
                   <div className="row">
                     <div className="col-md-6 mb-3 mb-md-0">
