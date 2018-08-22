@@ -185,7 +185,7 @@ const InternationalLogSchema = new Schema({
   dateCompleted: {
     type: Date
   },
-  rating: {
+  remarks: {
     type: String,
     defaut: "n/a"
   },

@@ -518,7 +518,10 @@ router.post(
     update.isCompleted = true;
     update.dateCompleted = Date.now();
     update.dateModified = Date.now();
-    update.remarks = capitalizeFirstLetter(req.body.remarks);
+    update.remarks
+      ? (update.remarks = capitalizeFirstLetter(req.body.remarks))
+      : (update.remarks = "n/a");
+
     update.status = "Complete";
 
     console.log(req.body);
