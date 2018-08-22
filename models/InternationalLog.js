@@ -41,10 +41,14 @@ const InternationalLogSchema = new Schema({
     }
   },
   etd: {
-    type: Date
+    type: Date,
+    default: Date.now,
+    required: true
   },
   eta: {
-    type: Date
+    type: Date,
+    default: Date.now,
+    required: true
   },
   operations: {
     preloading: {
