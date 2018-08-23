@@ -23,6 +23,7 @@ import ApplicationNav from "./components/application/ApplicationNav";
 import Logs from "./components/application/Logs";
 import Calendar from "./components/application/calendar/Calendar";
 import Statistics from "./components/application/statistics/Statistics";
+import Activity from "./components/application/activity/Activity";
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -92,6 +93,9 @@ class App extends Component {
 
                 {/* Statistics */}
                 <Route exact path="/app/statistics" component={Statistics} />
+
+                {/* Activity */}
+                <Route exact path="/app/activity" component={Activity} />
 
                 {/* Admin - user management */}
                 <Route exact path="/app/users" component={Users} />

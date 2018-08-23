@@ -22,6 +22,7 @@ const cors = require("cors");
 const users = require("./routes/api/users");
 const logs = require("./routes/api/logs");
 const operations = require("./routes/api/operations");
+const activities = require("./routes/api/activities");
 
 // ////////////////////////////////////
 
@@ -52,6 +53,7 @@ app.use(cors({ credentials: true, origin: true }));
 app.use("/api/users", users);
 app.use("/api/logs", logs);
 app.use("/api/operations", operations);
+app.use("/api/activities", activities);
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === "production") {

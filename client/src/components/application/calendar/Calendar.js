@@ -155,7 +155,7 @@ class Calendar extends Component {
       content = <Spinner />;
     } else {
       content = (
-        <div style={{ height: "100rem" }} className="m-3 mb-2 pb-5">
+        <div style={{ height: "100rem" }} className="mx-3 mb-2 pb-5">
           {/* Visibility controls. Hidden for now because they ugly */}
           {/* <div className="text-center mb-2">
             <div className="form-check form-check-inline">

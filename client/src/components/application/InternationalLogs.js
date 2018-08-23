@@ -289,7 +289,7 @@ class InternationalLogs extends Component {
     }
 
     return (
-      <div className="">
+      <div className="mx-3 mobile-margin">
         {/* //////////////////////// NAVBAR //////////////////////// */}
         <nav className="logs-nav navbar navbar-expand-lg navbar-light">
           <span className="navbar-brand">International Job Orders</span>

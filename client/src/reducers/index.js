@@ -8,6 +8,7 @@ import successReducer from "./successReducer";
 import logReducer from "./logReducer";
 import alertReducer from "./alertReducer";
 import weatherReducer from "./weatherReducer";
+import activityReducer from "./activityReducer";
 
 export default combineReducers({
   auth: authReducer,
@@ -19,5 +20,7 @@ export default combineReducers({
   log: logReducer,
   alert: alertReducer,
 
-  weather: weatherReducer
+  weather: weatherReducer,
+
+  activity: activityReducer
 });

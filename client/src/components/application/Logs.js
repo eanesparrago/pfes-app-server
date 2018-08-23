@@ -83,6 +83,9 @@ class Logs extends Component {
           content = (
             <div>
               {domesticContent}
+
+              <div className="dropdown-divider mx-3" />
+
               {internationalContent}
             </div>
           );
@@ -107,7 +110,7 @@ class Logs extends Component {
     }
 
     return (
-      <div className="fade-in m-3 mobile-margin">
+      <div className="fade-in mt-3 mobile-margin">
         {contentNav}
 
         {content}

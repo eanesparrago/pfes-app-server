@@ -4,6 +4,8 @@ import classnames from "classnames";
 import { connect } from "react-redux";
 import moment from "moment";
 
+import generateBadge from "../../utils/generateBadge";
+
 import logo from "../../img/pfes-logo.png";
 
 import Weather from "./weather/Weather";
@@ -12,6 +14,8 @@ import {
   getDomesticLogs,
   getInternationalLogs
 } from "../../actions/logsActions";
+
+import { getAllActivities } from "../../actions/activityActions";
 
 class ApplicationNav extends Component {
   constructor() {
@@ -26,6 +30,8 @@ class ApplicationNav extends Component {
   componentDidMount() {
     this.props.getDomesticLogs();
     this.props.getInternationalLogs();
+
+    this.props.getAllActivities();
   }
 
   componentWillMount() {
@@ -56,44 +62,7 @@ class ApplicationNav extends Component {
   render() {
     const { auth } = this.props;
 
-    let badge = null;
-    switch (auth.user.userType) {
-      case "admin":
-        badge = (
-          <span className="badge badge-primary">
-            <i className="fas fa-toolbox" /> Admin
-          </span>
-        );
-        break;
-
-      case "sales":
-        badge = (
-          <span className="badge badge-primary">
-            <i className="fas fa-comments" /> Sales
-          </span>
-        );
-        break;
-
-      case "operations":
-        badge = (
-          <span className="badge badge-primary">
-            <i className="fas fa-truck-loading" /> Operations
-          </span>
-        );
-        break;
-
-      case "viewer":
-        badge = (
-          <span className="badge badge-primary">
-            <i class="fas fa-book-open" /> Viewer
-          </span>
-        );
-        break;
-
-      default:
-        badge = <span className="badge badge-primary">Unknown</span>;
-        break;
-    }
+    const badge = generateBadge(auth.user.userType);
 
     return (
       <div className="container-fluid">
@@ -166,6 +135,18 @@ class ApplicationNav extends Component {
             </Link>
           </li>
 
+          <li className="nav-item">
+            <Link
+              className={classnames("nav-link", {
+                active: this.state.active === "/app/activity"
+              })}
+              to="/app/activity"
+              onClick={() => this.handleClick("/app/activity")}
+            >
+              <i className="fas fa-list" /> Activity
+            </Link>
+          </li>
+
           {auth.user.userType === "admin" ? (
             <li className="nav-item">
               <Link
@@ -191,5 +172,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getDomesticLogs, getInternationalLogs }
+  { getDomesticLogs, getInternationalLogs, getAllActivities }
 )(ApplicationNav);

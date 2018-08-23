@@ -120,8 +120,7 @@ h3 {
   background-image: linear-gradient(
     to top,
     rgba(0, 123, 255, 0.12),
-    rgba(0, 123, 255, 0.02) 30%,
-    #ffffff 90%
+    #ffffff 50%
   );
   border-top: 1px solid #ebebeb;
 }

@@ -292,7 +292,7 @@ class DomesticLogs extends Component {
 
     // @return
     return (
-      <div className="">
+      <div className="mx-3 mobile-margin">
         {/* //////////////////////// NAVBAR //////////////////////// */}
         <nav className="logs-nav navbar navbar-expand-lg navbar-light ">
           <span className="navbar-brand">Domestic Job Orders</span>
