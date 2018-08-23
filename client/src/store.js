@@ -12,7 +12,7 @@ const persistConfig = {
   key: "root",
   storage: storage,
   stateReconciler: autoMergeLevel2,
-  blacklist: ["alert, errors"]
+  whitelist: ["weather"]
 };
 
 const initialState = {};

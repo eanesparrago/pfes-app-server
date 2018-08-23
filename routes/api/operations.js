@@ -5,6 +5,8 @@ const passport = require("passport");
 // Log model
 const DomesticLog = require("../../models/DomesticLog");
 const InternationalLog = require("../../models/InternationalLog");
+const DomesticActivity = require("../../models/DomesticActivity");
+const InternationalActivity = require("../../models/InternationalActivity");
 
 // Validators
 const validateStatusInput = require("../../validation/status");
@@ -18,17 +20,31 @@ router.post(
   "/domestic/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log(req.user);
     // Only admin and operations can access
     if (req.user.userType !== "admin" && req.user.userType !== "operations") {
       return res.status(400).json({ unauthorized: "Unauthorized" });
     }
 
-    console.log("SUBMIT COMPELTE:", req.body);
-
     DomesticLog.findById(req.params.id).then(log => {
       const data = {};
       if (req.body.remarks) data.remarks = req.body.remarks;
+
+      // Activity
+      const newActivity = new DomesticActivity({
+        userID: req.user.id,
+        userName: req.user.userName,
+        userFullName: `${req.user.firstName} ${req.user.lastName}`,
+        userType: req.user.userType,
+        logID: log._id,
+        logNumber: log.domJo,
+        logShipper: log.shipperConsignee,
+        actionType: "Update Job Order Operations Status Stage",
+        actionSummary: `${req.user.firstName} ${req.user.lastName} (${
+          req.user.userName
+        }) updated the operations status of ${log.type} Job Order #${
+          log.domJo
+        } (${log.shipperConsignee}).`
+      });
 
       switch (req.body.stage) {
         case "preloading":
@@ -54,6 +70,9 @@ router.post(
           }`;
 
           log.save().then(log => res.json(log));
+
+          // Save activity
+          newActivity.save();
           break;
 
         case "loading":
@@ -82,6 +101,9 @@ router.post(
           }`;
 
           log.save().then(log => res.json(log));
+
+          // Save activity
+          newActivity.save();
           break;
 
         case "unloading":
@@ -114,6 +136,9 @@ router.post(
           }`;
 
           log.save().then(log => res.json(log));
+
+          // Save activity
+          newActivity.save();
           break;
 
         default:
@@ -132,17 +157,31 @@ router.post(
   "/international/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log(req.user);
     // Only admin and operations can access
     if (req.user.userType !== "admin" && req.user.userType !== "operations") {
       return res.status(400).json({ unauthorized: "Unauthorized" });
     }
 
-    console.log("SUBMIT COMPLETE:", req.body);
-
     InternationalLog.findById(req.params.id).then(log => {
       const data = {};
       if (req.body.remarks) data.remarks = req.body.remarks;
+
+      // Activity
+      const newActivity = new InternationalActivity({
+        userID: req.user.id,
+        userName: req.user.userName,
+        userFullName: `${req.user.firstName} ${req.user.lastName}`,
+        userType: req.user.userType,
+        logID: log._id,
+        logNumber: log.domJo,
+        logShipper: log.shipperConsignee,
+        actionType: "Update Job Order Operations Status Stage",
+        actionSummary: `${req.user.firstName} ${req.user.lastName} (${
+          req.user.userName
+        }) updated the operations status of ${log.type} Job Order #${
+          log.domJo
+        } (${log.shipperConsignee}).`
+      });
 
       switch (req.body.stage) {
         case "preloading":
@@ -168,6 +207,9 @@ router.post(
           }`;
 
           log.save().then(log => res.json(log));
+
+          // Save activity
+          newActivity.save();
           break;
 
         case "loading":
@@ -196,6 +238,9 @@ router.post(
           }`;
 
           log.save().then(log => res.json(log));
+
+          // Save activity
+          newActivity.save();
           break;
 
         case "unloading":
@@ -228,6 +273,9 @@ router.post(
           }`;
 
           log.save().then(log => res.json(log));
+
+          // Save activity
+          newActivity.save();
           break;
 
         default:
@@ -268,6 +316,23 @@ router.post(
     DomesticLog.findById(req.params.id).then(log => {
       log.dateModified = Date.now();
 
+      // Activity
+      const newActivity = new DomesticActivity({
+        userID: req.user.id,
+        userName: req.user.userName,
+        userFullName: `${req.user.firstName} ${req.user.lastName}`,
+        userType: req.user.userType,
+        logID: log._id,
+        logNumber: log.domJo,
+        logShipper: log.shipperConsignee,
+        actionType: "Add Job Order Operations Status",
+        actionSummary: `${req.user.firstName} ${req.user.lastName} (${
+          req.user.userName
+        }) added an operations status (${req.body.type}) in ${
+          log.type
+        } Job Order #${log.domJo} (${log.shipperConsignee}).`
+      });
+
       // Add to statuses array
       switch (req.body.stage) {
         case "preloading":
@@ -277,6 +342,7 @@ router.post(
             });
           }
           log.operations.preloading.statuses.unshift(newStatus);
+
           break;
 
         case "loading":
@@ -286,6 +352,7 @@ router.post(
             });
           }
           log.operations.loading.statuses.unshift(newStatus);
+
           break;
 
         case "unloading":
@@ -295,6 +362,7 @@ router.post(
             });
           }
           log.operations.unloading.statuses.unshift(newStatus);
+
           break;
 
         default:
@@ -303,6 +371,9 @@ router.post(
 
       // Save
       log.save().then(post => res.json(post));
+
+      // Save activity
+      newActivity.save();
     });
   }
 );
@@ -330,13 +401,30 @@ router.post(
     const newStatus = {};
 
     if (req.body.comment) newStatus.comment = req.body.comment;
+    if (req.body.type) newStatus.type = req.body.type;
+
     newStatus.name = `${req.user.firstName} ${req.user.lastName}`;
     newStatus.user = req.user.id;
 
     InternationalLog.findById(req.params.id).then(log => {
-      console.log("FOUND");
-
       log.dateModified = Date.now();
+
+      // Activity
+      const newActivity = new InternationalActivity({
+        userID: req.user.id,
+        userName: req.user.userName,
+        userFullName: `${req.user.firstName} ${req.user.lastName}`,
+        userType: req.user.userType,
+        logID: log._id,
+        logNumber: log.domJo,
+        logShipper: log.shipperConsignee,
+        actionType: "Add Job Order Operations Status",
+        actionSummary: `${req.user.firstName} ${req.user.lastName} (${
+          req.user.userName
+        }) added an operations status (${req.body.type}) in ${
+          log.type
+        } Job Order #${log.domJo} (${log.shipperConsignee}).`
+      });
 
       // Add to statuses array
       switch (req.body.stage) {
@@ -347,6 +435,7 @@ router.post(
             });
           }
           log.operations.preloading.statuses.unshift(newStatus);
+
           break;
 
         case "loading":
@@ -356,6 +445,7 @@ router.post(
             });
           }
           log.operations.loading.statuses.unshift(newStatus);
+
           break;
 
         case "unloading":
@@ -365,6 +455,7 @@ router.post(
             });
           }
           log.operations.unloading.statuses.unshift(newStatus);
+
           break;
 
         default:
@@ -373,6 +464,9 @@ router.post(
 
       // Save
       log.save().then(post => res.json(post));
+
+      // Save activity
+      newActivity.save();
     });
   }
 );
@@ -386,16 +480,30 @@ router.post(
   "/domestic/:id/status/:status_id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log(req.user);
     // Only admin and operations can access
     if (req.user.userType !== "admin" && req.user.userType !== "operations") {
       return res.status(400).json({ unauthorized: "Unauthorized" });
     }
 
-    console.log("stage:", req.body.stage);
-
     DomesticLog.findById(req.params.id)
       .then(log => {
+        // Activity
+        const newActivity = new DomesticActivity({
+          userID: req.user.id,
+          userName: req.user.userName,
+          userFullName: `${req.user.firstName} ${req.user.lastName}`,
+          userType: req.user.userType,
+          logID: log._id,
+          logNumber: log.domJo,
+          logShipper: log.shipperConsignee,
+          actionType: "Delete Job Order Operations Status",
+          actionSummary: `${req.user.firstName} ${req.user.lastName} (${
+            req.user.userName
+          }) deleted a ${log.type} Job Order #${log.domJo} (${
+            log.shipperConsignee
+          }) operations status.`
+        });
+
         switch (req.body.stage) {
           case "preloading":
             if (log.operations.preloading.isFinished === true) {
@@ -510,6 +618,9 @@ router.post(
           default:
             return res.status(400).json({ unknownStage: "Unknown stage" });
         }
+
+        // Save activity
+        newActivity.save();
       })
       .catch(err => res.status(404).json({ logNotFound: "No log found" }));
   }
@@ -524,16 +635,29 @@ router.post(
   "/international/:id/status/:status_id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log(req.user);
     // Only admin and operations can access
     if (req.user.userType !== "admin" && req.user.userType !== "operations") {
       return res.status(400).json({ unauthorized: "Unauthorized" });
     }
 
-    console.log("stage:", req.body.stage);
-
     InternationalLog.findById(req.params.id)
       .then(log => {
+        const newActivity = new InternationalActivity({
+          userID: req.user.id,
+          userName: req.user.userName,
+          userFullName: `${req.user.firstName} ${req.user.lastName}`,
+          userType: req.user.userType,
+          logID: log._id,
+          logNumber: log.domJo,
+          logShipper: log.shipperConsignee,
+          actionType: "Delete Job Order Operations Status",
+          actionSummary: `${req.user.firstName} ${req.user.lastName} (${
+            req.user.userName
+          }) deleted a ${log.type} Job Order #${log.domJo} (${
+            log.shipperConsignee
+          }) operations status.`
+        });
+
         switch (req.body.stage) {
           case "preloading":
             if (log.operations.preloading.isFinished === true) {
@@ -648,6 +772,9 @@ router.post(
           default:
             return res.status(400).json({ unknownStage: "Unknown stage" });
         }
+
+        // Save activity
+        newActivity.save();
       })
       .catch(err => res.status(404).json({ logNotFound: "No log found" }));
   }

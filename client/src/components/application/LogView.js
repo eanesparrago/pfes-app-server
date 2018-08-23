@@ -52,7 +52,7 @@ class LogView extends Component {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title mt-1" id="exampleModalLabel">
-                {log.type.slice(0, 1)}-{log.domJo}
+                {log.type} Job Order #{log.domJo}
               </h5>
 
               <button

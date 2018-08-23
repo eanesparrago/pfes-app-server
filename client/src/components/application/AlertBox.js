@@ -30,7 +30,7 @@ class AlertBox extends Component {
     if (show === true) {
       alert = (
         <div
-          class={classnames("alert alert-dismissible fade show", {
+          className={classnames("alert alert-dismissible fade show", {
             "alert-success": success === true,
             "alert-danger": success === false
           })}
@@ -39,7 +39,7 @@ class AlertBox extends Component {
           {message}
           <button
             type="button"
-            class="close"
+            className="close"
             data-dismiss="alert"
             aria-label="Close"
             onClick={this.props.clearAlert}

@@ -4,6 +4,25 @@ const isEmpty = require("./is-empty");
 module.exports = function validateLogInput(data) {
   let errors = {};
 
+  // Contact
+  if (Validator.isEmpty(data.contactName)) {
+    errors.contactName = "Contact name is required";
+  }
+
+  if (Validator.isEmpty(data.contactNumber)) {
+    errors.contactNumber = "Contact number is required";
+  }
+
+  // if (Validator.isEmpty(data.contactEmail)) {
+  //   errors.contactEmail = "Contact email is required";
+  // }
+
+  if (!Validator.isEmpty(data.contactEmail)) {
+    if (!Validator.isEmail(data.contactEmail)) {
+      errors.contactEmail = "Email is invalid";
+    }
+  }
+
   // Shipper
   if (!Validator.isLength(data.shipperConsignee, { max: 100 })) {
     errors.shipperConsignee =
@@ -42,11 +61,11 @@ module.exports = function validateLogInput(data) {
     }
 
     if (Validator.isEmpty(data.originLocation)) {
-      errors.originLocation = "Origin location is required";
+      errors.originLocation = "Origin address is required";
     }
 
     if (!Validator.isLength(data.originLocation, { max: 100 })) {
-      errors.originLocation = "Origin location must not exceed 100 characters";
+      errors.originLocation = "Origin address must not exceed 100 characters";
     }
 
     if (Validator.isEmpty(data.destinationProvinceKey)) {
@@ -58,12 +77,12 @@ module.exports = function validateLogInput(data) {
     }
 
     if (Validator.isEmpty(data.destinationLocation)) {
-      errors.destinationLocation = "Destination location is required";
+      errors.destinationLocation = "Destination address is required";
     }
 
     if (!Validator.isLength(data.destinationLocation, { max: 100 })) {
       errors.destinationLocation =
-        "Destination location must not exceed 100 characters";
+        "Destination address must not exceed 100 characters";
     }
   } else if (data.type === "International") {
     if (Validator.isEmpty(data.originCountry)) {
@@ -90,13 +109,6 @@ module.exports = function validateLogInput(data) {
     if (!Validator.isLength(data.destinationLocation, { max: 100 })) {
       errors.destinationLocation =
         "Destination location must not exceed 100 characters";
-    }
-  }
-
-  // Contact Email
-  if (!Validator.isEmpty(data.contactEmail)) {
-    if (!Validator.isEmail(data.contactEmail)) {
-      errors.contactEmail = "Email is invalid";
     }
   }
 

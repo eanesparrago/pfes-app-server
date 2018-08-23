@@ -6,16 +6,20 @@ autoIncrement.initialize(mongoose.connection);
 
 const InternationalLogSchema = new Schema({
   shipperConsignee: {
-    type: String
+    type: String,
+    required: true
   },
   associate: {
-    type: String
+    type: String,
+    required: true
   },
   modeOfTransport: {
-    type: String
+    type: String,
+    required: true
   },
   commodity: {
-    type: String
+    type: String,
+    required: true
   },
   blAwb: {
     type: String

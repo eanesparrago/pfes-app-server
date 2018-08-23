@@ -6,16 +6,20 @@ autoIncrement.initialize(mongoose.connection);
 
 const DomesticLogSchema = new Schema({
   shipperConsignee: {
-    type: String
+    type: String,
+    required: true
   },
   associate: {
-    type: String
+    type: String,
+    required: true
   },
   modeOfTransport: {
-    type: String
+    type: String,
+    required: true
   },
   commodity: {
-    type: String
+    type: String,
+    required: true
   },
   blAwb: {
     type: String
@@ -208,11 +212,13 @@ const DomesticLogSchema = new Schema({
   contact: {
     name: {
       type: String,
-      default: ""
+      default: "",
+      required: true
     },
     number: {
       type: String,
-      default: ""
+      default: "",
+      required: true
     },
     email: {
       type: String,
@@ -249,6 +255,7 @@ const DomesticLogSchema = new Schema({
   },
   date: {
     type: Date,
+    required: true,
     default: Date.now
   },
   dateModified: {

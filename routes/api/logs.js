@@ -6,6 +6,9 @@ const passport = require("passport");
 const DomesticLog = require("../../models/DomesticLog");
 const InternationalLog = require("../../models/InternationalLog");
 
+const DomesticActivity = require("../../models/DomesticActivity");
+const InternationalActivity = require("../../models/InternationalActivity");
+
 // User model
 const User = require("../../models/User");
 
@@ -164,7 +167,28 @@ router.post(
 
     const newDomesticLog = new DomesticLog(newLog);
 
-    newDomesticLog.save().then(log => res.json(log));
+    newDomesticLog.save().then(log => {
+      res.json(log);
+
+      // Activity
+      const newActivity = new DomesticActivity({
+        userID: req.user.id,
+        userName: req.user.userName,
+        userFullName: `${req.user.firstName} ${req.user.lastName}`,
+        userType: req.user.userType,
+        logID: log._id,
+        logNumber: log.domJo,
+        logShipper: log.shipperConsignee,
+        actionType: "Create Job Order",
+        actionSummary: `${req.user.firstName} ${req.user.lastName} (${
+          req.user.userName
+        }) created ${log.type} Job Order #${log.domJo} (${
+          log.shipperConsignee
+        }).`
+      });
+
+      newActivity.save();
+    });
   }
 );
 
@@ -262,7 +286,28 @@ router.post(
         return res.status(400).json(errors);
       }
 
-      newInternationalLog.save().then(log => res.json(log));
+      newInternationalLog.save().then(log => {
+        res.json(log);
+
+        // Activity
+        const newActivity = new InternationalActivity({
+          userID: req.user.id,
+          userName: req.user.userName,
+          userFullName: `${req.user.firstName} ${req.user.lastName}`,
+          userType: req.user.userType,
+          logID: log._id,
+          logNumber: log.domJo,
+          logShipper: log.shipperConsignee,
+          actionType: "Create Job Order",
+          actionSummary: `${req.user.firstName} ${req.user.lastName} (${
+            req.user.userName
+          }) created ${log.type} Job Order #${log.domJo} (${
+            log.shipperConsignee
+          }).`
+        });
+
+        newActivity.save();
+      });
     });
   }
 );
@@ -374,7 +419,28 @@ router.post(
           { domJo: req.body.domJo },
           { $set: newDomesticLog },
           { new: true }
-        ).then(log => res.json(log));
+        ).then(log => {
+          res.json(log);
+
+          // Activity
+          const newActivity = new DomesticActivity({
+            userID: req.user.id,
+            userName: req.user.userName,
+            userFullName: `${req.user.firstName} ${req.user.lastName}`,
+            userType: req.user.userType,
+            logID: log._id,
+            logNumber: log.domJo,
+            logShipper: log.shipperConsignee,
+            actionType: "Edit Job Order",
+            actionSummary: `${req.user.firstName} ${req.user.lastName} (${
+              req.user.userName
+            }) edited ${log.type} Job Order #${log.domJo} (${
+              log.shipperConsignee
+            }).`
+          });
+
+          newActivity.save();
+        });
       }
     });
   }
@@ -489,7 +555,28 @@ router.post(
           { domJo: req.body.domJo },
           { $set: newInternationalLog },
           { new: true }
-        ).then(log => res.json(log));
+        ).then(log => {
+          res.json(log);
+
+          // Activity
+          const newActivity = new InternationalActivity({
+            userID: req.user.id,
+            userName: req.user.userName,
+            userFullName: `${req.user.firstName} ${req.user.lastName}`,
+            userType: req.user.userType,
+            logID: log._id,
+            logNumber: log.domJo,
+            logShipper: log.shipperConsignee,
+            actionType: "Edit Job Order",
+            actionSummary: `${req.user.firstName} ${req.user.lastName} (${
+              req.user.userName
+            }) edited ${log.type} Job Order #${log.domJo} (${
+              log.shipperConsignee
+            }).`
+          });
+
+          newActivity.save();
+        });
       }
     });
   }
@@ -524,8 +611,6 @@ router.post(
 
     update.status = "Complete";
 
-    console.log(req.body);
-
     if (req.body.type === "Domestic") {
       DomesticLog.findOne({ domJo: req.body.domJo }).then(log => {
         if (log) {
@@ -534,7 +619,28 @@ router.post(
             { domJo: req.body.domJo },
             { $set: update },
             { new: true }
-          ).then(log => res.json(log));
+          ).then(log => {
+            res.json(log);
+
+            // Activity
+            const newActivity = new DomesticActivity({
+              userID: req.user.id,
+              userName: req.user.userName,
+              userFullName: `${req.user.firstName} ${req.user.lastName}`,
+              userType: req.user.userType,
+              logID: log._id,
+              logNumber: log.domJo,
+              logShipper: log.shipperConsignee,
+              actionType: "Complete Job Order",
+              actionSummary: `${req.user.firstName} ${req.user.lastName} (${
+                req.user.userName
+              }) marked ${log.type} Job Order #${log.domJo} (${
+                log.shipperConsignee
+              }) as complete.`
+            });
+
+            newActivity.save();
+          });
         }
       });
     } else if (req.body.type === "International") {
@@ -545,7 +651,28 @@ router.post(
             { domJo: req.body.domJo },
             { $set: update },
             { new: true }
-          ).then(log => res.json(log));
+          ).then(log => {
+            res.json(log);
+
+            // Activity
+            const newActivity = new InternationalActivity({
+              userID: req.user.id,
+              userName: req.user.userName,
+              userFullName: `${req.user.firstName} ${req.user.lastName}`,
+              userType: req.user.userType,
+              logID: log._id,
+              logNumber: log.domJo,
+              logShipper: log.shipperConsignee,
+              actionType: "Complete Job Order",
+              actionSummary: `${req.user.firstName} ${req.user.lastName} (${
+                req.user.userName
+              }) marked ${log.type} Job Order #${log.domJo} (${
+                log.shipperConsignee
+              }) as complete.`
+            });
+
+            newActivity.save();
+          });
         }
       });
     }
@@ -556,7 +683,7 @@ router.post(
 // @route   POST api/logs/domestic/operations/
 // @desc    Edit domestic operations log
 // @access  Private
-router.post(
+/*router.post(
   "/domestic/operations",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
@@ -594,17 +721,38 @@ router.post(
           { domJo: req.body.domJo },
           { $set: update },
           { new: true }
-        ).then(log => res.json(log));
+        ).then(log => {
+          res.json(log);
+
+          // Activity
+          const newActivity = new DomesticActivity({
+            userID: req.user.id,
+            userName: req.user.userName,
+            userFullName: `${req.user.firstName} ${req.user.lastName}`,
+            userType: req.user.userType,
+            logID: log._id,
+            logNumber: log.domJo,
+            logShipper: log.shipperConsignee,
+            actionType: "Update Job Order Operations Status",
+            actionSummary: `${req.user.firstName} ${req.user.lastName} (${
+              req.user.userName
+            }) updated ${log.type} Job Order #${log.domJo} (${
+              log.shipperConsignee
+            }) operations status.`
+          });
+
+          newActivity.save();
+        });
       }
     });
   }
-);
+);*/
 
 // ////////////////////////////////////
 // @route   POST api/logs/international/operations/
 // @desc    Edit international operations log
 // @access  Private
-router.post(
+/*router.post(
   "/international/operations/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
@@ -642,11 +790,32 @@ router.post(
           { domJo: req.body.domJo },
           { $set: update },
           { new: true }
-        ).then(log => res.json(log));
+        ).then(log => {
+          res.json(log);
+
+          // Activity
+          const newActivity = new InternationalActivity({
+            userID: req.user.id,
+            userName: req.user.userName,
+            userFullName: `${req.user.firstName} ${req.user.lastName}`,
+            userType: req.user.userType,
+            logID: log._id,
+            logNumber: log.domJo,
+            logShipper: log.shipperConsignee,
+            actionType: "Update Job Order Operations Status",
+            actionSummary: `${req.user.firstName} ${req.user.lastName} (${
+              req.user.userName
+            }) updated ${log.type} Job Order #${log.domJo} (${
+              log.shipperConsignee
+            }) operations status.`
+          });
+
+          newActivity.save();
+        });
       }
     });
   }
-);
+); */
 
 // ////////////////////////////////////
 // @route   DELETE api/logs/domestic

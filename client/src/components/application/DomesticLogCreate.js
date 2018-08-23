@@ -337,6 +337,84 @@ class DomesticLogCreate extends Component {
 
                 {/* FORM */}
                 <form noValidate>
+                  <h5 className="text-primary">Contact Details</h5>
+
+                  <div className="row">
+                    <div className="form-group col-lg-4">
+                      <label className="mb-1" htmlFor="contactName">
+                        Contact Name
+                      </label>
+                      <input
+                        type="text"
+                        className={classnames("form-control", {
+                          "is-invalid": errors.contactName
+                        })}
+                        placeholder=""
+                        name="contactName"
+                        value={this.state.contactName}
+                        onChange={this.onChange}
+                        maxLength="100"
+                      />
+                      {errors.contactName && (
+                        <div className="invalid-feedback">
+                          {errors.contactName}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="form-group col-lg-4">
+                      <label className="mb-1" htmlFor="contactNumber">
+                        Contact Number
+                      </label>
+
+                      <input
+                        type="text"
+                        className={classnames("form-control", {
+                          "is-invalid": errors.contactNumber
+                        })}
+                        placeholder=""
+                        name="contactNumber"
+                        value={this.state.contactNumber}
+                        onChange={this.onChange}
+                        maxLength="100"
+                      />
+                      {errors.contactNumber && (
+                        <div className="invalid-feedback">
+                          {errors.contactNumber}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="form-group col-lg-4">
+                      <label className="mb-1" htmlFor="contactEmail">
+                        Contact Email{" "}
+                        <span>
+                          <em className="text-muted">&mdash; Optional</em>
+                        </span>
+                      </label>
+                      <input
+                        type="text"
+                        className={classnames("form-control", {
+                          "is-invalid": errors.contactEmail
+                        })}
+                        placeholder="example@address.com"
+                        name="contactEmail"
+                        value={this.state.contactEmail}
+                        onChange={this.onChange}
+                        maxLength="100"
+                      />
+                      {errors.contactEmail && (
+                        <div className="invalid-feedback">
+                          {errors.contactEmail}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="dropdown-divider" />
+
+                  <h5 className="text-primary mt-3">Job Order Details</h5>
+
                   <div className="row">
                     <div className="form-group col-md-12">
                       <label className="mb-1" htmlFor="associate">
@@ -736,9 +814,9 @@ class DomesticLogCreate extends Component {
                         City/Municipality
                       </small>
 
-                      {errors.originCity && (
+                      {errors.destinationCity && (
                         <div className="invalid-feedback">
-                          {errors.originCity}
+                          {errors.destinationCity}
                         </div>
                       )}
                     </div>
@@ -867,85 +945,6 @@ class DomesticLogCreate extends Component {
                           </label>
                         </div>
                       </div>
-                    </div>
-                  </div>
-
-                  <div className="dropdown-divider" />
-
-                  {/* CONTACT */}
-
-                  <h5 className="mt-3">
-                    Contact Details
-                    <span className="text-muted ">
-                      <em> - Optional</em>
-                    </span>
-                  </h5>
-
-                  <div className="row mt-3">
-                    <div className="form-group col-lg-4">
-                      <label className="mb-1" htmlFor="contactName">
-                        Contact Name
-                      </label>
-                      <input
-                        type="text"
-                        className={classnames("form-control", {
-                          "is-invalid": errors.contactName
-                        })}
-                        placeholder=""
-                        name="contactName"
-                        value={this.state.contactName}
-                        onChange={this.onChange}
-                        maxLength="100"
-                      />
-                      {errors.contactName && (
-                        <div className="invalid-feedback">
-                          {errors.contactName}
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="form-group col-lg-4">
-                      <label className="mb-1" htmlFor="contactNumber">
-                        Contact Number
-                      </label>
-                      <input
-                        type="text"
-                        className={classnames("form-control", {
-                          "is-invalid": errors.contactNumber
-                        })}
-                        placeholder=""
-                        name="contactNumber"
-                        value={this.state.contactNumber}
-                        onChange={this.onChange}
-                        maxLength="100"
-                      />
-                      {errors.contactNumber && (
-                        <div className="invalid-feedback">
-                          {errors.contactNumber}
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="form-group col-lg-4">
-                      <label className="mb-1" htmlFor="contactEmail">
-                        Contact Email{" "}
-                      </label>
-                      <input
-                        type="text"
-                        className={classnames("form-control", {
-                          "is-invalid": errors.contactEmail
-                        })}
-                        placeholder="example@address.com"
-                        name="contactEmail"
-                        value={this.state.contactEmail}
-                        onChange={this.onChange}
-                        maxLength="100"
-                      />
-                      {errors.contactEmail && (
-                        <div className="invalid-feedback">
-                          {errors.contactEmail}
-                        </div>
-                      )}
                     </div>
                   </div>
 
