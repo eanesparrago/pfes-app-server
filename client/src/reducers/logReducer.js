@@ -9,7 +9,9 @@ import {
   ADD_INTERNATIONAL_LOG,
   ADD_STATUS,
   DELETE_STATUS,
-  USER_LOGOUT
+  USER_LOGOUT,
+  SUBMIT_REQUEST,
+  RECEIVE_REPLY
 } from "../actions/types";
 
 const initialState = {
@@ -26,6 +28,7 @@ const initialState = {
       unloading: { statuses: [] }
     }
   },
+  submitInProgress: false,
 
   loading: false
 };
@@ -36,6 +39,18 @@ export default function(state = initialState, action) {
       return {
         ...state,
         loading: true
+      };
+
+    case SUBMIT_REQUEST:
+      return {
+        ...state,
+        submitInProgress: true
+      };
+
+    case RECEIVE_REPLY:
+      return {
+        ...state,
+        submitInProgress: false
       };
 
     case GET_DOMESTIC_LOGS:
@@ -84,7 +99,7 @@ export default function(state = initialState, action) {
 
     case USER_LOGOUT:
       return initialState;
-      
+
     default:
       return state;
   }

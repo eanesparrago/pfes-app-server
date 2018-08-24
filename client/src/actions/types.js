@@ -23,6 +23,9 @@ export const ADD_STATUS = "ADD_STATUS";
 export const DELETE_STATUS = "DELETE_STATUS";
 export const DELETE_LOG = "DELETE_LOG";
 
+export const SUBMIT_REQUEST = "SUBMIT_REQUEST";
+export const RECEIVE_REPLY = "RECEIVE_REPLY";
+
 export const CLEAR_ALERT = "CLEAR_ALERT";
 
 export const GET_WEATHER = "GET_WEATHER";

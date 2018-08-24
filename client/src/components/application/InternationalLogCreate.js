@@ -235,7 +235,7 @@ class InternationalLogCreate extends Component {
 
   render() {
     const { errors } = this.state;
-    const { auth } = this.props;
+    const { auth, log } = this.props;
 
     let etaLimit;
     if (this.state.etd !== "") {
@@ -801,6 +801,7 @@ class InternationalLogCreate extends Component {
                       Close
                     </button>
                     <button
+                      disabled={log.submitInProgress ? true : false}
                       type="button"
                       className="btn btn-primary"
                       onClick={this.onSubmit}
@@ -822,13 +823,18 @@ InternationalLogCreate.propTypes = {
   createInternationalLog: PropTypes.func.isRequired,
   clearSuccess: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
-  clearAlert: PropTypes.func.isRequired
+  clearAlert: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
+  success: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
+  log: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   errors: state.errors,
   success: state.success,
-  auth: state.auth
+  auth: state.auth,
+  log: state.log
 });
 
 export default connect(

@@ -10,7 +10,9 @@ import {
   ADD_INTERNATIONAL_LOG,
   ADD_STATUS,
   DELETE_STATUS,
-  SHOW_ALERT
+  SHOW_ALERT,
+  SUBMIT_REQUEST,
+  RECEIVE_REPLY
 } from "./types";
 
 // /////////////////////////
@@ -40,6 +42,8 @@ export const getInternationalLogs = () => dispatch => {
 export const createDomesticLog = logData => dispatch => {
   dispatch(clearErrors());
 
+  dispatch({ type: SUBMIT_REQUEST });
+
   axios
     .post("/api/logs/domestic", logData)
     .then(res => {
@@ -54,19 +58,29 @@ export const createDomesticLog = logData => dispatch => {
           res.data.domJo
         } was successfully created`
       });
+
+      dispatch({
+        type: RECEIVE_REPLY
+      });
     })
-    .catch(err =>
+    .catch(err => {
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
-      })
-    );
+      });
+
+      dispatch({
+        type: RECEIVE_REPLY
+      });
+    });
 };
 
 // /////////////////////////
 // Create international log
 export const createInternationalLog = logData => dispatch => {
   dispatch(clearErrors());
+
+  dispatch({ type: SUBMIT_REQUEST });
 
   axios
     .post("/api/logs/international", logData)
@@ -82,13 +96,21 @@ export const createInternationalLog = logData => dispatch => {
           res.data.domJo
         } was successfully created`
       });
+
+      dispatch({
+        type: RECEIVE_REPLY
+      });
     })
-    .catch(err =>
+    .catch(err => {
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
-      })
-    );
+      });
+
+      dispatch({
+        type: RECEIVE_REPLY
+      });
+    });
 };
 
 // /////////////////////////
@@ -104,6 +126,8 @@ export const openLogView = log => dispatch => {
 // Edit log
 export const editLog = log => dispatch => {
   dispatch(clearErrors());
+
+  dispatch({ type: SUBMIT_REQUEST });
 
   if (log.type === "Domestic") {
     axios
@@ -121,14 +145,22 @@ export const editLog = log => dispatch => {
           } was successfully edited`
         });
 
+        dispatch({
+          type: RECEIVE_REPLY
+        });
+
         dispatch(getDomesticLogs());
       })
-      .catch(err =>
+      .catch(err => {
         dispatch({
           type: GET_ERRORS,
           payload: err.response.data
-        })
-      );
+        });
+
+        dispatch({
+          type: RECEIVE_REPLY
+        });
+      });
   }
 
   if (log.type === "International") {
@@ -147,14 +179,22 @@ export const editLog = log => dispatch => {
           } was successfully edited`
         });
 
+        dispatch({
+          type: RECEIVE_REPLY
+        });
+
         dispatch(getInternationalLogs());
       })
-      .catch(err =>
+      .catch(err => {
         dispatch({
           type: GET_ERRORS,
           payload: err.response.data
-        })
-      );
+        });
+
+        dispatch({
+          type: RECEIVE_REPLY
+        });
+      });
   }
 };
 
