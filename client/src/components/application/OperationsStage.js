@@ -40,25 +40,31 @@ class OperationsStage extends Component {
   }
 
   deleteStatus(id) {
+    const { log } = this.props.log;
+
     const stage = { stage: this.props.stage };
 
-    this.props.deleteStatus(this.props.log, id, stage);
+    this.props.deleteStatus(log, id, stage);
   }
 
   deleteComplete() {
+    const { log } = this.props.log;
+
     const statusData = {
       isFinished: false,
       stage: this.props.stage
     };
 
-    this.props.deleteComplete(this.props.log, statusData);
+    this.props.deleteComplete(log, statusData);
   }
 
   render() {
     const { statusControl, markCompleteControl } = this.state;
 
-    const { log, data, title, stage, auth, isSucceedingFinished } = this.props;
+    const { data, title, stage, auth, isSucceedingFinished } = this.props;
     // data contains isFinished, remarks, dateFinshed, and statuses
+
+    const { log, submitInProgress } = this.props.log;
 
     // Show controls only to either admin or operations and isFinished must be false
     let showControls = false;
@@ -113,6 +119,7 @@ class OperationsStage extends Component {
               !log.isCompleted ? (
                 <span>
                   <button
+                    disabled={submitInProgress ? true : false}
                     className="btn btn-outline-danger btn-sm"
                     onClick={() => this.deleteStatus(status._id)}
                   >
@@ -200,6 +207,7 @@ class OperationsStage extends Component {
                   (auth.user.userType === "admin" ||
                     auth.user.userType === "operations") ? (
                     <button
+                      disabled={submitInProgress ? true : false}
                       className="btn btn-outline-danger btn-sm"
                       onClick={this.deleteComplete}
                     >
@@ -220,7 +228,7 @@ class OperationsStage extends Component {
 }
 
 const mapStateToProps = state => ({
-  log: state.log.log,
+  log: state.log,
   auth: state.auth
 });
 

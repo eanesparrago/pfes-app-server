@@ -18,7 +18,7 @@ class OperationsCompleteForm extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.log) {
+    if (nextProps.log.log) {
       this.setState({ remarks: "", dateFinished: "" });
     }
   }
@@ -34,6 +34,8 @@ class OperationsCompleteForm extends Component {
   submitComplete(e) {
     e.preventDefault();
 
+    const { log } = this.props.log;
+
     const statusData = {
       isFinished: true,
       remarks: this.state.remarks,
@@ -41,33 +43,36 @@ class OperationsCompleteForm extends Component {
       stage: this.props.stage
     };
 
-    this.props.submitComplete(this.props.log, statusData);
+    this.props.submitComplete(log, statusData);
   }
 
   render() {
     const { errors } = this.props;
+    const { submitInProgress } = this.props.log;
 
     return (
       <form className="fade-in" noValidate onSubmit={this.submitComplete}>
-        <div className="row">
-          <div className="input-group input-group-sm mb-3 col-lg-12">
-            <input
-              type="text"
-              className={classnames("form-control", {
-                "is-invalid": errors.remark
-              })}
-              aria-label="Text input with dropdown button"
-              placeholder="Completion remarks (Optional)"
-              name="remarks"
-              value={this.state.remarks}
-              onChange={this.onChange}
-            />
+        <fieldset disabled={submitInProgress ? true : false}>
+          <div className="row">
+            <div className="input-group input-group-sm mb-3 col-lg-12">
+              <input
+                type="text"
+                className={classnames("form-control", {
+                  "is-invalid": errors.remark
+                })}
+                aria-label="Text input with dropdown button"
+                placeholder="Completion remarks (Optional)"
+                name="remarks"
+                value={this.state.remarks}
+                onChange={this.onChange}
+              />
 
-            <div className="input-group-append">
-              <button className="btn btn-success btn-sm">Submit</button>
+              <div className="input-group-append">
+                <button className="btn btn-success btn-sm">Submit</button>
+              </div>
             </div>
           </div>
-        </div>
+        </fieldset>
       </form>
     );
   }
@@ -75,7 +80,7 @@ class OperationsCompleteForm extends Component {
 
 const mapStateToProps = state => ({
   errors: state.errors,
-  log: state.log.log
+  log: state.log
 });
 
 export default connect(

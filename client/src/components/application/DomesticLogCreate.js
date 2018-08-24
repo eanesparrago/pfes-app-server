@@ -977,7 +977,7 @@ class DomesticLogCreate extends Component {
 }
 
 DomesticLogCreate.propTypes = {
-  createInternationalLog: PropTypes.func.isRequired,
+  createDomesticLog: PropTypes.func.isRequired,
   clearSuccess: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
   clearAlert: PropTypes.func.isRequired,

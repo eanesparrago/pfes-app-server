@@ -27,7 +27,7 @@ class OperationsAddStatus extends Component {
       this.setState({ errors: nextProps.errors });
     }
 
-    if (nextProps.log) {
+    if (nextProps.log.log) {
       this.setState({ comment: "", dateInput: "" });
     }
   }
@@ -49,79 +49,84 @@ class OperationsAddStatus extends Component {
   submitStatus(e) {
     e.preventDefault();
 
+    const { log } = this.props.log;
+
     const statusData = {
       comment: this.state.comment,
       type: this.state.type,
       stage: this.props.stage
     };
 
-    this.props.addStatus(this.props.log, statusData);
+    this.props.addStatus(log, statusData);
   }
 
   render() {
     const { errors } = this.state;
+    const { submitInProgress } = this.props.log;
 
     return (
       <form className="fade-in" noValidate onSubmit={this.submitStatus}>
-        <div className="row">
-          <div className="input-group input-group-sm mb-3 col-lg-12">
-            <div className="input-group-prepend">
-              <button
-                className={classnames("btn dropdown-toggle", {
-                  "btn-info": this.state.type === "Info",
-                  "btn-warning": this.state.type === "Warning",
-                  "btn-danger": this.state.type === "Problem"
-                })}
-                type="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                {this.state.type}
-              </button>
-              <div className="dropdown-menu">
-                <a
-                  className="dropdown-item"
-                  onClick={() => this.changeType("Info")}
+        <fieldset disabled={submitInProgress ? true : false}>
+          <div className="row">
+            <div className="input-group input-group-sm mb-3 col-lg-12">
+              <div className="input-group-prepend">
+                <button
+                  className={classnames("btn dropdown-toggle", {
+                    "btn-info": this.state.type === "Info",
+                    "btn-warning": this.state.type === "Warning",
+                    "btn-danger": this.state.type === "Problem"
+                  })}
+                  type="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
                 >
-                  Info
-                </a>
-                <a
-                  className="dropdown-item"
-                  onClick={() => this.changeType("Warning")}
-                >
-                  Warning
-                </a>
-                <a
-                  className="dropdown-item"
-                  onClick={() => this.changeType("Problem")}
-                >
-                  Problem
-                </a>
+                  {this.state.type}
+                </button>
+                <div className="dropdown-menu">
+                  <a
+                    className="dropdown-item"
+                    onClick={() => this.changeType("Info")}
+                  >
+                    Info
+                  </a>
+                  <a
+                    className="dropdown-item"
+                    onClick={() => this.changeType("Warning")}
+                  >
+                    Warning
+                  </a>
+                  <a
+                    className="dropdown-item"
+                    onClick={() => this.changeType("Problem")}
+                  >
+                    Problem
+                  </a>
+                </div>
               </div>
+
+              <input
+                type="text"
+                className={classnames("form-control", {
+                  "is-invalid": errors.comment
+                })}
+                aria-label="Text input with dropdown button"
+                placeholder="Status (Required)"
+                name="comment"
+                value={this.state.comment}
+                onChange={this.onChange}
+              />
+
+              <div className="input-group-append">
+                <button className="btn btn-primary btn-sm">Submit</button>
+              </div>
+
+              {errors.comment ? (
+                <div className="d-block invalid-feedback">{errors.comment}</div>
+              ) : null}
             </div>
-
-            <input
-              type="text"
-              className={classnames("form-control", {
-                "is-invalid": errors.comment
-              })}
-              aria-label="Text input with dropdown button"
-              placeholder="Status (Required)"
-              name="comment"
-              value={this.state.comment}
-              onChange={this.onChange}
-            />
-
-            <div className="input-group-append">
-              <button className="btn btn-primary btn-sm">Submit</button>
-            </div>
-
-            {errors.comment ? (
-              <div className="d-block invalid-feedback">{errors.comment}</div>
-            ) : null}
           </div>
-        </div>
+        </fieldset>
       </form>
     );
   }
@@ -129,7 +134,7 @@ class OperationsAddStatus extends Component {
 
 const mapStateToProps = state => ({
   errors: state.errors,
-  log: state.log.log
+  log: state.log
 });
 
 export default connect(

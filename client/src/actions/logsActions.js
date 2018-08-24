@@ -1,4 +1,5 @@
 import axios from "axios";
+import $ from "jquery";
 
 import {
   GET_DOMESTIC_LOGS,
@@ -56,7 +57,7 @@ export const createDomesticLog = logData => dispatch => {
         type: SHOW_ALERT,
         payload: `Domestic Job Order #${
           res.data.domJo
-        } was successfully created`
+        } was successfully created.`
       });
 
       dispatch({
@@ -94,7 +95,7 @@ export const createInternationalLog = logData => dispatch => {
         type: SHOW_ALERT,
         payload: `International Job Order #${
           res.data.domJo
-        } was successfully created`
+        } was successfully created.`
       });
 
       dispatch({
@@ -142,7 +143,7 @@ export const editLog = log => dispatch => {
           type: SHOW_ALERT,
           payload: `Domestic Job Order #${
             res.data.domJo
-          } was successfully edited`
+          } was successfully edited.`
         });
 
         dispatch({
@@ -176,7 +177,7 @@ export const editLog = log => dispatch => {
           type: SHOW_ALERT,
           payload: `International Job Order #${
             res.data.domJo
-          } was successfully edited`
+          } was successfully edited.`
         });
 
         dispatch({
@@ -201,6 +202,8 @@ export const editLog = log => dispatch => {
 // ////////////////////////
 // Submit Complete Log
 export const submitCompleteLog = data => dispatch => {
+  dispatch({ type: SUBMIT_REQUEST });
+
   axios.post("/api/logs/complete", data).then(res => {
     if (data.type === "Domestic") {
       dispatch({
@@ -212,7 +215,11 @@ export const submitCompleteLog = data => dispatch => {
         type: SHOW_ALERT,
         payload: `Domestic Job Order #${
           res.data.domJo
-        } was successfully marked as complete`
+        } was successfully marked as complete.`
+      });
+
+      dispatch({
+        type: RECEIVE_REPLY
       });
 
       dispatch(getDomesticLogs());
@@ -223,10 +230,14 @@ export const submitCompleteLog = data => dispatch => {
       });
 
       dispatch({
+        type: RECEIVE_REPLY
+      });
+
+      dispatch({
         type: SHOW_ALERT,
-        payload: `Domestic Job Order #${
+        payload: `International Job Order #${
           res.data.domJo
-        } was successfully marked as complete`
+        } was successfully marked as complete.`
       });
 
       dispatch(getInternationalLogs());
@@ -237,33 +248,65 @@ export const submitCompleteLog = data => dispatch => {
 // ////////////////////////
 // Delete log (admin)
 export const deleteLog = log => dispatch => {
+  dispatch({ type: SUBMIT_REQUEST });
+
   if (window.confirm("Are you sure? This log will be permanently deleted.")) {
     if (log.type === "Domestic") {
       axios
         .delete(`/api/logs/domestic/${log._id}`)
         .then(res => {
+          dispatch({
+            type: RECEIVE_REPLY
+          });
+
+          dispatch({
+            type: SHOW_ALERT,
+            payload: `Domestic Job Order was successfully deleted.`
+          });
+
+          $("#LogView .close").click();
+
           dispatch(getDomesticLogs());
         })
-        .catch(err =>
+        .catch(err => {
           dispatch({
             type: GET_ERRORS,
             payload: err.response.data
-          })
-        );
+          });
+
+          dispatch({
+            type: RECEIVE_REPLY
+          });
+        });
     }
 
     if (log.type === "International") {
       axios
         .delete(`/api/logs/international/${log._id}`)
         .then(res => {
+          dispatch({
+            type: RECEIVE_REPLY
+          });
+
+          dispatch({
+            type: SHOW_ALERT,
+            payload: `International Job Order was successfully deleted.`
+          });
+
+          $("#LogView .close").click();
+
           dispatch(getInternationalLogs());
         })
-        .catch(err =>
+        .catch(err => {
           dispatch({
             type: GET_ERRORS,
             payload: err.response.data
-          })
-        );
+          });
+
+          dispatch({
+            type: RECEIVE_REPLY
+          });
+        });
     }
   }
 };
@@ -273,6 +316,8 @@ export const deleteLog = log => dispatch => {
 export const submitComplete = (log, statusData) => dispatch => {
   dispatch(clearErrors());
 
+  dispatch({ type: SUBMIT_REQUEST });
+
   if (log.type === "Domestic") {
     axios
       .post(`/api/operations/domestic/${log._id}`, statusData)
@@ -280,6 +325,10 @@ export const submitComplete = (log, statusData) => dispatch => {
         dispatch({
           type: LOG_CLICKED,
           payload: res.data
+        });
+
+        dispatch({
+          type: RECEIVE_REPLY
         });
 
         dispatch(getDomesticLogs());
@@ -301,14 +350,22 @@ export const submitComplete = (log, statusData) => dispatch => {
           payload: res.data
         });
 
+        dispatch({
+          type: RECEIVE_REPLY
+        });
+
         dispatch(getInternationalLogs());
       })
-      .catch(err =>
+      .catch(err => {
         dispatch({
           type: GET_ERRORS,
           payload: err.response.data
-        })
-      );
+        });
+
+        dispatch({
+          type: RECEIVE_REPLY
+        });
+      });
   }
 };
 
@@ -317,7 +374,7 @@ export const submitComplete = (log, statusData) => dispatch => {
 export const addStatus = (log, statusData) => dispatch => {
   dispatch(clearErrors());
 
-  console.log("log:", log);
+  dispatch({ type: SUBMIT_REQUEST });
 
   if (log.type === "Domestic") {
     axios
@@ -328,14 +385,22 @@ export const addStatus = (log, statusData) => dispatch => {
           payload: res.data
         });
 
+        dispatch({
+          type: RECEIVE_REPLY
+        });
+
         dispatch(getDomesticLogs());
       })
-      .catch(err =>
+      .catch(err => {
         dispatch({
           type: GET_ERRORS,
           payload: err.response.data
-        })
-      );
+        });
+
+        dispatch({
+          type: RECEIVE_REPLY
+        });
+      });
   }
 
   if (log.type === "International") {
@@ -347,14 +412,22 @@ export const addStatus = (log, statusData) => dispatch => {
           payload: res.data
         });
 
+        dispatch({
+          type: RECEIVE_REPLY
+        });
+
         dispatch(getInternationalLogs());
       })
-      .catch(err =>
+      .catch(err => {
         dispatch({
           type: GET_ERRORS,
           payload: err.response.data
-        })
-      );
+        });
+
+        dispatch({
+          type: RECEIVE_REPLY
+        });
+      });
   }
 };
 
@@ -362,6 +435,8 @@ export const addStatus = (log, statusData) => dispatch => {
 // Delete domestic/international status
 export const deleteStatus = (log, statusData, stage) => dispatch => {
   if (window.confirm("Are you sure?")) {
+    dispatch({ type: SUBMIT_REQUEST });
+
     if (log.type === "Domestic") {
       axios
         .post(`/api/operations/domestic/${log._id}/status/${statusData}`, stage)
@@ -370,14 +445,23 @@ export const deleteStatus = (log, statusData, stage) => dispatch => {
             type: DELETE_STATUS,
             payload: res.data
           });
+
+          dispatch({
+            type: RECEIVE_REPLY
+          });
+
           dispatch(getDomesticLogs());
         })
-        .catch(err =>
+        .catch(err => {
           dispatch({
             type: GET_ERRORS,
             payload: err.response.data
-          })
-        );
+          });
+
+          dispatch({
+            type: RECEIVE_REPLY
+          });
+        });
     }
 
     if (log.type === "International") {
@@ -391,14 +475,23 @@ export const deleteStatus = (log, statusData, stage) => dispatch => {
             type: DELETE_STATUS,
             payload: res.data
           });
+
+          dispatch({
+            type: RECEIVE_REPLY
+          });
+
           dispatch(getInternationalLogs());
         })
-        .catch(err =>
+        .catch(err => {
           dispatch({
             type: GET_ERRORS,
             payload: err.response.data
-          })
-        );
+          });
+
+          dispatch({
+            type: RECEIVE_REPLY
+          });
+        });
     }
   }
 };
@@ -409,6 +502,8 @@ export const deleteComplete = (log, statusData) => dispatch => {
   if (window.confirm("Are you sure?")) {
     dispatch(clearErrors());
 
+    dispatch({ type: SUBMIT_REQUEST });
+
     if (log.type === "Domestic") {
       axios
         .post(`/api/operations/domestic/${log._id}`, statusData)
@@ -418,14 +513,22 @@ export const deleteComplete = (log, statusData) => dispatch => {
             payload: res.data
           });
 
+          dispatch({
+            type: RECEIVE_REPLY
+          });
+
           dispatch(getDomesticLogs());
         })
-        .catch(err =>
+        .catch(err => {
           dispatch({
             type: GET_ERRORS,
             payload: err.response.data
-          })
-        );
+          });
+
+          dispatch({
+            type: RECEIVE_REPLY
+          });
+        });
     }
 
     if (log.type === "International") {
@@ -437,14 +540,22 @@ export const deleteComplete = (log, statusData) => dispatch => {
             payload: res.data
           });
 
+          dispatch({
+            type: RECEIVE_REPLY
+          });
+
           dispatch(getInternationalLogs());
         })
-        .catch(err =>
+        .catch(err => {
           dispatch({
             type: GET_ERRORS,
             payload: err.response.data
-          })
-        );
+          });
+
+          dispatch({
+            type: RECEIVE_REPLY
+          });
+        });
     }
   }
 };

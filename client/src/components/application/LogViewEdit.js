@@ -99,48 +99,48 @@ export class LogViewEdit extends Component {
 
     if (nextProps.log) {
       this.setState({
-        domJo: nextProps.log.domJo,
-        shipperConsignee: nextProps.log.shipperConsignee,
-        associate: nextProps.log.associate,
-        modeOfTransport: nextProps.log.modeOfTransport,
-        commodity: nextProps.log.commodity,
-        blAwb: nextProps.log.blAwb,
+        domJo: nextProps.log.log.domJo,
+        shipperConsignee: nextProps.log.log.shipperConsignee,
+        associate: nextProps.log.log.associate,
+        modeOfTransport: nextProps.log.log.modeOfTransport,
+        commodity: nextProps.log.log.commodity,
+        blAwb: nextProps.log.log.blAwb,
 
-        etd: moment(nextProps.log.etd).format("YYYY-MM-DD"),
-        eta: moment(nextProps.log.eta).format("YYYY-MM-DD"),
-        status: nextProps.log.status,
-        type: nextProps.log.type,
-        remarks: nextProps.log.remarks,
+        etd: moment(nextProps.log.log.etd).format("YYYY-MM-DD"),
+        eta: moment(nextProps.log.log.eta).format("YYYY-MM-DD"),
+        status: nextProps.log.log.status,
+        type: nextProps.log.log.type,
+        remarks: nextProps.log.log.remarks,
 
-        tagUrgent: nextProps.log.tags.urgent,
-        tagImportant: nextProps.log.tags.important,
-        tagInsured: nextProps.log.tags.insured,
+        tagUrgent: nextProps.log.log.tags.urgent,
+        tagImportant: nextProps.log.log.tags.important,
+        tagInsured: nextProps.log.log.tags.insured,
 
-        contactName: nextProps.log.contact.name,
-        contactNumber: nextProps.log.contact.number,
-        contactEmail: nextProps.log.contact.email,
+        contactName: nextProps.log.log.contact.name,
+        contactNumber: nextProps.log.log.contact.number,
+        contactEmail: nextProps.log.log.contact.email,
 
-        originLocation: nextProps.log.origin.location,
-        destinationLocation: nextProps.log.destination.location
+        originLocation: nextProps.log.log.origin.location,
+        destinationLocation: nextProps.log.log.destination.location
       });
 
       // Domestic
-      if (nextProps.log.type === "Domestic") {
+      if (nextProps.log.log.type === "Domestic") {
         this.setState({
-          originProvinceKey: nextProps.log.origin.provinceKey,
-          originProvinceName: nextProps.log.origin.provinceName,
-          originCity: nextProps.log.origin.city,
+          originProvinceKey: nextProps.log.log.origin.provinceKey,
+          originProvinceName: nextProps.log.log.origin.provinceName,
+          originCity: nextProps.log.log.origin.city,
 
-          destinationProvinceKey: nextProps.log.destination.provinceKey,
-          destinationProvinceName: nextProps.log.destination.provinceName,
-          destinationCity: nextProps.log.destination.city
+          destinationProvinceKey: nextProps.log.log.destination.provinceKey,
+          destinationProvinceName: nextProps.log.log.destination.provinceName,
+          destinationCity: nextProps.log.log.destination.city
         });
       }
 
-      if (nextProps.log.type === "International") {
+      if (nextProps.log.log.type === "International") {
         this.setState({
-          originCountry: nextProps.log.origin.country,
-          destinationCountry: nextProps.log.destination.country
+          originCountry: nextProps.log.log.origin.country,
+          destinationCountry: nextProps.log.log.destination.country
         });
       }
     }
@@ -233,7 +233,7 @@ export class LogViewEdit extends Component {
 
   // @submitCompleteLog
   submitCompleteLog() {
-    const { log } = this.props;
+    const { log } = this.props.log;
 
     const data = {
       domJo: log.domJo,
@@ -246,7 +246,7 @@ export class LogViewEdit extends Component {
   }
 
   closeEdit() {
-    const { log } = this.props;
+    const { log } = this.props.log;
 
     this.setState({
       domJo: log.domJo,
@@ -304,7 +304,7 @@ export class LogViewEdit extends Component {
 
   // @submitEdit
   submitEdit() {
-    const { log } = this.props;
+    const { log } = this.props.log;
 
     this.props.clearAlert();
 
@@ -378,13 +378,14 @@ export class LogViewEdit extends Component {
   }
 
   deleteLog() {
-    this.props.deleteLog(this.props.log);
+    this.props.deleteLog(this.props.log.log);
   }
 
   // @render
   render() {
     const { errors, isEditable, isToggleComplete } = this.state;
-    const { log, auth } = this.props;
+    const { auth } = this.props;
+    const { log, submitInProgress } = this.props.log;
 
     let editControls = null;
 
@@ -419,6 +420,7 @@ export class LogViewEdit extends Component {
         if (isEditable && log.isCompleted === false) {
           editControls = (
             <button
+              disabled={submitInProgress ? true : false}
               type="button"
               className="btn btn-primary mr-2 mb-3"
               onClick={this.submitEdit}
@@ -462,6 +464,7 @@ export class LogViewEdit extends Component {
         ) {
           completeControl = (
             <button
+              disabled={submitInProgress ? true : false}
               type="button"
               className="btn btn-success mr-2 mb-3 pfes-print-hide"
               onClick={this.submitCompleteLog}
@@ -478,6 +481,7 @@ export class LogViewEdit extends Component {
       deleteControl =
         isEditable || isToggleComplete ? null : (
           <button
+            disabled={submitInProgress ? true : false}
             title="Delete Log"
             className="btn btn-outline-danger mb-3 mr-2 pfes-print-hide"
             onClick={this.deleteLog}
@@ -952,11 +956,12 @@ export class LogViewEdit extends Component {
             {editControls !== null ? (
               isEditable ? (
                 <button
+                  disabled={submitInProgress ? true : false}
                   type="button"
                   className="btn btn-secondary mb-3 mr-2"
                   onClick={this.closeEdit}
                 >
-                  Cancel
+                  Back
                 </button>
               ) : null
             ) : null}
@@ -966,11 +971,12 @@ export class LogViewEdit extends Component {
             {completeControl !== null && log.operations.unloading.isFinished ? (
               isToggleComplete ? (
                 <button
+                  disabled={submitInProgress ? true : false}
                   type="button"
                   className="btn btn-secondary mb-3 mr-2"
                   onClick={this.closeComplete}
                 >
-                  Cancel
+                  Back
                 </button>
               ) : null
             ) : null}
@@ -1545,7 +1551,7 @@ LogViewEdit.propTypes = {
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  log: state.log.log,
+  log: state.log,
   errors: state.errors,
   success: state.success,
   alert: state.alert
