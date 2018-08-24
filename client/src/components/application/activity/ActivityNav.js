@@ -18,9 +18,7 @@ class ActivityNav extends Component {
         </button>
 
         {/* @navbar */}
-        <div className="collapse navbar-collapse" id="domesticNavbar">
-         
-        </div>
+        <div className="collapse navbar-collapse" id="domesticNavbar" />
       </nav>
     );
   }

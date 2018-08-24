@@ -60,9 +60,9 @@ export const loginUser = userData => dispatch => {
 /*
 The weather is fetched from https://darksky.net/.
 It is limited to 1,000 API requests per day.
-Thus, the weathe is only fetched whenever the user logs in.
+Thus, the weather is only fetched whenever the user logs in.
 */
-const getWeather = () => dispatch => {
+export const getWeather = () => dispatch => {
   const geolocation = navigator.geolocation;
 
   let coordinates;
