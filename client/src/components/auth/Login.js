@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
 import TextFieldGroup from "../common/TextFieldGroup";
+import Spinner from "../common/Spinner";
 
 import "./Login.css";
 import logo from "../../img/pfes-logo.png";
@@ -59,6 +60,7 @@ class Login extends Component {
 
   render() {
     const { errors } = this.state;
+    const { auth } = this.props;
 
     // Show error for both if either username or password is invalid
     // This is to reduce information given to potential hackers
@@ -66,6 +68,33 @@ class Login extends Component {
 
     if (errors.userName || errors.password) {
       validation = "Invalid login information";
+    }
+
+    let formInputs;
+
+    if (auth.loading) {
+      formInputs = <Spinner />;
+    } else {
+      formInputs = (
+        <React.Fragment>
+          <TextFieldGroup
+            placeholder="Username"
+            name="userName"
+            value={this.state.userName}
+            onChange={this.onChange}
+            error={validation}
+          />
+
+          <TextFieldGroup
+            placeholder="Password"
+            type="password"
+            name="password"
+            value={this.state.password}
+            onChange={this.onChange}
+            error={validation}
+          />
+        </React.Fragment>
+      );
     }
 
     return (
@@ -84,23 +113,10 @@ class Login extends Component {
                 Log in to your PFES App account
               </p>
               <form onSubmit={this.onSubmit}>
-                <TextFieldGroup
-                  placeholder="Username"
-                  name="userName"
-                  value={this.state.userName}
-                  onChange={this.onChange}
-                  error={validation}
-                />
+                {formInputs}
 
-                <TextFieldGroup
-                  placeholder="Password"
-                  type="password"
-                  name="password"
-                  value={this.state.password}
-                  onChange={this.onChange}
-                  error={validation}
-                />
                 <input
+                  disabled={auth.loading ? true : false}
                   type="submit"
                   value="Login"
                   className="btn btn-primary btn-block mt-4"

@@ -2,6 +2,8 @@ export const GET_ERRORS = "GET_ERRORS";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
 
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
+export const USER_LOGIN_LOADING = "USER_LOGIN_LOADING";
+
 export const GET_ALL_USERS = "GET_ALL_USERS";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const CLEAR_REGISTER = "CLEAR_REGISTER";

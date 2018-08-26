@@ -8,7 +8,8 @@ import {
   REGISTER_SUCCESS,
   USER_LOGOUT,
   CLEAR_ERRORS,
-  GET_WEATHER
+  GET_WEATHER,
+  USER_LOGIN_LOADING
 } from "./types";
 
 // Register user
@@ -33,6 +34,8 @@ export const registerUser = userData => dispatch => {
 export const loginUser = userData => dispatch => {
   dispatch(clearErrors());
 
+  dispatch({ type: USER_LOGIN_LOADING, payload: true });
+
   axios
     .post("/api/users/login", userData)
     .then(res => {
@@ -54,6 +57,8 @@ export const loginUser = userData => dispatch => {
         type: GET_ERRORS,
         payload: err.response.data
       });
+
+      dispatch({ type: USER_LOGIN_LOADING, payload: false });
     });
 };
 
