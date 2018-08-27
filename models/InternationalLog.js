@@ -217,10 +217,6 @@ const InternationalLogSchema = new Schema({
       type: Boolean,
       default: false
     },
-    important: {
-      type: Boolean,
-      default: false
-    },
     insured: {
       type: Boolean,
       default: false

@@ -192,19 +192,6 @@ class InternationalLogs extends Component {
               );
             }
 
-            if (log.tags.important) {
-              operationsStatusIcons.push(
-                <i
-                  title="Important"
-                  className="fas fa-star text-warning mr-2"
-                />
-              );
-            } else {
-              operationsStatusIcons.push(
-                <i className="invisible fas fa-star text-warning mr-2" />
-              );
-            }
-
             if (log.tags.insured) {
               operationsStatusIcons.push(
                 <i
@@ -424,7 +411,6 @@ class InternationalLogs extends Component {
                           All Tags
                         </option>
                         <option value="urgent">Urgent</option>
-                        <option value="important">Important</option>
                         <option value="insured">Insured</option>
                       </select>
                     );

@@ -66,7 +66,7 @@ class Calendar extends Component {
         return (
           <div>
             <button
-              className="fade-in btn btn-sm btn-secondary w-100 d-block text-left text-nowrap text-truncate"
+              className="btn btn-sm btn-secondary w-100 d-block text-left text-nowrap text-truncate"
               data-toggle="modal"
               data-target="#holidayPopup"
             >
@@ -80,7 +80,7 @@ class Calendar extends Component {
         return (
           <button
             className={classnames(
-              "fade-in btn btn-sm btn-primary w-100 d-block text-white text-left",
+              "btn btn-sm btn-primary w-100 d-block text-white text-left",
               {
                 "btn-success": event.status === "Complete"
               }

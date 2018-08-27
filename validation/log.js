@@ -13,9 +13,9 @@ module.exports = function validateLogInput(data) {
     errors.contactNumber = "Contact number is required";
   }
 
-  // if (Validator.isEmpty(data.contactEmail)) {
-  //   errors.contactEmail = "Contact email is required";
-  // }
+  if (Validator.isEmpty(data.contactEmail)) {
+    errors.contactEmail = "Contact email is required";
+  }
 
   if (!Validator.isEmpty(data.contactEmail)) {
     if (!Validator.isEmail(data.contactEmail)) {

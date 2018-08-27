@@ -45,7 +45,6 @@ class DomesticLogCreate extends Component {
       contactEmail: "",
 
       tagUrgent: false,
-      tagImportant: false,
       tagInsured: false,
 
       errors: {}
@@ -90,7 +89,6 @@ class DomesticLogCreate extends Component {
         contactEmail: "",
 
         tagUrgent: false,
-        tagImportant: false,
         tagInsured: false,
 
         errors: {}
@@ -196,7 +194,6 @@ class DomesticLogCreate extends Component {
       status: this.state.status,
 
       tagUrgent: this.state.tagUrgent,
-      tagImportant: this.state.tagImportant,
       tagInsured: this.state.tagInsured,
 
       contactName: this.state.contactName,
@@ -236,7 +233,6 @@ class DomesticLogCreate extends Component {
       contactEmail: "",
 
       tagUrgent: false,
-      tagImportant: false,
       tagInsured: false,
 
       errors: {}
@@ -387,10 +383,7 @@ class DomesticLogCreate extends Component {
 
                     <div className="form-group col-lg-4">
                       <label className="mb-1" htmlFor="contactEmail">
-                        Contact Email{" "}
-                        <span>
-                          <em className="text-muted">&mdash; Optional</em>
-                        </span>
+                        Contact Email
                       </label>
                       <input
                         type="text"
@@ -463,30 +456,6 @@ class DomesticLogCreate extends Component {
                     </div>
 
                     <div className="form-group col-md-6">
-                      <label className="mb-1" htmlFor="commodity">
-                        Commodity
-                      </label>
-                      <input
-                        type="text"
-                        className={classnames("form-control", {
-                          "is-invalid": errors.commodity
-                        })}
-                        placeholder=""
-                        name="commodity"
-                        value={this.state.commodity}
-                        onChange={this.onChange}
-                        maxLength="100"
-                      />
-                      {errors.commodity && (
-                        <div className="invalid-feedback">
-                          {errors.commodity}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="row">
-                    <div className="form-group col-md-6">
                       <label className="mb-1" htmlFor="modeOfTransport">
                         Mode of Transport
                       </label>
@@ -514,8 +483,60 @@ class DomesticLogCreate extends Component {
                         </div>
                       )}
                     </div>
+                  </div>
 
-                    <div className="form-group col-md-6">
+                  <div className="row">
+                    <div className="col-lg-6">
+                      <div className="row">
+                        <div className="form-group col-4 pr-1">
+                          <label className="mb-1" htmlFor="commodity">
+                            Commodity
+                          </label>
+
+                          <input
+                            type="text"
+                            className={classnames("form-control", {
+                              "is-invalid": errors.commodity
+                            })}
+                            placeholder=""
+                            name="commodity"
+                            value={this.state.commodity}
+                            onChange={this.onChange}
+                            maxLength="100"
+                          />
+                          {errors.commodity && (
+                            <div className="invalid-feedback">
+                              {errors.commodity}
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="form-group col-8 pl-1">
+                          <label className="mb-1" htmlFor="commodity">
+                            &nbsp;
+                          </label>
+
+                          <input
+                            type="text"
+                            className={classnames("form-control", {
+                              "is-invalid": errors.commodity
+                            })}
+                            placeholder=""
+                            name="commodity"
+                            value={this.state.commodity}
+                            onChange={this.onChange}
+                            maxLength="100"
+                          />
+                          {errors.commodity && (
+                            <div className="invalid-feedback">
+                              {errors.commodity}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="form-group col-lg-6">
                       {this.state.modeOfTransport === "" ||
                       this.state.modeOfTransport === "Truck" ? (
                         <label className="mb-1" htmlFor="blAwb">
@@ -581,7 +602,7 @@ class DomesticLogCreate extends Component {
 
                   {/* @origin */}
                   <div className="row mt-3">
-                    <div className="form-group col-lg-4">
+                    <div className="form-group col-lg-4 pr-1">
                       <label className="mb-1" htmlFor="originLocation">
                         Origin Address
                       </label>
@@ -609,7 +630,7 @@ class DomesticLogCreate extends Component {
                       )}
                     </div>
 
-                    <div className="form-group col-lg-4">
+                    <div className="form-group col-lg-4 px-1">
                       <label
                         className="mb-1 d-none d-lg-block"
                         htmlFor="originProvinceKey"
@@ -647,7 +668,7 @@ class DomesticLogCreate extends Component {
                       )}
                     </div>
 
-                    <div className="form-group col-lg-4">
+                    <div className="form-group col-lg-4 pl-1">
                       <label
                         className="mb-1 d-none d-lg-block"
                         htmlFor="originLocation"
@@ -701,7 +722,7 @@ class DomesticLogCreate extends Component {
 
                   {/* @destination */}
                   <div className="row">
-                    <div className="form-group col-lg-4">
+                    <div className="form-group col-lg-4 pr-1">
                       <label className="mb-1" htmlFor="destinationProvinceKey">
                         Destination Address
                       </label>
@@ -729,7 +750,7 @@ class DomesticLogCreate extends Component {
                       )}
                     </div>
 
-                    <div className="form-group col-lg-4">
+                    <div className="form-group col-lg-4 px-1">
                       <label
                         className="mb-1 d-none d-lg-block"
                         htmlFor="destinationCity"
@@ -767,7 +788,7 @@ class DomesticLogCreate extends Component {
                       )}
                     </div>
 
-                    <div className="form-group col-lg-4">
+                    <div className="form-group col-lg-4 pl-1">
                       <label
                         className="mb-1 d-none d-lg-block"
                         htmlFor="destinationCity"
@@ -908,23 +929,6 @@ class DomesticLogCreate extends Component {
                             htmlFor="tagUrgent"
                           >
                             Urgent
-                          </label>
-                        </div>
-
-                        <div className="form-check form-check-inline">
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="tagImportant"
-                            name="tagImportant"
-                            checked={this.state.tagImportant}
-                            onChange={this.toggleCheck}
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="tagImportant"
-                          >
-                            Important
                           </label>
                         </div>
 

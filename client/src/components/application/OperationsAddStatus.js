@@ -73,7 +73,6 @@ class OperationsAddStatus extends Component {
                 <button
                   className={classnames("btn dropdown-toggle", {
                     "btn-info": this.state.type === "Info",
-                    "btn-warning": this.state.type === "Warning",
                     "btn-danger": this.state.type === "Problem"
                   })}
                   type="button"
@@ -90,12 +89,7 @@ class OperationsAddStatus extends Component {
                   >
                     Info
                   </a>
-                  <a
-                    className="dropdown-item"
-                    onClick={() => this.changeType("Warning")}
-                  >
-                    Warning
-                  </a>
+
                   <a
                     className="dropdown-item"
                     onClick={() => this.changeType("Problem")}

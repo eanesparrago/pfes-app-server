@@ -62,7 +62,6 @@ export class LogViewEdit extends Component {
       contactEmail: "",
 
       tagUrgent: false,
-      tagImportant: false,
       tagInsured: false,
 
       errors: {},
@@ -113,7 +112,6 @@ export class LogViewEdit extends Component {
         remarks: nextProps.log.log.remarks,
 
         tagUrgent: nextProps.log.log.tags.urgent,
-        tagImportant: nextProps.log.log.tags.important,
         tagInsured: nextProps.log.log.tags.insured,
 
         contactName: nextProps.log.log.contact.name,
@@ -263,7 +261,6 @@ export class LogViewEdit extends Component {
       remarks: log.remarks,
 
       tagUrgent: log.tags.urgent,
-      tagImportant: log.tags.important,
       tagInsured: log.tags.insured,
 
       contactName: log.contact.name,
@@ -331,7 +328,6 @@ export class LogViewEdit extends Component {
         status: this.state.status,
 
         tagUrgent: this.state.tagUrgent,
-        tagImportant: this.state.tagImportant,
         tagInsured: this.state.tagInsured,
 
         contactName: this.state.contactName,
@@ -363,7 +359,6 @@ export class LogViewEdit extends Component {
         status: this.state.status,
 
         tagUrgent: this.state.tagUrgent,
-        tagImportant: this.state.tagImportant,
         tagInsured: this.state.tagInsured,
 
         contactName: this.state.contactName,
@@ -399,7 +394,6 @@ export class LogViewEdit extends Component {
     let tags = [];
 
     if (log.tags.urgent === true) tags.push("Urgent");
-    if (log.tags.important === true) tags.push("Important");
     if (log.tags.insured === true) tags.push("Insured");
 
     if (
@@ -1393,20 +1387,6 @@ export class LogViewEdit extends Component {
                     />
                     <label className="form-check-label" htmlFor="tagUrgent">
                       Urgent
-                    </label>
-                  </div>
-
-                  <div className="form-check form-check-inline">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      id="tagImportant"
-                      name="tagImportant"
-                      checked={this.state.tagImportant}
-                      onChange={this.toggleCheck}
-                    />
-                    <label className="form-check-label" htmlFor="tagImportant">
-                      Important
                     </label>
                   </div>
 

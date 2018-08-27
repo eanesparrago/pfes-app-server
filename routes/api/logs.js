@@ -138,7 +138,6 @@ router.post(
     newLog.tags = {};
 
     if (req.body.tagUrgent) newLog.tags.urgent = req.body.tagUrgent;
-    if (req.body.tagImportant) newLog.tags.important = req.body.tagImportant;
     if (req.body.tagInsured) newLog.tags.insured = req.body.tagInsured;
 
     newLog.contact = {};
@@ -251,7 +250,6 @@ router.post(
     newLog.tags = {};
 
     if (req.body.tagUrgent) newLog.tags.urgent = req.body.tagUrgent;
-    if (req.body.tagImportant) newLog.tags.important = req.body.tagImportant;
     if (req.body.tagInsured) newLog.tags.insured = req.body.tagInsured;
 
     newLog.contact = {};
@@ -378,7 +376,6 @@ router.post(
     newLog.tags = {};
 
     if (req.body.tagUrgent) newLog.tags.urgent = req.body.tagUrgent;
-    if (req.body.tagImportant) newLog.tags.important = req.body.tagImportant;
     if (req.body.tagInsured) newLog.tags.insured = req.body.tagInsured;
 
     newLog.contact = {};
@@ -514,7 +511,6 @@ router.post(
     newLog.tags = {};
 
     if (req.body.tagUrgent) newLog.tags.urgent = req.body.tagUrgent;
-    if (req.body.tagImportant) newLog.tags.important = req.body.tagImportant;
     if (req.body.tagInsured) newLog.tags.insured = req.body.tagInsured;
 
     newLog.contact = {};

@@ -40,7 +40,6 @@ class InternationalLogCreate extends Component {
       contactEmail: "",
 
       tagUrgent: false,
-      tagImportant: false,
       tagInsured: false,
 
       errors: {}
@@ -81,7 +80,6 @@ class InternationalLogCreate extends Component {
         contactEmail: "",
 
         tagUrgent: false,
-        tagImportant: false,
         tagInsured: false,
 
         errors: {}
@@ -155,7 +153,6 @@ class InternationalLogCreate extends Component {
       status: this.state.status,
 
       tagUrgent: this.state.tagUrgent,
-      tagImportant: this.state.tagImportant,
       tagInsured: this.state.tagInsured,
 
       contactName: this.state.contactName,
@@ -191,7 +188,6 @@ class InternationalLogCreate extends Component {
       contactEmail: "",
 
       tagUrgent: false,
-      tagImportant: false,
       tagInsured: false,
 
       errors: {}
@@ -223,7 +219,6 @@ class InternationalLogCreate extends Component {
       contactEmail: "",
 
       tagUrgent: false,
-      tagImportant: false,
       tagInsured: false,
 
       errors: {}
@@ -337,10 +332,7 @@ class InternationalLogCreate extends Component {
 
                     <div className="form-group col-lg-4">
                       <label className="mb-1" htmlFor="contactEmail">
-                        Contact Email{" "}
-                        <span>
-                          <em className="text-muted">&mdash; Optional</em>
-                        </span>
+                        Contact Email
                       </label>
                       <input
                         type="text"
@@ -751,23 +743,6 @@ class InternationalLogCreate extends Component {
                             htmlFor="tagUrgent"
                           >
                             Urgent
-                          </label>
-                        </div>
-
-                        <div className="form-check form-check-inline">
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="tagImportant"
-                            name="tagImportant"
-                            checked={this.state.tagImportant}
-                            onChange={this.toggleCheck}
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="tagImportant"
-                          >
-                            Important
                           </label>
                         </div>
 
