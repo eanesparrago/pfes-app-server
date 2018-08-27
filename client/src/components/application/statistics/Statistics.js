@@ -113,7 +113,7 @@ class Statistics extends Component {
       );
 
       content = (
-        <div className="fade-in mx-3">
+        <div className="fade-in mx-3 mobile-margin">
           <nav className="logs-nav navbar navbar-expand-sm navbar-light mb-3">
             <span className="navbar-brand">Log Statistics</span>
             <button

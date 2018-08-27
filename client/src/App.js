@@ -21,6 +21,7 @@ import Login from "./components/auth/Login";
 import Users from "./components/admin/users/Users";
 import ApplicationNav from "./components/application/ApplicationNav";
 import Logs from "./components/application/Logs";
+import LogView from "./components/application/LogView";
 import Calendar from "./components/application/calendar/Calendar";
 import Statistics from "./components/application/statistics/Statistics";
 import Activity from "./components/application/activity/Activity";
@@ -99,6 +100,8 @@ class App extends Component {
 
                 {/* Admin - user management */}
                 <Route exact path="/app/users" component={Users} />
+
+                <LogView />
               </div>
 
               <Footer />

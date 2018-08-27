@@ -45,7 +45,7 @@ class Activity extends Component {
       );
     }
 
-    return <div className="mx-3">{content}</div>;
+    return <div className="mx-3 mobile-margin">{content}</div>;
   }
 }
 

@@ -28,7 +28,8 @@ class ActivityItem extends Component {
           <span className="mb-1">
             {badge}{" "}
             <strong>
-              {userFullName} {auth.user.id === userID ? "(You)" : null}
+              <span className="text-nowrap">{userFullName}</span>{" "}
+              {auth.user.id === userID ? "(You)" : null}
             </strong>
           </span>
 

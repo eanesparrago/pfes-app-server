@@ -5,7 +5,6 @@ import classnames from "classnames";
 
 import DomesticLogs from "./DomesticLogs";
 import InternationalLogs from "./InternationalLogs";
-import LogView from "./LogView";
 import Spinner from "../common/Spinner";
 
 class Logs extends Component {
@@ -114,8 +113,6 @@ class Logs extends Component {
         {contentNav}
 
         {content}
-
-        <LogView />
       </div>
     );
   }

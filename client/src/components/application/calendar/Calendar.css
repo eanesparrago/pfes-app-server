@@ -1,0 +1,5 @@
+@media only screen and (max-width: 400px) {
+  .Calendar {
+    font-size: 0.875rem;
+  }
+}

@@ -5,11 +5,16 @@ import moment from "moment";
 import holidays from "./holidays";
 import { connect } from "react-redux";
 
+import { openLogView } from "../../../actions/logsActions";
+
 import generateEvents from "./generateEvents";
 
 import Spinner from "../../common/Spinner";
+import HolidayPopUp from "./HolidayPopup";
 
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import "./Calendar.css";
+import classnames from "classnames";
 
 BigCalendar.momentLocalizer(moment);
 
@@ -27,13 +32,11 @@ class Calendar extends Component {
   }
 
   toggleCheck(e) {
-    this.setState({ [e.target.name]: !this.state[e.target.name] }, () => {
-      console.log(this.state);
-    });
+    this.setState({ [e.target.name]: !this.state[e.target.name] }, () => {});
   }
 
   render() {
-    const { log } = this.props;
+    const { log, openLogView } = this.props;
     const { domestic, international } = this.props.log;
     const { showDomestic, showInternational, showHolidays } = this.state;
 
@@ -58,25 +61,47 @@ class Calendar extends Component {
       }
     }
 
-    // Format for the event text
-    function Event({ event }) {
+    const EventWrapper = ({ openLogView }) => ({ event }) => {
       if (event.type === "Holiday") {
-        return <span>{event.title}</span>;
+        return (
+          <div>
+            <button
+              className="fade-in btn btn-sm btn-secondary w-100 d-block text-left text-nowrap text-truncate"
+              data-toggle="modal"
+              data-target="#holidayPopup"
+            >
+              {event.title}
+            </button>
+
+            <HolidayPopUp eventTitle={event.title} eventDate={event.start} />
+          </div>
+        );
       } else {
         return (
-          <span
+          <button
+            className={classnames(
+              "fade-in btn btn-sm btn-primary w-100 d-block text-white text-left",
+              {
+                "btn-success": event.status === "Complete"
+              }
+            )}
+            data-toggle="modal"
+            data-target="#LogView"
+            onClick={() => {
+              openLogView(event.log);
+            }}
             title={`${event.title} ${event.shipperConsignee} (${
               event.status
             } - ${event.operationsStatus}) — ${event.associate}`}
           >
-            <strong>{event.title}</strong>
-            {/* {event.shipperConsignee} (
-            {event.status} - {event.operationsStatus}) &mdash;{" "}
-            <em>{event.associate}</em> */}
-          </span>
+            <strong>
+              {event.title}
+              {event.log.tags.urgent ? "!" : null}
+            </strong>
+          </button>
         );
       }
-    }
+    };
 
     // Define custom toolbar
     class CustomToolbar extends Toolbar {
@@ -145,7 +170,8 @@ class Calendar extends Component {
     // Custom components
     let components = {
       event: Event,
-      toolbar: CustomToolbar
+      toolbar: CustomToolbar,
+      eventWrapper: EventWrapper({ openLogView })
     };
 
     // MAIN CONTENT
@@ -155,9 +181,20 @@ class Calendar extends Component {
       content = <Spinner />;
     } else {
       content = (
-        <div style={{ height: "100rem" }} className="mx-3 mb-2 pb-5">
+        <div
+          style={{ height: "55rem", overscrollBehaviorX: "auto" }}
+          className="Calendar mx-3 mobile-margin pb-5"
+        >
+          <BigCalendar
+            events={events}
+            showMultiDayTimes
+            views={["month"]}
+            popup
+            components={components}
+          />
+
           {/* Visibility controls. Hidden for now because they ugly */}
-          {/* <div className="text-center mb-2">
+          <div className="text-center mt-2">
             <div className="form-check form-check-inline">
               <input
                 className="form-check-input"
@@ -199,51 +236,7 @@ class Calendar extends Component {
                 Show Holidays
               </label>
             </div>
-          </div> */}
-
-          <BigCalendar
-            events={events}
-            showMultiDayTimes
-            views={["month"]}
-            popup
-            components={components}
-            eventPropGetter={(event, start, end, isSelected) => {
-              let classes;
-              let style = {};
-
-              switch (event.type) {
-                case "Domestic":
-                  if (isSelected) {
-                    style = { backgroundColor: "#0c6cc0" };
-                  } else {
-                    classes = "bg-primary";
-                  }
-                  break;
-
-                case "International":
-                  if (isSelected) {
-                    style = { backgroundColor: "#117888" };
-                  } else {
-                    classes = "bg-info";
-                  }
-                  break;
-
-                case "Holiday":
-                  classes = "bg-secondary";
-                  style = { cursor: "unset" };
-
-                  break;
-
-                default:
-                  classes = "bg-primary";
-              }
-
-              return {
-                className: classes,
-                style: style
-              };
-            }}
-          />
+          </div>
         </div>
       );
     }
@@ -256,4 +249,7 @@ const mapStateToProps = state => ({
   log: state.log
 });
 
-export default connect(mapStateToProps)(Calendar);
+export default connect(
+  mapStateToProps,
+  { openLogView }
+)(Calendar);

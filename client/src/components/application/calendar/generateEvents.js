@@ -28,7 +28,8 @@ export default function(logs) {
       shipperConsignee: log.shipperConsignee,
       status: log.status,
       operationsStatus: operationsStatus,
-      associate: log.associate
+      associate: log.associate,
+      log: log
     };
   });
 
