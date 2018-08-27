@@ -160,3 +160,26 @@ h3 {
   border-bottom: 1px solid #007bff;
   margin-bottom: 0.5rem;
 }
+
+/* //////////////////////////////////// TABLE ////////////////////////////////////*/
+/* .pfes-table {
+  font-size: 0.875rem;
+} */
+
+@media only screen and (max-width: 1400px) {
+  .pfes-table {
+    font-size: 0.875rem;
+  }
+}
+
+@media only screen and (max-width: 1300px) {
+  .pfes-table {
+    font-size: 0.8125rem;
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .pfes-table {
+    font-size: 0.875rem;
+  }
+}

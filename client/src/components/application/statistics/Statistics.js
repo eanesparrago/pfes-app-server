@@ -120,8 +120,8 @@ class Statistics extends Component {
               className="navbar-toggler"
               type="button"
               data-toggle="collapse"
-              data-target="#domesticNavbar"
-              aria-controls="domesticNavbar"
+              data-target="#statisticsNavbar"
+              aria-controls="statisticsNavbar"
               aria-expanded="false"
               aria-label="Toggle navigation"
             >
@@ -129,7 +129,7 @@ class Statistics extends Component {
             </button>
 
             {/* @navbar */}
-            <div className="collapse navbar-collapse" id="domesticNavbar">
+            <div className="collapse navbar-collapse" id="statisticsNavbar">
               <input
                 type="month"
                 style={{ maxWidth: "30rem" }}

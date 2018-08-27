@@ -69,9 +69,10 @@ class Calendar extends Component {
               event.status
             } - ${event.operationsStatus}) — ${event.associate}`}
           >
-            <strong>{event.title}</strong> {event.shipperConsignee} (
+            <strong>{event.title}</strong>
+            {/* {event.shipperConsignee} (
             {event.status} - {event.operationsStatus}) &mdash;{" "}
-            <em>{event.associate}</em>
+            <em>{event.associate}</em> */}
           </span>
         );
       }
@@ -90,7 +91,7 @@ class Calendar extends Component {
       render() {
         return (
           <nav className="logs-nav navbar navbar-expand-sm navbar-light mb-3">
-            <div style={{width: "12rem"}}>
+            <div style={{ width: "12rem" }}>
               <span className="navbar-brand">{this.props.label}</span>
             </div>
 
@@ -98,8 +99,8 @@ class Calendar extends Component {
               className="navbar-toggler"
               type="button"
               data-toggle="collapse"
-              data-target="#domesticNavbar"
-              aria-controls="domesticNavbar"
+              data-target="#calendarNavbar"
+              aria-controls="calendarNavbar"
               aria-expanded="false"
               aria-label="Toggle navigation"
             >
@@ -107,8 +108,7 @@ class Calendar extends Component {
             </button>
 
             {/* @navbar */}
-            <div className="collapse navbar-collapse" id="domesticNavbar">
-              {" "}
+            <div className="collapse navbar-collapse" id="calendarNavbar">
               <div
                 className="btn-group shadow-sm"
                 role="group"
