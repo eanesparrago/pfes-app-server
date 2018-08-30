@@ -18,6 +18,7 @@ const initialState = {
   domestic: null,
   international: null,
   log: {
+    commodity: {},
     tags: {},
     contact: {},
     origin: {},

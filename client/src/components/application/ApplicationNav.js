@@ -17,8 +17,6 @@ import {
 
 import { getWeather } from "../../actions/authActions";
 
-import { getAllActivities } from "../../actions/activityActions";
-
 class ApplicationNav extends Component {
   constructor() {
     super();
@@ -32,8 +30,6 @@ class ApplicationNav extends Component {
   componentDidMount() {
     this.props.getDomesticLogs();
     this.props.getInternationalLogs();
-
-    this.props.getAllActivities();
 
     this.props.getWeather();
   }
@@ -176,5 +172,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getDomesticLogs, getInternationalLogs, getAllActivities, getWeather }
+  { getDomesticLogs, getInternationalLogs, getWeather }
 )(ApplicationNav);

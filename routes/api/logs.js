@@ -102,10 +102,21 @@ router.post(
       newLog.shipperConsignee = capitalizeFirstLetter(
         req.body.shipperConsignee.trim()
       );
+
     if (req.body.modeOfTransport)
       newLog.modeOfTransport = req.body.modeOfTransport;
-    if (req.body.commodity)
-      newLog.commodity = capitalizeFirstLetter(req.body.commodity.trim());
+
+    // Commodity type and description
+    newLog.commodity = {};
+
+    if (req.body.commodityType) {
+      newLog.commodity.type = req.body.commodityType;
+    } else {
+      newLog.commodity.type = "";
+    }
+    newLog.commodity.description = capitalizeFirstLetter(
+      req.body.commodityDescription.trim()
+    );
 
     if (req.body.blAwb) {
       newLog.blAwb = req.body.blAwb.trim();
@@ -220,8 +231,18 @@ router.post(
       );
     if (req.body.modeOfTransport)
       newLog.modeOfTransport = req.body.modeOfTransport;
-    if (req.body.commodity)
-      capitalizeFirstLetter((newLog.commodity = req.body.commodity.trim()));
+
+    // Commodity type and description
+    newLog.commodity = {};
+
+    if (req.body.commodityType) {
+      newLog.commodity.type = req.body.commodityType;
+    } else {
+      newLog.commodity.type = "";
+    }
+    newLog.commodity.description = capitalizeFirstLetter(
+      req.body.commodityDescription.trim()
+    );
 
     if (req.body.blAwb) {
       newLog.blAwb = req.body.blAwb.trim();
@@ -337,9 +358,16 @@ router.post(
       );
     }
 
-    if (req.body.commodity) {
-      newLog.commodity = capitalizeFirstLetter(req.body.commodity.trim());
+    newLog.commodity = {};
+
+    if (req.body.commodityType) {
+      newLog.commodity.type = req.body.commodityType;
+    } else {
+      newLog.commodity.type = "";
     }
+    newLog.commodity.description = capitalizeFirstLetter(
+      req.body.commodityDescription.trim()
+    );
 
     if (req.body.modeOfTransport) {
       newLog.modeOfTransport = req.body.modeOfTransport;
@@ -472,11 +500,16 @@ router.post(
       newLog.shipperConsignee = "";
     }
 
-    if (req.body.commodity) {
-      newLog.commodity = capitalizeFirstLetter(req.body.commodity.trim());
+    newLog.commodity = {};
+
+    if (req.body.commodityType) {
+      newLog.commodity.type = req.body.commodityType;
     } else {
-      newLog.commodity = "";
+      newLog.commodity.type = "";
     }
+    newLog.commodity.description = capitalizeFirstLetter(
+      req.body.commodityDescription.trim()
+    );
 
     if (req.body.modeOfTransport) {
       newLog.modeOfTransport = req.body.modeOfTransport;

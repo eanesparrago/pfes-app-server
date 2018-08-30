@@ -5,6 +5,9 @@ module.exports = function validateLogInput(data) {
   let errors = {};
 
   // Contact
+  if (!Validator.isLength(data.contactName, { max: 100 })) {
+    errors.contactName = "Contact name must not exceed 100 characters";
+  }
   if (Validator.isEmpty(data.contactName)) {
     errors.contactName = "Contact name is required";
   }
@@ -33,11 +36,18 @@ module.exports = function validateLogInput(data) {
   }
 
   // Commodity
-  if (!Validator.isLength(data.commodity, { max: 100 })) {
-    errors.commodity = "Commodity must not exceed 100 characters";
+  if (data.modeOfTransport !== "Air") {
+    if (Validator.isEmpty(data.commodityType)) {
+      errors.commodityType = "Commodity type is required";
+    }
   }
-  if (Validator.isEmpty(data.commodity)) {
-    errors.commodity = "Commodity is required";
+
+  if (!Validator.isLength(data.commodityDescription, { max: 100 })) {
+    errors.commodityDescription =
+      "Commodity description must not exceed 100 characters";
+  }
+  if (Validator.isEmpty(data.commodityDescription)) {
+    errors.commodityDescription = "Commodity description is required";
   }
 
   // Mode of Transport
@@ -60,12 +70,11 @@ module.exports = function validateLogInput(data) {
       errors.originCity = "Origin city/municipality is required";
     }
 
-    if (Validator.isEmpty(data.originLocation)) {
-      errors.originLocation = "Origin address is required";
-    }
-
     if (!Validator.isLength(data.originLocation, { max: 100 })) {
       errors.originLocation = "Origin address must not exceed 100 characters";
+    }
+    if (Validator.isEmpty(data.originLocation)) {
+      errors.originLocation = "Origin address is required";
     }
 
     if (Validator.isEmpty(data.destinationProvinceKey)) {
@@ -76,39 +85,35 @@ module.exports = function validateLogInput(data) {
       errors.destinationCity = "Destination city/municipality is required";
     }
 
-    if (Validator.isEmpty(data.destinationLocation)) {
-      errors.destinationLocation = "Destination address is required";
-    }
-
     if (!Validator.isLength(data.destinationLocation, { max: 100 })) {
       errors.destinationLocation =
         "Destination address must not exceed 100 characters";
+    }
+    if (Validator.isEmpty(data.destinationLocation)) {
+      errors.destinationLocation = "Destination address is required";
     }
   } else if (data.type === "International") {
     if (Validator.isEmpty(data.originCountry)) {
       errors.originCountry = "Origin country is required";
     }
 
-    if (Validator.isEmpty(data.originLocation)) {
-      errors.originLocation = "Origin location is required";
+    if (!Validator.isLength(data.originLocation, { max: 100 })) {
+      errors.originLocation = "Origin address must not exceed 100 characters";
     }
-
-    if (!Validator.isLength(data.destinationLocation, { max: 100 })) {
-      errors.destinationLocation =
-        "Destination location must not exceed 100 characters";
+    if (Validator.isEmpty(data.originLocation)) {
+      errors.originLocation = "Origin address is required";
     }
 
     if (Validator.isEmpty(data.destinationCountry)) {
       errors.destinationCountry = "Destination country is required";
     }
 
-    if (Validator.isEmpty(data.destinationLocation)) {
-      errors.destinationLocation = "Destination location is required";
-    }
-
     if (!Validator.isLength(data.destinationLocation, { max: 100 })) {
       errors.destinationLocation =
-        "Destination location must not exceed 100 characters";
+        "Destination address must not exceed 100 characters";
+    }
+    if (Validator.isEmpty(data.destinationLocation)) {
+      errors.destinationLocation = "Destination address is required";
     }
   }
 

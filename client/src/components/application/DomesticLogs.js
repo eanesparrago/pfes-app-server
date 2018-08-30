@@ -228,7 +228,12 @@ class DomesticLogs extends Component {
                 )}
 
                 <td>{log.shipperConsignee}</td>
-                <td>{log.commodity}</td>
+
+                <td>
+                  {log.commodity.type ? `${log.commodity.type},` : null}{" "}
+                  {log.commodity.description}
+                </td>
+
                 <td>{log.modeOfTransport}</td>
                 <td>{log.blAwb ? log.blAwb : "n/a"}</td>
 

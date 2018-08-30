@@ -22,7 +22,10 @@ class InternationalLogCreate extends Component {
       shipperConsignee: "",
       associate: "",
       modeOfTransport: "",
-      commodity: "",
+
+      commodityType: "",
+      commodityDescription: "",
+
       blAwb: "",
 
       originCountry: "",
@@ -62,7 +65,10 @@ class InternationalLogCreate extends Component {
         shipperConsignee: "",
         associate: "",
         modeOfTransport: "",
-        commodity: "",
+
+        commodityType: "",
+        commodityDescription: "",
+
         blAwb: "",
 
         originCountry: "",
@@ -125,6 +131,10 @@ class InternationalLogCreate extends Component {
 
     if (e.target.name === "modeOfTransport") {
       this.setState({ blAwb: "" });
+
+      if (e.target.value === "Air") {
+        this.setState({ commodityType: "" });
+      }
     }
   }
 
@@ -139,7 +149,10 @@ class InternationalLogCreate extends Component {
     const logData = {
       shipperConsignee: this.state.shipperConsignee,
       modeOfTransport: this.state.modeOfTransport,
-      commodity: this.state.commodity,
+
+      commodityType: this.state.commodityType,
+      commodityDescription: this.state.commodityDescription,
+
       blAwb: this.state.blAwb,
 
       originCountry: this.state.originCountry,
@@ -170,7 +183,10 @@ class InternationalLogCreate extends Component {
       shipperConsignee: "",
       associate: "",
       modeOfTransport: "",
-      commodity: "",
+
+      commodityType: "",
+      commodityDescription: "",
+
       blAwb: "",
 
       originCountry: "",
@@ -201,7 +217,10 @@ class InternationalLogCreate extends Component {
       shipperConsignee: "",
       associate: "",
       modeOfTransport: "",
-      commodity: "",
+
+      commodityType: "",
+      commodityDescription: "",
+
       blAwb: "",
 
       originCountry: "",
@@ -321,7 +340,7 @@ class InternationalLogCreate extends Component {
                         name="contactNumber"
                         value={this.state.contactNumber}
                         onChange={this.onChange}
-                        maxLength="100"
+                        maxLength="15"
                       />
                       {errors.contactNumber && (
                         <div className="invalid-feedback">
@@ -405,30 +424,6 @@ class InternationalLogCreate extends Component {
                     </div>
 
                     <div className="form-group col-md-6">
-                      <label className="mb-1" htmlFor="commodity">
-                        Commodity
-                      </label>
-                      <input
-                        type="text"
-                        className={classnames("form-control", {
-                          "is-invalid": errors.commodity
-                        })}
-                        placeholder=""
-                        name="commodity"
-                        value={this.state.commodity}
-                        onChange={this.onChange}
-                        maxLength="100"
-                      />
-                      {errors.commodity && (
-                        <div className="invalid-feedback">
-                          {errors.commodity}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="row">
-                    <div className="form-group col-md-6">
                       <label className="mb-1" htmlFor="modeOfTransport">
                         Mode of Transport
                       </label>
@@ -454,6 +449,81 @@ class InternationalLogCreate extends Component {
                           {errors.modeOfTransport}
                         </div>
                       )}
+                    </div>
+                  </div>
+
+                  <div className="row">
+                    <div className="col-lg-6">
+                      <div className="row">
+                        <div className="form-group col-5 pr-1">
+                          <label className="mb-1" htmlFor="commodity">
+                            Commodity
+                          </label>
+
+                          <select
+                            disabled={
+                              this.state.modeOfTransport === "" ||
+                              this.state.modeOfTransport === "Air"
+                                ? true
+                                : false
+                            }
+                            className={classnames("form-control", {
+                              "is-invalid": errors.commodityType
+                            })}
+                            id="commodityType"
+                            name="commodityType"
+                            value={this.state.commodityType}
+                            onChange={this.onChange}
+                          >
+                            <option value="" disabled defaultValue>
+                              (Container)
+                            </option>
+
+                            <option value="FCL 1x10'">FCL 1x10'</option>
+
+                            <option value="FCL 1x20'">FCL 1x20'</option>
+
+                            <option value="FCL 1x40'">FCL 1x40'</option>
+
+                            <option value="FCL 1x40' HC">FCL 1x40' HC</option>
+
+                            <option value="LCL">LCL</option>
+                          </select>
+
+                          <small className="form-text text-muted">
+                            For Sea Only
+                          </small>
+
+                          {errors.commodityType && (
+                            <div className="invalid-feedback">
+                              {errors.commodityType}
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="form-group col-7 pl-1">
+                          <label className="mb-1" htmlFor="commodity">
+                            &nbsp;
+                          </label>
+
+                          <input
+                            type="text"
+                            className={classnames("form-control", {
+                              "is-invalid": errors.commodityDescription
+                            })}
+                            placeholder="Description"
+                            name="commodityDescription"
+                            value={this.state.commodityDescription}
+                            onChange={this.onChange}
+                            maxLength="100"
+                          />
+                          {errors.commodityDescription && (
+                            <div className="invalid-feedback">
+                              {errors.commodityDescription}
+                            </div>
+                          )}
+                        </div>
+                      </div>
                     </div>
 
                     <div className="form-group col-md-6">

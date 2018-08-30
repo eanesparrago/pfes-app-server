@@ -23,7 +23,10 @@ class DomesticLogCreate extends Component {
       shipperConsignee: "",
       associate: "",
       modeOfTransport: "",
-      commodity: "",
+
+      commodityType: "",
+      commodityDescription: "",
+
       blAwb: "",
 
       originProvinceName: "",
@@ -67,7 +70,10 @@ class DomesticLogCreate extends Component {
         shipperConsignee: "",
         associate: "",
         modeOfTransport: "",
-        commodity: "",
+
+        commodityType: "",
+        commodityDescription: "",
+
         blAwb: "",
 
         originProvinceName: "",
@@ -162,6 +168,10 @@ class DomesticLogCreate extends Component {
 
     if (e.target.name === "modeOfTransport") {
       this.setState({ blAwb: "" });
+
+      if (e.target.value === "Air") {
+        this.setState({ commodityType: "" });
+      }
     }
   }
 
@@ -176,7 +186,10 @@ class DomesticLogCreate extends Component {
     const logData = {
       shipperConsignee: this.state.shipperConsignee,
       modeOfTransport: this.state.modeOfTransport,
-      commodity: this.state.commodity,
+
+      commodityType: this.state.commodityType,
+      commodityDescription: this.state.commodityDescription,
+
       blAwb: this.state.blAwb,
 
       originProvinceName: this.state.originProvinceName,
@@ -211,7 +224,10 @@ class DomesticLogCreate extends Component {
       shipperConsignee: "",
       associate: "",
       modeOfTransport: "",
-      commodity: "",
+
+      commodityType: "",
+      commodityDescription: "",
+
       blAwb: "",
 
       originProvinceName: "",
@@ -246,7 +262,10 @@ class DomesticLogCreate extends Component {
       shipperConsignee: "",
       associate: "",
       modeOfTransport: "",
-      commodity: "",
+
+      commodityType: "",
+      commodityDescription: "",
+
       blAwb: "",
 
       originProvinceName: "",
@@ -372,7 +391,7 @@ class DomesticLogCreate extends Component {
                         name="contactNumber"
                         value={this.state.contactNumber}
                         onChange={this.onChange}
-                        maxLength="100"
+                        maxLength="15"
                       />
                       {errors.contactNumber && (
                         <div className="invalid-feedback">
@@ -488,30 +507,53 @@ class DomesticLogCreate extends Component {
                   <div className="row">
                     <div className="col-lg-6">
                       <div className="row">
-                        <div className="form-group col-4 pr-1">
+                        <div className="form-group col-5 pr-1">
                           <label className="mb-1" htmlFor="commodity">
                             Commodity
                           </label>
 
-                          <input
-                            type="text"
+                          <select
+                            disabled={
+                              this.state.modeOfTransport === "" ||
+                              this.state.modeOfTransport === "Air"
+                                ? true
+                                : false
+                            }
                             className={classnames("form-control", {
-                              "is-invalid": errors.commodity
+                              "is-invalid": errors.commodityType
                             })}
-                            placeholder=""
-                            name="commodity"
-                            value={this.state.commodity}
+                            id="commodityType"
+                            name="commodityType"
+                            value={this.state.commodityType}
                             onChange={this.onChange}
-                            maxLength="100"
-                          />
-                          {errors.commodity && (
+                          >
+                            <option value="" disabled defaultValue>
+                              (Container)
+                            </option>
+
+                            <option value="FCL 1x10'">FCL 1x10'</option>
+
+                            <option value="FCL 1x20'">FCL 1x20'</option>
+
+                            <option value="FCL 1x40'">FCL 1x40'</option>
+
+                            <option value="FCL 1x40' HC">FCL 1x40' HC</option>
+
+                            <option value="LCL">LCL</option>
+                          </select>
+
+                          <small className="form-text text-muted">
+                            For Truck and Sea
+                          </small>
+
+                          {errors.commodityType && (
                             <div className="invalid-feedback">
-                              {errors.commodity}
+                              {errors.commodityType}
                             </div>
                           )}
                         </div>
 
-                        <div className="form-group col-8 pl-1">
+                        <div className="form-group col-7 pl-1">
                           <label className="mb-1" htmlFor="commodity">
                             &nbsp;
                           </label>
@@ -519,17 +561,17 @@ class DomesticLogCreate extends Component {
                           <input
                             type="text"
                             className={classnames("form-control", {
-                              "is-invalid": errors.commodity
+                              "is-invalid": errors.commodityDescription
                             })}
-                            placeholder=""
-                            name="commodity"
-                            value={this.state.commodity}
+                            placeholder="Description"
+                            name="commodityDescription"
+                            value={this.state.commodityDescription}
                             onChange={this.onChange}
                             maxLength="100"
                           />
-                          {errors.commodity && (
+                          {errors.commodityDescription && (
                             <div className="invalid-feedback">
-                              {errors.commodity}
+                              {errors.commodityDescription}
                             </div>
                           )}
                         </div>
@@ -602,7 +644,7 @@ class DomesticLogCreate extends Component {
 
                   {/* @origin */}
                   <div className="row mt-3">
-                    <div className="form-group col-lg-4 pr-1">
+                    <div className="form-group col-lg-4 pr-lg-1">
                       <label className="mb-1" htmlFor="originLocation">
                         Origin Address
                       </label>
@@ -630,7 +672,7 @@ class DomesticLogCreate extends Component {
                       )}
                     </div>
 
-                    <div className="form-group col-lg-4 px-1">
+                    <div className="form-group col-lg-4 px-lg-1">
                       <label
                         className="mb-1 d-none d-lg-block"
                         htmlFor="originProvinceKey"
@@ -668,7 +710,7 @@ class DomesticLogCreate extends Component {
                       )}
                     </div>
 
-                    <div className="form-group col-lg-4 pl-1">
+                    <div className="form-group col-lg-4 pl-lg-1">
                       <label
                         className="mb-1 d-none d-lg-block"
                         htmlFor="originLocation"
@@ -722,7 +764,7 @@ class DomesticLogCreate extends Component {
 
                   {/* @destination */}
                   <div className="row">
-                    <div className="form-group col-lg-4 pr-1">
+                    <div className="form-group col-lg-4 pr-lg-1">
                       <label className="mb-1" htmlFor="destinationProvinceKey">
                         Destination Address
                       </label>
@@ -750,7 +792,7 @@ class DomesticLogCreate extends Component {
                       )}
                     </div>
 
-                    <div className="form-group col-lg-4 px-1">
+                    <div className="form-group col-lg-4 px-lg-1">
                       <label
                         className="mb-1 d-none d-lg-block"
                         htmlFor="destinationCity"
@@ -788,7 +830,7 @@ class DomesticLogCreate extends Component {
                       )}
                     </div>
 
-                    <div className="form-group col-lg-4 pl-1">
+                    <div className="form-group col-lg-4 pl-lg-1">
                       <label
                         className="mb-1 d-none d-lg-block"
                         htmlFor="destinationCity"

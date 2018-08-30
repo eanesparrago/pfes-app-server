@@ -18,8 +18,13 @@ const InternationalLogSchema = new Schema({
     required: true
   },
   commodity: {
-    type: String,
-    required: true
+    type: {
+      type: String
+    },
+    description: {
+      type: String,
+      required: true
+    }
   },
   blAwb: {
     type: String
@@ -66,8 +71,7 @@ const InternationalLogSchema = new Schema({
         default: "n/a"
       },
       dateFinished: {
-        type: Date,
-        default: Date.now
+        type: Date
       },
       name: {
         type: String
@@ -108,8 +112,7 @@ const InternationalLogSchema = new Schema({
         default: "n/a"
       },
       dateFinished: {
-        type: Date,
-        default: Date.now
+        type: Date
       },
       name: {
         type: String
@@ -150,8 +153,7 @@ const InternationalLogSchema = new Schema({
         default: "n/a"
       },
       dateFinished: {
-        type: Date,
-        default: Date.now
+        type: Date
       },
       name: {
         type: String

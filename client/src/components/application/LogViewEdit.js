@@ -32,7 +32,10 @@ export class LogViewEdit extends Component {
       shipperConsignee: "",
       associate: "",
       modeOfTransport: "",
-      commodity: "",
+
+      commodityType: "",
+      commodityDescription: "",
+
       blAwb: "",
 
       originProvinceKey: "",
@@ -102,7 +105,10 @@ export class LogViewEdit extends Component {
         shipperConsignee: nextProps.log.log.shipperConsignee,
         associate: nextProps.log.log.associate,
         modeOfTransport: nextProps.log.log.modeOfTransport,
-        commodity: nextProps.log.log.commodity,
+
+        commodityType: nextProps.log.log.commodity.type,
+        commodityDescription: nextProps.log.log.commodity.description,
+
         blAwb: nextProps.log.log.blAwb,
 
         etd: moment(nextProps.log.log.etd).format("YYYY-MM-DD"),
@@ -208,6 +214,10 @@ export class LogViewEdit extends Component {
 
     if (e.target.name === "modeOfTransport") {
       this.setState({ blAwb: "" });
+
+      if (e.target.value === "Air") {
+        this.setState({ commodityType: "" });
+      }
     }
   }
 
@@ -251,7 +261,8 @@ export class LogViewEdit extends Component {
       shipperConsignee: log.shipperConsignee,
       associate: log.associate,
       modeOfTransport: log.modeOfTransport,
-      commodity: log.commodity,
+      commodityType: log.commodity.type,
+      commodityDescription: log.commodity.description,
       blAwb: log.blAwb,
 
       etd: moment(log.etd).format("YYYY-MM-DD"),
@@ -310,7 +321,10 @@ export class LogViewEdit extends Component {
         domJo: log.domJo,
         shipperConsignee: this.state.shipperConsignee,
         modeOfTransport: this.state.modeOfTransport,
-        commodity: this.state.commodity,
+
+        commodityType: this.state.commodityType,
+        commodityDescription: this.state.commodityDescription,
+
         blAwb: this.state.blAwb,
 
         originProvinceKey: this.state.originProvinceKey,
@@ -345,7 +359,10 @@ export class LogViewEdit extends Component {
         domJo: log.domJo,
         shipperConsignee: this.state.shipperConsignee,
         modeOfTransport: this.state.modeOfTransport,
-        commodity: this.state.commodity,
+
+        commodityType: this.state.commodityType,
+        commodityDescription: this.state.commodityDescription,
+
         blAwb: this.state.blAwb,
 
         originCountry: this.state.originCountry,
@@ -376,7 +393,7 @@ export class LogViewEdit extends Component {
     this.props.deleteLog(this.props.log.log);
   }
 
-  // @render
+  //
   render() {
     const { errors, isEditable, isToggleComplete } = this.state;
     const { auth } = this.props;
@@ -1124,37 +1141,6 @@ export class LogViewEdit extends Component {
 
             {isEditable ? (
               <div className="form-group col-md-6">
-                <label className="mb-1" htmlFor="commodity">
-                  Commodity
-                </label>
-                <input
-                  readOnly={!isEditable}
-                  type="text"
-                  className={classnames("form-control", {
-                    "is-invalid": errors.commodity
-                  })}
-                  placeholder=""
-                  name="commodity"
-                  value={this.state.commodity}
-                  onChange={this.onChange}
-                  maxLength="100"
-                />
-                {errors.commodity && (
-                  <div className="invalid-feedback">{errors.commodity}</div>
-                )}
-              </div>
-            ) : (
-              <div className="col-md-6 mb-2">
-                <h5>
-                  Commodity: <strong>{log.commodity}</strong>
-                </h5>
-              </div>
-            )}
-          </div>
-
-          <div className="row">
-            {isEditable ? (
-              <div className="form-group col-md-6">
                 <label className="mb-1" htmlFor="modeOfTransport">
                   Mode of Transport
                 </label>
@@ -1189,6 +1175,94 @@ export class LogViewEdit extends Component {
               <div className="col-md-6 mb-2">
                 <h5>
                   Mode of Transport: <strong>{log.modeOfTransport}</strong>
+                </h5>
+              </div>
+            )}
+          </div>
+
+          <div className="row">
+            {/* @commodity */}
+            {isEditable ? (
+              <div className="col-lg-6">
+                <div className="row">
+                  <div className="form-group col-5 pr-1">
+                    <label className="mb-1" htmlFor="commodity">
+                      Commodity
+                    </label>
+
+                    <select
+                      disabled={
+                        this.state.modeOfTransport === "" ||
+                        this.state.modeOfTransport === "Air"
+                          ? true
+                          : false
+                      }
+                      className={classnames("form-control", {
+                        "is-invalid": errors.commodityType
+                      })}
+                      id="commodityType"
+                      name="commodityType"
+                      value={this.state.commodityType}
+                      onChange={this.onChange}
+                    >
+                      <option value="" disabled defaultValue>
+                        (Container)
+                      </option>
+
+                      <option value="FCL 1x10'">FCL 1x10'</option>
+
+                      <option value="FCL 1x20'">FCL 1x20'</option>
+
+                      <option value="FCL 1x40'">FCL 1x40'</option>
+
+                      <option value="FCL 1x40' HC">FCL 1x40' HC</option>
+
+                      <option value="LCL">LCL</option>
+                    </select>
+
+                    <small className="form-text text-muted">
+                      For Truck and Sea
+                    </small>
+
+                    {errors.commodityType && (
+                      <div className="invalid-feedback">
+                        {errors.commodityType}
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="form-group col-7 pl-1">
+                    <label className="mb-1" htmlFor="commodity">
+                      &nbsp;
+                    </label>
+
+                    <input
+                      type="text"
+                      className={classnames("form-control", {
+                        "is-invalid": errors.commodityDescription
+                      })}
+                      placeholder="Description"
+                      name="commodityDescription"
+                      value={this.state.commodityDescription}
+                      onChange={this.onChange}
+                      maxLength="100"
+                    />
+                    {errors.commodityDescription && (
+                      <div className="invalid-feedback">
+                        {errors.commodityDescription}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="col-md-6 mb-2">
+                <h5>
+                  Commodity:{" "}
+                  <strong>
+                    {log.commodity.type ? `${log.commodity.type},` : null}{" "}
+                    {log.commodity.description}
+                  </strong>
                 </h5>
               </div>
             )}
@@ -1466,7 +1540,7 @@ export class LogViewEdit extends Component {
                   name="contactNumber"
                   value={this.state.contactNumber}
                   onChange={this.onChange}
-                  maxLength="100"
+                  maxLength="15"
                 />
                 {errors.contactNumber && (
                   <div className="invalid-feedback">{errors.contactNumber}</div>
