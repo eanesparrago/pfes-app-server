@@ -487,7 +487,7 @@ class InternationalLogs extends Component {
               <h2>International Logs</h2>
             </div>
 
-            <table className="table table-striped table-hover">
+            <table className="pfes-table table table-striped table-hover">
               <thead>
                 <tr>
                   <th

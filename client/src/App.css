@@ -168,7 +168,7 @@ h3 {
 }
 
 /* //////////////////////////////////// TABLE ////////////////////////////////////*/
-@media only screen and (max-width: 1400px) {
+@media only screen and (max-width: 1500px) {
   .pfes-table {
     font-size: 0.9375rem;
   }

@@ -925,14 +925,14 @@ class InternationalLogCreate extends Component {
                           <input
                             className="form-check-input"
                             type="checkbox"
-                            id="tagUrgent"
+                            id="tagUrgentInternational"
                             name="tagUrgent"
                             checked={this.state.tagUrgent}
                             onChange={this.toggleCheck}
                           />
                           <label
                             className="form-check-label"
-                            htmlFor="tagUrgent"
+                            htmlFor="tagUrgentInternational"
                           >
                             Urgent
                           </label>
@@ -942,14 +942,14 @@ class InternationalLogCreate extends Component {
                           <input
                             className="form-check-input"
                             type="checkbox"
-                            id="tagInsured"
+                            id="tagInsuredInternational"
                             name="tagInsured"
                             checked={this.state.tagInsured}
                             onChange={this.toggleCheck}
                           />
                           <label
                             className="form-check-label"
-                            htmlFor="tagInsured"
+                            htmlFor="tagInsuredInternational"
                           >
                             Insured
                           </label>

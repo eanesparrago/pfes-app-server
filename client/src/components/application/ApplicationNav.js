@@ -107,7 +107,8 @@ class ApplicationNav extends Component {
               to="/app/logs"
               onClick={() => this.handleClick("/app/logs")}
             >
-              <i className="fas fa-book" /> Logs
+              <i className="fas fa-book" />{" "}
+              <span className="d-none d-sm-inline">Logs</span>
             </Link>
           </li>
 
@@ -119,7 +120,8 @@ class ApplicationNav extends Component {
               to="/app/calendar"
               onClick={() => this.handleClick("/app/calendar")}
             >
-              <i className="far fa-calendar-alt" /> Calendar
+              <i className="far fa-calendar-alt" />{" "}
+              <span className="d-none d-sm-inline">Calendar</span>
             </Link>
           </li>
 
@@ -131,7 +133,8 @@ class ApplicationNav extends Component {
               to="/app/statistics"
               onClick={() => this.handleClick("/app/statistics")}
             >
-              <i className="fas fa-chart-bar" /> Statistics
+              <i className="fas fa-chart-bar" />{" "}
+              <span className="d-none d-sm-inline">Statistics</span>
             </Link>
           </li>
 
@@ -143,7 +146,8 @@ class ApplicationNav extends Component {
               to="/app/activity"
               onClick={() => this.handleClick("/app/activity")}
             >
-              <i className="fas fa-list" /> Activity
+              <i className="fas fa-list" />{" "}
+              <span className="d-none d-sm-inline">Activity</span>
             </Link>
           </li>
 
@@ -156,7 +160,8 @@ class ApplicationNav extends Component {
                 to="/app/users"
                 onClick={() => this.handleClick("/app/users")}
               >
-                <i className="fas fa-users" /> Users
+                <i className="fas fa-users" />{" "}
+                <span className="d-none d-sm-inline">Users</span>
               </Link>
             </li>
           ) : null}

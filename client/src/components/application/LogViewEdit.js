@@ -1584,12 +1584,12 @@ export class LogViewEdit extends Component {
                     <input
                       className="form-check-input"
                       type="checkbox"
-                      id="tagUrgent"
+                      id="tagUrgentEdit"
                       name="tagUrgent"
                       checked={this.state.tagUrgent}
                       onChange={this.toggleCheck}
                     />
-                    <label className="form-check-label" htmlFor="tagUrgent">
+                    <label className="form-check-label" htmlFor="tagUrgentEdit">
                       Urgent
                     </label>
                   </div>
@@ -1598,12 +1598,15 @@ export class LogViewEdit extends Component {
                     <input
                       className="form-check-input"
                       type="checkbox"
-                      id="tagInsured"
+                      id="tagInsuredEdit"
                       name="tagInsured"
                       checked={this.state.tagInsured}
                       onChange={this.toggleCheck}
                     />
-                    <label className="form-check-label" htmlFor="tagInsured">
+                    <label
+                      className="form-check-label"
+                      htmlFor="tagInsuredEdit"
+                    >
                       Insured
                     </label>
                   </div>
