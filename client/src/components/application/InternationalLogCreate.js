@@ -31,6 +31,12 @@ class InternationalLogCreate extends Component {
       originCountry: "",
       originLocation: "",
 
+      portOfDepartureCountry: "",
+      portOfDepartureLocation: "",
+
+      portOfArrivalCountry: "",
+      portOfArrivalLocation: "",
+
       destinationCountry: "",
       destinationLocation: "",
 
@@ -75,6 +81,12 @@ class InternationalLogCreate extends Component {
         originCountry: "",
         originLocation: "",
 
+        portOfDepartureCountry: "",
+        portOfDepartureLocation: "",
+
+        portOfArrivalCountry: "",
+        portOfArrivalLocation: "",
+
         destinationCountry: "",
         destinationLocation: "",
 
@@ -99,6 +111,7 @@ class InternationalLogCreate extends Component {
 
   // @onChange
   onChange(e) {
+    // pickupDate, etd, eta
     if (
       e.target.name === "pickupDate" ||
       e.target.name === "etd" ||
@@ -201,6 +214,7 @@ class InternationalLogCreate extends Component {
 
         return;
       }
+      // contactName
     } else if (e.target.name === "contactName") {
       const regex = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u;
 
@@ -210,6 +224,7 @@ class InternationalLogCreate extends Component {
         this.setState({ [e.target.name]: e.target.value });
       }
       return;
+      // contactNumber
     } else if (e.target.name === "contactNumber") {
       const regex = /[\d-]+$/u;
 
@@ -222,12 +237,22 @@ class InternationalLogCreate extends Component {
     } else {
       this.setState({ [e.target.name]: e.target.value });
     }
-
+    // modeofTransport
     if (e.target.name === "modeOfTransport") {
       this.setState({ blAwb: "" });
 
       if (e.target.value === "Air") {
         this.setState({ commodityType: "" });
+      }
+
+      if (e.target.value === "Truck") {
+        this.setState({
+          portOfDepartureCountry: "",
+          portOfDepartureLocation: "",
+
+          portOfArrivalCountry: "",
+          portOfArrivalLocation: ""
+        });
       }
     }
   }
@@ -251,6 +276,12 @@ class InternationalLogCreate extends Component {
 
       originCountry: this.state.originCountry,
       originLocation: this.state.originLocation,
+
+      portOfDepartureCountry: this.state.portOfDepartureCountry,
+      portOfDepartureLocation: this.state.portOfDepartureLocation,
+
+      portOfArrivalCountry: this.state.portOfArrivalCountry,
+      portOfArrivalLocation: this.state.portOfArrivalLocation,
 
       destinationCountry: this.state.destinationCountry,
       destinationLocation: this.state.destinationLocation,
@@ -287,6 +318,12 @@ class InternationalLogCreate extends Component {
       originCountry: "",
       originLocation: "",
 
+      portOfDepartureCountry: "",
+      portOfDepartureLocation: "",
+
+      portOfArrivalCountry: "",
+      portOfArrivalLocation: "",
+
       destinationCountry: "",
       destinationLocation: "",
 
@@ -321,6 +358,12 @@ class InternationalLogCreate extends Component {
 
       originCountry: "",
       originLocation: "",
+
+      portOfDepartureCountry: "",
+      portOfDepartureLocation: "",
+
+      portOfArrivalCountry: "",
+      portOfArrivalLocation: "",
 
       destinationCountry: "",
       destinationLocation: "",
@@ -403,7 +446,7 @@ class InternationalLogCreate extends Component {
                   <div className="row">
                     <div className="form-group col-lg-4">
                       <label className="mb-1" htmlFor="contactName">
-                        Contact Name
+                        <strong>Contact Name</strong>
                       </label>
                       <input
                         type="text"
@@ -425,7 +468,7 @@ class InternationalLogCreate extends Component {
 
                     <div className="form-group col-lg-4">
                       <label className="mb-1" htmlFor="contactNumber">
-                        Contact Number
+                        <strong>Contact Number</strong>
                       </label>
 
                       <input
@@ -448,7 +491,7 @@ class InternationalLogCreate extends Component {
 
                     <div className="form-group col-lg-4">
                       <label className="mb-1" htmlFor="contactEmail">
-                        Contact Email
+                        <strong>Contact Email</strong>
                       </label>
                       <input
                         type="text"
@@ -476,7 +519,7 @@ class InternationalLogCreate extends Component {
                   <div className="row">
                     <div className="form-group col-md-12">
                       <label className="mb-1" htmlFor="associate">
-                        Associate
+                        <strong>Associate</strong>
                       </label>
                       <input
                         readOnly
@@ -500,7 +543,7 @@ class InternationalLogCreate extends Component {
                   <div className="row">
                     <div className="form-group col-md-6">
                       <label className="mb-1" htmlFor="shipperConsignee">
-                        Shipper/Consignee
+                        <strong>Shipper/Consignee</strong>
                       </label>
                       <input
                         type="text"
@@ -522,7 +565,7 @@ class InternationalLogCreate extends Component {
 
                     <div className="form-group col-md-6">
                       <label className="mb-1" htmlFor="modeOfTransport">
-                        Mode of Transport
+                        <strong>Mode of Transport</strong>
                       </label>
 
                       <select
@@ -554,7 +597,7 @@ class InternationalLogCreate extends Component {
                       <div className="row">
                         <div className="form-group col-5 pr-1">
                           <label className="mb-1" htmlFor="commodity">
-                            Commodity
+                            <strong>Commodity</strong>
                           </label>
 
                           <select
@@ -691,7 +734,7 @@ class InternationalLogCreate extends Component {
                   <div className="row mt-3">
                     <div className="form-group col-lg-8">
                       <label className="mb-1" htmlFor="originLocation">
-                        Origin Address
+                        <strong>Origin Address</strong>
                       </label>
 
                       <input
@@ -755,10 +798,147 @@ class InternationalLogCreate extends Component {
                     </div>
                   </div>
 
+                  {/* @portOfDeparture */}
+                  <div className="row">
+                    <div className="form-group col-lg-8">
+                      <label className="mb-1" htmlFor="portOfDepartureLocation">
+                        <strong>Port of Departure</strong>
+                      </label>
+
+                      <input
+                        type="text"
+                        className={classnames("form-control", {
+                          "is-invalid": errors.portOfDepartureLocation
+                        })}
+                        placeholder=""
+                        name="portOfDepartureLocation"
+                        value={this.state.portOfDepartureLocation}
+                        onChange={this.onChange}
+                        maxLength="100"
+                      />
+
+                      <small className="form-text text-muted">Port Name</small>
+
+                      {errors.portOfDepartureLocation && (
+                        <div className="invalid-feedback">
+                          {errors.portOfDepartureLocation}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="form-group col-lg-4">
+                      <label
+                        className="mb-1 d-none d-lg-block"
+                        htmlFor="portOfDepartureCountry"
+                      >
+                        &nbsp;
+                      </label>
+
+                      <select
+                        className={classnames("form-control", {
+                          "is-invalid": errors.portOfDepartureCountry
+                        })}
+                        id="portOfDepartureCountry"
+                        name="portOfDepartureCountry"
+                        value={this.state.portOfDepartureCountry}
+                        onChange={this.onChange}
+                      >
+                        <option value="" disabled defaultValue>
+                          Select a Country
+                        </option>
+
+                        {countries.map((country, index) => {
+                          return (
+                            <option key={index} value={country.name}>
+                              {country.name}
+                            </option>
+                          );
+                        })}
+                      </select>
+
+                      <small className="form-text text-muted">Country</small>
+
+                      {errors.portOfDepartureCountry && (
+                        <div className="invalid-feedback">
+                          {errors.portOfDepartureCountry}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* @portOfArrival */}
+                  <div className="row">
+                    <div className="form-group col-lg-8">
+                      <label className="mb-1" htmlFor="portOfArrivalLocation">
+                        <strong>Port of Arrival</strong>
+                      </label>
+
+                      <input
+                        type="text"
+                        className={classnames("form-control", {
+                          "is-invalid": errors.portOfArrivalLocation
+                        })}
+                        placeholder=""
+                        name="portOfArrivalLocation"
+                        value={this.state.portOfArrivalLocation}
+                        onChange={this.onChange}
+                        maxLength="100"
+                      />
+
+                      <small className="form-text text-muted">Port Name</small>
+
+                      {errors.portOfArrivalLocation && (
+                        <div className="invalid-feedback">
+                          {errors.portOfArrivalLocation}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="form-group col-lg-4">
+                      <label
+                        className="mb-1 d-none d-lg-block"
+                        htmlFor="portOfArrivalCountry"
+                      >
+                        &nbsp;
+                      </label>
+
+                      <select
+                        className={classnames("form-control", {
+                          "is-invalid": errors.portOfArrivalCountry
+                        })}
+                        id="portOfArrivalCountry"
+                        name="portOfArrivalCountry"
+                        value={this.state.portOfArrivalCountry}
+                        onChange={this.onChange}
+                      >
+                        <option value="" disabled defaultValue>
+                          Select a Country
+                        </option>
+
+                        {countries.map((country, index) => {
+                          return (
+                            <option key={index} value={country.name}>
+                              {country.name}
+                            </option>
+                          );
+                        })}
+                      </select>
+
+                      <small className="form-text text-muted">Country</small>
+
+                      {errors.portOfArrivalCountry && (
+                        <div className="invalid-feedback">
+                          {errors.portOfArrivalCountry}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* @destination */}
                   <div className="row">
                     <div className="form-group col-lg-8">
                       <label className="mb-1" htmlFor="destinationLocation">
-                        Destination Address
+                        <strong>Destination Address</strong>
                       </label>
 
                       <input
@@ -828,7 +1008,7 @@ class InternationalLogCreate extends Component {
                     {/* @pickup */}
                     <div className="form-group col-lg-4">
                       <label className="mb-1" htmlFor="pickupDate">
-                        Pickup Date
+                        <strong>Pickup Date</strong>
                       </label>
                       <input
                         type="date"
@@ -851,7 +1031,7 @@ class InternationalLogCreate extends Component {
                     {/* @etd */}
                     <div className="form-group col-lg-4">
                       <label className="mb-1" htmlFor="etd">
-                        ETD
+                        <strong>ETD</strong>
                       </label>
                       <input
                         type="date"
@@ -871,7 +1051,7 @@ class InternationalLogCreate extends Component {
 
                     <div className="form-group col-lg-4">
                       <label className="mb-1" htmlFor="eta">
-                        ETA
+                        <strong>ETA</strong>
                       </label>
                       <input
                         type="date"
@@ -893,7 +1073,7 @@ class InternationalLogCreate extends Component {
                   <div className="row">
                     <div className="form-group col-md-6">
                       <label className="mb-1" htmlFor="status">
-                        Status
+                        <strong>Status</strong>
                       </label>
 
                       <select
@@ -917,7 +1097,7 @@ class InternationalLogCreate extends Component {
 
                     <div className="form-group col-md-6">
                       <label className="mb-1" htmlFor="status">
-                        Tags
+                        <strong>Tags</strong>
                       </label>
 
                       <div className="form-control">

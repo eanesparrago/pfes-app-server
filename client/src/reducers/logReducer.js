@@ -22,6 +22,7 @@ const initialState = {
     tags: {},
     contact: {},
     origin: {},
+    portOfDeparture: {},
     destination: {},
     operations: {
       preloading: { statuses: [] },

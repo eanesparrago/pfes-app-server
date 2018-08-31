@@ -47,6 +47,34 @@ const DomesticLogSchema = new Schema({
       required: true
     }
   },
+  portOfDeparture: {
+    provinceName: {
+      type: String
+    },
+    provinceKey: {
+      type: String
+    },
+    city: {
+      type: String
+    },
+    location: {
+      type: String
+    }
+  },
+  portOfArrival: {
+    provinceName: {
+      type: String
+    },
+    provinceKey: {
+      type: String
+    },
+    city: {
+      type: String
+    },
+    location: {
+      type: String
+    }
+  },
   destination: {
     provinceName: {
       type: String,

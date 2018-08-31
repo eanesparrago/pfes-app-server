@@ -39,6 +39,22 @@ const InternationalLogSchema = new Schema({
       required: true
     }
   },
+  portOfDeparture: {
+    country: {
+      type: String
+    },
+    location: {
+      type: String
+    }
+  },
+  portOfArrival: {
+    country: {
+      type: String
+    },
+    location: {
+      type: String
+    }
+  },
   destination: {
     country: {
       type: String,

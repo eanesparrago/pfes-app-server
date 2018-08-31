@@ -55,11 +55,6 @@ module.exports = function validateLogInput(data) {
     errors.modeOfTransport = "Mode of Transport is required";
   }
 
-  // BL/AWB
-  if (!Validator.isLength(data.blAwb, { max: 100 })) {
-    errors.blAwb = "BL/AWB must not exceed 100 characters";
-  }
-
   // Origin/Destination
   if (data.type === "Domestic") {
     if (Validator.isEmpty(data.originProvinceKey)) {
@@ -92,6 +87,44 @@ module.exports = function validateLogInput(data) {
     if (Validator.isEmpty(data.destinationLocation)) {
       errors.destinationLocation = "Destination address is required";
     }
+
+    if (data.modeOfTransport === "Sea" || data.modeOfTransport === "Air") {
+      // Port of Departure
+      if (!Validator.isLength(data.portOfDepartureLocation, { max: 100 })) {
+        errors.portOfDepartureLocation =
+          "Port of departure name must not exceed 100 characters";
+      }
+      if (Validator.isEmpty(data.portOfDepartureLocation)) {
+        errors.portOfDepartureLocation = "Port of departure name is required";
+      }
+
+      if (Validator.isEmpty(data.portOfDepartureProvinceKey)) {
+        errors.portOfDepartureProvinceKey =
+          "Port of departure province is required";
+      }
+
+      if (Validator.isEmpty(data.portOfDepartureCity)) {
+        errors.portOfDepartureCity = "Port of departure city is required";
+      }
+
+      // Port of Arrival
+      if (!Validator.isLength(data.portOfArrivalLocation, { max: 100 })) {
+        errors.portOfArrivalLocation =
+          "Port of arrival name must not exceed 100 characters";
+      }
+      if (Validator.isEmpty(data.portOfArrivalLocation)) {
+        errors.portOfArrivalLocation = "Port of arrival name is required";
+      }
+
+      if (Validator.isEmpty(data.portOfArrivalProvinceKey)) {
+        errors.portOfArrivalProvinceKey =
+          "Port of arrival province is required";
+      }
+
+      if (Validator.isEmpty(data.portOfArrivalCity)) {
+        errors.portOfArrivalCity = "Port of arrival city is required";
+      }
+    }
   } else if (data.type === "International") {
     if (Validator.isEmpty(data.originCountry)) {
       errors.originCountry = "Origin country is required";
@@ -115,6 +148,37 @@ module.exports = function validateLogInput(data) {
     if (Validator.isEmpty(data.destinationLocation)) {
       errors.destinationLocation = "Destination address is required";
     }
+
+    // Port of Departure
+    if (!Validator.isLength(data.portOfDepartureLocation, { max: 100 })) {
+      errors.portOfDepartureLocation =
+        "Port of departure name must not exceed 100 characters";
+    }
+    if (Validator.isEmpty(data.portOfDepartureLocation)) {
+      errors.portOfDepartureLocation = "Port of departure name is required";
+    }
+
+    if (Validator.isEmpty(data.portOfDepartureCountry)) {
+      errors.portOfDepartureCountry = "Port of departure country is required";
+    }
+
+    // Port of Arrival
+    if (!Validator.isLength(data.portOfArrivalLocation, { max: 100 })) {
+      errors.portOfArrivalLocation =
+        "Port of arrival name must not exceed 100 characters";
+    }
+    if (Validator.isEmpty(data.portOfArrivalLocation)) {
+      errors.portOfArrivalLocation = "Port of arrival name is required";
+    }
+
+    if (Validator.isEmpty(data.portOfArrivalCountry)) {
+      errors.portOfArrivalCountry = "Port of arrival country is required";
+    }
+  }
+
+  // BL/AWB
+  if (!Validator.isLength(data.blAwb, { max: 100 })) {
+    errors.blAwb = "BL/AWB must not exceed 100 characters";
   }
 
   return {
