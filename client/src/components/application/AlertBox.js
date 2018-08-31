@@ -30,7 +30,7 @@ class AlertBox extends Component {
     if (show === true) {
       alert = (
         <div
-          className={classnames("alert alert-dismissible fade show", {
+          className={classnames("pfes-print-hide alert alert-dismissible fade show", {
             "alert-success": success === true,
             "alert-danger": success === false
           })}

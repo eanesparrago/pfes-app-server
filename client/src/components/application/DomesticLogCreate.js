@@ -287,14 +287,9 @@ class DomesticLogCreate extends Component {
         portOfArrivalCity: ""
       });
     } else if (e.target.name === "portOfArrivalCity") {
-      this.setState(
-        {
-          portOfArrivalCity: e.target.value
-        },
-        () => {
-          console.log(this.state);
-        }
-      );
+      this.setState({
+        portOfArrivalCity: e.target.value
+      });
     } else if (e.target.name === "destinationProvinceKey") {
       const province = provinces.filter(
         province => province.key === e.target.value

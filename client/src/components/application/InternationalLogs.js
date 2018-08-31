@@ -85,7 +85,7 @@ class InternationalLogs extends Component {
       tableBody = (
         <tbody>
           <tr>
-            <td className="text-center" colSpan="12">
+            <td className="text-center" colSpan="13">
               <em className="text-muted">No logs found</em>
             </td>
           </tr>

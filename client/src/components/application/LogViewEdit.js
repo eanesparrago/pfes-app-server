@@ -46,6 +46,22 @@ export class LogViewEdit extends Component {
 
       originCountry: "",
 
+      portOfDepartureProvinceName: "",
+      portOfDepartureProvinceKey: "",
+      portOfDepartureCity: "",
+
+      portOfDepartureLocation: "",
+
+      portOfDepartureCountry: "",
+
+      portOfArrivalProvinceName: "",
+      portOfArrivalProvinceKey: "",
+      portOfArrivalCity: "",
+
+      portOfArrivalLocation: "",
+
+      portOfArrivalCountry: "",
+
       destinationProvinceKey: "",
       destinationProvinceName: "",
       destinationCity: "",
@@ -100,7 +116,7 @@ export class LogViewEdit extends Component {
       }
     }
 
-    if (nextProps.log) {
+    if (nextProps.log.log) {
       this.setState({
         domJo: nextProps.log.log.domJo,
         shipperConsignee: nextProps.log.log.shipperConsignee,
@@ -127,6 +143,8 @@ export class LogViewEdit extends Component {
         contactEmail: nextProps.log.log.contact.email,
 
         originLocation: nextProps.log.log.origin.location,
+        portOfDepartureLocation: nextProps.log.log.portOfDeparture.location,
+        portOfArrivalLocation: nextProps.log.log.portOfArrival.location,
         destinationLocation: nextProps.log.log.destination.location
       });
 
@@ -137,6 +155,17 @@ export class LogViewEdit extends Component {
           originProvinceName: nextProps.log.log.origin.provinceName,
           originCity: nextProps.log.log.origin.city,
 
+          portOfDepartureProvinceName:
+            nextProps.log.log.portOfDeparture.provinceName,
+          portOfDepartureProvinceKey:
+            nextProps.log.log.portOfDeparture.provinceKey,
+          portOfDepartureCity: nextProps.log.log.portOfDeparture.city,
+
+          portOfArrivalProvinceName:
+            nextProps.log.log.portOfArrival.provinceName,
+          portOfArrivalProvinceKey: nextProps.log.log.portOfArrival.provinceKey,
+          portOfArrivalCity: nextProps.log.log.portOfArrival.city,
+
           destinationProvinceKey: nextProps.log.log.destination.provinceKey,
           destinationProvinceName: nextProps.log.log.destination.provinceName,
           destinationCity: nextProps.log.log.destination.city
@@ -146,6 +175,8 @@ export class LogViewEdit extends Component {
       if (nextProps.log.log.type === "International") {
         this.setState({
           originCountry: nextProps.log.log.origin.country,
+          portOfDepartureCountry: nextProps.log.log.portOfDeparture.country,
+          portOfArrivalCountry: nextProps.log.log.portOfArrival.country,
           destinationCountry: nextProps.log.log.destination.country
         });
       }
@@ -288,6 +319,39 @@ export class LogViewEdit extends Component {
       this.setState({
         originCity: e.target.value
       });
+    } else if (e.target.name === "portOfDepartureProvinceKey") {
+      const province = provinces.filter(
+        province => province.key === e.target.value
+      );
+
+      this.setState({
+        portOfDepartureProvinceKey: e.target.value,
+        portOfDepartureProvinceName: province[0].name,
+        portOfDepartureCity: ""
+      });
+    } else if (e.target.name === "portOfDepartureCity") {
+      this.setState({
+        portOfDepartureCity: e.target.value
+      });
+    } else if (e.target.name === "portOfArrivalProvinceKey") {
+      const province = provinces.filter(
+        province => province.key === e.target.value
+      );
+
+      this.setState({
+        portOfArrivalProvinceKey: e.target.value,
+        portOfArrivalProvinceName: province[0].name,
+        portOfArrivalCity: ""
+      });
+    } else if (e.target.name === "portOfArrivalCity") {
+      this.setState(
+        {
+          portOfArrivalCity: e.target.value
+        },
+        () => {
+          console.log(this.state);
+        }
+      );
     } else if (e.target.name === "destinationProvinceKey") {
       const province = provinces.filter(
         province => province.key === e.target.value
@@ -374,7 +438,8 @@ export class LogViewEdit extends Component {
       contactEmail: log.contact.email,
 
       originLocation: log.origin.location,
-
+      portOfDepartureLocation: log.portOfDeparture.location,
+      portOfArrivalLocation: log.portOfArrival.location,
       destinationLocation: log.destination.location,
 
       isEditable: false
@@ -386,6 +451,14 @@ export class LogViewEdit extends Component {
         originProvinceName: log.origin.provinceName,
         originCity: log.origin.city,
 
+        portOfDepartureProvinceName: log.portOfDeparture.provinceName,
+        portOfDepartureProvinceKey: log.portOfDeparture.provinceKey,
+        portOfDepartureCity: log.portOfDeparture.city,
+
+        portOfArrivalProvinceName: log.portOfArrival.provinceName,
+        portOfArrivalProvinceKey: log.portOfArrival.provinceKey,
+        portOfArrivalCity: log.portOfArrival.city,
+
         destinationProvinceKey: log.destination.provinceKey,
         destinationProvinceName: log.destination.provinceName,
         destinationCity: log.destination.city
@@ -395,6 +468,8 @@ export class LogViewEdit extends Component {
     if (log.type === "International") {
       this.setState({
         originCountry: log.origin.country,
+        portOfDepartureCountry: log.portOfDeparture.country,
+        portOfArrivalCountry: log.portOfArrival.country,
         destinationCountry: log.destination.country
       });
     }
@@ -426,6 +501,16 @@ export class LogViewEdit extends Component {
         originProvinceName: this.state.originProvinceName,
         originCity: this.state.originCity,
         originLocation: this.state.originLocation,
+
+        portOfDepartureProvinceName: this.state.portOfDepartureProvinceName,
+        portOfDepartureProvinceKey: this.state.portOfDepartureProvinceKey,
+        portOfDepartureCity: this.state.portOfDepartureCity,
+        portOfDepartureLocation: this.state.portOfDepartureLocation,
+
+        portOfArrivalProvinceName: this.state.portOfArrivalProvinceName,
+        portOfArrivalProvinceKey: this.state.portOfArrivalProvinceKey,
+        portOfArrivalCity: this.state.portOfArrivalCity,
+        portOfArrivalLocation: this.state.portOfArrivalLocation,
 
         destinationProvinceKey: this.state.destinationProvinceKey,
         destinationProvinceName: this.state.destinationProvinceName,
@@ -463,6 +548,12 @@ export class LogViewEdit extends Component {
 
         originCountry: this.state.originCountry,
         originLocation: this.state.originLocation,
+
+        portOfDepartureCountry: this.state.portOfDepartureCountry,
+        portOfDepartureLocation: this.state.portOfDepartureLocation,
+
+        portOfArrivalCountry: this.state.portOfArrivalCountry,
+        portOfArrivalLocation: this.state.portOfArrivalLocation,
 
         destinationCountry: this.state.destinationCountry,
         destinationLocation: this.state.destinationLocation,
@@ -519,6 +610,7 @@ export class LogViewEdit extends Component {
             type="button"
             className="btn btn-outline-primary mr-2 mb-3 pfes-print-hide"
             onClick={this.enableEdit}
+            id="editJobOrderBtn"
           >
             Edit Job Order
           </button>
@@ -608,9 +700,10 @@ export class LogViewEdit extends Component {
           <div className="row mt-3">
             {isEditable ? (
               <React.Fragment>
+                {/* @origin */}
                 <div className="form-group col-lg-4 pr-lg-1">
                   <label className="mb-1" htmlFor="originProvinceKey">
-                    Origin Address
+                    <strong>Origin Address</strong>
                   </label>
 
                   <input
@@ -736,12 +829,288 @@ export class LogViewEdit extends Component {
             )}
           </div>
 
+          {/* @portOfDeparture */}
+          <div className="row">
+            {this.state.modeOfTransport === "Sea" ||
+            this.state.modeOfTransport === "Air" ? (
+              isEditable ? (
+                <React.Fragment>
+                  <div className="form-group col-lg-4 pr-lg-1">
+                    <label className="mb-1" htmlFor="portOfDepartureLocation">
+                      <strong>Port of Departure</strong>
+                    </label>
+
+                    <input
+                      type="text"
+                      className={classnames("form-control", {
+                        "is-invalid": errors.portOfDepartureLocation
+                      })}
+                      placeholder=""
+                      name="portOfDepartureLocation"
+                      value={this.state.portOfDepartureLocation}
+                      onChange={this.onChange}
+                      maxLength="100"
+                    />
+
+                    <small className="form-text text-muted">Port Name</small>
+
+                    {errors.portOfDepartureLocation && (
+                      <div className="invalid-feedback">
+                        {errors.portOfDepartureLocation}
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="form-group col-lg-4 px-lg-1">
+                    <label
+                      className="mb-1 d-none d-lg-block"
+                      htmlFor="portOfDepartureProvinceKey"
+                    >
+                      &nbsp;
+                    </label>
+                    <select
+                      className={classnames("form-control", {
+                        "is-invalid": errors.portOfDepartureProvinceKey
+                      })}
+                      id="portOfDepartureProvinceKey"
+                      name="portOfDepartureProvinceKey"
+                      value={this.state.portOfDepartureProvinceKey}
+                      onChange={this.onChange}
+                    >
+                      <option value="" disabled defaultValue>
+                        Select a Province
+                      </option>
+
+                      {provinces.map((province, index) => {
+                        return (
+                          <option key={index} value={province.key}>
+                            {province.name}
+                          </option>
+                        );
+                      })}
+                    </select>
+
+                    <small className="form-text text-muted">Province</small>
+
+                    {errors.portOfDepartureProvinceKey && (
+                      <div className="invalid-feedback">
+                        {errors.portOfDepartureProvinceKey}
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="form-group col-lg-4 pl-lg-1">
+                    <label
+                      className="mb-1 d-none d-lg-block"
+                      htmlFor="portOfDepartureCity"
+                    >
+                      &nbsp;
+                    </label>
+
+                    <select
+                      disabled={
+                        this.state.portOfDepartureProvinceKey === ""
+                          ? true
+                          : false
+                      }
+                      className={classnames("form-control", {
+                        "is-invalid": errors.portOfDepartureCity
+                      })}
+                      id="portOfDepartureCity"
+                      name="portOfDepartureCity"
+                      value={this.state.portOfDepartureCity}
+                      onChange={this.onChange}
+                    >
+                      <option value="" disabled defaultValue>
+                        Select a City/Municipality
+                      </option>
+
+                      {this.state.portOfDepartureProvinceKey === ""
+                        ? null
+                        : cities
+                            .filter(
+                              city =>
+                                city.province ===
+                                this.state.portOfDepartureProvinceKey
+                            )
+                            .map((city, index) => {
+                              return (
+                                <option key={index} value={city.name}>
+                                  {city.name}
+                                </option>
+                              );
+                            })}
+                    </select>
+
+                    <small className="form-text text-muted">
+                      City/Municipality
+                    </small>
+
+                    {errors.portOfDepartureCity && (
+                      <div className="invalid-feedback">
+                        {errors.portOfDepartureCity}
+                      </div>
+                    )}
+                  </div>
+                </React.Fragment>
+              ) : (
+                <div className="col-md-12 mb-2">
+                  <h5>
+                    Port of Departure:{" "}
+                    <strong>
+                      {log.portOfDeparture.location}, {log.portOfDeparture.city}
+                      , {log.portOfDeparture.provinceName}
+                    </strong>
+                  </h5>
+                </div>
+              )
+            ) : null}
+          </div>
+
+          {/* @portOfArrival */}
+          <div className="row">
+            {this.state.modeOfTransport === "Sea" ||
+            this.state.modeOfTransport === "Air" ? (
+              isEditable ? (
+                <React.Fragment>
+                  <div className="form-group col-lg-4 pr-lg-1">
+                    <label className="mb-1" htmlFor="portOfArrivalLocation">
+                      <strong>Port of Arrival</strong>
+                    </label>
+
+                    <input
+                      type="text"
+                      className={classnames("form-control", {
+                        "is-invalid": errors.portOfArrivalLocation
+                      })}
+                      placeholder=""
+                      name="portOfArrivalLocation"
+                      value={this.state.portOfArrivalLocation}
+                      onChange={this.onChange}
+                      maxLength="100"
+                    />
+
+                    <small className="form-text text-muted">Port Name</small>
+
+                    {errors.portOfArrivalLocation && (
+                      <div className="invalid-feedback">
+                        {errors.portOfArrivalLocation}
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="form-group col-lg-4 px-lg-1">
+                    <label
+                      className="mb-1 d-none d-lg-block"
+                      htmlFor="portOfArrivalProvinceKey"
+                    >
+                      &nbsp;
+                    </label>
+                    <select
+                      className={classnames("form-control", {
+                        "is-invalid": errors.portOfArrivalProvinceKey
+                      })}
+                      id="portOfArrivalProvinceKey"
+                      name="portOfArrivalProvinceKey"
+                      value={this.state.portOfArrivalProvinceKey}
+                      onChange={this.onChange}
+                    >
+                      <option value="" disabled defaultValue>
+                        Select a Province
+                      </option>
+
+                      {provinces.map((province, index) => {
+                        return (
+                          <option key={index} value={province.key}>
+                            {province.name}
+                          </option>
+                        );
+                      })}
+                    </select>
+
+                    <small className="form-text text-muted">Province</small>
+
+                    {errors.portOfArrivalProvinceKey && (
+                      <div className="invalid-feedback">
+                        {errors.portOfArrivalProvinceKey}
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="form-group col-lg-4 pl-lg-1">
+                    <label
+                      className="mb-1 d-none d-lg-block"
+                      htmlFor="portOfArrivalCity"
+                    >
+                      &nbsp;
+                    </label>
+
+                    <select
+                      disabled={
+                        this.state.portOfArrivalProvinceKey === ""
+                          ? true
+                          : false
+                      }
+                      className={classnames("form-control", {
+                        "is-invalid": errors.portOfArrivalCity
+                      })}
+                      id="portOfArrivalCity"
+                      name="portOfArrivalCity"
+                      value={this.state.portOfArrivalCity}
+                      onChange={this.onChange}
+                    >
+                      <option value="" disabled defaultValue>
+                        Select a City/Municipality
+                      </option>
+
+                      {this.state.portOfArrivalProvinceKey === ""
+                        ? null
+                        : cities
+                            .filter(
+                              city =>
+                                city.province ===
+                                this.state.portOfArrivalProvinceKey
+                            )
+                            .map((city, index) => {
+                              return (
+                                <option key={index} value={city.name}>
+                                  {city.name}
+                                </option>
+                              );
+                            })}
+                    </select>
+
+                    <small className="form-text text-muted">
+                      City/Municipality
+                    </small>
+
+                    {errors.portOfArrivalCity && (
+                      <div className="invalid-feedback">
+                        {errors.portOfArrivalCity}
+                      </div>
+                    )}
+                  </div>
+                </React.Fragment>
+              ) : (
+                <div className="col-md-12 mb-2">
+                  <h5>
+                    Port of Arrival:{" "}
+                    <strong>
+                      {log.portOfArrival.location}, {log.portOfArrival.city},{" "}
+                      {log.portOfArrival.provinceName}
+                    </strong>
+                  </h5>
+                </div>
+              )
+            ) : null}
+          </div>
+
           <div className="row">
             {isEditable ? (
               <React.Fragment>
                 <div className="form-group col-lg-4 pr-lg-1">
                   <label className="mb-1" htmlFor="destinationProvinceKey">
-                    Destination Address
+                    <strong>Destination Address</strong>
                   </label>
 
                   <input
@@ -874,12 +1243,13 @@ export class LogViewEdit extends Component {
     if (log.type === "International") {
       originDestinationInputs = (
         <React.Fragment>
+          {/* @origin */}
           <div className="row mt-3">
             {isEditable ? (
               <React.Fragment>
                 <div className="form-group col-lg-8">
                   <label className="mb-1" htmlFor="originLocation">
-                    Origin Address
+                    <strong>Origin Address</strong>
                   </label>
 
                   <input
@@ -954,12 +1324,176 @@ export class LogViewEdit extends Component {
             )}
           </div>
 
+          {/* @internationalPortOfDeparture */}
+          <div className="row">
+            {isEditable ? (
+              <React.Fragment>
+                <div className="form-group col-lg-8">
+                  <label className="mb-1" htmlFor="portOfDepartureLocation">
+                    <strong>Port of Departure</strong>
+                  </label>
+
+                  <input
+                    type="text"
+                    className={classnames("form-control", {
+                      "is-invalid": errors.portOfDepartureLocation
+                    })}
+                    placeholder=""
+                    name="portOfDepartureLocation"
+                    value={this.state.portOfDepartureLocation}
+                    onChange={this.onChange}
+                    maxLength="100"
+                  />
+
+                  <small className="form-text text-muted">Port Name</small>
+
+                  {errors.portOfDepartureLocation && (
+                    <div className="invalid-feedback">
+                      {errors.portOfDepartureLocation}
+                    </div>
+                  )}
+                </div>
+
+                <div className="form-group col-lg-4">
+                  <label
+                    className="mb-1 d-none d-lg-block"
+                    htmlFor="portOfDepartureCountry"
+                  >
+                    &nbsp;
+                  </label>
+
+                  <select
+                    className={classnames("form-control", {
+                      "is-invalid": errors.portOfDepartureCountry
+                    })}
+                    id="portOfDepartureCountry"
+                    name="portOfDepartureCountry"
+                    value={this.state.portOfDepartureCountry}
+                    onChange={this.onChange}
+                  >
+                    <option value="" disabled defaultValue>
+                      Select a Country
+                    </option>
+
+                    {countries.map((country, index) => {
+                      return (
+                        <option key={index} value={country.name}>
+                          {country.name}
+                        </option>
+                      );
+                    })}
+                  </select>
+
+                  <small className="form-text text-muted">Country</small>
+
+                  {errors.portOfDepartureCountry && (
+                    <div className="invalid-feedback">
+                      {errors.portOfDepartureCountry}
+                    </div>
+                  )}
+                </div>
+              </React.Fragment>
+            ) : (
+              <div className="col-md-12 mb-2">
+                <h5>
+                  Port of Departure:{" "}
+                  <strong>
+                    {log.portOfDeparture.location},{" "}
+                    {log.portOfDeparture.country}
+                  </strong>
+                </h5>
+              </div>
+            )}
+          </div>
+
+          {/* @internationalPortOfArrival */}
+          <div className="row">
+            {isEditable ? (
+              <React.Fragment>
+                <div className="form-group col-lg-8">
+                  <label className="mb-1" htmlFor="portOfArrivalLocation">
+                    <strong>Port of Arrival</strong>
+                  </label>
+
+                  <input
+                    type="text"
+                    className={classnames("form-control", {
+                      "is-invalid": errors.portOfArrivalLocation
+                    })}
+                    placeholder=""
+                    name="portOfArrivalLocation"
+                    value={this.state.portOfArrivalLocation}
+                    onChange={this.onChange}
+                    maxLength="100"
+                  />
+
+                  <small className="form-text text-muted">Port Name</small>
+
+                  {errors.portOfArrivalLocation && (
+                    <div className="invalid-feedback">
+                      {errors.portOfArrivalLocation}
+                    </div>
+                  )}
+                </div>
+
+                <div className="form-group col-lg-4">
+                  <label
+                    className="mb-1 d-none d-lg-block"
+                    htmlFor="portOfArrivalCountry"
+                  >
+                    &nbsp;
+                  </label>
+
+                  <select
+                    className={classnames("form-control", {
+                      "is-invalid": errors.portOfArrivalCountry
+                    })}
+                    id="portOfArrivalCountry"
+                    name="portOfArrivalCountry"
+                    value={this.state.portOfArrivalCountry}
+                    onChange={this.onChange}
+                  >
+                    <option value="" disabled defaultValue>
+                      Select a Country
+                    </option>
+
+                    {countries.map((country, index) => {
+                      return (
+                        <option key={index} value={country.name}>
+                          {country.name}
+                        </option>
+                      );
+                    })}
+                  </select>
+
+                  <small className="form-text text-muted">Country</small>
+
+                  {errors.portOfArrivalCountry && (
+                    <div className="invalid-feedback">
+                      {errors.portOfArrivalCountry}
+                    </div>
+                  )}
+                </div>
+              </React.Fragment>
+            ) : (
+              <div className="col-md-12 mb-2">
+                <h5>
+                  Port of Arrival:{" "}
+                  <strong>
+                    {log.portOfArrival.location}, {log.portOfArrival.country}
+                  </strong>
+                </h5>
+              </div>
+            )}
+          </div>
+
+          {/* @internationalDestination */}
           <div className="row">
             {isEditable ? (
               <React.Fragment>
                 <div className="form-group col-lg-8">
                   <label className="mb-1" htmlFor="destinationLocation">
-                    Destination Address
+                    <strong>Destination Address</strong>
                   </label>
 
                   <input
@@ -1177,7 +1711,7 @@ export class LogViewEdit extends Component {
             {isEditable ? (
               <div className="form-group col-md-12">
                 <label className="mb-1" htmlFor="associate">
-                  Associate
+                  <strong>Associate</strong>
                 </label>
                 <input
                   readOnly
@@ -1207,7 +1741,7 @@ export class LogViewEdit extends Component {
             {isEditable ? (
               <div className="form-group col-md-6">
                 <label className="mb-1" htmlFor="shipperConsignee">
-                  Shipper/Consignee
+                  <strong>Shipper/Consignee</strong>
                 </label>
                 <input
                   readOnly={!isEditable}
@@ -1238,7 +1772,7 @@ export class LogViewEdit extends Component {
             {isEditable ? (
               <div className="form-group col-md-6">
                 <label className="mb-1" htmlFor="modeOfTransport">
-                  Mode of Transport
+                  <strong>Mode of Transport</strong>
                 </label>
 
                 <select
@@ -1283,7 +1817,7 @@ export class LogViewEdit extends Component {
                 <div className="row">
                   <div className="form-group col-5 pr-1">
                     <label className="mb-1" htmlFor="commodity">
-                      Commodity
+                      <strong>Commodity</strong>
                     </label>
 
                     <select
@@ -1446,7 +1980,7 @@ export class LogViewEdit extends Component {
             {isEditable ? (
               <div className="form-group col-md-4">
                 <label className="mb-1" htmlFor="pickupDate">
-                  Pickup
+                  <strong>Pickup</strong>
                 </label>
                 <input
                   readOnly={!isEditable}
@@ -1477,7 +2011,7 @@ export class LogViewEdit extends Component {
             {isEditable ? (
               <div className="form-group col-md-4">
                 <label className="mb-1" htmlFor="etd">
-                  ETD
+                  <strong>ETD</strong>
                 </label>
                 <input
                   readOnly={!isEditable}
@@ -1509,7 +2043,7 @@ export class LogViewEdit extends Component {
             {isEditable ? (
               <div className="form-group col-md-4">
                 <label className="mb-1" htmlFor="eta">
-                  ETA
+                  <strong>ETA</strong>
                 </label>
                 <input
                   readOnly={!isEditable}
@@ -1543,7 +2077,7 @@ export class LogViewEdit extends Component {
             {isEditable ? (
               <div className="form-group col-md-6">
                 <label className="mb-1" htmlFor="status">
-                  Status
+                  <strong>Status</strong>
                 </label>
 
                 <select
@@ -1576,7 +2110,7 @@ export class LogViewEdit extends Component {
             {isEditable ? (
               <div className="form-group col-md-6">
                 <label className="mb-1" htmlFor="status">
-                  Tags
+                  <strong>Tags</strong>
                 </label>
 
                 <div className="form-control">
@@ -1634,7 +2168,7 @@ export class LogViewEdit extends Component {
             {isEditable ? (
               <div className="form-group col-md-6">
                 <label className="mb-1" htmlFor="contactName">
-                  Contact Name
+                  <strong>Contact Name</strong>
                 </label>
                 <input
                   type="text"
@@ -1662,7 +2196,7 @@ export class LogViewEdit extends Component {
             {isEditable ? (
               <div className="form-group col-md-6">
                 <label className="mb-1" htmlFor="contactNumber">
-                  Contact Number
+                  <strong>Contact Number</strong>
                 </label>
                 <input
                   type="text"
@@ -1692,7 +2226,7 @@ export class LogViewEdit extends Component {
             {isEditable ? (
               <div className="form-group col-md-12">
                 <label className="mb-1" htmlFor="contactEmail">
-                  Contact Email
+                  <strong>Contact Email</strong>
                 </label>
                 <input
                   type="text"

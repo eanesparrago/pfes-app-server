@@ -419,6 +419,29 @@ router.post(
       req.body.originLocation.trim()
     );
 
+    if (
+      req.body.modeOfTransport === "Sea" ||
+      req.body.modeOfTransport === "Air"
+    ) {
+      newLog.portOfDeparture = {};
+      newLog.portOfArrival = {};
+
+      newLog.portOfDeparture.provinceKey = req.body.portOfDepartureProvinceKey;
+      newLog.portOfDeparture.provinceName =
+        req.body.portOfDepartureProvinceName;
+      newLog.portOfDeparture.city = req.body.portOfDepartureCity;
+      newLog.portOfDeparture.location = capitalizeFirstLetter(
+        req.body.portOfDepartureLocation.trim()
+      );
+
+      newLog.portOfArrival.provinceKey = req.body.portOfArrivalProvinceKey;
+      newLog.portOfArrival.provinceName = req.body.portOfArrivalProvinceName;
+      newLog.portOfArrival.city = req.body.portOfArrivalCity;
+      newLog.portOfArrival.location = capitalizeFirstLetter(
+        req.body.portOfArrivalLocation.trim()
+      );
+    }
+
     newLog.destination.provinceKey = req.body.destinationProvinceKey;
     newLog.destination.provinceName = req.body.destinationProvinceName;
     newLog.destination.city = req.body.destinationCity;
@@ -556,10 +579,22 @@ router.post(
 
     newLog.origin = {};
     newLog.destination = {};
+    newLog.portOfDeparture = {};
+    newLog.portOfArrival = {};
 
     newLog.origin.country = req.body.originCountry;
     newLog.origin.location = capitalizeFirstLetter(
       req.body.originLocation.trim()
+    );
+
+    newLog.portOfDeparture.country = req.body.portOfDepartureCountry;
+    newLog.portOfDeparture.location = capitalizeFirstLetter(
+      req.body.portOfDepartureLocation.trim()
+    );
+
+    newLog.portOfArrival.country = req.body.portOfArrivalCountry;
+    newLog.portOfArrival.location = capitalizeFirstLetter(
+      req.body.portOfArrivalLocation.trim()
     );
 
     newLog.destination.country = req.body.destinationCountry;
