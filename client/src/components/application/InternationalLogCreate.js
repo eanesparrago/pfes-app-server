@@ -34,6 +34,7 @@ class InternationalLogCreate extends Component {
       destinationCountry: "",
       destinationLocation: "",
 
+      pickupDate: moment().format("YYYY-MM-DD"),
       etd: moment().format("YYYY-MM-DD"),
       eta: moment().format("YYYY-MM-DD"),
       status: "Ongoing",
@@ -77,6 +78,7 @@ class InternationalLogCreate extends Component {
         destinationCountry: "",
         destinationLocation: "",
 
+        pickupDate: moment().format("YYYY-MM-DD"),
         etd: moment().format("YYYY-MM-DD"),
         eta: moment().format("YYYY-MM-DD"),
         status: "Ongoing",
@@ -97,16 +99,108 @@ class InternationalLogCreate extends Component {
 
   // @onChange
   onChange(e) {
-    if (e.target.name === "etd" || e.target.name === "eta") {
-      this.setState({ [e.target.name]: e.target.value }, () => {
-        const etd = Date.parse(moment(this.state.etd).format("DD MMM YYYY"));
-        const eta = Date.parse(moment(this.state.eta).format("DD MMM YYYY"));
+    if (
+      e.target.name === "pickupDate" ||
+      e.target.name === "etd" ||
+      e.target.name === "eta"
+    ) {
+      if (e.target.value === "") {
+        return;
+      } else {
+        const today = Date.parse(moment());
 
-        if (etd > eta) {
-          this.setState({ eta: this.state.etd });
+        switch (e.target.name) {
+          case "pickupDate":
+            this.setState({ pickupDate: e.target.value }, () => {
+              let pickupDate = Date.parse(
+                moment(this.state.pickupDate).format("DD MMM YYYY")
+              );
+
+              if (pickupDate < today) {
+                this.setState({
+                  pickupDate: moment(today).format("YYYY-MM-DD")
+                });
+              }
+
+              let etd = Date.parse(
+                moment(this.state.etd).format("DD MMM YYYY")
+              );
+
+              if (etd < pickupDate) {
+                this.setState(
+                  {
+                    etd: moment(pickupDate).format("YYYY-MM-DD")
+                  },
+                  () => {
+                    etd = Date.parse(
+                      moment(this.state.etd).format("DD MMM YYYY")
+                    );
+
+                    let eta = Date.parse(
+                      moment(this.state.eta).format("DD MMM YYYY")
+                    );
+
+                    if (eta < etd) {
+                      this.setState({
+                        eta: moment(etd).format("YYYY-MM-DD")
+                      });
+                    }
+                  }
+                );
+              }
+            });
+            break;
+
+          case "etd":
+            this.setState({ etd: e.target.value }, () => {
+              let pickupDate = Date.parse(
+                moment(this.state.pickupDate).format("DD MMM YYYY")
+              );
+
+              let etd = Date.parse(
+                moment(this.state.etd).format("DD MMM YYYY")
+              );
+
+              if (etd < pickupDate) {
+                this.setState({ etd: moment(pickupDate).format("YYYY-MM-DD") });
+              }
+
+              let eta = Date.parse(
+                moment(this.state.eta).format("DD MMM YYYY")
+              );
+
+              if (eta < etd) {
+                this.setState({
+                  eta: moment(etd).format("YYYY-MM-DD")
+                });
+              }
+            });
+            break;
+
+          case "eta":
+            this.setState({ eta: e.target.value }, () => {
+              let etd = Date.parse(
+                moment(this.state.etd).format("DD MMM YYYY")
+              );
+
+              let eta = Date.parse(
+                moment(this.state.eta).format("DD MMM YYYY")
+              );
+
+              if (eta < etd) {
+                this.setState({
+                  eta: moment(etd).format("YYYY-MM-DD")
+                });
+              }
+            });
+            break;
+
+          default:
+            console.log("Oh my...");
         }
-      });
-      return;
+
+        return;
+      }
     } else if (e.target.name === "contactName") {
       const regex = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u;
 
@@ -161,6 +255,7 @@ class InternationalLogCreate extends Component {
       destinationCountry: this.state.destinationCountry,
       destinationLocation: this.state.destinationLocation,
 
+      pickupDate: this.state.pickupDate,
       etd: this.state.etd,
       eta: this.state.eta,
       status: this.state.status,
@@ -195,6 +290,7 @@ class InternationalLogCreate extends Component {
       destinationCountry: "",
       destinationLocation: "",
 
+      pickupDate: moment().format("YYYY-MM-DD"),
       etd: moment().format("YYYY-MM-DD"),
       eta: moment().format("YYYY-MM-DD"),
       status: "Ongoing",
@@ -229,6 +325,7 @@ class InternationalLogCreate extends Component {
       destinationCountry: "",
       destinationLocation: "",
 
+      pickupDate: moment().format("YYYY-MM-DD"),
       etd: moment().format("YYYY-MM-DD"),
       eta: moment().format("YYYY-MM-DD"),
       status: "Ongoing",
@@ -609,9 +706,7 @@ class InternationalLogCreate extends Component {
                         maxLength="100"
                       />
 
-                      <small className="form-text text-muted">
-                        Origin Address
-                      </small>
+                      <small className="form-text text-muted">Address</small>
 
                       {errors.originLocation && (
                         <div className="invalid-feedback">
@@ -729,8 +824,32 @@ class InternationalLogCreate extends Component {
 
                   <div className="dropdown-divider" />
 
-                  <div className="row">
-                    <div className="form-group col-md-6">
+                  <div className="row mt-3">
+                    {/* @pickup */}
+                    <div className="form-group col-lg-4">
+                      <label className="mb-1" htmlFor="pickupDate">
+                        Pickup Date
+                      </label>
+                      <input
+                        type="date"
+                        className={classnames("form-control", {
+                          "is-invalid": errors.pickupDate
+                        })}
+                        name="pickupDate"
+                        value={this.state.pickupDate}
+                        onChange={this.onChange}
+                        min={moment().format("YYYY-MM-DD")}
+                        max="2999-01-01"
+                      />
+                      {errors.pickupDate && (
+                        <div className="invalid-feedback">
+                          {errors.pickupDate}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* @etd */}
+                    <div className="form-group col-lg-4">
                       <label className="mb-1" htmlFor="etd">
                         ETD
                       </label>
@@ -742,13 +861,15 @@ class InternationalLogCreate extends Component {
                         name="etd"
                         value={this.state.etd}
                         onChange={this.onChange}
-                        min={moment().format("YYYY-MM-DD")}
+                        min={moment(this.state.pickupDate).format("YYYY-MM-DD")}
+                        max="2999-01-01"
                       />
                       {errors.etd && (
                         <div className="invalid-feedback">{errors.etd}</div>
                       )}
                     </div>
-                    <div className="form-group col-md-6">
+
+                    <div className="form-group col-lg-4">
                       <label className="mb-1" htmlFor="eta">
                         ETA
                       </label>
@@ -761,6 +882,7 @@ class InternationalLogCreate extends Component {
                         value={this.state.eta}
                         onChange={this.onChange}
                         min={etaLimit}
+                        max="2999-01-01"
                       />
                       {errors.eta && (
                         <div className="invalid-feedback">{errors.eta}</div>

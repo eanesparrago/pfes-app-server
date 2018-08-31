@@ -241,14 +241,20 @@ class DomesticLogs extends Component {
                   {log.origin.location}, {log.origin.city},{" "}
                   {log.origin.provinceName}
                 </td>
+
                 <td>
                   {log.destination.location}, {log.destination.city},{" "}
                   {log.destination.provinceName}
                 </td>
 
+                <td title={moment(log.pickupDate).format("MMMM Do YYYY")}>
+                  <Moment format="MM/DD/YYYY">{log.pickupDate}</Moment>
+                </td>
+
                 <td title={moment(log.etd).format("MMMM Do YYYY")}>
                   <Moment format="MM/DD/YYYY">{log.etd}</Moment>
                 </td>
+
                 <td title={moment(log.eta).format("MMMM Do YYYY")}>
                   <Moment format="MM/DD/YYYY">{log.eta}</Moment>
                 </td>
@@ -341,6 +347,7 @@ class DomesticLogs extends Component {
                 <option value="destinationProvince">
                   Destination Province
                 </option>
+                <option value="pickupDate">Pickup</option>
                 <option value="etd">ETD</option>
                 <option value="eta">ETA</option>
                 <option value="status">Status</option>
@@ -400,6 +407,7 @@ class DomesticLogs extends Component {
                       </select>
                     );
 
+                  case "pickupDate":
                   case "etd":
                   case "eta":
                     return (
@@ -666,6 +674,28 @@ class DomesticLogs extends Component {
                         }
                       )}
                       onClick={() => this.onClickSort("destination")}
+                    />
+                  </th>
+
+                  <th
+                    className="text-nowrap"
+                    scope="col"
+                    style={{ width: "7rem" }}
+                  >
+                    Pickup&nbsp;
+                    <i
+                      className={classnames(
+                        "far fa-caret-square-down pfes-print-hide",
+                        {
+                          "text-primary": sortKey === "pickupDate",
+                          "text-secondary": sortKey !== "pickupDate",
+                          "fas fa-caret-square-down":
+                            sortKey === "pickupDate" && sortOrder === false,
+                          "fas fa-caret-square-up":
+                            sortKey === "pickupDate" && sortOrder === true
+                        }
+                      )}
+                      onClick={() => this.onClickSort("pickupDate")}
                     />
                   </th>
 

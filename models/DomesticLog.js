@@ -65,6 +65,11 @@ const DomesticLogSchema = new Schema({
       required: true
     }
   },
+  pickupDate: {
+    type: Date,
+    default: Date.now,
+    required: true
+  },
   etd: {
     type: Date,
     default: Date.now,

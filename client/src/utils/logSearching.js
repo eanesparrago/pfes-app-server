@@ -35,6 +35,7 @@ export default (logs, category, value) => {
     search.addIndex("shipperConsignee");
     search.addIndex("modeOfTransport");
     search.addIndex("blAwb");
+    search.addIndex("pickupDate");
     search.addIndex("etd");
     search.addIndex("eta");
     search.addIndex(["origin", "location"]);

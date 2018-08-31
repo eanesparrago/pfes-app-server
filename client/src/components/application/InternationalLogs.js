@@ -244,6 +244,10 @@ class InternationalLogs extends Component {
                   {log.destination.location}, {log.destination.country}
                 </td>
 
+                <td title={moment(log.pickupDate).format("MMMM Do YYYY")}>
+                  <Moment format="MM/DD/YYYY">{log.pickupDate}</Moment>
+                </td>
+
                 <td title={moment(log.etd).format("MMMM Do YYYY")}>
                   <Moment format="MM/DD/YYYY">{log.etd}</Moment>
                 </td>
@@ -333,6 +337,7 @@ class InternationalLogs extends Component {
                 <option value="originCountry">Origin Country</option>
                 <option value="destinationLocation">Destination Address</option>
                 <option value="destinationCountry">Destination Country</option>
+                <option value="pickupDate">Pickup</option>
                 <option value="etd">ETD</option>
                 <option value="eta">ETA</option>
                 <option value="status">Status</option>
@@ -391,6 +396,7 @@ class InternationalLogs extends Component {
                       </select>
                     );
 
+                  case "pickupDate":
                   case "etd":
                   case "eta":
                     return (
@@ -660,6 +666,28 @@ class InternationalLogs extends Component {
                         }
                       )}
                       onClick={() => this.onClickSort("destination")}
+                    />
+                  </th>
+
+                  <th
+                    className="text-nowrap"
+                    scope="col"
+                    style={{ width: "7rem" }}
+                  >
+                    Pickup&nbsp;
+                    <i
+                      className={classnames(
+                        "far fa-caret-square-down pfes-print-hide",
+                        {
+                          "text-primary": sortKey === "pickupDate",
+                          "text-secondary": sortKey !== "pickupDate",
+                          "fas fa-caret-square-down":
+                            sortKey === "pickupDate" && sortOrder === false,
+                          "fas fa-caret-square-up":
+                            sortKey === "pickupDate" && sortOrder === true
+                        }
+                      )}
+                      onClick={() => this.onClickSort("pickupDate")}
                     />
                   </th>
 

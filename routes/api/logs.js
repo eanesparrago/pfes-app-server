@@ -141,6 +141,7 @@ router.post(
       req.body.destinationLocation.trim()
     );
 
+    if (req.body.pickupDate) newLog.pickupDate = req.body.pickupDate;
     if (req.body.etd) newLog.etd = req.body.etd;
     if (req.body.eta) newLog.eta = req.body.eta;
 
@@ -263,6 +264,7 @@ router.post(
       req.body.destinationLocation.trim()
     );
 
+    if (req.body.pickupDate) newLog.pickupDate = req.body.pickupDate;
     if (req.body.etd) newLog.etd = req.body.etd;
     if (req.body.eta) newLog.eta = req.body.eta;
 
@@ -396,6 +398,7 @@ router.post(
       req.body.destinationLocation.trim()
     );
 
+    if (req.body.pickupDate) newLog.pickupDate = req.body.pickupDate;
     if (req.body.etd) newLog.etd = req.body.etd;
     if (req.body.eta) newLog.eta = req.body.eta;
 
@@ -536,6 +539,7 @@ router.post(
       req.body.destinationLocation.trim()
     );
 
+    if (req.body.pickupDate) newLog.pickupDate = req.body.pickupDate;
     if (req.body.etd) newLog.etd = req.body.etd;
     if (req.body.eta) newLog.eta = req.body.eta;
 
