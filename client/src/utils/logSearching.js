@@ -44,6 +44,7 @@ export default (logs, category, value) => {
     search.addIndex(["destination", "location"]);
     search.addIndex(["destination", "city"]);
     search.addIndex(["destination", "provinceName"]);
+    search.addIndex("status");
     return search.search(value);
   } else if (category === "tags") {
     switch (value) {

@@ -22,7 +22,7 @@ export default function(logs) {
       id: log._id,
       title: `${log.type.charAt(0)}-${log.domJo}`,
       allDay: true,
-      start: moment(log.etd).format("YYYY-MM-DD"),
+      start: moment(log.pickupDate).format("YYYY-MM-DD"),
       end: moment(log.eta).format("YYYY-MM-DD"),
       type: log.type,
       shipperConsignee: log.shipperConsignee,
