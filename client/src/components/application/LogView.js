@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Moment from "react-moment";
 import moment from "moment";
+import $ from "jquery";
 
 import LogViewEdit from "./LogViewEdit";
 import Operations from "./Operations";
@@ -13,24 +14,13 @@ class LogView extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      isOpen: false
-    };
-
     this.close = this.close.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.log) {
-      this.setState({ isOpen: true });
-    }
-  }
-
   close() {
-    this.setState({ isOpen: false });
     this.props.clearAlert();
 
-    this.child.closeEdit();
+    $("#editBack").click();
   }
 
   render() {

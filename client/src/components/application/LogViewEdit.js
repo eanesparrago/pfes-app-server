@@ -105,14 +105,6 @@ export class LogViewEdit extends Component {
     this.toPrint = React.createRef();
   }
 
-  componentDidMount() {
-    this.props.onRef(this);
-  }
-
-  componentWillUnmount() {
-    this.props.onRef(undefined);
-  }
-
   // @componentswillreceiveprops
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
@@ -1615,6 +1607,7 @@ export class LogViewEdit extends Component {
               isEditable ? (
                 <button
                   disabled={submitInProgress ? true : false}
+                  id="editBack"
                   type="button"
                   className="btn btn-secondary mb-3 mr-2"
                   onClick={this.closeEdit}
