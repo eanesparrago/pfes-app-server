@@ -105,6 +105,14 @@ export class LogViewEdit extends Component {
     this.toPrint = React.createRef();
   }
 
+  componentDidMount() {
+    this.props.onRef(this);
+  }
+
+  componentWillUnmount() {
+    this.props.onRef(undefined);
+  }
+
   // @componentswillreceiveprops
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
@@ -1717,33 +1725,11 @@ export class LogViewEdit extends Component {
 
         <form noValidate>
           <div className="row">
-            {isEditable ? (
-              <div className="form-group col-md-12">
-                <label className="mb-1" htmlFor="associate">
-                  <strong>Associate</strong>
-                </label>
-                <input
-                  readOnly
-                  type="text"
-                  className={classnames("form-control", {
-                    "is-invalid": errors.associate
-                  })}
-                  placeholder=""
-                  name="associate"
-                  value={this.state.associate}
-                  // onChange={this.onChange}
-                />
-                {errors.associate && (
-                  <div className="invalid-feedback">{errors.associate}</div>
-                )}
-              </div>
-            ) : (
-              <div className="col-md-6 mb-2">
-                <h5>
-                  Associate: <strong>{log.associate}</strong>
-                </h5>
-              </div>
-            )}
+            <div className="col-md-6 mb-2">
+              <h5>
+                Associate: <strong>{log.associate}</strong>
+              </h5>
+            </div>
           </div>
 
           <div className="row">
@@ -2172,10 +2158,7 @@ export class LogViewEdit extends Component {
           <div className="row">
             {isEditable ? (
               <div className="form-group col-12">
-                <label
-                  className="mb-1"
-                  htmlFor="domesticCreateAdditional"
-                >
+                <label className="mb-1" htmlFor="domesticCreateAdditional">
                   <strong>Remarks</strong>
                 </label>
 
@@ -2189,7 +2172,9 @@ export class LogViewEdit extends Component {
               </div>
             ) : (
               <div className="col-md-4 mb-2">
-                <h5>Remarks: <em>{log.additional}</em></h5>
+                <h5>
+                  Remarks: <em>{log.additional}</em>
+                </h5>
               </div>
             )}
           </div>

@@ -29,6 +29,8 @@ class LogView extends Component {
   close() {
     this.setState({ isOpen: false });
     this.props.clearAlert();
+
+    this.child.closeEdit();
   }
 
   render() {
@@ -68,7 +70,7 @@ class LogView extends Component {
             </div>
             <div className="modal-body">
               {/* //////////// FORM //////////// */}
-              <LogViewEdit isOpen={this.state.isOpen} />
+              <LogViewEdit onRef={ref => (this.child = ref)} />
 
               {/* //////////// OPERATIONS //////////// */}
               <React.Fragment>
