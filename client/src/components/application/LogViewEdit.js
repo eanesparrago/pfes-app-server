@@ -356,10 +356,8 @@ export class LogViewEdit extends Component {
       this.setState(
         {
           portOfArrivalCity: e.target.value
-        },
-        () => {
-          console.log(this.state);
         }
+        
       );
     } else if (e.target.name === "destinationProvinceKey") {
       const province = provinces.filter(
@@ -2177,7 +2175,7 @@ export class LogViewEdit extends Component {
                 )}
               </div>
             ) : (
-              <div className="col-md-6 mb-2">
+              <div className="col-md-4 mb-2">
                 <h5>
                   Status: <strong>{log.status}</strong>
                 </h5>

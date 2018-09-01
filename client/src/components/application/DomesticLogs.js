@@ -248,7 +248,10 @@ class DomesticLogs extends Component {
                 </td>
 
                 <td title={moment(log.pickupDate).format("MMMM Do YYYY")}>
-                  <Moment format="MM/DD/YYYY">{log.pickupDate}</Moment>
+                  <Moment format="MM/DD/YYYY">{log.pickupDate}</Moment>{" "}
+                  {log.pickupTime && log.pickupTime !== ""
+                    ? moment(log.pickupTime, "HH:mm").format("h:mm a")
+                    : null}
                 </td>
 
                 <td title={moment(log.etd).format("MMMM Do YYYY")}>
@@ -262,7 +265,10 @@ class DomesticLogs extends Component {
                 </td>
 
                 <td title={moment(log.eta).format("MMMM Do YYYY")}>
-                  <Moment format="MM/DD/YYYY">{log.eta}</Moment>
+                  <Moment format="MM/DD/YYYY">{log.eta}</Moment>{" "}
+                  {log.deliveryTime && log.deliveryTime !== ""
+                    ? moment(log.deliveryTime, "HH:mm").format("h:mm a")
+                    : null}
                 </td>
 
                 <td>
