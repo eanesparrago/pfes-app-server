@@ -54,6 +54,9 @@ class DomesticLogCreate extends Component {
       eta: moment().format("YYYY-MM-DD"),
       status: "Ongoing",
 
+      pickupTime: "",
+      deliveryTime: "",
+
       contactName: "",
       contactNumber: "",
       contactEmail: "",
@@ -113,6 +116,9 @@ class DomesticLogCreate extends Component {
         etd: moment().format("YYYY-MM-DD"),
         eta: moment().format("YYYY-MM-DD"),
         status: "Ongoing",
+
+        pickupTime: "",
+        deliveryTime: "",
 
         contactName: "",
         contactNumber: "",
@@ -308,6 +314,15 @@ class DomesticLogCreate extends Component {
       this.setState({
         destinationCity: e.target.value
       });
+    } else if (
+      e.target.name === "pickupTime" ||
+      e.target.name === "deliveryTime"
+    ) {
+      if (e.target.value === "") {
+        return;
+      } else {
+        this.setState({ [e.target.name]: e.target.value });
+      }
     } else {
       this.setState({ [e.target.name]: e.target.value });
     }
@@ -329,7 +344,9 @@ class DomesticLogCreate extends Component {
           portOfArrivalProvinceName: "",
           portOfArrivalProvinceKey: "",
           portOfArrivalCity: "",
-          portOfArrivalLocation: ""
+          portOfArrivalLocation: "",
+
+          etd: this.state.pickupDate
         });
       }
     }
@@ -376,6 +393,9 @@ class DomesticLogCreate extends Component {
       etd: this.state.etd,
       eta: this.state.eta,
       status: this.state.status,
+
+      pickupTime: this.state.pickupTime,
+      deliveryTime: this.state.deliveryTime,
 
       tagUrgent: this.state.tagUrgent,
       tagInsured: this.state.tagInsured,
@@ -428,6 +448,9 @@ class DomesticLogCreate extends Component {
       eta: moment().format("YYYY-MM-DD"),
       status: "Ongoing",
 
+      pickupTime: "",
+      deliveryTime: "",
+
       contactName: "",
       contactNumber: "",
       contactEmail: "",
@@ -477,6 +500,9 @@ class DomesticLogCreate extends Component {
       etd: moment().format("YYYY-MM-DD"),
       eta: moment().format("YYYY-MM-DD"),
       status: "Ongoing",
+
+      pickupTime: "",
+      deliveryTime: "",
 
       contactName: "",
       contactNumber: "",
@@ -627,26 +653,11 @@ class DomesticLogCreate extends Component {
                   <h5 className="text-primary mt-3">Job Order Details</h5>
 
                   <div className="row">
-                    <div className="form-group col-md-12">
-                      <label className="mb-1" htmlFor="associate">
-                        <strong>Associate</strong>
-                      </label>
-                      <input
-                        readOnly
-                        type="text"
-                        className={classnames("form-control", {
-                          "is-invalid": errors.associate
-                        })}
-                        placeholder=""
-                        name="associate"
-                        value={`${auth.user.firstName} ${auth.user.lastName}`}
-                        // onChange={this.onChange}
-                      />
-                      {errors.associate && (
-                        <div className="invalid-feedback">
-                          {errors.associate}
-                        </div>
-                      )}
+                    <div className="col-md-12 my-2">
+                      <h5>
+                        <strong>Associate: </strong>
+                        {auth.user.firstName} {auth.user.lastName}
+                      </h5>
                     </div>
                   </div>
 
@@ -1374,15 +1385,27 @@ class DomesticLogCreate extends Component {
                     {/* @etd */}
                     <div className="form-group col-lg-4">
                       <label className="mb-1" htmlFor="etd">
-                        <strong>ETD</strong>
+                        <strong>ETD</strong>{" "}
+                        <em className="text-muted">&mdash; For Sea and Air</em>
                       </label>
                       <input
+                        disabled={
+                          this.state.modeOfTransport === "Truck" ? true : false
+                        }
                         type="date"
                         className={classnames("form-control", {
                           "is-invalid": errors.etd
                         })}
-                        name="etd"
-                        value={this.state.etd}
+                        name={
+                          this.state.modeOfTransport === "Truck"
+                            ? "pickupDate"
+                            : "etd"
+                        }
+                        value={
+                          this.state.modeOfTransport === "Truck"
+                            ? this.state.pickupDate
+                            : this.state.etd
+                        }
                         onChange={this.onChange}
                         min={moment(this.state.pickupDate).format("YYYY-MM-DD")}
                         max="2999-01-01"
@@ -1412,6 +1435,50 @@ class DomesticLogCreate extends Component {
                       )}
                     </div>
                   </div>
+
+                  {this.state.modeOfTransport === "Truck" ? (
+                    <div className="row">
+                      {/* @pickupTime */}
+                      <div className="form-group col-md-6">
+                        <label className="mb-1" htmlFor="pickupTime">
+                          <strong>Pickup Time</strong>{" "}
+                          <span className="text-muted">
+                            <em>&mdash; Optional</em>
+                          </span>
+                        </label>
+
+                        <input
+                          type="time"
+                          className={classnames("form-control", {
+                            "is-invalid": errors.pickupTime
+                          })}
+                          name="pickupTime"
+                          value={this.state.pickupTime}
+                          onChange={this.onChange}
+                        />
+                      </div>
+
+                      <div className="form-group col-md-6">
+                        <label className="mb-1" htmlFor="deliveryTime">
+                          <strong>Est. Arrival Time</strong>{" "}
+                          <span className="text-muted">
+                            <em>&mdash; Optional</em>
+                          </span>
+                        </label>
+
+                        <input
+                          type="time"
+                          className={classnames("form-control", {
+                            "is-invalid": errors.deliveryTime
+                          })}
+                          name="deliveryTime"
+                          value={this.state.deliveryTime}
+                          onChange={this.onChange}
+                          min={this.state.pickupTime}
+                        />
+                      </div>
+                    </div>
+                  ) : null}
 
                   <div className="row">
                     <div className="form-group col-md-6">

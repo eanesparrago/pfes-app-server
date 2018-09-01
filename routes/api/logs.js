@@ -136,19 +136,35 @@ router.post(
       req.body.originLocation.trim()
     );
 
-    newLog.portOfDeparture.provinceKey = req.body.portOfDepartureProvinceKey;
-    newLog.portOfDeparture.provinceName = req.body.portOfDepartureProvinceName;
-    newLog.portOfDeparture.city = req.body.portOfDepartureCity;
-    newLog.portOfDeparture.location = capitalizeFirstLetter(
-      req.body.portOfDepartureLocation.trim()
-    );
+    if (
+      req.body.modeOfTransport === "Sea" ||
+      req.body.modeOfTransport === "Air"
+    ) {
+      newLog.portOfDeparture.provinceKey = req.body.portOfDepartureProvinceKey;
+      newLog.portOfDeparture.provinceName =
+        req.body.portOfDepartureProvinceName;
+      newLog.portOfDeparture.city = req.body.portOfDepartureCity;
+      newLog.portOfDeparture.location = capitalizeFirstLetter(
+        req.body.portOfDepartureLocation.trim()
+      );
 
-    newLog.portOfArrival.provinceKey = req.body.portOfArrivalProvinceKey;
-    newLog.portOfArrival.provinceName = req.body.portOfArrivalProvinceName;
-    newLog.portOfArrival.city = req.body.portOfArrivalCity;
-    newLog.portOfArrival.location = capitalizeFirstLetter(
-      req.body.portOfArrivalLocation.trim()
-    );
+      newLog.portOfArrival.provinceKey = req.body.portOfArrivalProvinceKey;
+      newLog.portOfArrival.provinceName = req.body.portOfArrivalProvinceName;
+      newLog.portOfArrival.city = req.body.portOfArrivalCity;
+      newLog.portOfArrival.location = capitalizeFirstLetter(
+        req.body.portOfArrivalLocation.trim()
+      );
+    } else {
+      newLog.portOfDeparture.provinceKey = "";
+      newLog.portOfDeparture.provinceName = "";
+      newLog.portOfDeparture.city = "";
+      newLog.portOfDeparture.location = "";
+
+      newLog.portOfArrival.provinceKey = "";
+      newLog.portOfArrival.provinceName = "";
+      newLog.portOfArrival.city = "";
+      newLog.portOfArrival.location = "";
+    }
 
     newLog.destination.provinceKey = req.body.destinationProvinceKey;
     newLog.destination.provinceName = req.body.destinationProvinceName;
@@ -160,6 +176,18 @@ router.post(
     if (req.body.pickupDate) newLog.pickupDate = req.body.pickupDate;
     if (req.body.etd) newLog.etd = req.body.etd;
     if (req.body.eta) newLog.eta = req.body.eta;
+
+    if (req.body.pickupTime && req.body.modeOfTransport === "Truck") {
+      newLog.pickupTime = req.body.pickupTime;
+    } else {
+      newLog.pickupTime = "";
+    }
+
+    if (req.body.deliveryTime && req.body.modeOfTransport === "Truck") {
+      newLog.deliveryTime = req.body.deliveryTime;
+    } else {
+      newLog.deliveryTime = "";
+    }
 
     if (req.body.status) newLog.status = req.body.status;
 
@@ -431,13 +459,13 @@ router.post(
       req.body.originLocation.trim()
     );
 
+    newLog.portOfDeparture = {};
+    newLog.portOfArrival = {};
+
     if (
       req.body.modeOfTransport === "Sea" ||
       req.body.modeOfTransport === "Air"
     ) {
-      newLog.portOfDeparture = {};
-      newLog.portOfArrival = {};
-
       newLog.portOfDeparture.provinceKey = req.body.portOfDepartureProvinceKey;
       newLog.portOfDeparture.provinceName =
         req.body.portOfDepartureProvinceName;
@@ -452,6 +480,16 @@ router.post(
       newLog.portOfArrival.location = capitalizeFirstLetter(
         req.body.portOfArrivalLocation.trim()
       );
+    } else {
+      newLog.portOfDeparture.provinceKey = "";
+      newLog.portOfDeparture.provinceName = "";
+      newLog.portOfDeparture.city = "";
+      newLog.portOfDeparture.location = "";
+
+      newLog.portOfArrival.provinceKey = "";
+      newLog.portOfArrival.provinceName = "";
+      newLog.portOfArrival.city = "";
+      newLog.portOfArrival.location = "";
     }
 
     newLog.destination.provinceKey = req.body.destinationProvinceKey;
@@ -464,6 +502,18 @@ router.post(
     if (req.body.pickupDate) newLog.pickupDate = req.body.pickupDate;
     if (req.body.etd) newLog.etd = req.body.etd;
     if (req.body.eta) newLog.eta = req.body.eta;
+
+    if (req.body.pickupTime && req.body.modeOfTransport === "Truck") {
+      newLog.pickupTime = req.body.pickupTime;
+    } else {
+      newLog.pickupTime = "";
+    }
+
+    if (req.body.deliveryTime && req.body.modeOfTransport === "Truck") {
+      newLog.deliveryTime = req.body.deliveryTime;
+    } else {
+      newLog.deliveryTime = "";
+    }
 
     newLog.status = req.body.status;
 

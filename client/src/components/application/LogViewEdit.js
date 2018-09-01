@@ -77,6 +77,9 @@ export class LogViewEdit extends Component {
       type: "",
       remarks: "",
 
+      pickupTime: "",
+      deliveryTime: "",
+
       contactName: "",
       contactNumber: "",
       contactEmail: "",
@@ -171,7 +174,10 @@ export class LogViewEdit extends Component {
 
           destinationProvinceKey: nextProps.log.log.destination.provinceKey,
           destinationProvinceName: nextProps.log.log.destination.provinceName,
-          destinationCity: nextProps.log.log.destination.city
+          destinationCity: nextProps.log.log.destination.city,
+
+          pickupTime: nextProps.log.log.pickupTime,
+          deliveryTime: nextProps.log.log.deliveryTime
         });
       }
 
@@ -452,6 +458,9 @@ export class LogViewEdit extends Component {
 
     if (log.type === "Domestic") {
       this.setState({
+        pickupTime: log.pickupTime,
+        deliveryTime: log.deliveryTime,
+
         originProvinceKey: log.origin.provinceKey,
         originProvinceName: log.origin.provinceName,
         originCity: log.origin.city,
@@ -526,6 +535,9 @@ export class LogViewEdit extends Component {
         etd: this.state.etd,
         eta: this.state.eta,
         status: this.state.status,
+
+        pickupTime: this.state.pickupTime,
+        deliveryTime: this.state.deliveryTime,
 
         tagUrgent: this.state.tagUrgent,
         tagInsured: this.state.tagInsured,
@@ -1986,11 +1998,18 @@ export class LogViewEdit extends Component {
                 )}
               </div>
             ) : (
-              <div className="col-md-4 mb-2">
+              <div
+                className={classnames("col-md-4 mb-2", {
+                  "col-md-6": log.modeOfTransport === "Truck"
+                })}
+              >
                 <h5>
                   Pickup:{" "}
                   <strong title={moment(log.pickupDate).format("MMMM Do YYYY")}>
-                    <Moment format="MM/DD/YYYY">{log.pickupDate}</Moment>
+                    <Moment format="MM/DD/YYYY">{log.pickupDate}</Moment>{" "}
+                    {log.pickupTime && log.pickupTime !== ""
+                      ? moment(log.pickupTime, "HH:mm").format("h:mm a")
+                      : null}
                   </strong>
                 </h5>
               </div>
@@ -2002,13 +2021,24 @@ export class LogViewEdit extends Component {
                   <strong>ETD</strong>
                 </label>
                 <input
+                  disabled={
+                    this.state.modeOfTransport === "Truck" ? true : false
+                  }
                   readOnly={!isEditable}
                   type="date"
                   className={classnames("form-control", {
                     "is-invalid": errors.etd
                   })}
-                  name="etd"
-                  value={this.state.etd}
+                  name={
+                    this.state.modeOfTransport === "Truck"
+                      ? "pickupDate"
+                      : "etd"
+                  }
+                  value={
+                    this.state.modeOfTransport === "Truck"
+                      ? this.state.pickupDate
+                      : this.state.etd
+                  }
                   onChange={this.onChange}
                   min={moment(this.state.pickupDate).format("YYYY-MM-DD")}
                   max="2999-01-01"
@@ -2017,13 +2047,17 @@ export class LogViewEdit extends Component {
                   <div className="invalid-feedback">{errors.etd}</div>
                 )}
               </div>
-            ) : (
+            ) : log.modeOfTransport === "Truck" ? null : (
               <div className="col-md-4 mb-2">
                 <h5>
-                  ETD:{" "}
-                  <strong title={moment(log.etd).format("MMMM Do YYYY")}>
-                    <Moment format="MM/DD/YYYY">{log.etd}</Moment>
-                  </strong>
+                  {this.state.modeOfTransport === "Truck" ? null : (
+                    <span>
+                      ETD:{" "}
+                      <strong title={moment(log.etd).format("MMMM Do YYYY")}>
+                        <Moment format="MM/DD/YYYY">{log.etd}</Moment>
+                      </strong>
+                    </span>
+                  )}
                 </h5>
               </div>
             )}
@@ -2050,16 +2084,71 @@ export class LogViewEdit extends Component {
                 )}
               </div>
             ) : (
-              <div className="col-md-4 mb-2">
+              <div
+                className={classnames("col-md-4 mb-2", {
+                  "col-md-6": log.modeOfTransport === "Truck"
+                })}
+              >
                 <h5>
                   ETA:{" "}
                   <strong title={moment(log.eta).format("MMMM Do YYYY")}>
-                    <Moment format="MM/DD/YYYY">{log.eta}</Moment>
+                    <Moment format="MM/DD/YYYY">{log.eta}</Moment>{" "}
+                    {log.deliveryTime && log.deliveryTime !== ""
+                      ? moment(log.deliveryTime, "HH:mm").format("h:mm a")
+                      : null}
                   </strong>
                 </h5>
               </div>
             )}
           </div>
+
+          {this.state.modeOfTransport === "Truck" ? (
+            <div className="row">
+              {/* @pickupTime */}
+              {isEditable ? (
+                <div className="form-group col-md-6">
+                  <label className="mb-1" htmlFor="pickupTime">
+                    <strong>Pickup Time</strong>{" "}
+                    <span className="text-muted">
+                      <em>&mdash; Optional</em>
+                    </span>
+                  </label>
+
+                  <input
+                    type="time"
+                    className={classnames("form-control", {
+                      "is-invalid": errors.pickupTime
+                    })}
+                    name="pickupTime"
+                    value={this.state.pickupTime}
+                    onChange={this.onChange}
+                  />
+                </div>
+              ) : null}
+
+              {isEditable ? (
+                <div className="form-group col-md-6">
+                  <label className="mb-1" htmlFor="deliveryTime">
+                    <strong>Est. Arrival Time</strong>{" "}
+                    <span className="text-muted">
+                      <em>&mdash; Optional</em>
+                    </span>
+                  </label>
+
+                  <input
+                    type="time"
+                    className={classnames("form-control", {
+                      "is-invalid": errors.deliveryTime
+                    })}
+                    name="deliveryTime"
+                    value={this.state.deliveryTime}
+                    onChange={this.onChange}
+                    min={this.state.pickupTime}
+                  />
+                </div>
+              ) : null}
+            </div>
+          ) : null}
 
           <div className="row">
             {isEditable ? (
@@ -2088,7 +2177,7 @@ export class LogViewEdit extends Component {
                 )}
               </div>
             ) : (
-              <div className="col-md-4 mb-2">
+              <div className="col-md-6 mb-2">
                 <h5>
                   Status: <strong>{log.status}</strong>
                 </h5>

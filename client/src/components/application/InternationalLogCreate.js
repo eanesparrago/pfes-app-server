@@ -527,26 +527,13 @@ class InternationalLogCreate extends Component {
                   <h5 className="text-primary mt-3">Job Order Details</h5>
 
                   <div className="row">
-                    <div className="form-group col-md-12">
-                      <label className="mb-1" htmlFor="associate">
-                        <strong>Associate</strong>
-                      </label>
-                      <input
-                        readOnly
-                        type="text"
-                        className={classnames("form-control", {
-                          "is-invalid": errors.associate
-                        })}
-                        placeholder=""
-                        name="associate"
-                        value={`${auth.user.firstName} ${auth.user.lastName}`}
-                        // onChange={this.onChange}
-                      />
-                      {errors.associate && (
-                        <div className="invalid-feedback">
-                          {errors.associate}
-                        </div>
-                      )}
+                    <div className="col-md-12 my-2">
+                      <h5>
+                        Associate:{" "}
+                        <strong>
+                          {auth.user.firstName} {auth.user.lastName}
+                        </strong>
+                      </h5>
                     </div>
                   </div>
 

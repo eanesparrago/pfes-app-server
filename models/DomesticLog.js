@@ -98,6 +98,9 @@ const DomesticLogSchema = new Schema({
     default: Date.now,
     required: true
   },
+  pickupTime: {
+    type: String
+  },
   etd: {
     type: Date,
     default: Date.now,
@@ -107,6 +110,9 @@ const DomesticLogSchema = new Schema({
     type: Date,
     default: Date.now,
     required: true
+  },
+  deliveryTime: {
+    type: String
   },
   operations: {
     preloading: {

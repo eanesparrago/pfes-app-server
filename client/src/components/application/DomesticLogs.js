@@ -252,7 +252,13 @@ class DomesticLogs extends Component {
                 </td>
 
                 <td title={moment(log.etd).format("MMMM Do YYYY")}>
-                  <Moment format="MM/DD/YYYY">{log.etd}</Moment>
+                  {log.modeOfTransport === "Truck" ? (
+                    <em className="text-muted">
+                      <Moment format="MM/DD/YYYY">{log.etd}</Moment>
+                    </em>
+                  ) : (
+                    <Moment format="MM/DD/YYYY">{log.etd}</Moment>
+                  )}
                 </td>
 
                 <td title={moment(log.eta).format("MMMM Do YYYY")}>
