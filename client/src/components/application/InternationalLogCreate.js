@@ -52,6 +52,8 @@ class InternationalLogCreate extends Component {
       tagUrgent: false,
       tagInsured: false,
 
+      additional: "",
+
       errors: {}
     };
 
@@ -101,6 +103,8 @@ class InternationalLogCreate extends Component {
 
         tagUrgent: false,
         tagInsured: false,
+
+        additional: "",
 
         errors: {}
       });
@@ -294,6 +298,8 @@ class InternationalLogCreate extends Component {
       tagUrgent: this.state.tagUrgent,
       tagInsured: this.state.tagInsured,
 
+      additional: this.state.additional,
+
       contactName: this.state.contactName,
       contactNumber: this.state.contactNumber,
       contactEmail: this.state.contactEmail,
@@ -339,6 +345,8 @@ class InternationalLogCreate extends Component {
       tagUrgent: false,
       tagInsured: false,
 
+      additional: "",
+
       errors: {}
     });
 
@@ -379,6 +387,8 @@ class InternationalLogCreate extends Component {
 
       tagUrgent: false,
       tagInsured: false,
+
+      additional: "",
 
       errors: {}
     });
@@ -732,7 +742,7 @@ class InternationalLogCreate extends Component {
 
                   {/* @origin */}
                   <div className="row mt-3">
-                    <div className="form-group col-lg-8">
+                    <div className="form-group col-lg-8 pr-lg-1">
                       <label className="mb-1" htmlFor="originLocation">
                         <strong>Origin Address</strong>
                       </label>
@@ -758,7 +768,7 @@ class InternationalLogCreate extends Component {
                       )}
                     </div>
 
-                    <div className="form-group col-lg-4">
+                    <div className="form-group col-lg-4 pl-lg-1">
                       <label
                         className="mb-1 d-none d-lg-block"
                         htmlFor="originCity"
@@ -800,7 +810,7 @@ class InternationalLogCreate extends Component {
 
                   {/* @portOfDeparture */}
                   <div className="row">
-                    <div className="form-group col-lg-8">
+                    <div className="form-group col-lg-8 pr-lg-1">
                       <label className="mb-1" htmlFor="portOfDepartureLocation">
                         <strong>Port of Departure</strong>
                       </label>
@@ -826,7 +836,7 @@ class InternationalLogCreate extends Component {
                       )}
                     </div>
 
-                    <div className="form-group col-lg-4">
+                    <div className="form-group col-lg-4 pl-lg-1">
                       <label
                         className="mb-1 d-none d-lg-block"
                         htmlFor="portOfDepartureCountry"
@@ -868,7 +878,7 @@ class InternationalLogCreate extends Component {
 
                   {/* @portOfArrival */}
                   <div className="row">
-                    <div className="form-group col-lg-8">
+                    <div className="form-group col-lg-8 pr-lg-1">
                       <label className="mb-1" htmlFor="portOfArrivalLocation">
                         <strong>Port of Arrival</strong>
                       </label>
@@ -894,7 +904,7 @@ class InternationalLogCreate extends Component {
                       )}
                     </div>
 
-                    <div className="form-group col-lg-4">
+                    <div className="form-group col-lg-4 pl-lg-1">
                       <label
                         className="mb-1 d-none d-lg-block"
                         htmlFor="portOfArrivalCountry"
@@ -936,7 +946,7 @@ class InternationalLogCreate extends Component {
 
                   {/* @destination */}
                   <div className="row">
-                    <div className="form-group col-lg-8">
+                    <div className="form-group col-lg-8 pr-lg-1">
                       <label className="mb-1" htmlFor="destinationLocation">
                         <strong>Destination Address</strong>
                       </label>
@@ -962,7 +972,7 @@ class InternationalLogCreate extends Component {
                       )}
                     </div>
 
-                    <div className="form-group col-lg-4">
+                    <div className="form-group col-lg-4 pr-lg-1">
                       <label
                         className="mb-1 d-none d-lg-block"
                         htmlFor="destinationCity"
@@ -1135,6 +1145,25 @@ class InternationalLogCreate extends Component {
                           </label>
                         </div>
                       </div>
+                    </div>
+                  </div>
+
+                  <div className="row">
+                    <div className="form-group col-12">
+                      <label
+                        className="mb-1"
+                        htmlFor="internationalcreateAdditional"
+                      >
+                        <strong>Remarks</strong>
+                      </label>
+
+                      <textarea
+                        className="form-control"
+                        name="additional"
+                        id="internationalreateAdditional"
+                        onChange={this.onChange}
+                        value={this.state.additional}
+                      />
                     </div>
                   </div>
 

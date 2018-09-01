@@ -61,6 +61,8 @@ class DomesticLogCreate extends Component {
       tagUrgent: false,
       tagInsured: false,
 
+      additional: "",
+
       errors: {}
     };
 
@@ -118,6 +120,8 @@ class DomesticLogCreate extends Component {
 
         tagUrgent: false,
         tagInsured: false,
+
+        additional: "",
 
         errors: {}
       });
@@ -376,6 +380,8 @@ class DomesticLogCreate extends Component {
       tagUrgent: this.state.tagUrgent,
       tagInsured: this.state.tagInsured,
 
+      additional: this.state.additional,
+
       contactName: this.state.contactName,
       contactNumber: this.state.contactNumber,
       contactEmail: this.state.contactEmail,
@@ -429,6 +435,8 @@ class DomesticLogCreate extends Component {
       tagUrgent: false,
       tagInsured: false,
 
+      additional: "",
+
       errors: {}
     });
 
@@ -477,6 +485,8 @@ class DomesticLogCreate extends Component {
       tagUrgent: false,
       tagImportant: false,
       tagInsured: false,
+
+      additional: "",
 
       errors: {}
     });
@@ -1471,9 +1481,29 @@ class DomesticLogCreate extends Component {
                     </div>
                   </div>
 
+                  {/* @remarks */}
+                  <div className="row">
+                    <div className="form-group col-12">
+                      <label
+                        className="mb-1"
+                        htmlFor="domesticCreateAdditional"
+                      >
+                        <strong>Remarks</strong>
+                      </label>
+
+                      <textarea
+                        className="form-control"
+                        name="additional"
+                        id="domesticCreateAdditional"
+                        onChange={this.onChange}
+                        value={this.state.additional}
+                      />
+                    </div>
+                  </div>
+
                   <div className="modal-footer pb-0 pr-0">
                     <button
-                      type="submit"
+                      type="button"
                       className="btn btn-secondary"
                       data-dismiss="modal"
                       onClick={this.onClose}

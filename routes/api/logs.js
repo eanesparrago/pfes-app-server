@@ -121,7 +121,7 @@ router.post(
     if (req.body.blAwb) {
       newLog.blAwb = req.body.blAwb.trim();
     } else {
-      newLog.blAwb = "";
+      newLog.blAwb = "n/a";
     }
 
     newLog.origin = {};
@@ -186,6 +186,12 @@ router.post(
       newLog.contact.email = req.body.contactEmail.trim();
     } else {
       newLog.contact.email = "";
+    }
+
+    if (req.body.additional) {
+      newLog.additional = req.body.additional.trim();
+    } else {
+      newLog.additional = "n/a";
     }
 
     newLog.associate = `${req.user.firstName} ${req.user.lastName}`;
@@ -264,7 +270,7 @@ router.post(
     if (req.body.blAwb) {
       newLog.blAwb = req.body.blAwb.trim();
     } else {
-      newLog.blAwb = "";
+      newLog.blAwb = "n/a";
     }
 
     newLog.origin = {};
@@ -321,6 +327,12 @@ router.post(
       newLog.contact.email = req.body.contactEmail.trim();
     } else {
       newLog.contact.email = "";
+    }
+
+    if (req.body.additional) {
+      newLog.additional = req.body.additional.trim();
+    } else {
+      newLog.additional = "n/a";
     }
 
     newLog.associate = `${req.user.firstName} ${req.user.lastName}`;
@@ -406,7 +418,7 @@ router.post(
     if (req.body.blAwb) {
       newLog.blAwb = req.body.blAwb.trim();
     } else {
-      newLog.blAwb = "";
+      newLog.blAwb = "n/a";
     }
 
     newLog.origin = {};
@@ -478,6 +490,12 @@ router.post(
       newLog.contact.email = req.body.contactEmail.trim();
     } else {
       newLog.contact.email = "";
+    }
+
+    if (req.body.additional) {
+      newLog.additional = req.body.additional.trim();
+    } else {
+      newLog.additional = "n/a";
     }
 
     newLog.dateModified = Date.now();
@@ -574,7 +592,7 @@ router.post(
     if (req.body.blAwb) {
       newLog.blAwb = req.body.blAwb.trim();
     } else {
-      newLog.blAwb = "";
+      newLog.blAwb = "n/a";
     }
 
     newLog.origin = {};
@@ -631,6 +649,12 @@ router.post(
       newLog.contact.email = req.body.contactEmail.trim();
     } else {
       newLog.contact.email = "";
+    }
+
+    if (req.body.additional) {
+      newLog.additional = req.body.additional.trim();
+    } else {
+      newLog.additional = "n/a";
     }
 
     newLog.dateModified = Date.now();

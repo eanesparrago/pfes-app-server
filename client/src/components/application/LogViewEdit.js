@@ -84,9 +84,10 @@ export class LogViewEdit extends Component {
       tagUrgent: false,
       tagInsured: false,
 
+      additional: "",
+
       errors: {},
       isEditable: false,
-
       isToggleComplete: false
     };
 
@@ -137,6 +138,8 @@ export class LogViewEdit extends Component {
 
         tagUrgent: nextProps.log.log.tags.urgent,
         tagInsured: nextProps.log.log.tags.insured,
+
+        additional: nextProps.log.log.additional,
 
         contactName: nextProps.log.log.contact.name,
         contactNumber: nextProps.log.log.contact.number,
@@ -433,6 +436,8 @@ export class LogViewEdit extends Component {
       tagUrgent: log.tags.urgent,
       tagInsured: log.tags.insured,
 
+      additional: log.additional,
+
       contactName: log.contact.name,
       contactNumber: log.contact.number,
       contactEmail: log.contact.email,
@@ -525,6 +530,8 @@ export class LogViewEdit extends Component {
         tagUrgent: this.state.tagUrgent,
         tagInsured: this.state.tagInsured,
 
+        additional: this.state.additional,
+
         contactName: this.state.contactName,
         contactNumber: this.state.contactNumber,
         contactEmail: this.state.contactEmail,
@@ -564,6 +571,8 @@ export class LogViewEdit extends Component {
 
         tagUrgent: this.state.tagUrgent,
         tagInsured: this.state.tagInsured,
+
+        additional: this.state.additional,
 
         contactName: this.state.contactName,
         contactNumber: this.state.contactNumber,
@@ -2156,6 +2165,31 @@ export class LogViewEdit extends Component {
                     <em>No tags</em>
                   )}
                 </h5>
+              </div>
+            )}
+          </div>
+
+          <div className="row">
+            {isEditable ? (
+              <div className="form-group col-12">
+                <label
+                  className="mb-1"
+                  htmlFor="domesticCreateAdditional"
+                >
+                  <strong>Remarks</strong>
+                </label>
+
+                <textarea
+                  className="form-control"
+                  name="additional"
+                  id="domesticCreateAdditional"
+                  onChange={this.onChange}
+                  value={this.state.additional}
+                />
+              </div>
+            ) : (
+              <div className="col-md-4 mb-2">
+                <h5>Remarks: <em>{log.additional}</em></h5>
               </div>
             )}
           </div>

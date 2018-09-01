@@ -245,6 +245,10 @@ const InternationalLogSchema = new Schema({
       default: false
     }
   },
+  additional: {
+    type: String,
+    default: "n/a"
+  },
   user: {
     type: Schema.Types.ObjectId,
     ref: "users"
