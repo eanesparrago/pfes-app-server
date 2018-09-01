@@ -314,15 +314,6 @@ class DomesticLogCreate extends Component {
       this.setState({
         destinationCity: e.target.value
       });
-    } else if (
-      e.target.name === "pickupTime" ||
-      e.target.name === "deliveryTime"
-    ) {
-      if (e.target.value === "") {
-        return;
-      } else {
-        this.setState({ [e.target.name]: e.target.value });
-      }
     } else {
       this.setState({ [e.target.name]: e.target.value });
     }
