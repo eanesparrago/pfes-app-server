@@ -36,7 +36,7 @@ class Calendar extends Component {
   }
 
   render() {
-    const { log, openLogView } = this.props;
+    const { log, openLogView, auth } = this.props;
     const { domestic, international } = this.props.log;
     const { showDomestic, showInternational, showHolidays } = this.state;
 
@@ -61,7 +61,7 @@ class Calendar extends Component {
       }
     }
 
-    const EventWrapper = ({ openLogView }) => ({ event }) => {
+    const EventWrapper = () => ({ event }) => {
       if (event.type === "Holiday") {
         return (
           <div>
@@ -80,8 +80,10 @@ class Calendar extends Component {
         return (
           <button
             className={classnames(
-              "btn btn-sm btn-primary w-100 d-block text-white text-left",
+              "btn btn-sm  w-100 d-block text-white text-left",
               {
+                "btn-primary": auth.user.id === event.log.user,
+                "btn-info": auth.user.id !== event.log.user,
                 "btn-success": event.status === "Complete"
               }
             )}
@@ -246,6 +248,7 @@ class Calendar extends Component {
 }
 
 const mapStateToProps = state => ({
+  auth: state.auth,
   log: state.log
 });
 

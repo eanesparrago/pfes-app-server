@@ -18,12 +18,21 @@ class Logs extends Component {
     this.navigate = this.navigate.bind(this);
   }
 
+  componentDidMount() {
+    if (
+      this.props.auth.user.userType === "sales" ||
+      this.props.auth.user.userType === "admin"
+    ) {
+      this.setState({ view: "myLogs" });
+    }
+  }
+
   navigate(view) {
     this.setState({ view: view });
   }
 
   render() {
-    const { log } = this.props;
+    const { log, auth } = this.props;
     const { view } = this.state;
 
     let content = null;
@@ -38,12 +47,40 @@ class Logs extends Component {
 
       domesticContent = <Spinner />;
     } else {
-      domesticContent = <DomesticLogs logs={log.domestic} />;
-      internationalContent = <InternationalLogs logs={log.international} />;
+      if (this.state.view === "myLogs") {
+        const myDomesticContent = log.domestic.filter(
+          log => log.user === auth.user.id
+        );
+
+        const myInternationalContent = log.international.filter(
+          log => log.user === auth.user.id
+        );
+
+        domesticContent = <DomesticLogs logs={myDomesticContent} />;
+        internationalContent = (
+          <InternationalLogs logs={myInternationalContent} />
+        );
+      } else {
+        domesticContent = <DomesticLogs logs={log.domestic} />;
+        internationalContent = <InternationalLogs logs={log.international} />;
+      }
 
       contentNav = (
         <div className="logs-nav-2 container mb-2">
           <nav className="nav nav-pills nav-justified">
+            {auth.user.userType === "sales" ||
+            auth.user.userType === "admin" ? (
+              <a
+                className={classnames("nav-item nav-link text-nowrap", {
+                  active: view === "myLogs"
+                })}
+                href="#myLogs"
+                onClick={() => this.navigate("myLogs")}
+              >
+                <i className="fas fa-user-circle" /> My Job Orders
+              </a>
+            ) : null}
+
             <a
               className={classnames("nav-item nav-link", {
                 active: view === "all"
@@ -79,6 +116,7 @@ class Logs extends Component {
 
       switch (view) {
         case "all":
+        case "myLogs":
           content = (
             <div>
               {domesticContent}
@@ -123,6 +161,7 @@ Logs.propTypes = {
 };
 
 const mapStateToProps = state => ({
+  auth: state.auth,
   log: state.log
 });
 

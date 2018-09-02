@@ -959,7 +959,7 @@ class InternationalLogCreate extends Component {
                       )}
                     </div>
 
-                    <div className="form-group col-lg-4 pr-lg-1">
+                    <div className="form-group col-lg-4 pl-lg-1">
                       <label
                         className="mb-1 d-none d-lg-block"
                         htmlFor="destinationCity"
