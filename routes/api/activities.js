@@ -17,6 +17,7 @@ router.get(
 
     DomesticActivity.find()
       .sort({ _id: -1 })
+      .limit(20)
       .then(logs => {
         if (!logs) {
           errors.noLogs = "There are no domestic activity logs";
@@ -44,6 +45,7 @@ router.get(
 
     InternationalActivity.find()
       .sort({ _id: -1 })
+      .limit(20)
       .then(logs => {
         if (!logs) {
           errors.noLogs = "There are no international activity logs";

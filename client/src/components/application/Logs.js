@@ -7,6 +7,11 @@ import DomesticLogs from "./DomesticLogs";
 import InternationalLogs from "./InternationalLogs";
 import Spinner from "../common/Spinner";
 
+import {
+  getDomesticLogs,
+  getInternationalLogs
+} from "../../actions/logsActions";
+
 class Logs extends Component {
   constructor(props) {
     super(props);
@@ -25,6 +30,9 @@ class Logs extends Component {
     ) {
       this.setState({ view: "myLogs" });
     }
+
+    this.props.getDomesticLogs();
+    this.props.getInternationalLogs();
   }
 
   navigate(view) {
@@ -165,4 +173,7 @@ const mapStateToProps = state => ({
   log: state.log
 });
 
-export default connect(mapStateToProps)(Logs);
+export default connect(
+  mapStateToProps,
+  { getDomesticLogs, getInternationalLogs }
+)(Logs);

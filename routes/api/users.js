@@ -128,6 +128,11 @@ router.post("/login", (req, res) => {
       }
     });
   });
+  // .catch(err => {
+  //   errors.password = "Network error";
+
+  //   res.status(404).json(errors);
+  // });
 });
 
 // ////////////////////////////////////
