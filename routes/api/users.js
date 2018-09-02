@@ -7,10 +7,15 @@ const passport = require("passport");
 
 // Load input validations
 const validateRegisterInput = require("../../validation/register");
+const validateEditUserInput = require("../../validation/editUser");
 const validateLoginInput = require("../../validation/login");
 
 // Load User model
 const User = require("../../models/User");
+
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
 // ////////////////////////////////////
 // @route   GET api/users/test
@@ -39,34 +44,77 @@ router.post(
       return res.status(400).json(errors);
     }
 
-    User.findOne({ userName: req.body.userName }).then(user => {
-      // Check to see if the username already exists in the database
-      if (user) {
-        return res.status(400).json({ userName: "Username already exists" });
-      } else {
-        // Create new user of model User
-        const newUser = new User({
-          userName: req.body.userName,
-          userType: req.body.userType,
-          firstName: req.body.firstName,
-          lastName: req.body.lastName,
-          email: req.body.email,
-          contact: req.body.contact,
-          password: req.body.password // This will be a hash
-        });
-
-        // Generate hash for password
-        bcrypt.genSalt(10, (err, salt) => {
-          bcrypt.hash(newUser.password, salt, (err, hash) => {
-            if (err) throw err;
-            newUser.password = hash;
-            newUser
-              .save()
-              .then(user => res.json(user))
-              .catch(err => console.log(err));
+    User.findOne({ userName_lower: req.body.userName.toLowerCase() }).then(
+      user => {
+        // Check to see if the username already exists in the database
+        if (user) {
+          return res.status(400).json({ userName: "Username already exists" });
+        } else {
+          // Create new user of model User
+          const newUser = new User({
+            userName: req.body.userName,
+            userName_lower: req.body.userName.toLowerCase(),
+            userType: req.body.userType,
+            firstName: capitalizeFirstLetter(req.body.firstName.trim()),
+            lastName: capitalizeFirstLetter(req.body.lastName.trim()),
+            email: req.body.email.trim().toLowerCase(),
+            contact: req.body.contact.trim(),
+            password: req.body.password // This will be a hash
           });
-        });
+
+          // Generate hash for password
+          bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(newUser.password, salt, (err, hash) => {
+              if (err) throw err;
+              newUser.password = hash;
+              newUser
+                .save()
+                .then(user => res.json(user))
+                .catch(err => console.log(err));
+            });
+          });
+        }
       }
+    );
+  }
+);
+
+// ////////////////////////////////////
+// @route   POST api/users/edit
+// @desc    Edit user
+// @access  Private
+router.post(
+  "/edit",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    // Only admin can register a new user account
+    if (req.user.userType !== "admin") {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    // Validate registration
+    const { errors, isValid } = validateEditUserInput(req.body);
+
+    // Check validation
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
+    const userEdits = {};
+
+    userEdits.userType = req.body.userType;
+    userEdits.firstName = req.body.firstName;
+    userEdits.lastName = req.body.lastName;
+    userEdits.email = req.body.email.toLowerCase();
+    userEdits.contact = req.body.contact;
+    userEdits.isActive = req.body.isActive;
+
+    User.findOneAndUpdate(
+      { userName: req.body.userName },
+      { $set: userEdits },
+      { new: true }
+    ).then(log => {
+      res.json({ reply: "test" });
     });
   }
 );
@@ -88,51 +136,52 @@ router.post("/login", (req, res) => {
   }
 
   // Find user by username
-  User.findOne({ userName: userName }).then(user => {
-    // Check for user
-    if (!user) {
-      errors.userName = "User not found";
-      return res.status(404).json(errors);
-    }
-
-    // Check password
-    bcrypt.compare(password, user.password).then(isMatch => {
-      if (isMatch) {
-        // User matched, create JWT Payload
-        const payload = {
-          id: user.id,
-          userName: user.userName,
-          userType: user.userType,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          email: user.email,
-          contact: user.contact
-        };
-
-        // Sign token (expires in 12 hours or 43200 seconds)
-        jwt.sign(
-          payload,
-          keys.secretOrKey,
-          { expiresIn: 43200 },
-          (err, token) => {
-            res.json({
-              success: true,
-              token: "Bearer " + token,
-              payload
-            });
-          }
-        );
-      } else {
-        errors.password = "Incorrect login information";
-        return res.status(400).json(errors);
+  User.findOne({ userName: userName })
+    .then(user => {
+      // Check for user
+      if (!user || user.isActive === false) {
+        errors.userName = "User not found";
+        return res.status(404).json(errors);
       }
-    });
-  });
-  // .catch(err => {
-  //   errors.password = "Network error";
 
-  //   res.status(404).json(errors);
-  // });
+      // Check password
+      bcrypt.compare(password, user.password).then(isMatch => {
+        if (isMatch) {
+          // User matched, create JWT Payload
+          const payload = {
+            id: user.id,
+            userName: user.userName,
+            userType: user.userType,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            contact: user.contact
+          };
+
+          // Sign token (expires in 6 hours or 21600 seconds)
+          jwt.sign(
+            payload,
+            keys.secretOrKey,
+            { expiresIn: 21600 },
+            (err, token) => {
+              res.json({
+                success: true,
+                token: "Bearer " + token,
+                payload
+              });
+            }
+          );
+        } else {
+          errors.password = "Incorrect login information";
+          return res.status(400).json(errors);
+        }
+      });
+    })
+    .catch(err => {
+      errors.password = "Network error";
+
+      res.status(404).json(errors);
+    });
 });
 
 // ////////////////////////////////////
@@ -171,7 +220,7 @@ router.get(
     const errors = {};
 
     User.find()
-      .sort({ userName: 1 })
+      .sort({ date: -1 })
       .then(users => {
         if (!users) {
           errors.noUsers = "There are no users";

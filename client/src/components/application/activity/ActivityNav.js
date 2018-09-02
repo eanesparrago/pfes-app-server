@@ -9,8 +9,8 @@ class ActivityNav extends Component {
           className="navbar-toggler"
           type="button"
           data-toggle="collapse"
-          data-target="#domesticNavbar"
-          aria-controls="domesticNavbar"
+          data-target="#activityNavbar"
+          aria-controls="activityNavbar"
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
@@ -18,7 +18,7 @@ class ActivityNav extends Component {
         </button>
 
         {/* @navbar */}
-        <div className="collapse navbar-collapse" id="domesticNavbar" />
+        <div className="collapse navbar-collapse" id="activityNavbar" />
       </nav>
     );
   }

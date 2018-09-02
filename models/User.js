@@ -8,6 +8,10 @@ const UserSchema = new Schema({
     required: true,
     unique: true
   },
+  userName_lower: {
+    type: String,
+    required: true
+  },
   userType: {
     type: String,
     required: true
@@ -35,6 +39,11 @@ const UserSchema = new Schema({
   date: {
     type: Date,
     default: Date.now
+  },
+  isActive: {
+    type: Boolean,
+    required: true,
+    default: true
   }
 });
 

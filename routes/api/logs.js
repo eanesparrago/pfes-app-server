@@ -9,9 +9,6 @@ const InternationalLog = require("../../models/InternationalLog");
 const DomesticActivity = require("../../models/DomesticActivity");
 const InternationalActivity = require("../../models/InternationalActivity");
 
-// User model
-const User = require("../../models/User");
-
 // Log validation
 const validateLogInput = require("../../validation/log");
 

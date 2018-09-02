@@ -20,22 +20,28 @@ class UsersTable extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.users) {
-      this.setState({ users: nextProps.users, loading: false });
+      this.setState({ users: nextProps.users.list, loading: false });
     }
   }
 
   render() {
     const { users, loading } = this.state;
+    const { openEditModal } = this.props;
 
     const tableBody = users.map(user => {
       return (
-        <tr key={user._id}>
+        <tr
+          key={user._id}
+          onClick={() => openEditModal(user)}
+          style={{ cursor: "pointer" }}
+        >
           <td>{user.userName}</td>
           <td>{user.userType}</td>
           <td>{user.firstName}</td>
           <td>{user.lastName}</td>
           <td>{user.email}</td>
           <td>{user.contact}</td>
+          <td>{user.isActive ? "YES" : "NO"}</td>
           <td>{user.date.slice(0, 10)}</td>
         </tr>
       );
@@ -48,17 +54,41 @@ class UsersTable extends Component {
             <Spinner />
           </div>
         ) : (
-          <div className="table-responsive  mt-2">
-            <table className="table">
+          <div className="table-responsive mt-2">
+            <table className="pfes-table table table-striped table-hover">
               <thead>
                 <tr>
-                  <th scope="col">Username</th>
-                  <th scope="col">Type</th>
-                  <th scope="col">Firstname</th>
-                  <th scope="col">Lastname</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Contact</th>
-                  <th scope="col">Date Added</th>
+                  <th className="text-nowrap" scope="col">
+                    Username
+                  </th>
+
+                  <th className="text-nowrap" scope="col">
+                    Type
+                  </th>
+
+                  <th className="text-nowrap" scope="col">
+                    Firstname
+                  </th>
+
+                  <th className="text-nowrap" scope="col">
+                    Lastname
+                  </th>
+
+                  <th className="text-nowrap" scope="col">
+                    Email
+                  </th>
+
+                  <th className="text-nowrap" scope="col">
+                    Contact
+                  </th>
+
+                  <th className="text-nowrap" scope="col">
+                    Active
+                  </th>
+
+                  <th className="text-nowrap" scope="col">
+                    Date Added
+                  </th>
                 </tr>
               </thead>
               <tbody>{tableBody}</tbody>
@@ -72,7 +102,7 @@ class UsersTable extends Component {
 
 UsersTable.propTypes = {
   getAllUsers: PropTypes.func.isRequired,
-  users: PropTypes.arrayOf(PropTypes.object)
+  users: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({

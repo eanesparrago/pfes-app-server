@@ -1,25 +1,14 @@
 const Validator = require("validator");
 const isEmpty = require("./is-empty");
 
-module.exports = function validateRegisterInput(data) {
+module.exports = function validateEditUserInput(data) {
   let errors = {};
 
-  data.userName = !isEmpty(data.userName) ? data.userName : "";
   data.userType = !isEmpty(data.userType) ? data.userType : "";
   data.firstName = !isEmpty(data.firstName) ? data.firstName : "";
   data.lastName = !isEmpty(data.lastName) ? data.lastName : "";
   data.email = !isEmpty(data.email) ? data.email : "";
   data.contact = !isEmpty(data.contact) ? data.contact : "";
-  data.password = !isEmpty(data.password) ? data.password : "";
-  data.password2 = !isEmpty(data.password2) ? data.password2 : "";
-
-  // userName validation
-  if (!Validator.isLength(data.userName, { min: 2, max: 30 })) {
-    errors.userName = "Username must be between 2 to 30 characters";
-  }
-  if (Validator.isEmpty(data.userName)) {
-    errors.userName = "Username is required";
-  }
 
   // userType validation
   if (Validator.isEmpty(data.userType)) {
@@ -35,7 +24,7 @@ module.exports = function validateRegisterInput(data) {
   }
 
   // lastName validation
-   if (!Validator.isLength(data.lastName, { min: 3, max: 30 })) {
+  if (!Validator.isLength(data.lastName, { min: 3, max: 30 })) {
     errors.lastName = "Lastname must be between 2 to 30 characters";
   }
   if (Validator.isEmpty(data.lastName)) {
@@ -53,22 +42,6 @@ module.exports = function validateRegisterInput(data) {
   // contact validation
   if (Validator.isEmpty(data.contact)) {
     errors.contact = "Contact is required";
-  }
-
-  // password validation
-  if (!Validator.isLength(data.password, { min: 6 })) {
-    errors.password = "Password must be at least 6 characters";
-  }
-  if (Validator.isEmpty(data.password)) {
-    errors.password = "Password is required";
-  }
-
-  // password2 validation
-  if (Validator.isEmpty(data.password2)) {
-    errors.password2 = "Confirm password is required";
-  }
-  if (!Validator.equals(data.password, data.password2)) {
-    errors.password2 = "Passwords does not match";
   }
 
   return {
