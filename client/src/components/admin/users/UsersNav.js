@@ -8,7 +8,7 @@ class UsersNav extends Component {
     return (
       <nav className="logs-nav navbar navbar-expand-sm navbar-light mb-3">
         <span className="navbar-brand">Users</span>
-        <button
+        {/* <button
           className="navbar-toggler"
           type="button"
           data-toggle="collapse"
@@ -18,14 +18,14 @@ class UsersNav extends Component {
           aria-label="Toggle navigation"
         >
           <span className="navbar-toggler-icon" />
-        </button>
+        </button> */}
+
+        <Button color="primary" onClick={toggleRegisterModal}>
+          <i className="fas fa-user-plus" /> New User
+        </Button>
 
         {/* @navbar */}
-        <div className="collapse navbar-collapse" id="usersNavbar">
-          <Button color="primary" onClick={toggleRegisterModal}>
-            <i className="fas fa-user-plus" /> New User
-          </Button>
-        </div>
+        {/* <div className="collapse navbar-collapse" id="usersNavbar" /> */}
       </nav>
     );
   }
