@@ -140,7 +140,9 @@ class OperationsStage extends Component {
             <div>{title}</div>
           </h4>
 
-          {!log.isCompleted && showControls === true ? (
+          {log.status === "Ongoing" &&
+          !log.isCompleted &&
+          showControls === true ? (
             <div className="col-lg-10">
               <div>
                 <button
@@ -169,12 +171,16 @@ class OperationsStage extends Component {
         </div>
 
         {/* Add Status Form */}
-        {!log.isCompleted && showControls === true && statusControl === true ? (
+        {log.status === "Ongoing" &&
+        !log.isCompleted &&
+        showControls === true &&
+        statusControl === true ? (
           <OperationsAddStatus data={data} stage={stage} />
         ) : null}
 
         {/* Mark as Complete Form */}
-        {!log.isCompleted &&
+        {log.status === "Ongoing" &&
+        !log.isCompleted &&
         showControls === true &&
         markCompleteControl === true ? (
           <OperationsCompleteForm stage={stage} />
@@ -201,7 +207,8 @@ class OperationsStage extends Component {
 
                 {/* Undo complete button */}
                 <div className="col-lg-2">
-                  {!log.isCompleted &&
+                  {log.status === "Ongoing" &&
+                  !log.isCompleted &&
                   !isSucceedingFinished &&
                   stage !== "unloading" &&
                   (auth.user.userType === "admin" ||

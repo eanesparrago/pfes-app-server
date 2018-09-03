@@ -263,7 +263,7 @@ class InternationalLogs extends Component {
                   >
                     {log.status}
                   </span>{" "}
-                  {!log.isCompleted ? (
+                  {log.status === "Ongoing" && !log.isCompleted ? (
                     <span title={operationsStatusRemarks}>
                       {operationsStatus}
                     </span>
