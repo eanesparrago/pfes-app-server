@@ -15,6 +15,14 @@ class AlertBox extends Component {
     };
   }
 
+  componentDidMount() {
+    this.state = {
+      show: false,
+      success: false,
+      message: ""
+    };
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.alert) {
       const { show, success, message } = nextProps.alert;
@@ -30,10 +38,13 @@ class AlertBox extends Component {
     if (show === true) {
       alert = (
         <div
-          className={classnames("pfes-print-hide alert alert-dismissible fade show", {
-            "alert-success": success === true,
-            "alert-danger": success === false
-          })}
+          className={classnames(
+            "pfes-print-hide alert alert-dismissible fade show",
+            {
+              "alert-success": success === true,
+              "alert-danger": success === false
+            }
+          )}
           role="alert"
         >
           {message}

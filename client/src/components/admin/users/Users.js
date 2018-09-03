@@ -8,6 +8,7 @@ import { logoutUser } from "../../../actions/authActions";
 import UsersNav from "./UsersNav";
 import RegisterModal from "./RegisterModal";
 import EditModal from "./EditModal";
+import AlertBox from "../../application/AlertBox";
 
 class Users extends Component {
   constructor(props) {
@@ -58,6 +59,12 @@ class Users extends Component {
     });
 
     this.props.clearErrors();
+
+    // Logout if token has expired
+    const currentTime = Date.now() / 1000;
+    if (this.props.auth.user.exp < currentTime) {
+      this.props.logoutUser();
+    }
   }
 
   toggleEditModal() {
@@ -75,12 +82,20 @@ class Users extends Component {
     });
 
     this.props.clearErrors();
+
+    // Logout if token has expired
+    const currentTime = Date.now() / 1000;
+    if (this.props.auth.user.exp < currentTime) {
+      this.props.logoutUser();
+    }
   }
 
   render() {
     return (
       <div className="mobile-margin mx-3">
         <UsersNav toggleRegisterModal={this.toggleRegisterModal} />
+
+        <AlertBox />
 
         <RegisterModal
           isRegisterModalOpen={this.state.isRegisterModalOpen}

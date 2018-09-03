@@ -8,7 +8,8 @@ import {
   GET_ERRORS,
   REGISTER_SUCCESS,
   SUBMIT_USERS_SUCCESS,
-  RESET_USERS_SUCCESS
+  RESET_USERS_SUCCESS,
+  SHOW_ALERT
 } from "./types";
 
 // Get all users
@@ -38,6 +39,11 @@ export const registerUser = userData => dispatch => {
         payload: res.data
       });
 
+      dispatch({
+        type: SHOW_ALERT,
+        payload: `${res.data.userName} was successfully created.`
+      });
+
       dispatch({ type: RECEIVE_USERS_REPLY });
     })
     .catch(err => {
@@ -58,6 +64,11 @@ export const editUser = userData => dispatch => {
     .post("/api/users/edit", userData)
     .then(res => {
       dispatch({ type: RECEIVE_USERS_REPLY });
+
+      dispatch({
+        type: SHOW_ALERT,
+        payload: `${res.data.userName} was successfully edited.`
+      });
 
       dispatch({ type: SUBMIT_USERS_SUCCESS, payload: "edit" });
 

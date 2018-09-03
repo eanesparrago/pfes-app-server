@@ -114,8 +114,8 @@ router.post(
       { userName: req.body.userName },
       { $set: userEdits },
       { new: true }
-    ).then(log => {
-      res.json({ reply: "test" });
+    ).then(user => {
+      res.json(user);
     });
   }
 );

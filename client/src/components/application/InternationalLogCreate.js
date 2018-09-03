@@ -1163,20 +1163,21 @@ class InternationalLogCreate extends Component {
 
                   <div className="modal-footer pb-0 pr-0">
                     <button
-                      type="submit"
-                      className="btn btn-secondary"
-                      data-dismiss="modal"
-                      onClick={this.onClose}
-                    >
-                      Close
-                    </button>
-                    <button
                       disabled={log.submitInProgress ? true : false}
                       type="button"
                       className="btn btn-primary"
                       onClick={this.onSubmit}
                     >
                       Create Job Order
+                    </button>
+
+                    <button
+                      type="submit"
+                      className="btn btn-secondary"
+                      data-dismiss="modal"
+                      onClick={this.onClose}
+                    >
+                      Close
                     </button>
                   </div>
                 </form>
