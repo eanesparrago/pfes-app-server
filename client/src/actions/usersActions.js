@@ -73,6 +73,27 @@ export const editUser = userData => dispatch => {
     });
 };
 
+// Change password
+export const changePassword = userData => dispatch => {
+  dispatch({ type: SUBMIT_USERS_REQUEST });
+
+  axios
+    .post("/api/users/password", userData)
+    .then(res => {
+      dispatch({ type: RECEIVE_USERS_REPLY });
+
+      dispatch({ type: SUBMIT_USERS_SUCCESS, payload: "password" });
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+
+      dispatch({ type: RECEIVE_USERS_REPLY });
+    });
+};
+
 export const resetSuccess = () => dispatch => {
   dispatch({ type: RESET_USERS_SUCCESS });
 };

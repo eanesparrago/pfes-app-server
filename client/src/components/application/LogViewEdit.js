@@ -1266,7 +1266,7 @@ export class LogViewEdit extends Component {
           <div className="row mt-3">
             {isEditable ? (
               <React.Fragment>
-                <div className="form-group col-lg-8">
+                <div className="form-group col-lg-8 pr-lg-1">
                   <label className="mb-1" htmlFor="originLocation">
                     <strong>Origin Address</strong>
                   </label>
@@ -1292,7 +1292,7 @@ export class LogViewEdit extends Component {
                   )}
                 </div>
 
-                <div className="form-group col-lg-4">
+                <div className="form-group col-lg-4 pl-lg-1">
                   <label
                     className="mb-1 d-none d-lg-block"
                     htmlFor="originCountry"
@@ -1347,7 +1347,7 @@ export class LogViewEdit extends Component {
           <div className="row">
             {isEditable ? (
               <React.Fragment>
-                <div className="form-group col-lg-8">
+                <div className="form-group col-lg-8 pr-lg-1">
                   <label className="mb-1" htmlFor="portOfDepartureLocation">
                     <strong>Port of Departure</strong>
                   </label>
@@ -1373,7 +1373,7 @@ export class LogViewEdit extends Component {
                   )}
                 </div>
 
-                <div className="form-group col-lg-4">
+                <div className="form-group col-lg-4 pl-lg-1">
                   <label
                     className="mb-1 d-none d-lg-block"
                     htmlFor="portOfDepartureCountry"
@@ -1429,7 +1429,7 @@ export class LogViewEdit extends Component {
           <div className="row">
             {isEditable ? (
               <React.Fragment>
-                <div className="form-group col-lg-8">
+                <div className="form-group col-lg-8 pr-lg-1">
                   <label className="mb-1" htmlFor="portOfArrivalLocation">
                     <strong>Port of Arrival</strong>
                   </label>
@@ -1455,7 +1455,7 @@ export class LogViewEdit extends Component {
                   )}
                 </div>
 
-                <div className="form-group col-lg-4">
+                <div className="form-group col-lg-4 pl-lg-1">
                   <label
                     className="mb-1 d-none d-lg-block"
                     htmlFor="portOfArrivalCountry"
@@ -1510,7 +1510,7 @@ export class LogViewEdit extends Component {
           <div className="row">
             {isEditable ? (
               <React.Fragment>
-                <div className="form-group col-lg-8">
+                <div className="form-group col-lg-8 pr-lg-1">
                   <label className="mb-1" htmlFor="destinationLocation">
                     <strong>Destination Address</strong>
                   </label>
@@ -1536,7 +1536,7 @@ export class LogViewEdit extends Component {
                   )}
                 </div>
 
-                <div className="form-group col-lg-4">
+                <div className="form-group col-lg-4 pl-lg-1">
                   <label
                     className="mb-1 d-none d-lg-block"
                     htmlFor="destinationCountry"
@@ -1678,7 +1678,7 @@ export class LogViewEdit extends Component {
                       type="text"
                       className="form-control mb-3"
                       name="remarks"
-                      placeholder="Job Order Completion Remarks (Optional)"
+                      placeholder="Shipment Completion Remarks (Optional)"
                       value={this.remarks}
                       onChange={this.onChange}
                     />

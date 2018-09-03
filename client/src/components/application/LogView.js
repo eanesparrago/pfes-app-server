@@ -73,6 +73,7 @@ class LogView extends Component {
             <div className="modal-footer">
               <div className="mr-3">
                 <small
+                  className="text-nowrap"
                   title={moment(log.date).format("MMMM Do YYYY, h:mm:ssa")}
                 >
                   <em>
@@ -81,6 +82,7 @@ class LogView extends Component {
                   </em>
                 </small>{" "}
                 <small
+                  className="text-nowrap"
                   title={moment(log.dateModified).format(
                     "MMMM Do YYYY, h:mm:ssa"
                   )}

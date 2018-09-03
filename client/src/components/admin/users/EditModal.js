@@ -5,8 +5,11 @@ import classnames from "classnames";
 import { editUser } from "../../../actions/usersActions";
 import { clearRegister } from "../../../actions/registerActions";
 import { clearErrors } from "../../../actions/logsActions";
+import { resetSuccess } from "../../../actions/usersActions";
 
 import isEmpty from "../../../validation/is-empty";
+
+import PasswordModal from "./PasswordModal";
 
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { Form, FormGroup, Label, Input } from "reactstrap";
@@ -22,12 +25,16 @@ class EditModal extends Component {
       lastName: "",
       email: "",
       contact: "",
-      isActive: false
+      isActive: false,
+
+      isPasswordModalOpen: false
     };
 
     this.onChange = this.onChange.bind(this);
     this.submit = this.submit.bind(this);
     this.toggleIsActive = this.toggleIsActive.bind(this);
+
+    this.togglePasswordModal = this.togglePasswordModal.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -50,6 +57,17 @@ class EditModal extends Component {
         this.props.clearRegister();
 
         this.props.toggleEditModal();
+      }
+    }
+
+    if (nextProps.users) {
+      if (
+        nextProps.users.success.isSuccessful === true &&
+        nextProps.users.success.type === "password"
+      ) {
+        this.setState({ isPasswordModalOpen: false });
+
+        this.props.resetSuccess();
       }
     }
   }
@@ -84,12 +102,19 @@ class EditModal extends Component {
       return;
     } else {
       this.setState({ [e.target.name]: e.target.value });
-      console.log("else");
     }
   }
 
   toggleIsActive() {
     this.setState({ isActive: !this.state.isActive });
+  }
+
+  togglePasswordModal() {
+    this.setState({
+      isPasswordModalOpen: !this.state.isPasswordModalOpen
+    });
+
+    this.props.clearErrors();
   }
 
   submit(e) {
@@ -213,7 +238,7 @@ class EditModal extends Component {
                   id="registerEmail"
                   value={this.state.email}
                   onChange={this.onChange}
-                  placeholder=""
+                  placeholder="example@address.com"
                   maxLength="30"
                 />
 
@@ -240,6 +265,10 @@ class EditModal extends Component {
                   maxLength="15"
                 />
 
+                <small className="form-text text-muted">
+                  Numbers and dashes only
+                </small>
+
                 {errors.contact && (
                   <div className="invalid-feedback">{errors.contact}</div>
                 )}
@@ -256,53 +285,22 @@ class EditModal extends Component {
                 </Label>
               </FormGroup>
 
-              <Button className="mt-3" color="danger">Delete User</Button>
+              {/* <Button className="mt-3" color="danger">Delete User</Button> */}
+              <div className="dropdown-divider mb-3" />
 
-              {/* <div className="dropdown-divider mb-3" />
+              <Button
+                outline
+                color="primary"
+                onClick={this.togglePasswordModal}
+              >
+                Change Password
+              </Button>
 
-              <FormGroup>
-                <Label for="registerPassword">Password</Label>
-
-                <Input
-                  className={classnames("", {
-                    "is-invalid": errors.password
-                  })}
-                  type="password"
-                  name="password"
-                  id="registerPassword"
-                  value={this.state.password}
-                  onChange={this.onChange}
-                  placeholder=""
-                  maxLength="100"
-                />
-
-                {errors.password && (
-                  <div className="invalid-feedback">{errors.password}</div>
-                )}
-              </FormGroup>
-
-              <FormGroup>
-                <Label className="mb-1" for="registerPassword2">
-                  Confirm Password
-                </Label>
-
-                <Input
-                  className={classnames("", {
-                    "is-invalid": errors.password2
-                  })}
-                  type="password"
-                  name="password2"
-                  id="registerPassword2"
-                  value={this.state.password2}
-                  onChange={this.onChange}
-                  placeholder=""
-                  maxLength="30"
-                />
-
-                {errors.password2 && (
-                  <div className="invalid-feedback">{errors.password2}</div>
-                )}
-              </FormGroup> */}
+              <PasswordModal
+                isPasswordModalOpen={this.state.isPasswordModalOpen}
+                togglePasswordModal={this.togglePasswordModal}
+                userName={this.state.userName}
+              />
             </Form>
           </ModalBody>
 
@@ -340,6 +338,7 @@ export default connect(
   {
     editUser,
     clearRegister,
-    clearErrors
+    clearErrors,
+    resetSuccess
   }
 )(EditModal);

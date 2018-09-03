@@ -106,7 +106,6 @@ class RegisterModal extends Component {
       return;
     } else {
       this.setState({ [e.target.name]: e.target.value });
-      console.log("else");
     }
   }
 
@@ -172,7 +171,6 @@ class RegisterModal extends Component {
                 <option value="sales">Sales</option>
                 <option value="operations">Operations</option>
                 <option value="viewer">Viewer</option>
-                <option value="admin">Administrator</option>
               </Input>
 
               {errors.userType && (
@@ -240,7 +238,7 @@ class RegisterModal extends Component {
                 id="registerEmail"
                 value={this.state.email}
                 onChange={this.onChange}
-                placeholder=""
+                placeholder="example@address.com"
                 maxLength="30"
               />
 
@@ -266,6 +264,9 @@ class RegisterModal extends Component {
                 placeholder=""
                 maxLength="15"
               />
+              <small className="form-text text-muted">
+                Numbers and dashes only
+              </small>
 
               {errors.contact && (
                 <div className="invalid-feedback">{errors.contact}</div>
@@ -289,6 +290,10 @@ class RegisterModal extends Component {
                 placeholder=""
                 maxLength="100"
               />
+
+              <small className="form-text text-muted">
+                At least 6 characters
+              </small>
 
               {errors.password && (
                 <div className="invalid-feedback">{errors.password}</div>

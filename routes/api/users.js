@@ -9,6 +9,7 @@ const passport = require("passport");
 const validateRegisterInput = require("../../validation/register");
 const validateEditUserInput = require("../../validation/editUser");
 const validateLoginInput = require("../../validation/login");
+const validatePasswordInput = require("../../validation/password");
 
 // Load User model
 const User = require("../../models/User");
@@ -87,7 +88,7 @@ router.post(
   "/edit",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    // Only admin can register a new user account
+    // Only admin can access
     if (req.user.userType !== "admin") {
       return res.status(401).json({ error: "Unauthorized" });
     }
@@ -116,6 +117,56 @@ router.post(
     ).then(log => {
       res.json({ reply: "test" });
     });
+  }
+);
+
+// ////////////////////////////////////
+// @route   POST api/users/password
+// @desc    Change user password
+// @access  Private
+router.post(
+  "/password",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    // Only admin can access
+    if (req.user.userType !== "admin") {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    // Validate registration
+    const { errors, isValid } = validatePasswordInput(req.body);
+
+    // Check validation
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
+    User.findOne({ userName_lower: req.body.userName.toLowerCase() }).then(
+      user => {
+        if (!user) {
+          return res.status(400).json({ userNotFound: "User not found" });
+        }
+
+        const userEdits = {};
+        userEdits.password = req.body.password;
+
+        // Generate hash for password
+        bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(userEdits.password, salt, (err, hash) => {
+            if (err) throw err;
+            userEdits.password = hash;
+
+            User.findOneAndUpdate(
+              { userName: req.body.userName },
+              { $set: userEdits },
+              { new: true }
+            ).then(log => {
+              res.json({ reply: "Change password success" });
+            });
+          });
+        });
+      }
+    );
   }
 );
 
@@ -220,6 +271,8 @@ router.get(
     const errors = {};
 
     User.find()
+      .where("userName")
+      .nin(["pfesadmin"])
       .sort({ date: -1 })
       .then(users => {
         if (!users) {
@@ -232,4 +285,5 @@ router.get(
       .catch(err => res.status(404).json({ profile: "There are no users" }));
   }
 );
+
 module.exports = router;
