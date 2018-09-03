@@ -3,6 +3,7 @@ import UsersTable from "./UsersTable";
 import { connect } from "react-redux";
 import { clearErrors } from "../../../actions/logsActions";
 import { resetSuccess } from "../../../actions/usersActions";
+import { logoutUser } from "../../../actions/authActions";
 
 import UsersNav from "./UsersNav";
 import RegisterModal from "./RegisterModal";
@@ -27,6 +28,14 @@ class Users extends Component {
   componentWillMount() {
     if (this.props.auth.user.userType !== "admin") {
       this.props.history.push("/app");
+    }
+  }
+
+  componentDidMount() {
+    // Logout if token has expired
+    const currentTime = Date.now() / 1000;
+    if (this.props.auth.user.exp < currentTime) {
+      this.props.logoutUser();
     }
   }
 
@@ -97,5 +106,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { clearErrors, resetSuccess }
+  { clearErrors, resetSuccess, logoutUser }
 )(Users);

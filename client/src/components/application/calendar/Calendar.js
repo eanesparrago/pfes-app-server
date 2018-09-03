@@ -6,6 +6,7 @@ import holidays from "./holidays";
 import { connect } from "react-redux";
 
 import { openLogView } from "../../../actions/logsActions";
+import { logoutUser } from "../../../actions/authActions";
 
 import generateEvents from "./generateEvents";
 
@@ -29,6 +30,14 @@ class Calendar extends Component {
     };
 
     this.toggleCheck = this.toggleCheck.bind(this);
+  }
+
+  componentDidMount() {
+    // Logout if token has expired
+    const currentTime = Date.now() / 1000;
+    if (this.props.auth.user.exp < currentTime) {
+      this.props.logoutUser();
+    }
   }
 
   toggleCheck(e) {
@@ -254,5 +263,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { openLogView }
+  { openLogView, logoutUser }
 )(Calendar);

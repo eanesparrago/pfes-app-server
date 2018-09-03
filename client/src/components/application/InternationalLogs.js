@@ -10,6 +10,7 @@ import ReactToPrint from "react-to-print";
 import { CSVLink } from "react-csv";
 
 import { openLogView } from "../../actions/logsActions";
+import { logoutUser } from "../../actions/authActions";
 
 import logSorting from "../../utils/logSorting";
 import logSearching from "../../utils/logSearching";
@@ -37,6 +38,16 @@ class InternationalLogs extends Component {
     this.onChangeSearchCategory = this.onChangeSearchCategory.bind(this);
 
     this.toPrint = React.createRef();
+  }
+
+  onLogClick(log) {
+    // Logout if token has expired
+    const currentTime = Date.now() / 1000;
+    if (this.props.auth.user.exp < currentTime) {
+      this.props.logoutUser();
+    }
+
+    this.props.openLogView(log);
   }
 
   onClickSort(sortKey) {
@@ -86,7 +97,7 @@ class InternationalLogs extends Component {
         <tbody>
           <tr>
             <td className="text-center" colSpan="13">
-              <em className="text-muted">No logs found</em>
+              <em className="text-muted">Empty</em>
             </td>
           </tr>
         </tbody>
@@ -210,7 +221,7 @@ class InternationalLogs extends Component {
                 key={log._id}
                 data-toggle="modal"
                 data-target="#LogView"
-                onClick={() => this.props.openLogView(log)}
+                onClick={() => this.onLogClick(log)}
                 className="fade-in pointer"
               >
                 <td className="text-nowrap">
@@ -786,5 +797,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { openLogView }
+  { openLogView, logoutUser }
 )(InternationalLogs);

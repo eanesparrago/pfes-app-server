@@ -41,10 +41,12 @@ if (localStorage.jwtToken) {
     // Logout user
     store.dispatch(logoutUser());
 
-    persistor.purge();
+    console.log(decoded.exp);
 
     //  Redirect to login
     window.location.href = "/";
+
+    persistor.purge();
 
     console.log("token expired");
   }

@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import { createInternationalLog, clearErrors } from "../../actions/logsActions";
 import { clearSuccess } from "../../actions/successActions";
 import { clearAlert } from "../../actions/alertActions";
+import { logoutUser } from "../../actions/authActions";
 
 import AlertBox from "./AlertBox";
 
@@ -349,6 +350,12 @@ class InternationalLogCreate extends Component {
 
       errors: {}
     });
+
+    // Logout if token has expired
+    const currentTime = Date.now() / 1000;
+    if (this.props.auth.user.exp < currentTime) {
+      this.props.logoutUser();
+    }
 
     this.props.clearErrors();
   }
@@ -1206,6 +1213,7 @@ export default connect(
     createInternationalLog,
     clearSuccess,
     clearErrors,
-    clearAlert
+    clearAlert,
+    logoutUser
   }
 )(withRouter(InternationalLogCreate));

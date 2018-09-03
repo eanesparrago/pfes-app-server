@@ -12,6 +12,8 @@ import {
   getInternationalLogs
 } from "../../actions/logsActions";
 
+import { logoutUser } from "../../actions/authActions";
+
 class Logs extends Component {
   constructor(props) {
     super(props);
@@ -33,6 +35,12 @@ class Logs extends Component {
 
     this.props.getDomesticLogs();
     this.props.getInternationalLogs();
+
+    // Logout if token has expired
+    const currentTime = Date.now() / 1000;
+    if (this.props.auth.user.exp < currentTime) {
+      this.props.logoutUser();
+    }
   }
 
   navigate(view) {
@@ -175,5 +183,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getDomesticLogs, getInternationalLogs }
+  { getDomesticLogs, getInternationalLogs, logoutUser }
 )(Logs);

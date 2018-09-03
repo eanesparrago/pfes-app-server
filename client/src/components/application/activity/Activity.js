@@ -7,10 +7,17 @@ import ActivityNav from "./ActivityNav";
 import ActivityList from "./ActivityList";
 
 import { getAllActivities } from "../../../actions/activityActions";
+import { logoutUser } from "../../../actions/authActions";
 
 class Activity extends Component {
   componentDidMount() {
     this.props.getAllActivities();
+
+    // Logout if token has expired
+    const currentTime = Date.now() / 1000;
+    if (this.props.auth.user.exp < currentTime) {
+      this.props.logoutUser();
+    }
   }
 
   render() {
@@ -50,10 +57,11 @@ class Activity extends Component {
 }
 
 const mapStateToProps = state => ({
-  activity: state.activity
+  activity: state.activity,
+  auth: state.auth
 });
 
 export default connect(
   mapStateToProps,
-  { getAllActivities }
+  { getAllActivities, logoutUser }
 )(Activity);

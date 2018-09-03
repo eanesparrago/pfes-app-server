@@ -7,6 +7,7 @@ import Spinner from "../../common/Spinner";
 
 import { Line, Bar } from "react-chartjs-2";
 import generateChartData from "../../../utils/generateChartData";
+import { logoutUser } from "../../../actions/authActions";
 
 class Statistics extends Component {
   constructor(props) {
@@ -17,6 +18,14 @@ class Statistics extends Component {
     };
 
     this.onChangeDate = this.onChangeDate.bind(this);
+  }
+
+  componentDidMount() {
+    // Logout if token has expired
+    const currentTime = Date.now() / 1000;
+    if (this.props.auth.user.exp < currentTime) {
+      this.props.logoutUser();
+    }
   }
 
   onChangeDate(e) {
@@ -310,10 +319,11 @@ class Statistics extends Component {
 }
 
 const mapStateToProps = state => ({
-  log: state.log
+  log: state.log,
+  auth: state.auth
 });
 
 export default connect(
   mapStateToProps,
-  null
+  { logoutUser }
 )(Statistics);

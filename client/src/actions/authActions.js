@@ -46,7 +46,6 @@ export const loginUser = userData => dispatch => {
 /*
 The weather is fetched from https://darksky.net/.
 It is limited to 1,000 API requests per day.
-Thus, the weather is only fetched whenever the user logs in.
 */
 export const getWeather = () => dispatch => {
   const geolocation = navigator.geolocation;
@@ -87,6 +86,8 @@ export const logoutUser = () => dispatch => {
   setAuthToken(false);
   // Set current user to {} which will set isAutenticated to false
   dispatch(setCurrentUser({}));
+
+  window.location.href = "/";
 
   // dispatch({ type: CLEAR_USERS, payload: null });
   dispatch({ type: USER_LOGOUT });
