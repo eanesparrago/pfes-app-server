@@ -7,6 +7,7 @@ import Spinner from "../common/Spinner";
 
 import "./Login.css";
 import logo from "../../img/pfes-logo.png";
+import bg from "../../img/bg.jpg";
 
 class Login extends Component {
   constructor() {
@@ -25,12 +26,16 @@ class Login extends Component {
     if (this.props.auth.isAuthenticated) {
       this.props.history.push("/app/logs");
     }
+
+    document.body.style.backgroundImage = `url("${bg}")`;
   }
 
   componentWillUnmount() {
     if (!this.props.auth.isAuthenticated) {
       this.props.history.push("/");
     }
+
+    document.body.style.backgroundImage = null;
   }
 
   componentWillReceiveProps(nextProps) {
