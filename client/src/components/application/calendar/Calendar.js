@@ -92,7 +92,7 @@ class Calendar extends Component {
               "btn btn-sm  w-100 d-block text-white text-left",
               {
                 "btn-primary": auth.user.id === event.log.user,
-                "btn-secondary": auth.user.id !== event.log.user,
+                "btn-info": auth.user.id !== event.log.user,
                 "btn-success": event.status === "Complete"
               }
             )}

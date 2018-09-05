@@ -1102,12 +1102,13 @@ class InternationalLogCreate extends Component {
                   </div>
 
                   <div className="row">
-                    <div className="form-group col-md-6">
+                    {/* <div className="form-group col-md-6">
                       <label className="mb-1" htmlFor="status">
                         <strong>Status</strong>
                       </label>
 
                       <select
+                        disabled
                         className={classnames("form-control", {
                           "is-invalid": errors.status
                         })}
@@ -1124,9 +1125,9 @@ class InternationalLogCreate extends Component {
                       {errors.status && (
                         <div className="invalid-feedback">{errors.status}</div>
                       )}
-                    </div>
+                    </div> */}
 
-                    <div className="form-group col-md-6">
+                    <div className="form-group col-md-12">
                       <label className="mb-1" htmlFor="status">
                         <strong>Tags</strong>
                       </label>

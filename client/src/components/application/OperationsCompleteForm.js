@@ -10,7 +10,6 @@ class OperationsCompleteForm extends Component {
 
     this.state = {
       remarks: ""
-      // dateFinished: ""
     };
 
     this.onChange = this.onChange.bind(this);
@@ -39,11 +38,20 @@ class OperationsCompleteForm extends Component {
     const statusData = {
       isFinished: true,
       remarks: this.state.remarks,
-      // dateFinished: this.state.dateFinished,
       stage: this.props.stage
     };
 
-    this.props.submitComplete(log, statusData);
+    if (this.props.stage === "unloading") {
+      if (
+        window.confirm(
+          "Are you sure unloading is complete? This action cannot be undone."
+        )
+      ) {
+        this.props.submitComplete(log, statusData);
+      }
+    } else {
+      this.props.submitComplete(log, statusData);
+    }
   }
 
   render() {

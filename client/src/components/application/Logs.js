@@ -63,12 +63,17 @@ class Logs extends Component {
 
       domesticContent = <Spinner />;
     } else {
+      let activeDomesticLogs = log.domestic.filter(log => log.active === true);
+      let activeInternationalLogs = log.international.filter(
+        log => log.active === true
+      );
+
       if (this.state.view === "myLogs") {
-        const myDomesticContent = log.domestic.filter(
+        const myDomesticContent = activeDomesticLogs.filter(
           log => log.user === auth.user.id
         );
 
-        const myInternationalContent = log.international.filter(
+        const myInternationalContent = activeInternationalLogs.filter(
           log => log.user === auth.user.id
         );
 
@@ -77,8 +82,10 @@ class Logs extends Component {
           <InternationalLogs logs={myInternationalContent} />
         );
       } else {
-        domesticContent = <DomesticLogs logs={log.domestic} />;
-        internationalContent = <InternationalLogs logs={log.international} />;
+        domesticContent = <DomesticLogs logs={activeDomesticLogs} />;
+        internationalContent = (
+          <InternationalLogs logs={activeInternationalLogs} />
+        );
       }
 
       contentNav = (

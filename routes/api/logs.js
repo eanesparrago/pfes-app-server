@@ -781,6 +781,12 @@ router.post(
     if (req.body.type === "Domestic") {
       DomesticLog.findOne({ domJo: req.body.domJo }).then(log => {
         if (log) {
+          if (log.operations.unloading.isFinished === false) {
+            return res
+              .status(400)
+              .json({ error: "Unloading not yet finished" });
+          }
+
           // Update
           DomesticLog.findOneAndUpdate(
             { domJo: req.body.domJo },
@@ -813,6 +819,12 @@ router.post(
     } else if (req.body.type === "International") {
       InternationalLog.findOne({ domJo: req.body.domJo }).then(log => {
         if (log) {
+          if (log.operations.unloading.isFinished === false) {
+            return res
+              .status(400)
+              .json({ error: "Unloading not yet finished" });
+          }
+
           // Update
           InternationalLog.findOneAndUpdate(
             { domJo: req.body.domJo },
@@ -847,178 +859,56 @@ router.post(
 );
 
 // ////////////////////////////////////
-// @route   POST api/logs/domestic/operations/
-// @desc    Edit domestic operations log
+// @route   Archive api/logs/domestic
+// @desc    Archive domestic log
 // @access  Private
-/*router.post(
-  "/domestic/operations",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    // Only admin and operations can edit operations status
-    if (req.user.userType !== "admin" && req.user.userType !== "operations") {
-      return res.json({ unauthorized: "Unauthorized" });
-    }
-
-    const update = {};
-
-    update.operations = {};
-    update.operations.preloading = {};
-    update.operations.loading = {};
-    update.operations.unloading = {};
-
-    if (req.body.preloadingStatus)
-      update.operations.preloading.status = req.body.preloadingStatus;
-    if (req.body.preloadingRemarks)
-      update.operations.preloading.remarks = req.body.preloadingRemarks;
-
-    if (req.body.loadingStatus)
-      update.operations.loading.status = req.body.loadingStatus;
-    if (req.body.loadingRemarks)
-      update.operations.loading.remarks = req.body.loadingRemarks;
-
-    if (req.body.unloadingStatus)
-      update.operations.unloading.status = req.body.unloadingStatus;
-    if (req.body.unloadingRemarks)
-      update.operations.unloading.remarks = req.body.unloadingRemarks;
-
-    DomesticLog.findOne({ domJo: req.body.domJo }).then(log => {
-      if (log) {
-        // Update
-        DomesticLog.findOneAndUpdate(
-          { domJo: req.body.domJo },
-          { $set: update },
-          { new: true }
-        ).then(log => {
-          res.json(log);
-
-          // Activity
-          const newActivity = new DomesticActivity({
-            userID: req.user.id,
-            userName: req.user.userName,
-            userFullName: `${req.user.firstName} ${req.user.lastName}`,
-            userType: req.user.userType,
-            logID: log._id,
-            logNumber: log.domJo,
-            logShipper: log.shipperConsignee,
-            actionType: "Update Job Order Operations Status",
-            actionSummary: `${req.user.firstName} ${req.user.lastName} (${
-              req.user.userName
-            }) updated ${log.type} Job Order #${log.domJo} (${
-              log.shipperConsignee
-            }) operations status.`
-          });
-
-          newActivity.save();
-        });
-      }
-    });
-  }
-);*/
-
-// ////////////////////////////////////
-// @route   POST api/logs/international/operations/
-// @desc    Edit international operations log
-// @access  Private
-/*router.post(
-  "/international/operations/",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    // Only admin and operations can edit operations status
-    if (req.user.userType !== "admin" && req.user.userType !== "operations") {
-      return res.json({ unauthorized: "Unauthorized" });
-    }
-
-    const update = {};
-
-    update.operations = {};
-    update.operations.preloading = {};
-    update.operations.loading = {};
-    update.operations.unloading = {};
-
-    if (req.body.preloadingStatus)
-      update.operations.preloading.status = req.body.preloadingStatus;
-    if (req.body.preloadingRemarks)
-      update.operations.preloading.remarks = req.body.preloadingRemarks;
-
-    if (req.body.loadingStatus)
-      update.operations.loading.status = req.body.loadingStatus;
-    if (req.body.loadingRemarks)
-      update.operations.loading.remarks = req.body.loadingRemarks;
-
-    if (req.body.unloadingStatus)
-      update.operations.unloading.status = req.body.unloadingStatus;
-    if (req.body.unloadingRemarks)
-      update.operations.unloading.remarks = req.body.unloadingRemarks;
-
-    InternationalLog.findOne({ domJo: req.body.domJo }).then(log => {
-      if (log) {
-        // Update
-        InternationalLog.findOneAndUpdate(
-          { domJo: req.body.domJo },
-          { $set: update },
-          { new: true }
-        ).then(log => {
-          res.json(log);
-
-          // Activity
-          const newActivity = new InternationalActivity({
-            userID: req.user.id,
-            userName: req.user.userName,
-            userFullName: `${req.user.firstName} ${req.user.lastName}`,
-            userType: req.user.userType,
-            logID: log._id,
-            logNumber: log.domJo,
-            logShipper: log.shipperConsignee,
-            actionType: "Update Job Order Operations Status",
-            actionSummary: `${req.user.firstName} ${req.user.lastName} (${
-              req.user.userName
-            }) updated ${log.type} Job Order #${log.domJo} (${
-              log.shipperConsignee
-            }) operations status.`
-          });
-
-          newActivity.save();
-        });
-      }
-    });
-  }
-); */
-
-// ////////////////////////////////////
-// @route   DELETE api/logs/domestic
-// @desc    Delete domestic log
-// @access  Private
-router.delete(
+router.post(
   "/domestic/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    // Only admin can delete logs
+    // Only admin can archive logs
     if (req.user.userType !== "admin") {
       return res.status(401).json({ unauthorized: "Unauthorized" });
     }
 
-    DomesticLog.findByIdAndRemove(req.params.id).then(() => {
-      res.json({ success: true });
+    DomesticLog.findById(req.params.id).then(log => {
+      log.active = false;
+
+      log.save(() => {
+        res.json({ success: true });
+      });
     });
+
+    // DomesticLog.findByIdAndRemove(req.params.id).then(() => {
+    //   res.json({ success: true });
+    // });
   }
 );
 
 // ////////////////////////////////////
-// @route   DELETE api/logs/domestic
-// @desc    Delete international log
+// @route   Archive api/logs/domestic
+// @desc    Archive international log
 // @access  Private
-router.delete(
+router.post(
   "/international/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    // Only admin can delete logs
+    // Only admin can archive logs
     if (req.user.userType !== "admin") {
       return res.status(401).json({ unauthorized: "Unauthorized" });
     }
 
-    InternationalLog.findByIdAndRemove(req.params.id).then(() => {
-      res.json({ success: true });
+    InternationalLog.findById(req.params.id).then(log => {
+      log.active = false;
+
+      log.save(() => {
+        res.json({ success: true });
+      });
     });
+
+    // InternationalLog.findByIdAndRemove(req.params.id).then(() => {
+    //   res.json({ success: true });
+    // });
   }
 );
 

@@ -1,7 +1,11 @@
 import moment from "moment";
 
 export default function(logs) {
-  const events = logs.map(log => {
+  const activeLogs = logs.filter(
+    log => log.active === true && (log.status === "Ongoing" || log.status === "Complete")
+  );
+
+  const events = activeLogs.map(log => {
     const { preloading, loading, unloading } = log.operations;
 
     let operationsStatus = "Preloading";

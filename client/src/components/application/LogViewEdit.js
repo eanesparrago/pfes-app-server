@@ -417,7 +417,13 @@ export class LogViewEdit extends Component {
       user: log.user
     };
 
-    this.props.submitCompleteLog(data);
+    if (
+      window.confirm(
+        "Are you sure shipment is complete? This action cannot be undone."
+      )
+    ) {
+      this.props.submitCompleteLog(data);
+    }
   }
 
   closeEdit() {
@@ -551,7 +557,9 @@ export class LogViewEdit extends Component {
         type: "Domestic"
       };
 
-      this.props.editLog(editLog);
+      if (window.confirm("Are you sure you want to edit this job order?")) {
+        this.props.editLog(editLog);
+      }
     }
 
     if (log.type === "International") {
@@ -623,7 +631,7 @@ export class LogViewEdit extends Component {
         }
       }
     }
-    
+
     let editControls = null;
 
     let etaLimit;
@@ -714,16 +722,16 @@ export class LogViewEdit extends Component {
       }
 
     let deleteControl = null;
-    if (auth.user.userType === "admin") {
+    if (auth.user.userType === "admin" && log.isCompleted === true) {
       deleteControl =
         isEditable || isToggleComplete ? null : (
           <button
             disabled={submitInProgress ? true : false}
-            title="Delete Log"
-            className="btn btn-outline-danger mb-3 mr-2 pfes-print-hide"
+            title="Archive Log"
+            className="btn btn-outline-warning mb-3 pfes-print-hide"
             onClick={this.deleteLog}
           >
-            <i className="fas fa-trash-alt" />
+            <i className="fas fa-archive" />
           </button>
         );
     }
@@ -1663,8 +1671,6 @@ export class LogViewEdit extends Component {
           </div>
 
           <div className="d-block">
-            {deleteControl}
-
             {/* @print */}
             {isEditable || isToggleComplete ? null : (
               <ReactToPrint
@@ -1672,7 +1678,7 @@ export class LogViewEdit extends Component {
                   <button
                     title="Print Log"
                     type="button"
-                    className="btn btn-outline-primary shadow-sm mb-3 pfes-print-hide"
+                    className="btn btn-outline-primary shadow-sm mb-3 mr-2 pfes-print-hide"
                   >
                     <i className="fas fa-print" />
                   </button>
@@ -1680,6 +1686,8 @@ export class LogViewEdit extends Component {
                 content={() => this.toPrint.current}
               />
             )}
+
+            {deleteControl}
           </div>
         </div>
 

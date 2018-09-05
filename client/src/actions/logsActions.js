@@ -105,7 +105,6 @@ export const createInternationalLog = logData => dispatch => {
       });
 
       $("#internationalLogCreate .close").click();
-
     })
     .catch(err => {
       dispatch({
@@ -251,14 +250,14 @@ export const submitCompleteLog = data => dispatch => {
 };
 
 // ////////////////////////
-// Delete log (admin)
+// Archive log (admin)
 export const deleteLog = log => dispatch => {
-  dispatch({ type: SUBMIT_REQUEST });
+  if (window.confirm("Are you sure? This log will be archived.")) {
+    dispatch({ type: SUBMIT_REQUEST });
 
-  if (window.confirm("Are you sure? This log will be permanently deleted.")) {
     if (log.type === "Domestic") {
       axios
-        .delete(`/api/logs/domestic/${log._id}`)
+        .post(`/api/logs/domestic/${log._id}`)
         .then(res => {
           dispatch({
             type: RECEIVE_REPLY
@@ -266,7 +265,7 @@ export const deleteLog = log => dispatch => {
 
           dispatch({
             type: SHOW_ALERT,
-            payload: `Domestic Job Order was successfully deleted.`
+            payload: `Domestic Job Order was successfully archived.`
           });
 
           $("#LogView .close").click();
@@ -287,7 +286,7 @@ export const deleteLog = log => dispatch => {
 
     if (log.type === "International") {
       axios
-        .delete(`/api/logs/international/${log._id}`)
+        .post(`/api/logs/international/${log._id}`)
         .then(res => {
           dispatch({
             type: RECEIVE_REPLY
@@ -295,7 +294,7 @@ export const deleteLog = log => dispatch => {
 
           dispatch({
             type: SHOW_ALERT,
-            payload: `International Job Order was successfully deleted.`
+            payload: `International Job Order was successfully archived.`
           });
 
           $("#LogView .close").click();
