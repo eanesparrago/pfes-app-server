@@ -16,11 +16,11 @@ class AlertBox extends Component {
   }
 
   componentDidMount() {
-    this.state = {
+    this.setState({
       show: false,
       success: false,
       message: ""
-    };
+    });
   }
 
   componentWillReceiveProps(nextProps) {

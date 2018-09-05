@@ -12,6 +12,9 @@ import { logoutUser } from "../../actions/authActions";
 
 import AlertBox from "./AlertBox";
 
+import { Typeahead } from "react-bootstrap-typeahead";
+import "react-bootstrap-typeahead/css/Typeahead.css";
+
 import isEmpty from "../../validation/is-empty";
 
 import countries from "../../assets/countries.json";
@@ -71,6 +74,8 @@ class InternationalLogCreate extends Component {
     }
 
     if (!isEmpty(nextProps.success)) {
+      this.typeahead.getInstance().clear();
+
       this.setState({
         shipperConsignee: "",
         associate: "",
@@ -312,6 +317,8 @@ class InternationalLogCreate extends Component {
   }
 
   onOpen() {
+    this.typeahead.getInstance().clear();
+
     this.setState({
       shipperConsignee: "",
       associate: "",
@@ -361,6 +368,8 @@ class InternationalLogCreate extends Component {
   }
 
   onClose() {
+    this.typeahead.getInstance().clear();
+
     this.setState({
       shipperConsignee: "",
       associate: "",
@@ -407,6 +416,13 @@ class InternationalLogCreate extends Component {
   render() {
     const { errors } = this.state;
     const { auth, log } = this.props;
+
+    let shippers = [];
+    for (let i in log.international) {
+      if (!shippers.includes(log.international[i].shipperConsignee)) {
+        shippers.push(log.international[i].shipperConsignee);
+      }
+    }
 
     let etaLimit;
     if (this.state.etd !== "") {
@@ -545,25 +561,36 @@ class InternationalLogCreate extends Component {
                   </div>
 
                   <div className="row">
+                    {/* @shipper */}
+
                     <div className="form-group col-md-6">
                       <label className="mb-1" htmlFor="shipperConsignee">
                         <strong>Shipper/Consignee</strong>
                       </label>
-                      <input
-                        type="text"
-                        className={classnames("form-control", {
-                          "is-invalid": errors.shipperConsignee
+
+                      <Typeahead
+                        ref={typeahead => (this.typeahead = typeahead)}
+                        className={classnames("", {
+                          "red-border": errors.shipperConsignee
                         })}
-                        placeholder=""
                         name="shipperConsignee"
+                        onInputChange={value => {
+                          this.setState({ shipperConsignee: value });
+                        }}
                         value={this.state.shipperConsignee}
-                        onChange={this.onChange}
+                        onChange={value => {
+                          if (value !== undefined) {
+                            this.setState({ shipperConsignee: value[0] });
+                          }
+                        }}
+                        emptyLabel="(New shipper)"
                         maxLength="100"
+                        options={shippers}
                       />
                       {errors.shipperConsignee && (
-                        <div className="invalid-feedback">
+                        <small className="text-danger">
                           {errors.shipperConsignee}
-                        </div>
+                        </small>
                       )}
                     </div>
 

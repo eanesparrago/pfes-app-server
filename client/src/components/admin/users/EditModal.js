@@ -170,7 +170,7 @@ class EditModal extends Component {
                   <option value="sales">Sales</option>
                   <option value="operations">Operations</option>
                   <option value="viewer">Viewer</option>
-                  <option value="admin">Administrator</option>
+                  {/* <option value="admin">Administrator</option> */}
                 </Input>
 
                 {errors.userType && (

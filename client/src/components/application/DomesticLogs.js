@@ -70,7 +70,7 @@ class DomesticLogs extends Component {
     if (this.props.auth.user.exp < currentTime) {
       this.props.logoutUser();
     }
-    
+
     this.props.openLogView(log);
   }
 

@@ -185,3 +185,9 @@ h3 {
     font-size: 0.9375rem;
   }
 }
+
+
+.red-border {
+  border: 1px solid #dc3545;
+  border-radius: 5px;
+}

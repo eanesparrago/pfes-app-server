@@ -63,6 +63,8 @@ export const createDomesticLog = logData => dispatch => {
       dispatch({
         type: RECEIVE_REPLY
       });
+
+      $("#domesticLogCreate .close").click();
     })
     .catch(err => {
       dispatch({
@@ -101,6 +103,9 @@ export const createInternationalLog = logData => dispatch => {
       dispatch({
         type: RECEIVE_REPLY
       });
+
+      $("#internationalLogCreate .close").click();
+
     })
     .catch(err => {
       dispatch({

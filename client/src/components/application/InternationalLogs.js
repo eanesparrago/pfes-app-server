@@ -76,6 +76,7 @@ class InternationalLogs extends Component {
 
   render() {
     const { auth, logs } = this.props;
+
     const { sortKey, sortOrder, searchValue, searchCategory } = this.state;
 
     let logList = logs;

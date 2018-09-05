@@ -7,6 +7,9 @@ import moment from "moment";
 import ReactToPrint from "react-to-print";
 import AlertBox from "./AlertBox";
 
+import { Typeahead } from "react-bootstrap-typeahead";
+import "react-bootstrap-typeahead/css/Typeahead.css";
+
 import { clearAlert } from "../../actions/alertActions";
 
 import {
@@ -106,6 +109,8 @@ export class LogViewEdit extends Component {
     this.submitCompleteLog = this.submitCompleteLog.bind(this);
 
     this.toPrint = React.createRef();
+
+    this.editShipper = React.createRef();
   }
 
   // @componentswillreceiveprops
@@ -353,12 +358,9 @@ export class LogViewEdit extends Component {
         portOfArrivalCity: ""
       });
     } else if (e.target.name === "portOfArrivalCity") {
-      this.setState(
-        {
-          portOfArrivalCity: e.target.value
-        }
-        
-      );
+      this.setState({
+        portOfArrivalCity: e.target.value
+      });
     } else if (e.target.name === "destinationProvinceKey") {
       const province = provinces.filter(
         province => province.key === e.target.value
@@ -605,6 +607,23 @@ export class LogViewEdit extends Component {
     const { auth } = this.props;
     const { log, submitInProgress } = this.props.log;
 
+    let shippers = [];
+    if (log.type === "Domestic") {
+      for (let i in this.props.log.domestic) {
+        if (!shippers.includes(this.props.log.domestic[i].shipperConsignee)) {
+          shippers.push(this.props.log.domestic[i].shipperConsignee);
+        }
+      }
+    } else if (log.type === "International") {
+      for (let i in this.props.log.international) {
+        if (
+          !shippers.includes(this.props.log.international[i].shipperConsignee)
+        ) {
+          shippers.push(this.props.log.international[i].shipperConsignee);
+        }
+      }
+    }
+    
     let editControls = null;
 
     let etaLimit;
@@ -1736,27 +1755,36 @@ export class LogViewEdit extends Component {
           </div>
 
           <div className="row">
+            {/* @shipper */}
             {isEditable ? (
               <div className="form-group col-md-6">
                 <label className="mb-1" htmlFor="shipperConsignee">
                   <strong>Shipper/Consignee</strong>
                 </label>
-                <input
-                  readOnly={!isEditable}
-                  type="text"
-                  className={classnames("form-control", {
-                    "is-invalid": errors.shipperConsignee
+
+                <Typeahead
+                  ref={this.editShipper}
+                  className={classnames("", {
+                    "red-border": errors.shipperConsignee
                   })}
-                  placeholder=""
                   name="shipperConsignee"
-                  value={this.state.shipperConsignee}
-                  onChange={this.onChange}
+                  onInputChange={value => {
+                    this.setState({ shipperConsignee: value });
+                  }}
+                  onChange={value => {
+                    if (value !== undefined) {
+                      this.setState({ shipperConsignee: value[0] });
+                    }
+                  }}
+                  defaultInputValue={this.state.shipperConsignee}
+                  emptyLabel="(New shipper)"
                   maxLength="100"
+                  options={shippers}
                 />
                 {errors.shipperConsignee && (
-                  <div className="invalid-feedback">
+                  <small className="text-danger">
                     {errors.shipperConsignee}
-                  </div>
+                  </small>
                 )}
               </div>
             ) : (
