@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 
+import Pagination from "react-js-pagination";
+
 import { connect } from "react-redux";
 import { getAllUsers } from "../../../actions/usersActions";
 
@@ -21,10 +23,14 @@ class UsersTable extends Component {
       sortOrder: true,
 
       users: [],
-      loading: true
+      loading: true,
+
+      activePage: 1
     };
 
     this.onClickSort = this.onClickSort.bind(this);
+    this.handlePageChange = this.handlePageChange.bind(this);
+
   }
 
   componentDidMount() {
@@ -50,8 +56,12 @@ class UsersTable extends Component {
     }
   }
 
+  handlePageChange(pageNumber) {
+    this.setState({ activePage: pageNumber });
+  }
+
   render() {
-    const { users, loading } = this.state;
+    const { users, loading, activePage } = this.state;
     const { openEditModal } = this.props;
     const { sortKey, sortOrder } = this.state;
 
@@ -59,7 +69,10 @@ class UsersTable extends Component {
 
     usersList = usersList.sort(logSorting(sortKey, sortOrder));
 
-    const tableBody = usersList.map(user => {
+    // Pagination
+    const page = usersList.slice((activePage - 1) * 15, activePage * 15);
+
+    const tableBody = page.map(user => {
       return (
         <tr
           key={user._id}
@@ -212,6 +225,22 @@ class UsersTable extends Component {
               </thead>
               <tbody>{tableBody}</tbody>
             </table>
+
+            <div className="container">
+              <div className="row justify-content-center">
+                <Pagination
+                  itemClass="page-item"
+                  linkClass="page-link"
+                  activePage={this.state.activePage}
+                  itemsCountPerPage={15}
+                  totalItemsCount={usersList.length}
+                  pageRangeDisplayed={5}
+                  onChange={this.handlePageChange}
+                />
+              </div>
+            </div>
+
+            <div />
           </div>
         )}
       </div>

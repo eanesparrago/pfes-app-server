@@ -57,6 +57,7 @@ class Navbar extends Component {
           >
             {user.userName} ({userType})
           </a>
+
           <div className="dropdown-menu">
             <a
               onClick={this.onLogoutClick.bind(this)}
@@ -76,6 +77,11 @@ class Navbar extends Component {
             <Link className="navbar-brand" to="/">
               PFES App
             </Link>
+
+            {/* <Link className="text-light" to="/app/mission-vision">
+              Mission & Vision
+            </Link> */}
+
             {isAuthenticated ? authLinks : null}
           </div>
         </nav>

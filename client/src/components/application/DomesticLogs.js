@@ -9,6 +9,8 @@ import classnames from "classnames";
 import ReactToPrint from "react-to-print";
 import { CSVLink } from "react-csv";
 
+import Pagination from "react-js-pagination";
+
 import { openLogView } from "../../actions/logsActions";
 import { logoutUser } from "../../actions/authActions";
 
@@ -30,12 +32,15 @@ class DomesticLogs extends Component {
       sortOrder: true,
 
       searchValue: "",
-      searchCategory: "all"
+      searchCategory: "all",
+
+      activePage: 1
     };
 
     this.onClickSort = this.onClickSort.bind(this);
     this.onChangeSearchValue = this.onChangeSearchValue.bind(this);
     this.onChangeSearchCategory = this.onChangeSearchCategory.bind(this);
+    this.handlePageChange = this.handlePageChange.bind(this);
 
     this.toPrint = React.createRef();
   }
@@ -64,6 +69,10 @@ class DomesticLogs extends Component {
     });
   }
 
+  handlePageChange(pageNumber) {
+    this.setState({ activePage: pageNumber });
+  }
+
   onLogClick(log) {
     // Logout if token has expired
     const currentTime = Date.now() / 1000;
@@ -77,7 +86,13 @@ class DomesticLogs extends Component {
   // @render
   render() {
     const { auth, logs } = this.props;
-    const { sortKey, sortOrder, searchValue, searchCategory } = this.state;
+    const {
+      sortKey,
+      sortOrder,
+      searchValue,
+      searchCategory,
+      activePage
+    } = this.state;
 
     let logList = logs;
 
@@ -86,6 +101,9 @@ class DomesticLogs extends Component {
     }
 
     logList = logList.sort(logSorting(sortKey, sortOrder));
+
+    // Pagination
+    const page = logList.slice((activePage - 1) * 15, activePage * 15);
 
     // Generate CSV
     const logsCSV = generateCSV(logList, "domestic");
@@ -106,7 +124,7 @@ class DomesticLogs extends Component {
     } else {
       tableBody = (
         <tbody>
-          {logList.map(log => {
+          {page.map(log => {
             /* Generate the operations status element */
             const { preloading, loading, unloading } = log.operations;
 
@@ -800,6 +818,22 @@ class DomesticLogs extends Component {
 
               {tableBody}
             </table>
+
+            <div className="container">
+              <div className="row justify-content-center">
+                <Pagination
+                  itemClass="page-item"
+                  linkClass="page-link"
+                  activePage={this.state.activePage}
+                  itemsCountPerPage={15}
+                  totalItemsCount={logList.length}
+                  pageRangeDisplayed={5}
+                  onChange={this.handlePageChange}
+                />
+              </div>
+            </div>
+
+            <div />
           </div>
         </div>
       </div>

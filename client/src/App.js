@@ -25,6 +25,7 @@ import LogView from "./components/application/LogView";
 import Calendar from "./components/application/calendar/Calendar";
 import Statistics from "./components/application/statistics/Statistics";
 import Activity from "./components/application/activity/Activity";
+import MissionVision from "./components/mission-vision/MissionVision";
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -70,8 +71,11 @@ class App extends Component {
                   <Route exact path="/" component={Login} />
                   {/* App navigation tabs */}
                   <Route path="/app" component={ApplicationNav} />
+                  {/* Mission and vision */}
+                  <Route path="/mission-vision" component={MissionVision} />
                   {/* 404 */}
                   <Route render={() => <h1>Not found</h1>} />
+
                 </Switch>
 
                 <Route
