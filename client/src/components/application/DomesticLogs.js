@@ -13,6 +13,7 @@ import Pagination from "react-js-pagination";
 
 import { openLogView } from "../../actions/logsActions";
 import { logoutUser } from "../../actions/authActions";
+import { clearAlert } from "../../actions/alertActions";
 
 import logSorting from "../../utils/logSorting";
 import logSearching from "../../utils/logSearching";
@@ -81,6 +82,7 @@ class DomesticLogs extends Component {
     }
 
     this.props.openLogView(log);
+    this.props.clearAlert();
   }
 
   // @render
@@ -851,5 +853,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { openLogView, logoutUser }
+  { openLogView, logoutUser, clearAlert }
 )(DomesticLogs);
