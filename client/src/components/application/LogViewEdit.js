@@ -207,48 +207,59 @@ export class LogViewEdit extends Component {
       if (e.target.value === "") {
         return;
       } else {
-        const today = Date.parse(moment());
-
         switch (e.target.name) {
           case "pickupDate":
-            this.setState({ pickupDate: e.target.value }, () => {
-              let pickupDate = Date.parse(
-                moment(this.state.pickupDate).format("DD MMM YYYY")
-              );
-
-              if (pickupDate < today) {
-                this.setState({
-                  pickupDate: moment(today).format("YYYY-MM-DD")
-                });
-              }
-
-              let etd = Date.parse(
-                moment(this.state.etd).format("DD MMM YYYY")
-              );
-
-              if (etd < pickupDate) {
-                this.setState(
-                  {
-                    etd: moment(pickupDate).format("YYYY-MM-DD")
-                  },
-                  () => {
-                    etd = Date.parse(
-                      moment(this.state.etd).format("DD MMM YYYY")
-                    );
-
-                    let eta = Date.parse(
-                      moment(this.state.eta).format("DD MMM YYYY")
-                    );
-
-                    if (eta < etd) {
-                      this.setState({
-                        eta: moment(etd).format("YYYY-MM-DD")
-                      });
-                    }
-                  }
+            this.setState(
+              {
+                pickupDate: e.target.value,
+                etd:
+                  this.state.modeOfTransport === "Truck"
+                    ? e.target.value
+                    : this.state.etd
+              },
+              () => {
+                let pickupDate = Date.parse(
+                  moment(this.state.pickupDate).format("DD MMM YYYY")
                 );
+
+                let etd = Date.parse(
+                  moment(this.state.etd).format("DD MMM YYYY")
+                );
+
+                let eta = Date.parse(
+                  moment(this.state.eta).format("DD MMM YYYY")
+                );
+
+                if (etd < pickupDate) {
+                  this.setState(
+                    {
+                      etd: moment(pickupDate).format("YYYY-MM-DD")
+                    },
+                    () => {
+                      etd = Date.parse(
+                        moment(this.state.etd).format("DD MMM YYYY")
+                      );
+
+                      eta = Date.parse(
+                        moment(this.state.eta).format("DD MMM YYYY")
+                      );
+
+                      if (eta < etd || eta < pickupDate) {
+                        this.setState({
+                          eta: moment(etd).format("YYYY-MM-DD")
+                        });
+                      }
+                    }
+                  );
+                }
+
+                if (eta < etd || eta < pickupDate) {
+                  this.setState({
+                    eta: moment(etd).format("YYYY-MM-DD")
+                  });
+                }
               }
-            });
+            );
             break;
 
           case "etd":
@@ -2110,7 +2121,11 @@ export class LogViewEdit extends Component {
                   name="eta"
                   value={this.state.eta}
                   onChange={this.onChange}
-                  min={etaLimit}
+                  min={
+                    this.state.modeOfTransport === "Truck"
+                      ? moment(this.state.pickupDate).format("YYYY-MM-DD")
+                      : moment(this.state.etd).format("YYYY-MM-DD")
+                  }
                   max="2999-01-01"
                 />
                 {errors.eta && (

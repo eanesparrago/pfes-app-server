@@ -156,44 +156,63 @@ class DomesticLogCreate extends Component {
 
         switch (e.target.name) {
           case "pickupDate":
-            this.setState({ pickupDate: e.target.value }, () => {
-              let pickupDate = Date.parse(
-                moment(this.state.pickupDate).format("DD MMM YYYY")
-              );
-
-              if (pickupDate < today) {
-                this.setState({
-                  pickupDate: moment(today).format("YYYY-MM-DD")
-                });
-              }
-
-              let etd = Date.parse(
-                moment(this.state.etd).format("DD MMM YYYY")
-              );
-
-              if (etd < pickupDate) {
-                this.setState(
-                  {
-                    etd: moment(pickupDate).format("YYYY-MM-DD")
-                  },
-                  () => {
-                    etd = Date.parse(
-                      moment(this.state.etd).format("DD MMM YYYY")
-                    );
-
-                    let eta = Date.parse(
-                      moment(this.state.eta).format("DD MMM YYYY")
-                    );
-
-                    if (eta < etd) {
-                      this.setState({
-                        eta: moment(etd).format("YYYY-MM-DD")
-                      });
-                    }
-                  }
+            this.setState(
+              {
+                pickupDate: e.target.value,
+                etd:
+                  this.state.modeOfTransport === "Truck"
+                    ? e.target.value
+                    : this.state.etd
+              },
+              () => {
+                let pickupDate = Date.parse(
+                  moment(this.state.pickupDate).format("DD MMM YYYY")
                 );
+
+                if (pickupDate < today) {
+                  this.setState({
+                    pickupDate: moment(today).format("YYYY-MM-DD")
+                  });
+                }
+
+                let etd = Date.parse(
+                  moment(this.state.etd).format("DD MMM YYYY")
+                );
+
+                let eta = Date.parse(
+                  moment(this.state.eta).format("DD MMM YYYY")
+                );
+
+                if (etd < pickupDate) {
+                  this.setState(
+                    {
+                      etd: moment(pickupDate).format("YYYY-MM-DD")
+                    },
+                    () => {
+                      etd = Date.parse(
+                        moment(this.state.etd).format("DD MMM YYYY")
+                      );
+
+                      eta = Date.parse(
+                        moment(this.state.eta).format("DD MMM YYYY")
+                      );
+
+                      if (eta < etd || eta < pickupDate) {
+                        this.setState({
+                          eta: moment(etd).format("YYYY-MM-DD")
+                        });
+                      }
+                    }
+                  );
+                }
+
+                if (eta < etd || eta < pickupDate) {
+                  this.setState({
+                    eta: moment(etd).format("YYYY-MM-DD")
+                  });
+                }
               }
-            });
+            );
             break;
 
           case "etd":
@@ -355,6 +374,7 @@ class DomesticLogCreate extends Component {
 
   // @onSubmit
   onSubmit(e) {
+    console.log(this.state);
     e.preventDefault();
 
     const logData = {
@@ -530,20 +550,13 @@ class DomesticLogCreate extends Component {
 
   render() {
     const { errors } = this.state;
-    const { auth, log, } = this.props;
+    const { auth, log } = this.props;
 
     let shippers = [];
     for (let i in log.domestic) {
       if (!shippers.includes(log.domestic[i].shipperConsignee)) {
         shippers.push(log.domestic[i].shipperConsignee);
       }
-    }
-
-    let etaLimit;
-    if (this.state.etd !== "") {
-      etaLimit = moment(this.state.etd).format("YYYY-MM-DD");
-    } else {
-      etaLimit = moment().format("YYYY-MM-DD");
     }
 
     return (
@@ -1451,7 +1464,7 @@ class DomesticLogCreate extends Component {
                         name="eta"
                         value={this.state.eta}
                         onChange={this.onChange}
-                        min={etaLimit}
+                        min={moment(this.state.etd).format("YYYY-MM-DD")}
                         max="2999-01-01"
                       />
                       {errors.eta && (
