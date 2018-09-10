@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
+import moment from "moment";
 
 import Pagination from "react-js-pagination";
 
@@ -19,7 +20,7 @@ class UsersTable extends Component {
   constructor() {
     super();
     this.state = {
-      sortKey: "userName",
+      sortKey: "date",
       sortOrder: true,
 
       users: [],
@@ -30,7 +31,6 @@ class UsersTable extends Component {
 
     this.onClickSort = this.onClickSort.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
-
   }
 
   componentDidMount() {
@@ -85,8 +85,22 @@ class UsersTable extends Component {
           <td>{user.lastName}</td>
           <td>{user.email}</td>
           <td>{user.contact}</td>
-          <td>{user.isActive ? "YES" : "NO"}</td>
-          <td>{user.date.slice(0, 10)}</td>
+          <td>
+            {user.isActive ? (
+              <h5>
+                <span className="badge badge-success">Yes</span>
+              </h5>
+            ) : (
+              <h5>
+                <span className="badge badge-secondary">No</span>
+              </h5>
+            )}
+          </td>
+          <td>
+            <span title={moment(user.date).format("MMMM Do YYYY, h:mm:ssa")}>
+              {user.date.slice(0, 10)}
+            </span>
+          </td>
         </tr>
       );
     });

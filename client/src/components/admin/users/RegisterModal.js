@@ -57,6 +57,20 @@ class RegisterModal extends Component {
         this.props.toggleRegisterModal();
       }
     }
+
+    if (nextProps.toggleRegisterModal) {
+      this.setState({
+        userName: "",
+        userType: "",
+        firstName: "",
+        lastName: "",
+        email: "",
+        contact: "",
+        password: "",
+        password2: "",
+        errors: {}
+      });
+    }
   }
 
   submit(e) {
