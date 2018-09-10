@@ -645,13 +645,6 @@ export class LogViewEdit extends Component {
 
     let editControls = null;
 
-    let etaLimit;
-    if (this.state.etd !== "") {
-      etaLimit = moment(this.state.etd).format("YYYY-MM-DD");
-    } else {
-      etaLimit = moment().format("YYYY-MM-DD");
-    }
-
     let tags = [];
 
     if (log.tags.urgent === true) tags.push("Urgent");
