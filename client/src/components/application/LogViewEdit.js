@@ -2287,7 +2287,7 @@ export class LogViewEdit extends Component {
                 />
               </div>
             ) : (
-              <div className="col-md-4 mb-2">
+              <div className="col-md-12 mb-2">
                 <h5>
                   Remarks: <em>{log.additional}</em>
                 </h5>
