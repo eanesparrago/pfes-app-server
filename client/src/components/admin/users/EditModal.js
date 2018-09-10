@@ -170,7 +170,7 @@ class EditModal extends Component {
                   <option value="sales">Sales</option>
                   <option value="operations">Operations</option>
                   <option value="viewer">Viewer</option>
-                  {/* <option value="admin">Administrator</option> */}
+                  <option value="admin">Administrator</option>
                 </Input>
 
                 {errors.userType && (
@@ -277,6 +277,11 @@ class EditModal extends Component {
               <FormGroup check>
                 <Label check>
                   <Input
+                    disabled={
+                      this.props.auth.user.userName === this.state.userName
+                        ? true
+                        : false
+                    }
                     type="checkbox"
                     checked={this.state.isActive}
                     onChange={this.toggleIsActive}
@@ -330,7 +335,8 @@ class EditModal extends Component {
 const mapStateToProps = state => ({
   errors: state.errors,
   users: state.users,
-  register: state.register
+  register: state.register,
+  auth: state.auth
 });
 
 export default connect(
