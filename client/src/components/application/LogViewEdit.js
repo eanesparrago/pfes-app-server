@@ -322,7 +322,7 @@ export class LogViewEdit extends Component {
       }
       return;
     } else if (e.target.name === "contactNumber") {
-      const regex = /[\d-]+$/u;
+      const regex = /[-\d ()+]+$/u;
 
       if (e.target.value === "") {
         this.setState({ [e.target.name]: e.target.value });

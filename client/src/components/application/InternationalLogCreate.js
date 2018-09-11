@@ -236,7 +236,7 @@ class InternationalLogCreate extends Component {
       return;
       // contactNumber
     } else if (e.target.name === "contactNumber") {
-      const regex = /[\d-]+$/u;
+      const regex = /[-\d ()+]+$/u;
 
       if (e.target.value === "") {
         this.setState({ [e.target.name]: e.target.value });

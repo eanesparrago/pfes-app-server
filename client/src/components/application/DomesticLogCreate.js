@@ -275,7 +275,7 @@ class DomesticLogCreate extends Component {
       }
       return;
     } else if (e.target.name === "contactNumber") {
-      const regex = /[\d-]+$/u;
+      const regex = /[-\d ()+]+$/u;
 
       if (e.target.value === "") {
         this.setState({ [e.target.name]: e.target.value });
@@ -645,6 +645,7 @@ class DomesticLogCreate extends Component {
                         onChange={this.onChange}
                         maxLength="15"
                       />
+
                       {errors.contactNumber && (
                         <div className="invalid-feedback">
                           {errors.contactNumber}

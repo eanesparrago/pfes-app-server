@@ -12,6 +12,10 @@ module.exports = function validateLogInput(data) {
     errors.contactName = "Contact name is required";
   }
 
+  if (!Validator.isLength(data.contactNumber, { min: 4, max: 15 })) {
+    errors.contactNumber = "Contact number must be between 4 to 15 characters";
+  }
+
   if (Validator.isEmpty(data.contactNumber)) {
     errors.contactNumber = "Contact number is required";
   }
