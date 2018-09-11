@@ -314,7 +314,16 @@ class DomesticLogs extends Component {
                   ) : moment(log.etd).isSame(moment(), "day") ? (
                     <strong>{moment(log.etd).format("MM/DD/YYYY")}</strong>
                   ) : (
-                    <Moment format="MM/DD/YYYY">{log.etd}</Moment>
+                    <Moment
+                      className={classnames("", {
+                        "text-danger":
+                          moment(log.eta).isBefore(moment(), "day") &&
+                          log.operations.loading.isFinished === false
+                      })}
+                      format="MM/DD/YYYY"
+                    >
+                      {log.etd}
+                    </Moment>
                   )}
                 </td>
 

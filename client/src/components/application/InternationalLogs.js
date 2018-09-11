@@ -283,14 +283,56 @@ class InternationalLogs extends Component {
                 </td>
 
                 <td title={moment(log.pickupDate).format("MMMM Do YYYY")}>
-                  <Moment format="MM/DD/YYYY">{log.pickupDate}</Moment>
+                  {moment(log.pickupDate).isSame(moment(), "day") ? (
+                    <strong>
+                      {moment(log.pickupDate).format("MM/DD/YYYY")}
+                    </strong>
+                  ) : (
+                    <Moment
+                      className={classnames("", {
+                        "text-danger":
+                          moment(log.pickupDate).isBefore(moment(), "day") &&
+                          log.operations.preloading.isFinished === false
+                      })}
+                      format="MM/DD/YYYY"
+                    >
+                      {log.pickupDate}
+                    </Moment>
+                  )}
                 </td>
 
                 <td title={moment(log.etd).format("MMMM Do YYYY")}>
-                  <Moment format="MM/DD/YYYY">{log.etd}</Moment>
+                  {moment(log.etd).isSame(moment(), "day") ? (
+                    <strong>{moment(log.etd).format("MM/DD/YYYY")}</strong>
+                  ) : (
+                    <Moment
+                      className={classnames("", {
+                        "text-danger":
+                          moment(log.eta).isBefore(moment(), "day") &&
+                          log.operations.loading.isFinished === false
+                      })}
+                      format="MM/DD/YYYY"
+                    >
+                      {log.etd}
+                    </Moment>
+                  )}
                 </td>
+
                 <td title={moment(log.eta).format("MMMM Do YYYY")}>
-                  <Moment format="MM/DD/YYYY">{log.eta}</Moment>
+                  {moment(log.eta).isSame(moment(), "day") ? (
+                    <strong>{moment(log.eta).format("MM/DD/YYYY")}</strong>
+                  ) : (
+                    <Moment
+                      className={classnames("", {
+                        "text-danger":
+                          moment(log.eta).isBefore(moment(), "day") &&
+                          log.operations.unloading.isFinished === false
+                      })}
+                      format="MM/DD/YYYY"
+                    >
+                      {log.eta}
+                    </Moment>
+                  )}
                 </td>
 
                 <td>
