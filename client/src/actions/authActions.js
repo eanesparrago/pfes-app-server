@@ -58,7 +58,7 @@ export const getWeather = () => dispatch => {
     fetch(
       `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/19218d2614796b023be50699767d8e21/${
         coordinates.latitude
-      },${coordinates.longitude}`
+      },${coordinates.longitude}?units=auto`
     )
       .then(res => res.json())
       .then(data => {

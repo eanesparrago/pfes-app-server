@@ -2,6 +2,7 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  padding-top: 0.5rem;
 }
 @media (max-width: 992px) {
   .weather-container {
@@ -25,10 +26,9 @@
   .weather-today {
     padding-right: 0;
     margin-right: 0;
-    
 
     width: 100%;
-    padding-bottom: 0.5rem;
+    /* padding-bottom: 0.5rem; */
     border-right: none;
     border-bottom: 1px solid #dee2e6;
     margin-top: 0.5rem;
@@ -51,6 +51,10 @@
   justify-content: center;
 }
 
+.weather-forecast-icon{
+  margin-bottom: 0.3rem;
+}
+
 .weather-forecast-item {
   display: flex;
   flex-flow: column nowrap;
@@ -59,4 +63,14 @@
 
 .weather-forecast-item:not(:last-child) {
   margin-right: 1.5rem;
+}
+
+/* //////////////////////////////////// WEATHER ICONS ////////////////////////////////////*/
+.icon-wrap .icon,
+.icon-wrap .wi {
+  font-size: 2.5rem;
+}
+
+.icon-wrap-s .wi {
+  font-size: 2rem;
 }

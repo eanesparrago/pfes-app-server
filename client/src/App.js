@@ -5,10 +5,12 @@ import {
   Switch,
   Redirect
 } from "react-router-dom";
+
 import "./App.css";
+import "weather-icons/css/weather-icons.css";
+
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
-
 import { persistor, store } from "./store";
 
 import jwt_decode from "jwt-decode";
@@ -75,7 +77,6 @@ class App extends Component {
                   <Route path="/mission-vision" component={MissionVision} />
                   {/* 404 */}
                   <Route render={() => <h1>Not found</h1>} />
-
                 </Switch>
 
                 <Route

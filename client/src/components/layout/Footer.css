@@ -4,3 +4,11 @@
   align-items: flex-end;
   height: 8rem;
 }
+
+@media (max-width: 500px) {
+  .Footer {
+    flex-flow: column;
+    text-align: center;
+    align-items: center;
+  }
+}

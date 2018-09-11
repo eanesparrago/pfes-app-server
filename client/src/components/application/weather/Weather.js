@@ -16,38 +16,47 @@ class Weather extends Component {
   }
 
   getIcon(weather) {
-    let icon = <ion-icon size="large" name="sunny" />;
+    let icon = <i className="wi wi-day-sunny" />;
 
     switch (weather) {
       case "clear-day":
-        icon = <ion-icon size="large" name="sunny" />;
+        icon = <i className="wi wi-day-sunny" />;
         break;
 
       case "clear-night":
-        icon = <ion-icon size="large" name="moon" />;
+        icon = <i className="wi wi-night-clear" />;
         break;
 
       case "rain":
+        icon = <i className="wi wi-rain" />;
+        break;
+
       case "snow":
-        icon = <ion-icon size="large" name="rainy" />;
+        icon = <i className="wi wi-snow" />;
         break;
 
       case "cloudy":
+        icon = <i className="wi wi-cloudy" />;
+        break;
+
       case "fog":
-        icon = <ion-icon size="large" name="cloud" />;
+        icon = <i className="wi wi-fog" />;
         break;
 
       case "wind":
+        icon = <i className="wi wi-cloudy-windy" />;
+        break;
+
       case "partly-cloudy-day":
-        icon = <ion-icon size="large" name="cloudy" />;
+        icon = <i className="wi wi-day-cloudy" />;
         break;
 
       case "partly-cloudy-night":
-        icon = <ion-icon size="large" name="cloudy-night" />;
+        icon = <i className="wi wi-night-alt-cloudy" />;
         break;
 
       default:
-        icon = <ion-icon size="large" name="sunny" />;
+        icon = <i className="wi wi-cloud" />;
     }
 
     return icon;
@@ -64,98 +73,100 @@ class Weather extends Component {
       content = <SpinnerSmall />;
     } else {
       content = (
-        <div className="weather-container">
-          <div className="weather-today">
-            <div className="weather-today-top">
-              <div
-                title={currently.summary}
-                className="weather-today-icon text-primary"
-              >
-                {this.getIcon(currently.icon)}
+        <div>
+          <div className="weather-container">
+            <div className="weather-today">
+              <div className="weather-today-top">
+                <div
+                  title={currently.summary}
+                  className="weather-today-icon icon-wrap text-primary"
+                >
+                  {this.getIcon(currently.icon)}
+                </div>
+
+                <h3>
+                  {currently.temperature}
+                  &deg;C
+                </h3>
               </div>
 
-              <h3>
-                {currently.temperature}
-                &deg;C
-              </h3>
+              <span>
+                <small>{currently.summary}</small>
+              </span>
             </div>
 
-            <span>
-              <small>{currently.summary}</small>
-            </span>
-          </div>
+            <div className="weather-forecast">
+              <div className="weather-forecast-item">
+                <div
+                  title={daily.data[1].summary}
+                  className="weather-forecast-icon icon-wrap-s text-primary"
+                >
+                  {this.getIcon(daily.data[1].icon)}
+                </div>
 
-          <div className="weather-forecast">
-            <div className="weather-forecast-item">
-              <div
-                title={daily.data[1].summary}
-                className="weather-forecast-icon text-primary"
-              >
-                {this.getIcon(daily.data[1].icon)}
+                <small>
+                  {daily.data[1].temperatureHigh}
+                  &deg;C
+                </small>
+
+                <small>
+                  {moment(daily.data[1].time * 1000).format("MMM DD")}
+                </small>
               </div>
 
-              <small>
-                {daily.data[1].temperatureHigh}
-                &deg;C
-              </small>
+              <div className="weather-forecast-item">
+                <div
+                  title={daily.data[2].summary}
+                  className="weather-forecast-icon icon-wrap-s text-primary"
+                >
+                  {this.getIcon(daily.data[2].icon)}
+                </div>
 
-              <small>
-                {moment(daily.data[1].time * 1000).format("MMM DD")}
-              </small>
-            </div>
+                <small>
+                  {daily.data[2].temperatureHigh}
+                  &deg;C
+                </small>
 
-            <div className="weather-forecast-item">
-              <div
-                title={daily.data[2].summary}
-                className="weather-forecast-icon text-primary"
-              >
-                {this.getIcon(daily.data[2].icon)}
+                <small>
+                  {moment(daily.data[2].time * 1000).format("MMM DD")}
+                </small>
               </div>
 
-              <small>
-                {daily.data[2].temperatureHigh}
-                &deg;C
-              </small>
+              <div className="weather-forecast-item">
+                <div
+                  title={daily.data[3].summary}
+                  className="weather-forecast-icon icon-wrap-s text-primary"
+                >
+                  {this.getIcon(daily.data[3].icon)}
+                </div>
 
-              <small>
-                {moment(daily.data[2].time * 1000).format("MMM DD")}
-              </small>
-            </div>
+                <small>
+                  {daily.data[3].temperatureHigh}
+                  &deg;C
+                </small>
 
-            <div className="weather-forecast-item">
-              <div
-                title={daily.data[3].summary}
-                className="weather-forecast-icon text-primary"
-              >
-                {this.getIcon(daily.data[3].icon)}
+                <small>
+                  {moment(daily.data[3].time * 1000).format("MMM DD")}
+                </small>
               </div>
 
-              <small>
-                {daily.data[3].temperatureHigh}
-                &deg;C
-              </small>
+              <div className="weather-forecast-item">
+                <div
+                  title={daily.data[4].summary}
+                  className="weather-forecast-icon icon-wrap-s text-primary"
+                >
+                  {this.getIcon(daily.data[4].icon)}
+                </div>
 
-              <small>
-                {moment(daily.data[3].time * 1000).format("MMM DD")}
-              </small>
-            </div>
+                <small>
+                  {daily.data[4].temperatureHigh}
+                  &deg;C
+                </small>
 
-            <div className="weather-forecast-item">
-              <div
-                title={daily.data[4].summary}
-                className="weather-forecast-icon text-primary"
-              >
-                {this.getIcon(daily.data[4].icon)}
+                <small>
+                  {moment(daily.data[4].time * 1000).format("MMM DD")}
+                </small>
               </div>
-
-              <small>
-                {daily.data[4].temperatureHigh}
-                &deg;C
-              </small>
-
-              <small>
-                {moment(daily.data[4].time * 1000).format("MMM DD")}
-              </small>
             </div>
           </div>
         </div>
