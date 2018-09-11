@@ -46,6 +46,12 @@ class InternationalLogs extends Component {
     this.toPrint = React.createRef();
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.view) {
+      this.setState({ activePage: 1 });
+    }
+  }
+
   onLogClick(log) {
     // Logout if token has expired
     const currentTime = Date.now() / 1000;

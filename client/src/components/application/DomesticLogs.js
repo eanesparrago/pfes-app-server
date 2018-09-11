@@ -49,8 +49,6 @@ class DomesticLogs extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.view) {
       this.setState({ activePage: 1 });
-
-      console.log(nextProps.view);
     }
   }
 
@@ -287,7 +285,22 @@ class DomesticLogs extends Component {
                 </td>
 
                 <td title={moment(log.pickupDate).format("MMMM Do YYYY")}>
-                  <Moment format="MM/DD/YYYY">{log.pickupDate}</Moment>{" "}
+                  {moment(log.pickupDate).isSame(moment(), "day") ? (
+                    <strong>
+                      {moment(log.pickupDate).format("MM/DD/YYYY")}
+                    </strong>
+                  ) : (
+                    <Moment
+                      className={classnames("", {
+                        "text-danger":
+                          moment(log.pickupDate).isBefore(moment(), "day") &&
+                          log.operations.preloading.isFinished === false
+                      })}
+                      format="MM/DD/YYYY"
+                    >
+                      {log.pickupDate}
+                    </Moment>
+                  )}{" "}
                   {log.pickupTime && log.pickupTime !== ""
                     ? moment(log.pickupTime, "HH:mm").format("h:mm a")
                     : null}
@@ -298,13 +311,28 @@ class DomesticLogs extends Component {
                     <em className="text-muted">
                       <Moment format="MM/DD/YYYY">{log.etd}</Moment>
                     </em>
+                  ) : moment(log.etd).isSame(moment(), "day") ? (
+                    <strong>{moment(log.etd).format("MM/DD/YYYY")}</strong>
                   ) : (
                     <Moment format="MM/DD/YYYY">{log.etd}</Moment>
                   )}
                 </td>
 
                 <td title={moment(log.eta).format("MMMM Do YYYY")}>
-                  <Moment format="MM/DD/YYYY">{log.eta}</Moment>{" "}
+                  {moment(log.eta).isSame(moment(), "day") ? (
+                    <strong>{moment(log.eta).format("MM/DD/YYYY")}</strong>
+                  ) : (
+                    <Moment
+                      className={classnames("", {
+                        "text-danger":
+                          moment(log.eta).isBefore(moment(), "day") &&
+                          log.operations.unloading.isFinished === false
+                      })}
+                      format="MM/DD/YYYY"
+                    >
+                      {log.eta}
+                    </Moment>
+                  )}{" "}
                   {log.deliveryTime && log.deliveryTime !== ""
                     ? moment(log.deliveryTime, "HH:mm").format("h:mm a")
                     : null}
