@@ -26,7 +26,8 @@ class Calendar extends Component {
     this.state = {
       showDomestic: true,
       showInternational: true,
-      showHolidays: true
+      showHolidays: true,
+      isBig: false
     };
 
     this.toggleCheck = this.toggleCheck.bind(this);
@@ -193,7 +194,10 @@ class Calendar extends Component {
     } else {
       content = (
         <div
-          style={{ height: "55rem", overscrollBehaviorX: "auto" }}
+          style={{
+            height: this.state.isBig ? "121rem" : "70rem",
+            overscrollBehaviorX: "auto"
+          }}
           className="Calendar mx-3 mobile-margin pb-5"
         >
           <BigCalendar
@@ -246,6 +250,34 @@ class Calendar extends Component {
               <label className="form-check-label" htmlFor="showHolidays">
                 Show Holidays
               </label>
+            </div>
+
+            <div
+              className="btn-group shadow-sm"
+              role="group"
+              aria-label="Basic example"
+            >
+              <button
+                type="button"
+                className="btn btn-outline-primary"
+                onClick={() => {
+                  this.setState({ isBig: false });
+                  this.forceUpdate();
+                }}
+              >
+                Small
+              </button>
+
+              <button
+                type="button"
+                className="btn btn-outline-primary"
+                onClick={() => {
+                  this.setState({ isBig: true });
+                  this.forceUpdate();
+                }}
+              >
+                Big
+              </button>
             </div>
           </div>
         </div>
