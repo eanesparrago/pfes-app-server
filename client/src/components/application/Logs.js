@@ -77,14 +77,24 @@ class Logs extends Component {
           log => log.user === auth.user.id
         );
 
-        domesticContent = <DomesticLogs logs={myDomesticContent} />;
+        domesticContent = (
+          <DomesticLogs logs={myDomesticContent} view={this.state.view} />
+        );
         internationalContent = (
-          <InternationalLogs logs={myInternationalContent} />
+          <InternationalLogs
+            logs={myInternationalContent}
+            view={this.state.view}
+          />
         );
       } else {
-        domesticContent = <DomesticLogs logs={activeDomesticLogs} />;
+        domesticContent = (
+          <DomesticLogs logs={activeDomesticLogs} view={this.state.view} />
+        );
         internationalContent = (
-          <InternationalLogs logs={activeInternationalLogs} />
+          <InternationalLogs
+            logs={activeInternationalLogs}
+            view={this.state.view}
+          />
         );
       }
 

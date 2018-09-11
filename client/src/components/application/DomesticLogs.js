@@ -46,6 +46,14 @@ class DomesticLogs extends Component {
     this.toPrint = React.createRef();
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.view) {
+      this.setState({ activePage: 1 });
+
+      console.log(nextProps.view);
+    }
+  }
+
   onClickSort(sortKey) {
     if (sortKey === this.state.sortKey) {
       this.setState({

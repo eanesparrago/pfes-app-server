@@ -1746,7 +1746,7 @@ export class LogViewEdit extends Component {
 
                   <div className="mb-3">
                     <h5>
-                      Completion Remarks: <strong>{log.remarks}</strong>
+                      Completion Remarks: <em>{log.remarks}</em>
                     </h5>
                   </div>
 
