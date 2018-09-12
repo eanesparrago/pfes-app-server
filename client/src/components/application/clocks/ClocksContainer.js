@@ -28,7 +28,7 @@ class ClocksContainer extends Component {
           <div className="clock-box">
             <ReactCountryFlag code="za" svg />
 
-            <span className="clock-item text-primary">South Africa</span>
+            <span className="clock-item text-primary">S. Africa</span>
 
             <Clock
               className="clock-item"

@@ -2,13 +2,13 @@
   display: flex;
 }
 
-@media (max-width: 1500px) {
+@media (max-width: 1400px) {
   .clocks-container {
     flex-flow: column;
   }
 }
 
-@media (max-width: 992px) {
+@media (max-width: 767px) {
   .clocks-container {
     align-items: center;
     margin-top: 1rem;
@@ -20,14 +20,14 @@
   margin-right: 1rem;
 }
 
-@media (max-width: 992px) {
+@media (max-width: 767px) {
   .clocks-col-1 {
     margin-right: 0;
-    width: 15rem;
+    /* width: 15rem; */
   }
 
   .clocks-col-2 {
-    width: 15rem;
+    /* width: 15rem; */
   }
 }
 

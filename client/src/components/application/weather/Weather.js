@@ -150,7 +150,7 @@ class Weather extends Component {
                 </small>
               </div>
 
-              <div className="weather-forecast-item">
+              {/* <div className="weather-forecast-item">
                 <div
                   title={daily.data[4].summary}
                   className="weather-forecast-icon icon-wrap-s text-primary"
@@ -166,7 +166,7 @@ class Weather extends Component {
                 <small>
                   {moment(daily.data[4].time * 1000).format("MMM DD")}
                 </small>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
