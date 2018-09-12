@@ -849,20 +849,20 @@ class InternationalLogs extends Component {
 
               {tableBody}
             </table>
+          </div>
+        </div>
 
-            <div className="container">
-              <div className="row justify-content-center">
-                <Pagination
-                  itemClass="page-item"
-                  linkClass="page-link"
-                  activePage={this.state.activePage}
-                  itemsCountPerPage={15}
-                  totalItemsCount={logList.length}
-                  pageRangeDisplayed={5}
-                  onChange={this.handlePageChange}
-                />
-              </div>
-            </div>
+        <div className="container mt-2">
+          <div className="row justify-content-center">
+            <Pagination
+              itemClass="page-item"
+              linkClass="page-link"
+              activePage={this.state.activePage}
+              itemsCountPerPage={15}
+              totalItemsCount={logList.length}
+              pageRangeDisplayed={5}
+              onChange={this.handlePageChange}
+            />
           </div>
         </div>
       </div>
