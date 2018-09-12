@@ -9,6 +9,7 @@ import generateBadge from "../../utils/generateBadge";
 import logo from "../../img/pfes-logo.png";
 
 import Weather from "./weather/Weather";
+import ClocksContainer from "./clocks/ClocksContainer";
 
 import {
   getDomesticLogs,
@@ -68,7 +69,7 @@ class ApplicationNav extends Component {
       <div className="container-fluid">
         <div className="card mb-3 shadow-sm pfes-header">
           <div className="card-body row">
-            <div className="col-sm-6">
+            <div className="col-lg-4">
               <div className="pfes-header-info">
                 <div>
                   <img
@@ -80,9 +81,9 @@ class ApplicationNav extends Component {
 
                 <div className="pfes-header-text">
                   <div className="pfes-header-name">
-                    <h2 className="">
-                      Hello {auth.user.firstName}! {badge}
-                    </h2>
+                    <h3 className="">
+                      {auth.user.firstName} {badge}
+                    </h3>
                   </div>
 
                   <div className="pfes-header-date">
@@ -92,8 +93,12 @@ class ApplicationNav extends Component {
               </div>
             </div>
 
-            <div className="col-sm-6">
+            <div className="col-lg-4">
               <Weather />
+            </div>
+
+            <div className="col-lg-4">
+              <ClocksContainer />
             </div>
           </div>
         </div>
