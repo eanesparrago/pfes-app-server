@@ -69,7 +69,7 @@ class ApplicationNav extends Component {
       <div className="container-fluid">
         <div className="card mb-3 shadow-sm pfes-header">
           <div className="card-body row">
-            <div className="col-md-4">
+            <div className="col-lg-4">
               <div className="pfes-header-info">
                 <div>
                   <img
@@ -93,12 +93,16 @@ class ApplicationNav extends Component {
               </div>
             </div>
 
-            <div className="col-md-4">
-              <Weather />
-            </div>
+            <div className="container col-lg-8">
+              <div className="row">
+                <div className="col-sm-6">
+                  <Weather />
+                </div>
 
-            <div className="col-md-4">
-              <ClocksContainer />
+                <div className="col-sm-6">
+                  <ClocksContainer />
+                </div>
+              </div>
             </div>
           </div>
         </div>

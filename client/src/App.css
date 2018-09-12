@@ -147,6 +147,21 @@ h3 {
     text-align: center;
   }
 }
+@media (max-width: 991px) {
+  .pfes-header-info {
+    flex-flow: row;
+    justify-content: center;
+    text-align: left;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #dee2e6;
+    margin-bottom: 1rem;
+  }
+}
+@media (max-width: 991px) {
+  .pfes-header-info {
+    text-align: center;
+  }
+}
 
 .pfes-header-logo {
   width: 6rem;
@@ -157,12 +172,25 @@ h3 {
 @media (max-width: 1200px) {
   .pfes-header-logo {
     width: 5rem;
-  
+  }
+}
+@media (max-width: 500px) {
+  .pfes-header-logo {
+    position: absolute;
+    width: 70%;
+    top: 15rem;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    z-index: 0;
+    opacity: 0.1;
   }
 }
 
 .pfes-header-text {
   max-width: 50rem;
+  z-index: 5;
 }
 @media (max-width: 1200px) {
   .pfes-header-text {

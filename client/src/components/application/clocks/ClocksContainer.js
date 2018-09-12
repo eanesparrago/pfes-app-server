@@ -79,7 +79,9 @@ class ClocksContainer extends Component {
           <div className="clock-box">
             <ReactCountryFlag code="us" svg />
 
-            <span className="clock-item text-primary text-nowrap">New York</span>
+            <span className="clock-item text-primary text-nowrap">
+              New York
+            </span>
 
             <Clock
               className="clock-item text-nowrap"

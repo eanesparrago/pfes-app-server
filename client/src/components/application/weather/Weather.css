@@ -3,14 +3,16 @@
   justify-content: center;
   align-items: center;
   /* padding-top: 0.5rem; */
-}
+  /* border: 1px solid magenta; */
 
+}
 @media (max-width: 1200px) {
   .weather-container {
     flex-flow: column nowrap;
     justify-content: center;
-
+    align-items: center;
     width: 100%;
+
   }
 }
 

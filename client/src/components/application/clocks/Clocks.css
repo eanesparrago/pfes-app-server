@@ -1,25 +1,33 @@
 .clocks-container {
   display: flex;
 }
-
 @media (max-width: 1400px) {
   .clocks-container {
     flex-flow: column;
+    padding-left: 3rem;
   }
 }
-
+@media (max-width: 1200px) {
+  .clocks-container {
+    padding-left: 0;
+  }
+}
 @media (max-width: 767px) {
+  .clocks-container {
+    align-items: flex-start;
+  }
+}
+@media (max-width: 574px) {
   .clocks-container {
     align-items: center;
     margin-top: 1rem;
-    /* border: 1px solid magenta; */
+
   }
 }
 
 .clocks-col-1 {
   margin-right: 1.5rem;
 }
-
 @media (max-width: 767px) {
   .clocks-col-1 {
     margin-right: 0;
@@ -38,4 +46,8 @@
 
 .clock-item {
   margin-left: 0.5rem;
+}
+
+.test {
+  width: 10rem;
 }
