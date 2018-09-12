@@ -276,25 +276,25 @@ class InternationalLogCreate extends Component {
     e.preventDefault();
 
     const logData = {
-      shipperConsignee: this.state.shipperConsignee,
+      shipperConsignee: this.state.shipperConsignee.trim(),
       modeOfTransport: this.state.modeOfTransport,
 
       commodityType: this.state.commodityType,
-      commodityDescription: this.state.commodityDescription,
+      commodityDescription: this.state.commodityDescription.trim(),
 
-      blAwb: this.state.blAwb,
+      blAwb: this.state.blAwb.trim(),
 
       originCountry: this.state.originCountry,
       originLocation: this.state.originLocation,
 
       portOfDepartureCountry: this.state.portOfDepartureCountry,
-      portOfDepartureLocation: this.state.portOfDepartureLocation,
+      portOfDepartureLocation: this.state.portOfDepartureLocation.trim(),
 
       portOfArrivalCountry: this.state.portOfArrivalCountry,
-      portOfArrivalLocation: this.state.portOfArrivalLocation,
+      portOfArrivalLocation: this.state.portOfArrivalLocation.trim(),
 
       destinationCountry: this.state.destinationCountry,
-      destinationLocation: this.state.destinationLocation,
+      destinationLocation: this.state.destinationLocation.trim(),
 
       pickupDate: this.state.pickupDate,
       etd: this.state.etd,
@@ -306,9 +306,9 @@ class InternationalLogCreate extends Component {
 
       additional: this.state.additional,
 
-      contactName: this.state.contactName,
-      contactNumber: this.state.contactNumber,
-      contactEmail: this.state.contactEmail,
+      contactName: this.state.contactName.trim(),
+      contactNumber: this.state.contactNumber.trim(),
+      contactEmail: this.state.contactEmail.trim(),
 
       type: "International"
     };

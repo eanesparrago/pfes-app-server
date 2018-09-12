@@ -520,33 +520,33 @@ export class LogViewEdit extends Component {
     if (log.type === "Domestic") {
       const editLog = {
         domJo: log.domJo,
-        shipperConsignee: this.state.shipperConsignee,
+        shipperConsignee: this.state.shipperConsignee.trim(),
         modeOfTransport: this.state.modeOfTransport,
 
         commodityType: this.state.commodityType,
-        commodityDescription: this.state.commodityDescription,
+        commodityDescription: this.state.commodityDescription.trim(),
 
-        blAwb: this.state.blAwb,
+        blAwb: this.state.blAwb.trim(),
 
         originProvinceKey: this.state.originProvinceKey,
         originProvinceName: this.state.originProvinceName,
         originCity: this.state.originCity,
-        originLocation: this.state.originLocation,
+        originLocation: this.state.originLocation.trim(),
 
         portOfDepartureProvinceName: this.state.portOfDepartureProvinceName,
         portOfDepartureProvinceKey: this.state.portOfDepartureProvinceKey,
         portOfDepartureCity: this.state.portOfDepartureCity,
-        portOfDepartureLocation: this.state.portOfDepartureLocation,
+        portOfDepartureLocation: this.state.portOfDepartureLocation.trim(),
 
         portOfArrivalProvinceName: this.state.portOfArrivalProvinceName,
         portOfArrivalProvinceKey: this.state.portOfArrivalProvinceKey,
         portOfArrivalCity: this.state.portOfArrivalCity,
-        portOfArrivalLocation: this.state.portOfArrivalLocation,
+        portOfArrivalLocation: this.state.portOfArrivalLocation.trim(),
 
         destinationProvinceKey: this.state.destinationProvinceKey,
         destinationProvinceName: this.state.destinationProvinceName,
         destinationCity: this.state.destinationCity,
-        destinationLocation: this.state.destinationLocation,
+        destinationLocation: this.state.destinationLocation.trim(),
 
         pickupDate: this.state.pickupDate,
         etd: this.state.etd,
@@ -561,9 +561,9 @@ export class LogViewEdit extends Component {
 
         additional: this.state.additional,
 
-        contactName: this.state.contactName,
-        contactNumber: this.state.contactNumber,
-        contactEmail: this.state.contactEmail,
+        contactName: this.state.contactName.trim(),
+        contactNumber: this.state.contactNumber.trim(),
+        contactEmail: this.state.contactEmail.trim(),
 
         type: "Domestic"
       };
@@ -576,25 +576,25 @@ export class LogViewEdit extends Component {
     if (log.type === "International") {
       const editLog = {
         domJo: log.domJo,
-        shipperConsignee: this.state.shipperConsignee,
+        shipperConsignee: this.state.shipperConsignee.trim(),
         modeOfTransport: this.state.modeOfTransport,
 
         commodityType: this.state.commodityType,
-        commodityDescription: this.state.commodityDescription,
+        commodityDescription: this.state.commodityDescription.trim(),
 
         blAwb: this.state.blAwb,
 
         originCountry: this.state.originCountry,
-        originLocation: this.state.originLocation,
+        originLocation: this.state.originLocation.trim(),
 
         portOfDepartureCountry: this.state.portOfDepartureCountry,
-        portOfDepartureLocation: this.state.portOfDepartureLocation,
+        portOfDepartureLocation: this.state.portOfDepartureLocation.trim(),
 
         portOfArrivalCountry: this.state.portOfArrivalCountry,
-        portOfArrivalLocation: this.state.portOfArrivalLocation,
+        portOfArrivalLocation: this.state.portOfArrivalLocation.trim(),
 
         destinationCountry: this.state.destinationCountry,
-        destinationLocation: this.state.destinationLocation,
+        destinationLocation: this.state.destinationLocation.trim(),
 
         etd: this.state.etd,
         eta: this.state.eta,
@@ -605,9 +605,9 @@ export class LogViewEdit extends Component {
 
         additional: this.state.additional,
 
-        contactName: this.state.contactName,
-        contactNumber: this.state.contactNumber,
-        contactEmail: this.state.contactEmail,
+        contactName: this.state.contactName.trim(),
+        contactNumber: this.state.contactNumber.trim(),
+        contactEmail: this.state.contactEmail.trim(),
 
         type: "International"
       };

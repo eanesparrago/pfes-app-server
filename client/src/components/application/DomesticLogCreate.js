@@ -376,35 +376,35 @@ class DomesticLogCreate extends Component {
   onSubmit(e) {
     console.log(this.state);
     e.preventDefault();
-
+6
     const logData = {
-      shipperConsignee: this.state.shipperConsignee,
+      shipperConsignee: this.state.shipperConsignee.trim(),
       modeOfTransport: this.state.modeOfTransport,
 
       commodityType: this.state.commodityType,
-      commodityDescription: this.state.commodityDescription,
+      commodityDescription: this.state.commodityDescription.trim(),
 
-      blAwb: this.state.blAwb,
+      blAwb: this.state.blAwb.trim(),
 
       originProvinceName: this.state.originProvinceName,
       originProvinceKey: this.state.originProvinceKey,
       originCity: this.state.originCity,
-      originLocation: this.state.originLocation,
+      originLocation: this.state.originLocation.trim(),
 
       portOfDepartureProvinceName: this.state.portOfDepartureProvinceName,
       portOfDepartureProvinceKey: this.state.portOfDepartureProvinceKey,
       portOfDepartureCity: this.state.portOfDepartureCity,
-      portOfDepartureLocation: this.state.portOfDepartureLocation,
+      portOfDepartureLocation: this.state.portOfDepartureLocation.trim(),
 
       portOfArrivalProvinceName: this.state.portOfArrivalProvinceName,
       portOfArrivalProvinceKey: this.state.portOfArrivalProvinceKey,
       portOfArrivalCity: this.state.portOfArrivalCity,
-      portOfArrivalLocation: this.state.portOfArrivalLocation,
+      portOfArrivalLocation: this.state.portOfArrivalLocation.trim(),
 
       destinationProvinceName: this.state.destinationProvinceName,
       destinationProvinceKey: this.state.destinationProvinceKey,
       destinationCity: this.state.destinationCity,
-      destinationLocation: this.state.destinationLocation,
+      destinationLocation: this.state.destinationLocation.trim(),
 
       pickupDate: this.state.pickupDate,
       etd: this.state.etd,
@@ -419,9 +419,9 @@ class DomesticLogCreate extends Component {
 
       additional: this.state.additional,
 
-      contactName: this.state.contactName,
-      contactNumber: this.state.contactNumber,
-      contactEmail: this.state.contactEmail,
+      contactName: this.state.contactName.trim(),
+      contactNumber: this.state.contactNumber.trim(),
+      contactEmail: this.state.contactEmail.trim(),
 
       type: "Domestic"
     };
