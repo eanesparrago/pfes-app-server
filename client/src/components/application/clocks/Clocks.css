@@ -21,7 +21,6 @@
   .clocks-container {
     align-items: center;
     margin-top: 1rem;
-
   }
 }
 
@@ -31,10 +30,6 @@
 @media (max-width: 767px) {
   .clocks-col-1 {
     margin-right: 0;
-    /* width: 15rem; */
-  }
-
-  .clocks-col-2 {
     /* width: 15rem; */
   }
 }

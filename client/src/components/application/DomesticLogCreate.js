@@ -376,7 +376,7 @@ class DomesticLogCreate extends Component {
   onSubmit(e) {
     console.log(this.state);
     e.preventDefault();
-6
+
     const logData = {
       shipperConsignee: this.state.shipperConsignee.trim(),
       modeOfTransport: this.state.modeOfTransport,
