@@ -439,6 +439,7 @@ class DomesticLogs extends Component {
                 <option value="etd">ETD</option>
                 <option value="eta">ETA</option>
                 <option value="status">Status</option>
+                <option value="operations">Ongoing Operation Status</option>
                 <option value="tags">Tags</option>
               </select>
             </div>
@@ -492,6 +493,25 @@ class DomesticLogs extends Component {
                         <option value="Complete">Complete</option>
                         <option value="Waiting">Waiting</option>
                         <option value="Void">Void</option>
+                      </select>
+                    );
+
+                  case "operations":
+                    return (
+                      <select
+                        className="custom-select"
+                        name="searchValue"
+                        id="searchValue"
+                        value={this.state.searchValue}
+                        onChange={this.onChangeSearchValue}
+                      >
+                        <option value="" defaultValue>
+                          All Operation Statuses
+                        </option>
+                        <option value="preloading">Preloading</option>
+                        <option value="loading">Loading</option>
+                        <option value="unloading">Unloading</option>
+                        <option value="delivered">Delivered</option>
                       </select>
                     );
 

@@ -66,6 +66,48 @@ export default (logs, category, value) => {
       default:
         return logs;
     }
+  } else if (category === "operations") {
+    switch (value) {
+      case "preloading":
+        return logs.filter(log => {
+          return (
+            log.status === "Ongoing" &&
+            log.operations.preloading.isFinished === false
+          );
+        });
+
+      case "loading":
+        return logs.filter(log => {
+          return (
+            log.status === "Ongoing" &&
+            log.operations.preloading.isFinished === true &&
+            log.operations.loading.isFinished === false
+          );
+        });
+
+      case "unloading":
+        return logs.filter(log => {
+          return (
+            log.status === "Ongoing" &&
+            log.operations.preloading.isFinished === true &&
+            log.operations.loading.isFinished === true &&
+            log.operations.unloading.isFinished === false
+          );
+        });
+
+      case "delivered":
+        return logs.filter(log => {
+          return (
+            log.status === "Ongoing" &&
+            log.operations.preloading.isFinished === true &&
+            log.operations.loading.isFinished === true &&
+            log.operations.unloading.isFinished === true
+          );
+        });
+
+      default:
+        return logs;
+    }
   } else {
     search.addIndex(category);
     return search.search(value);
