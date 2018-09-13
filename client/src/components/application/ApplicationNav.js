@@ -51,9 +51,9 @@ class ApplicationNav extends Component {
   }
 
   componentWillUnmount() {
-    if (this.props.auth.isAuthenticated) {
-      this.props.history.push("/app");
-    }
+    // if (this.props.auth.isAuthenticated) {
+    //   this.props.history.push("/app");
+    // }
   }
 
   handleClick(item) {

@@ -46,28 +46,75 @@ class Navbar extends Component {
     }
 
     const authLinks = (
-      <ul className="navbar-nav ml-auto">
-        <li className="nav-item dropdown">
-          <a
-            className="nav-link dropdown-toggle"
-            data-toggle="dropdown"
-            role="button"
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-            {user.userName} ({userType})
-          </a>
+      // <div className="collapse navbar-collapse" id="navbarSupportedContent">
+      //   <ul className="navbar-nav ml-auto">
+      //     <li className="nav-item dropdown">
+      //       <a
+      //         className="nav-link dropdown-toggle"
+      //         data-toggle="dropdown"
+      //         role="button"
+      //         aria-haspopup="true"
+      //         aria-expanded="false"
+      //       >
+      //         {user.userName} ({userType})
+      //       </a>
 
-          <div className="dropdown-menu">
-            <a
-              onClick={this.onLogoutClick.bind(this)}
-              className="dropdown-item"
-            >
-              Logout
+      //       <div className="dropdown-menu">
+      //         <a
+      //           onClick={this.onLogoutClick.bind(this)}
+      //           className="dropdown-item"
+      //         >
+      //           Help
+      //         </a>
+
+      //         <a
+      //           onClick={this.onLogoutClick.bind(this)}
+      //           className="dropdown-item"
+      //         >
+      //           Logout
+      //         </a>
+      //       </div>
+      //     </li>
+      //   </ul>
+      // </div>
+      <div className="collapse navbar-collapse" id="navbarSupportedContent">
+        {/* <ul className="navbar-nav mr-auto">
+          <li className="nav-item active">
+            <a className="nav-link" href="#">
+              Home <span className="sr-only">(current)</span>
             </a>
-          </div>
-        </li>
-      </ul>
+          </li>
+        </ul> */}
+
+        <ul className="navbar-nav ml-auto">
+          <li className="nav-item dropdown">
+            <a
+              className="nav-link dropdown-toggle"
+              data-toggle="dropdown"
+              role="button"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              {user.userName} ({userType})
+            </a>
+
+            <div className="dropdown-menu">
+              <Link className="dropdown-item" to="/mission-vision">
+                Mission & Vision
+              </Link>
+
+              <div className="dropdown-divider" />
+
+              <a
+                onClick={this.onLogoutClick.bind(this)}
+                className="dropdown-item"
+              >
+                Logout
+              </a>
+            </div>
+          </li>
+        </ul>
+      </div>
     );
 
     return (
@@ -81,6 +128,18 @@ class Navbar extends Component {
             {/* <Link className="text-light" to="/app/mission-vision">
               Mission & Vision
             </Link> */}
+
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span className="navbar-toggler-icon" />
+            </button>
 
             {isAuthenticated ? authLinks : null}
           </div>

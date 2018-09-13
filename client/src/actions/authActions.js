@@ -8,7 +8,8 @@ import {
   USER_LOGOUT,
   CLEAR_ERRORS,
   GET_WEATHER,
-  USER_LOGIN_LOADING
+  USER_LOGIN_LOADING,
+  ERROR_WEATHER
 } from "./types";
 
 // Login - Get user token
@@ -65,6 +66,11 @@ export const getWeather = () => dispatch => {
         dispatch({
           type: GET_WEATHER,
           payload: data
+        });
+      })
+      .catch(res => {
+        dispatch({
+          type: ERROR_WEATHER
         });
       });
   });

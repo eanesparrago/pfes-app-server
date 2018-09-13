@@ -259,7 +259,9 @@ class Calendar extends Component {
             >
               <button
                 type="button"
-                className="btn btn-outline-primary"
+                className={classnames("btn btn-outline-primary ", {
+                  "active": this.state.isBig === false
+                })}
                 onClick={() => {
                   this.setState({ isBig: false });
                   this.forceUpdate();
@@ -270,7 +272,9 @@ class Calendar extends Component {
 
               <button
                 type="button"
-                className="btn btn-outline-primary"
+                className={classnames("btn btn-outline-primary ", {
+                  "active": this.state.isBig === true
+                })}
                 onClick={() => {
                   this.setState({ isBig: true });
                   this.forceUpdate();

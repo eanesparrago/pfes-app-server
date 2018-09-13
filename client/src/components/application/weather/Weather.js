@@ -64,14 +64,26 @@ class Weather extends Component {
 
   render() {
     const { weather } = this.props;
-    const { currently, daily } = weather;
+    const { currently, daily } = weather.weather;
 
     let content = null;
 
+    console.log(weather.loading, weather.success);
+
     // Show spinner if weather is not loading yet
-    if (!Object.keys(weather).length) {
+    // if (!Object.keys(weather).length) {
+    if (weather.loading === true) {
       content = <SpinnerSmall />;
-    } else {
+    } else if (weather.loading === false && weather.success === false) {
+      content = (
+        <div className="weather-container">
+          <em className="text-muted">
+            Weather information is currently unavailable or your location data
+            is inaccessible.
+          </em>
+        </div>
+      );
+    } else if (weather.success === true) {
       content = (
         <div>
           <div className="weather-container">
@@ -178,7 +190,7 @@ class Weather extends Component {
 }
 
 const mapStateToProps = state => ({
-  weather: state.weather.weather
+  weather: state.weather
 });
 
 export default connect(

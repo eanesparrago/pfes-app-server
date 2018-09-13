@@ -1,8 +1,9 @@
-import { GET_WEATHER, USER_LOGOUT } from "../actions/types";
+import { GET_WEATHER, USER_LOGOUT, ERROR_WEATHER } from "../actions/types";
 
 const initialState = {
   weather: {},
-  loading: false
+  loading: true,
+  success: false
 };
 
 export default function(state = initialState, action) {
@@ -11,7 +12,15 @@ export default function(state = initialState, action) {
       return {
         ...state,
         weather: action.payload,
-        loading: false
+        loading: false,
+        success: true
+      };
+
+    case ERROR_WEATHER:
+      return {
+        ...state,
+        loading: false,
+        success: false
       };
 
     case USER_LOGOUT:
