@@ -3,8 +3,8 @@
   position: relative;
   z-index: 1;
   height: 8rem;
-  -webkit-perspective: 1000px;
-  perspective: 1000px;
+  -webkit-perspective: 3000px;
+  perspective: 3000px;
 }
 @media (max-width: 1500px) {
   .pfes-card-container {
@@ -57,12 +57,12 @@ img {
 }
 
 /*- Flipping the card -*/
-.pfes-card-container:active .pfes-card-body {
+.pfes-card-container:hover .pfes-card-body {
   -webkit-transform: rotateX(180deg);
   transform: rotateX(180deg);
 }
 
-.pfes-card-container:active > .pfes-card-body > .side-front {
+.pfes-card-container:hover > .pfes-card-body > .side-front {
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.2s ease-in, visibility 0.75s ease-in-out;

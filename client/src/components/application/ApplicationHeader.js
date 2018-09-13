@@ -77,41 +77,7 @@ class ApplicationHeader extends Component {
           {/* BACK */}
           <div className="card mb-3 shadow-sm pfes-header pfes-card-side side-back">
             <div className="card-body row">
-              <div className="col-lg-4">
-                <div className="pfes-header-info">
-                  <div>
-                    <img
-                      className="pfes-header-logo"
-                      src={logo}
-                      alt="PFES Logo"
-                    />
-                  </div>
-
-                  <div className="pfes-header-text">
-                    <div className="pfes-header-name">
-                      <h3 className="">
-                        {auth.user.firstName} {badge}
-                      </h3>
-                    </div>
-
-                    <div className="pfes-header-date">
-                      <span>Today is {moment().format("MMM DD, YYYY")}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="container col-lg-8">
-                <div className="row">
-                  <div className="col-sm-6">
-                    <Weather />
-                  </div>
-
-                  <div className="col-sm-6">
-                    <ClocksContainer />
-                  </div>
-                </div>
-              </div>
+              Test
             </div>
           </div>
           {/* BACK END */}
