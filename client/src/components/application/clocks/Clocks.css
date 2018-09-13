@@ -17,7 +17,7 @@
     align-items: flex-start;
   }
 }
-@media (max-width: 574px) {
+@media (max-width: 575px) {
   .clocks-container {
     align-items: center;
     margin-top: 1rem;
