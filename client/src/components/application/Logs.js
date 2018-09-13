@@ -115,7 +115,7 @@ class Logs extends Component {
             ) : null}
 
             <a
-              className={classnames("nav-item nav-link", {
+              className={classnames("nav-item nav-link text-nowrap", {
                 active: view === "all"
               })}
               href="#all"
