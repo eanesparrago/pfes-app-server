@@ -68,8 +68,6 @@ class Weather extends Component {
 
     let content = null;
 
-    console.log(weather.loading, weather.success);
-
     // Show spinner if weather is not loading yet
     // if (!Object.keys(weather).length) {
     if (weather.loading === true) {

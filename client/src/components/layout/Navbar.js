@@ -100,7 +100,7 @@ class Navbar extends Component {
 
             <div className="dropdown-menu">
               <Link className="dropdown-item" to="/mission-vision">
-                Mission & Vision
+                Our Mission & Vision
               </Link>
 
               <div className="dropdown-divider" />
@@ -124,10 +124,6 @@ class Navbar extends Component {
             <Link className="navbar-brand" to="/">
               PFES App
             </Link>
-
-            {/* <Link className="text-light" to="/app/mission-vision">
-              Mission & Vision
-            </Link> */}
 
             <button
               className="navbar-toggler"

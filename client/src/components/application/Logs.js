@@ -121,7 +121,7 @@ class Logs extends Component {
               href="#all"
               onClick={() => this.navigate("all")}
             >
-              All
+              All Job Orders
             </a>
 
             <a
