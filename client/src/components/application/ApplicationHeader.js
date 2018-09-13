@@ -76,7 +76,7 @@ class ApplicationHeader extends Component {
 
           {/* BACK */}
           <div className="card mb-3 shadow-sm pfes-header-back pfes-card-side side-back">
-            <div className="card-body row">
+            <div className="card-body row text-white">
               <div className="col-12">TEST</div>
             </div>
           </div>

@@ -88,10 +88,10 @@
 .pfes-header-back {
   background-image: linear-gradient(
     to top,
-    rgba(0, 123, 255, 0.12),
-    #ffffff 50%
+    rgba(50, 149, 255, 0.4),
+    rgba(50, 149, 255, 0.9) 90%
   );
-  border-top: 1px solid #ebebeb;
+  border-bottom: 1px solid #ebebeb;
   /* border: 1px solid magenta; */
 
   -webkit-touch-callout: none; /* iOS Safari */
@@ -161,6 +161,12 @@
   -webkit-transform: rotateX(180deg);
   transform: rotateX(180deg);
 }
+@media (max-width: 575px) {
+  .pfes-card-container:active .pfes-card-body {
+    -webkit-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+  }
+}
 
 .pfes-card-container:active > .pfes-card-body > .side-front {
   opacity: 0;
@@ -192,4 +198,11 @@
   z-index: 2;
   -webkit-transform: rotateX(180deg);
   transform: rotateX(180deg);
+}
+@media (max-width: 575px) {
+  .side-back {
+    z-index: 2;
+    -webkit-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+  }
 }
