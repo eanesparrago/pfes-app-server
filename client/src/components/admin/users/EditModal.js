@@ -156,6 +156,11 @@ class EditModal extends Component {
                 </Label>
 
                 <Input
+                  disabled={
+                    this.props.auth.user.userName === this.state.userName
+                      ? true
+                      : false
+                  }
                   className={classnames("", {
                     "is-invalid": errors.userType
                   })}

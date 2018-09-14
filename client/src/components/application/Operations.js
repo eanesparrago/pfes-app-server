@@ -20,7 +20,6 @@ class Operations extends Component {
 
     this.onChange = this.onChange.bind(this);
     this.toggleEdit = this.toggleEdit.bind(this);
-    this.submitEdit = this.submitEdit.bind(this);
   }
 
   onChange(e) {
