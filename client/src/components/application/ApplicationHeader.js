@@ -40,6 +40,74 @@ class ApplicationHeader extends Component {
             {/* FRONT */}
             <div className="card mb-3 shadow-sm pfes-header pfes-card-side side-front">
               <label htmlFor="flip" id="flip-label">
+                <div id="particlesFront">
+                  {this.props.weather.success === true &&
+                  this.props.weather.weather.currently.icon === "rain" ? (
+                    <Particles
+                      params={{
+                        particles: {
+                          number: {
+                            value: 200,
+                            density: { enable: true, value_area: 800 }
+                          },
+                          color: { value: "#007bff" },
+                          shape: {
+                            type: "circle",
+                            stroke: { width: 0, color: "#000000" },
+                            polygon: { nb_sides: 3 },
+                            image: {
+                              src: "img/github.svg",
+                              width: 100,
+                              height: 100
+                            }
+                          },
+                          opacity: {
+                            value: 0.5,
+                            random: true,
+                            anim: {
+                              enable: false,
+                              speed: 1,
+                              opacity_min: 0.1,
+                              sync: false
+                            }
+                          },
+                          size: {
+                            value: 2,
+                            random: true,
+                            anim: {
+                              enable: false,
+                              speed: 40,
+                              size_min: 0.1,
+                              sync: false
+                            }
+                          },
+                          line_linked: {
+                            enable: false,
+                            distance: 500,
+                            color: "#ffffff",
+                            opacity: 0.4,
+                            width: 2
+                          },
+                          move: {
+                            enable: true,
+                            speed: 10,
+                            direction: "bottom",
+                            random: true,
+                            straight: true,
+                            out_mode: "out",
+                            bounce: false,
+                            attract: {
+                              enable: false,
+                              rotateX: 1200,
+                              rotateY: 1200
+                            }
+                          }
+                        }
+                      }}
+                    />
+                  ) : null}
+                </div>
+
                 <div className="card-body row">
                   <div className="col-lg-4">
                     <div className="pfes-header-info">
@@ -158,7 +226,8 @@ class ApplicationHeader extends Component {
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  weather: state.weather
 });
 
 export default connect(
