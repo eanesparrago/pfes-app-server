@@ -40,7 +40,7 @@ class Activity extends Component {
               </div>
             </div>
 
-            <div className="col-lg-6">
+            <div className="col-lg-6 mt-3 mt-lg-0">
               <h4>International</h4>
 
               <div className="list-group">
