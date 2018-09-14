@@ -48,7 +48,6 @@ class RegisterContainer extends Component {
           password2: "",
           errors: {}
         });
-        console.log("Success");
 
         this.props.clearRegister();
         this.props.clearErrors();
@@ -76,8 +75,6 @@ class RegisterContainer extends Component {
     };
 
     this.props.registerUser(newUser);
-
-    console.log("Submit clicked");
   }
 
   render() {

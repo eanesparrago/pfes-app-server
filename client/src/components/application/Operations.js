@@ -33,10 +33,6 @@ class Operations extends Component {
     });
   }
 
-  submitEdit() {
-    console.log("STATE", this.state);
-  }
-
   render() {
     const { log } = this.props;
 

@@ -41,9 +41,7 @@ class OperationsAddStatus extends Component {
   }
 
   changeType(type) {
-    this.setState({ type: type }, () => {
-      console.log(this.state);
-    });
+    this.setState({ type: type });
   }
 
   submitStatus(e) {

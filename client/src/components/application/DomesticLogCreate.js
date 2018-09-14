@@ -374,7 +374,6 @@ class DomesticLogCreate extends Component {
 
   // @onSubmit
   onSubmit(e) {
-    console.log(this.state);
     e.preventDefault();
 
     const logData = {

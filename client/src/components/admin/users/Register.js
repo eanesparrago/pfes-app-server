@@ -32,7 +32,6 @@ class Register extends Component {
 
     if (nextProps.register) {
       if (nextProps.register.success) {
-        console.log("Success");
         this.setState({
           userName: "",
           userType: "",
@@ -69,8 +68,6 @@ class Register extends Component {
     this.props.registerUser(newUser);
 
     this.props.getAllUsers();
-
-    console.log("Submit clicked");
   }
 
   render() {
