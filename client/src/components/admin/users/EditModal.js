@@ -92,7 +92,7 @@ class EditModal extends Component {
       }
       return;
     } else if (e.target.name === "contact") {
-      const regex = /[\d-]+$/u;
+      const regex = /[-\d ()+]+$/u;
 
       if (e.target.value === "") {
         this.setState({ [e.target.name]: e.target.value });
@@ -269,10 +269,6 @@ class EditModal extends Component {
                   placeholder=""
                   maxLength="15"
                 />
-
-                <small className="form-text text-muted">
-                  Numbers and dashes only
-                </small>
 
                 {errors.contact && (
                   <div className="invalid-feedback">{errors.contact}</div>

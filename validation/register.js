@@ -35,7 +35,7 @@ module.exports = function validateRegisterInput(data) {
   }
 
   // lastName validation
-   if (!Validator.isLength(data.lastName, { min: 2, max: 30 })) {
+  if (!Validator.isLength(data.lastName, { min: 2, max: 30 })) {
     errors.lastName = "Lastname must be between 2 to 30 characters";
   }
   if (Validator.isEmpty(data.lastName)) {
@@ -51,6 +51,10 @@ module.exports = function validateRegisterInput(data) {
   }
 
   // contact validation
+  if (!Validator.isLength(data.contact, { min: 4, max: 15 })) {
+    errors.contact = "Contact number must be between 4 to 15 characters";
+  }
+
   if (Validator.isEmpty(data.contact)) {
     errors.contact = "Contact is required";
   }

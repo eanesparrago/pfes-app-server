@@ -40,6 +40,10 @@ module.exports = function validateEditUserInput(data) {
   }
 
   // contact validation
+  if (!Validator.isLength(data.contact, { min: 4, max: 15 })) {
+    errors.contact = "Contact number must be between 4 to 15 characters";
+  }
+
   if (Validator.isEmpty(data.contact)) {
     errors.contact = "Contact is required";
   }
