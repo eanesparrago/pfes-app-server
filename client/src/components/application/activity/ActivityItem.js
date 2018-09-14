@@ -7,13 +7,10 @@ import generateBadge from "../../../utils/generateBadge";
 class ActivityItem extends Component {
   render() {
     const {
-      userName,
       userID,
       userFullName,
       userType,
-      logNumber,
-      logShipper,
-      actionType,
+
       actionSummary,
       time
     } = this.props.activity;

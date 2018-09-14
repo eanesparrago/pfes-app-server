@@ -30,57 +30,71 @@ class ApplicationHeader extends Component {
     const badge = generateBadge(auth.user.userType);
 
     return (
-      <div className="pfes-card-container mb-3">
-        <div className="pfes-card-body">
-          {/* FRONT */}
-          <div className="card mb-3 shadow-sm pfes-header pfes-card-side side-front">
-            <div className="card-body row">
-              <div className="col-lg-4">
-                <div className="pfes-header-info">
-                  <div>
-                    <img
-                      className="pfes-header-logo"
-                      src={logo}
-                      alt="PFES Logo"
-                    />
+      <div>
+        <input type="checkbox" id="flip" />
+
+        <div className="pfes-card-container mb-3">
+          <div className="pfes-card-body">
+            {/* FRONT */}
+            <div className="card mb-3 shadow-sm pfes-header pfes-card-side side-front">
+              <label htmlFor="flip" id="flip-label">
+                <div className="card-body row">
+                  <div className="col-lg-4">
+                    <div className="pfes-header-info">
+                      <div>
+                        <img
+                          className="pfes-header-logo"
+                          src={logo}
+                          alt="PFES Logo"
+                        />
+                      </div>
+
+                      <div className="pfes-header-text">
+                        <div className="pfes-header-name">
+                          <h3 className="">
+                            {auth.user.firstName} {badge}
+                          </h3>
+                        </div>
+
+                        <div className="pfes-header-date">
+                          <span>
+                            Today is {moment().format("MMM DD, YYYY")}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="pfes-header-text">
-                    <div className="pfes-header-name">
-                      <h3 className="">
-                        {auth.user.firstName} {badge}
-                      </h3>
-                    </div>
+                  <div className="container col-lg-8">
+                    <div className="row">
+                      <div className="col-sm-6">
+                        <Weather />
+                      </div>
 
-                    <div className="pfes-header-date">
-                      <span>Today is {moment().format("MMM DD, YYYY")}</span>
+                      <div className="col-sm-6">
+                        <ClocksContainer />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </label>
+            </div>
+            {/* FRONT END */}
 
-              <div className="container col-lg-8">
-                <div className="row">
-                  <div className="col-sm-6">
-                    <Weather />
-                  </div>
-
-                  <div className="col-sm-6">
-                    <ClocksContainer />
-                  </div>
+            {/* BACK */}
+            <div className="card mb-3 shadow-sm pfes-header-back pfes-card-side side-back">
+              <label
+                className="pfes-header-back-fix"
+                htmlFor="flip"
+                id="flip-label"
+              >
+                <div className="card-body row text-white">
+                  <div className="col-12">TEST</div>
                 </div>
-              </div>
+              </label>
             </div>
+            {/* BACK END */}
           </div>
-          {/* FRONT END */}
-
-          {/* BACK */}
-          <div className="card mb-3 shadow-sm pfes-header-back pfes-card-side side-back">
-            <div className="card-body row text-white">
-              <div className="col-12">TEST</div>
-            </div>
-          </div>
-          {/* BACK END */}
         </div>
       </div>
     );
