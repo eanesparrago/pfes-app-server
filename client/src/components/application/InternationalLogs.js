@@ -255,6 +255,21 @@ class InternationalLogs extends Component {
                   {log.type.slice(0, 1)}-{log.domJo}
                 </td>
 
+                <td>
+                  <span
+                    className={classnames("", {
+                      "text-success": log.isCompleted
+                    })}
+                  >
+                    {log.status}
+                  </span>{" "}
+                  {log.status === "Ongoing" && !log.isCompleted ? (
+                    <span title={operationsStatusRemarks}>
+                      {operationsStatus}
+                    </span>
+                  ) : null}
+                </td>
+
                 {/* If the logged in user is the associate, set color to blue */}
                 {auth.user.id === log.user ? (
                   <td>
@@ -333,21 +348,6 @@ class InternationalLogs extends Component {
                       {log.eta}
                     </Moment>
                   )}
-                </td>
-
-                <td>
-                  <span
-                    className={classnames("", {
-                      "text-success": log.isCompleted
-                    })}
-                  >
-                    {log.status}
-                  </span>{" "}
-                  {log.status === "Ongoing" && !log.isCompleted ? (
-                    <span title={operationsStatusRemarks}>
-                      {operationsStatus}
-                    </span>
-                  ) : null}
                 </td>
 
                 <td>
@@ -615,6 +615,28 @@ class InternationalLogs extends Component {
                   <th
                     className="text-nowrap"
                     scope="col"
+                    style={{ width: "7rem" }}
+                  >
+                    Status&nbsp;
+                    <i
+                      className={classnames(
+                        "far  fa-caret-square-down pfes-print-hide",
+                        {
+                          "text-primary": sortKey === "status",
+                          "text-secondary": sortKey !== "status",
+                          "fas fa-caret-square-down":
+                            sortKey === "status" && sortOrder === false,
+                          "fas fa-caret-square-up":
+                            sortKey === "status" && sortOrder === true
+                        }
+                      )}
+                      onClick={() => this.onClickSort("status")}
+                    />
+                  </th>
+
+                  <th
+                    className="text-nowrap"
+                    scope="col"
                     style={{ width: "9rem" }}
                   >
                     Associate&nbsp;
@@ -832,28 +854,6 @@ class InternationalLogs extends Component {
                         }
                       )}
                       onClick={() => this.onClickSort("eta")}
-                    />
-                  </th>
-
-                  <th
-                    className="text-nowrap"
-                    scope="col"
-                    style={{ width: "7rem" }}
-                  >
-                    Status&nbsp;
-                    <i
-                      className={classnames(
-                        "far  fa-caret-square-down pfes-print-hide",
-                        {
-                          "text-primary": sortKey === "status",
-                          "text-secondary": sortKey !== "status",
-                          "fas fa-caret-square-down":
-                            sortKey === "status" && sortOrder === false,
-                          "fas fa-caret-square-up":
-                            sortKey === "status" && sortOrder === true
-                        }
-                      )}
-                      onClick={() => this.onClickSort("status")}
                     />
                   </th>
 
