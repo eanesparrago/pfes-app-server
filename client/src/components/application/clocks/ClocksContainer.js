@@ -29,21 +29,6 @@ class ClocksContainer extends Component {
           </div>
 
           <div className="clock-box">
-            <ReactCountryFlag code="za" svg />
-
-            <span className="clock-item text-primary text-nowrap">
-              S. Africa
-            </span>
-
-            <Clock
-              className="clock-item text-nowrap"
-              format={"ddd h:mm a"}
-              ticking={true}
-              timezone={"Africa/Johannesburg"}
-            />
-          </div>
-
-          <div className="clock-box">
             <ReactCountryFlag code="th" svg />
 
             <span
@@ -60,9 +45,42 @@ class ClocksContainer extends Component {
               timezone={"Asia/Bangkok"}
             />
           </div>
+
+          <div className="clock-box">
+            <ReactCountryFlag code="za" svg />
+
+            <span
+              title="S. Africa/Italy"
+              className="clock-item text-primary text-nowrap"
+            >
+              S. Africa
+            </span>
+
+            <Clock
+              className="clock-item text-nowrap"
+              format={"ddd h:mm a"}
+              ticking={true}
+              timezone={"Africa/Johannesburg"}
+            />
+          </div>
         </div>
 
         <div className="clocks-col-2">
+          <div className="clock-box">
+            <ReactCountryFlag code="nl" svg />
+
+            <span className="clock-item text-primary text-nowrap">
+              Amsterdam
+            </span>
+
+            <Clock
+              className="clock-item text-nowrap"
+              format={"ddd h:mm a"}
+              ticking={true}
+              timezone={"Europe/Amsterdam"}
+            />
+          </div>
+
           <div className="clock-box">
             <ReactCountryFlag code="gb" svg />
 

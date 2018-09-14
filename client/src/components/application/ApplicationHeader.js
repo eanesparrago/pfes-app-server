@@ -7,6 +7,7 @@ import generateBadge from "../../utils/generateBadge";
 
 import Weather from "./weather/Weather";
 import ClocksContainer from "./clocks/ClocksContainer";
+import Particles from "react-particles-js";
 
 import "./ApplicationHeader.css";
 
@@ -26,6 +27,7 @@ class ApplicationHeader extends Component {
 
   render() {
     const { auth } = this.props;
+    const { user } = auth;
 
     const badge = generateBadge(auth.user.userType);
 
@@ -88,8 +90,62 @@ class ApplicationHeader extends Component {
                 htmlFor="flip"
                 id="flip-label"
               >
-                <div className="card-body row text-white">
-                  <div className="col-12">TEST</div>
+                <div id="particles">
+                  <Particles
+                    params={{
+                      particles: {
+                        number: {
+                          value: 20
+                        },
+                        opacity: {
+                          value: 0.5
+                        },
+                        line_linked: {
+                          color: "#fff",
+                          opacity: 0.4,
+                          width: 1
+                        }
+                      }
+                    }}
+                  />
+                </div>
+
+                <div className="card-body row text-white m-0 p-2 pt-3 pt-xl-2">
+                  <div className="col-sm-6">
+                    <div className="row">
+                      <div className="col-xl-6">
+                        <h3 className="">Your Information</h3>
+                        <div>Username: {user.userName}</div>
+                        <div>Firstname: {user.firstName}</div>
+                        <div>Lastname: {user.lastName}</div>
+                      </div>
+
+                      <div className="col-xl-6">
+                        <h3 className="d-none d-xl-block">&nbsp;</h3>
+                        <div>User Type: {user.userType}</div>
+                        <div>Email: {user.email}</div>
+                        <div>Contact: {user.contact}</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="col-sm-6 mt-4 mt-sm-0">
+                    <h3 className="">Your Stats</h3>
+                    <div title={moment(user.date).format("MMMM Do YYYY")}>
+                      Date User Added: {moment(user.date).format("MM/DD/YYYY")}
+                    </div>
+
+                    {user.userType === "sales" ? (
+                      <React.Fragment>
+                        <div>Total Job Orders: {user.logsAdded}</div>
+                        <div>Job Orders Completed: {user.logsCompleted}</div>
+                      </React.Fragment>
+                    ) : user.userType === "operations" ? (
+                      <div>Job Orders Delivered: {user.logsCompleted}</div>
+                    ) : null}
+                  </div>
+
+                  {/* <div className="col-sm-2">3</div> */}
                 </div>
               </label>
             </div>

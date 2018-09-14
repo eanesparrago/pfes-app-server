@@ -1,6 +1,13 @@
 // auth
 
-import { SET_CURRENT_USER, USER_LOGIN_LOADING } from "../actions/types";
+import {
+  SET_CURRENT_USER,
+  USER_LOGIN_LOADING,
+  ADD_DOMESTIC_LOG,
+  ADD_INTERNATIONAL_LOG,
+  SUBMIT_COMPLETE_LOG,
+  SUBMIT_COMPLETE
+} from "../actions/types";
 import isEmpty from "../validation/is-empty";
 
 const initialState = {
@@ -23,6 +30,42 @@ export default function(state = initialState, action) {
         isAuthenticated: !isEmpty(action.payload),
         user: action.payload,
         loading: false
+      };
+
+    case ADD_DOMESTIC_LOG:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          logsAdded: state.user.logsAdded + 1
+        }
+      };
+
+    case ADD_INTERNATIONAL_LOG:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          logsAdded: state.user.logsAdded + 1
+        }
+      };
+
+    case SUBMIT_COMPLETE:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          logsCompleted: state.user.logsCompleted + 1
+        }
+      };
+
+    case SUBMIT_COMPLETE_LOG:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          logsCompleted: state.user.logsCompleted + 1
+        }
       };
 
     default:

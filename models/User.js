@@ -45,6 +45,16 @@ const UserSchema = new Schema({
     type: Boolean,
     required: true,
     default: true
+  },
+  logsAdded: {
+    type: Number,
+    required: true,
+    default: 0
+  },
+  logsCompleted: {
+    type: Number,
+    required: true,
+    default: 0
   }
 });
 

@@ -13,7 +13,9 @@ import {
   DELETE_STATUS,
   SHOW_ALERT,
   SUBMIT_REQUEST,
-  RECEIVE_REPLY
+  RECEIVE_REPLY,
+  SUBMIT_COMPLETE_LOG,
+  SUBMIT_COMPLETE
 } from "./types";
 
 // /////////////////////////
@@ -216,6 +218,10 @@ export const submitCompleteLog = data => dispatch => {
       });
 
       dispatch({
+        type: SUBMIT_COMPLETE
+      });
+
+      dispatch({
         type: SHOW_ALERT,
         payload: `Domestic Job Order #${
           res.data.domJo
@@ -231,6 +237,10 @@ export const submitCompleteLog = data => dispatch => {
       dispatch({
         type: LOG_CLICKED,
         payload: res.data
+      });
+
+      dispatch({
+        type: SUBMIT_COMPLETE
       });
 
       dispatch({
@@ -316,7 +326,7 @@ export const deleteLog = log => dispatch => {
 };
 
 // /////////////////////////
-// Submit complete
+// Submit complete operations
 export const submitComplete = (log, statusData) => dispatch => {
   dispatch(clearErrors());
 
@@ -330,6 +340,12 @@ export const submitComplete = (log, statusData) => dispatch => {
           type: LOG_CLICKED,
           payload: res.data
         });
+
+        if (statusData.stage === "unloading") {
+          dispatch({
+            type: SUBMIT_COMPLETE_LOG
+          });
+        }
 
         dispatch({
           type: RECEIVE_REPLY
@@ -354,6 +370,11 @@ export const submitComplete = (log, statusData) => dispatch => {
           payload: res.data
         });
 
+        if (statusData.stage === "unloading") {
+          dispatch({
+            type: SUBMIT_COMPLETE_LOG
+          });
+        }
         dispatch({
           type: RECEIVE_REPLY
         });

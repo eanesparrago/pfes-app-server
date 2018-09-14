@@ -228,6 +228,18 @@ router.post(
     newDomesticLog.save().then(log => {
       res.json(log);
 
+      // User update
+      User.findOneAndUpdate(
+        { _id: req.user.id },
+        { $inc: { logsAdded: 1 } },
+        { new: true },
+        (err, response) => {
+          if (err) {
+            console.log(err);
+          }
+        }
+      );
+
       // Activity
       const newActivity = new DomesticActivity({
         userID: req.user.id,
@@ -374,6 +386,18 @@ router.post(
 
       newInternationalLog.save().then(log => {
         res.json(log);
+
+        // User update
+        User.findOneAndUpdate(
+          { _id: req.user.id },
+          { $inc: { logsAdded: 1 } },
+          { new: true },
+          (err, response) => {
+            if (err) {
+              console.log(err);
+            }
+          }
+        );
 
         // Activity
         const newActivity = new InternationalActivity({
@@ -795,6 +819,18 @@ router.post(
           ).then(log => {
             res.json(log);
 
+            // User update
+            User.findOneAndUpdate(
+              { _id: req.user.id },
+              { $inc: { logsCompleted: 1 } },
+              { new: true },
+              (err, response) => {
+                if (err) {
+                  console.log(err);
+                }
+              }
+            );
+
             // Activity
             const newActivity = new DomesticActivity({
               userID: req.user.id,
@@ -832,6 +868,18 @@ router.post(
             { new: true }
           ).then(log => {
             res.json(log);
+
+            // User update
+            User.findOneAndUpdate(
+              { _id: req.user.id },
+              { $inc: { logsCompleted: 1 } },
+              { new: true },
+              (err, response) => {
+                if (err) {
+                  console.log(err);
+                }
+              }
+            );
 
             // Activity
             const newActivity = new InternationalActivity({

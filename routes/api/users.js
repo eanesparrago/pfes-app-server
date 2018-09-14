@@ -206,7 +206,10 @@ router.post("/login", (req, res) => {
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
-            contact: user.contact
+            contact: user.contact,
+            date: user.date,
+            logsAdded: user.logsAdded,
+            logsCompleted: user.logsCompleted
           };
 
           // Sign token (expires in 30 minutes or 1800 seconds)
@@ -250,7 +253,8 @@ router.get(
       firstName: req.user.firstName,
       lastName: req.user.lastName,
       email: req.user.email,
-      contact: req.user.contact
+      contact: req.user.contact,
+      date: req.user.date
     });
   }
 );
@@ -271,6 +275,7 @@ router.get(
     const errors = {};
 
     User.find()
+      .select("-password")
       .where("userName")
       .nin(["pfesadmin"])
       .sort({ date: -1 })

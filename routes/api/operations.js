@@ -137,6 +137,18 @@ router.post(
 
           log.save().then(log => res.json(log));
 
+          // User update
+          User.findOneAndUpdate(
+            { _id: req.user.id },
+            { $inc: { logsCompleted: 1 } },
+            { new: true },
+            (err, response) => {
+              if (err) {
+                console.log(err);
+              }
+            }
+          );
+
           // Save activity
           newActivity.save();
           break;
@@ -273,6 +285,18 @@ router.post(
           }`;
 
           log.save().then(log => res.json(log));
+
+          // User update
+          User.findOneAndUpdate(
+            { _id: req.user.id },
+            { $inc: { logsCompleted: 1 } },
+            { new: true },
+            (err, response) => {
+              if (err) {
+                console.log(err);
+              }
+            }
+          );
 
           // Save activity
           newActivity.save();

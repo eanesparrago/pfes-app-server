@@ -31,7 +31,7 @@ export default userType => {
     case "viewer":
       badge = (
         <span className="badge badge-primary">
-          <i class="fas fa-book-open" /> Viewer
+          <i className="fas fa-book-open" /> Viewer
         </span>
       );
       break;

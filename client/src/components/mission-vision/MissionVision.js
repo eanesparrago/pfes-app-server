@@ -11,7 +11,7 @@ class MissionVision extends Component {
     return (
       <div className="container fade-in">
         <div className="p-4 mb-3 text-center">
-          <img class="img-fluid" src={logo} alt="PFES logo" />
+          <img className="img-fluid" src={logo} alt="PFES logo" />
         </div>
 
         <div className="row">

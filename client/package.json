@@ -23,6 +23,7 @@
     "react-js-pagination": "^3.0.2",
     "react-live-clock": "^2.0.3",
     "react-moment": "^0.7.9",
+    "react-particles-js": "^2.3.0",
     "react-redux": "^5.0.7",
     "react-responsive": "^5.0.0",
     "react-router-dom": "^4.3.1",
