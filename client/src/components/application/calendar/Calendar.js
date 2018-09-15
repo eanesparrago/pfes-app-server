@@ -253,14 +253,14 @@ class Calendar extends Component {
             </div>
 
             <div
-              className="btn-group shadow-sm"
+              className="btn-group shadow-sm "
               role="group"
               aria-label="Basic example"
             >
               <button
                 type="button"
                 className={classnames("btn btn-outline-primary ", {
-                  "active": this.state.isBig === false
+                  active: this.state.isBig === false
                 })}
                 onClick={() => {
                   this.setState({ isBig: false });
@@ -273,7 +273,7 @@ class Calendar extends Component {
               <button
                 type="button"
                 className={classnames("btn btn-outline-primary ", {
-                  "active": this.state.isBig === true
+                  active: this.state.isBig === true
                 })}
                 onClick={() => {
                   this.setState({ isBig: true });
@@ -288,7 +288,7 @@ class Calendar extends Component {
       );
     }
 
-    return <div className="fade-in">{content}</div>;
+    return <div className="fade-in mb-5">{content}</div>;
   }
 }
 
