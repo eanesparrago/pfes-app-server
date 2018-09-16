@@ -53,27 +53,34 @@ export const getWeather = () => dispatch => {
 
   let coordinates;
 
-  geolocation.getCurrentPosition(position => {
-    coordinates = position.coords;
+  geolocation.getCurrentPosition(
+    position => {
+      coordinates = position.coords;
 
-    fetch(
-      `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/19218d2614796b023be50699767d8e21/${
-        coordinates.latitude
-      },${coordinates.longitude}?units=auto`
-    )
-      .then(res => res.json())
-      .then(data => {
-        dispatch({
-          type: GET_WEATHER,
-          payload: data
+      fetch(
+        `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/19218d2614796b023be50699767d8e21/${
+          coordinates.latitude
+        },${coordinates.longitude}?units=auto`
+      )
+        .then(res => res.json())
+        .then(data => {
+          dispatch({
+            type: GET_WEATHER,
+            payload: data
+          });
+        })
+        .catch(res => {
+          dispatch({
+            type: ERROR_WEATHER
+          });
         });
-      })
-      .catch(res => {
-        dispatch({
-          type: ERROR_WEATHER
-        });
+    },
+    () => {
+      dispatch({
+        type: ERROR_WEATHER
       });
-  });
+    }
+  );
 };
 
 // Set logged in user
