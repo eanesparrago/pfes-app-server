@@ -769,7 +769,7 @@ export class LogViewEdit extends Component {
                   />
 
                   <small className="form-text text-muted">
-                    Building, Street Name, Barangay
+                    Location
                   </small>
 
                   {errors.originLocation && (
@@ -1176,7 +1176,7 @@ export class LogViewEdit extends Component {
                   />
 
                   <small className="form-text text-muted">
-                    Building, Street Name, Barangay
+                    Location
                   </small>
 
                   {errors.destinationLocation && (
