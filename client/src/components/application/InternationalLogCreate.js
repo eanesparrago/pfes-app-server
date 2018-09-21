@@ -492,6 +492,10 @@ class InternationalLogCreate extends Component {
                         onChange={this.onChange}
                         maxLength="100"
                       />
+                      <small className="form-text text-muted">
+                        Valid name characters only
+                      </small>
+
                       {errors.contactName && (
                         <div className="invalid-feedback">
                           {errors.contactName}
@@ -515,6 +519,10 @@ class InternationalLogCreate extends Component {
                         onChange={this.onChange}
                         maxLength="15"
                       />
+                      <small className="form-text text-muted">
+                        0-9, +, parenthesis, and dashes only
+                      </small>
+
                       {errors.contactNumber && (
                         <div className="invalid-feedback">
                           {errors.contactNumber}
