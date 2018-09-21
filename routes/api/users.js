@@ -212,11 +212,11 @@ router.post("/login", (req, res) => {
             logsCompleted: user.logsCompleted
           };
 
-          // Sign token (expires in 30 minutes or 1800 seconds)
+          // Sign token (expires in 1 hour or 3600 seconds)
           jwt.sign(
             payload,
             keys.secretOrKey,
-            { expiresIn: 1800 },
+            { expiresIn: 3600 },
             (err, token) => {
               res.json({
                 success: true,
