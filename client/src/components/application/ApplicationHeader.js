@@ -197,21 +197,24 @@ class ApplicationHeader extends Component {
                     </div>
                   </div>
 
-                  <div className="col-sm-6 mt-4 mt-sm-0">
-                    <h3 className="">Your Stats</h3>
-                    <div title={moment(user.date).format("MMMM Do YYYY")}>
-                      Date User Added: {moment(user.date).format("MM/DD/YYYY")}
-                    </div>
+                  {user.userType === "sales" || user.userType === "operations" ? (
+                    <div className="col-sm-6 mt-4 mt-sm-0">
+                      <h3 className="">Your Stats</h3>
+                      <div title={moment(user.date).format("MMMM Do YYYY")}>
+                        Date User Added:{" "}
+                        {moment(user.date).format("MM/DD/YYYY")}
+                      </div>
 
-                    {user.userType === "sales" ? (
-                      <React.Fragment>
-                        <div>Total Job Orders: {user.logsAdded}</div>
-                        <div>Job Orders Completed: {user.logsCompleted}</div>
-                      </React.Fragment>
-                    ) : user.userType === "operations" ? (
-                      <div>Job Orders Delivered: {user.logsCompleted}</div>
-                    ) : null}
-                  </div>
+                      {user.userType === "sales" ? (
+                        <React.Fragment>
+                          <div>Total Job Orders: {user.logsAdded}</div>
+                          <div>Job Orders Completed: {user.logsCompleted}</div>
+                        </React.Fragment>
+                      ) : user.userType === "operations" ? (
+                        <div>Job Orders Delivered: {user.logsCompleted}</div>
+                      ) : null}
+                    </div>
+                  ) : null}
 
                   {/* <div className="col-sm-2">3</div> */}
                 </div>
