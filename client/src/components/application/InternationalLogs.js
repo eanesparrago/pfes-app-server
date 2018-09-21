@@ -682,7 +682,7 @@ class InternationalLogs extends Component {
                   <th
                     className="text-nowrap"
                     scope="col"
-                    style={{ width: "9rem" }}
+                    style={{ width: "10rem" }}
                   >
                     Commodity&nbsp;
                     <i
