@@ -100,7 +100,7 @@ class Navbar extends Component {
 
             <div className="dropdown-menu">
               <Link className="dropdown-item" to="/mission-vision">
-                Our Mission & Vision
+                Mission & Vision
               </Link>
 
               <div className="dropdown-divider" />
