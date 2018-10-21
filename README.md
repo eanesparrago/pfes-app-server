@@ -7,7 +7,7 @@ https://pacific-plains-77762.herokuapp.com/
 Username: github, Password: github
 
 ## Built With
-* React
+* React, Redux
 * Node.js, Express.js
 * MongoDB, mLab
 
