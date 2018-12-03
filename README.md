@@ -10,6 +10,7 @@ Username: github, Password: github
 * React, Redux
 * Node.js, Express.js
 * MongoDB, mLab
+* Bootstrap
 
 ## Author
 Leandro Esparrago
