@@ -11,6 +11,7 @@ Username: github, Password: github
 * Node.js, Express.js
 * MongoDB, mLab
 * Bootstrap
+* Heroku
 
 ## Author
 Leandro Esparrago
