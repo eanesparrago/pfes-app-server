@@ -1,9 +1,10 @@
 # pfes-app-server
 Log management web application using the MERN stack
 
-## Demo Link
+## Project Link
 https://pacific-plains-77762.herokuapp.com/
 
+Viewer account:
 Username: github, Password: github
 
 ## Built With
