@@ -4,8 +4,7 @@ Log management web application using the MERN stack
 ## Project Link
 https://pacific-plains-77762.herokuapp.com/
 
-Viewer account:
-Username: github, Password: github
+Username: github, Password: github (Viewer role only)
 
 ## Built With
 * React, Redux
