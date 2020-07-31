@@ -13,8 +13,8 @@ class Login extends Component {
   constructor() {
     super();
     this.state = {
-      userName: "",
-      password: "",
+      userName: "github",
+      password: "github",
       errors: {}
     };
 
