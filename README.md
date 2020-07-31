@@ -2,7 +2,7 @@
 Log management web application using the MERN stack
 
 ## Demo
-https://ljesp-pfes-app.herokuapp.com
+https://pfes-app.herokuapp.com
 
 Username: github, Password: github (Viewer role only)
 
